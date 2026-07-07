@@ -1,0 +1,462 @@
+.manager-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.manager-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, white);
+  border-radius: 28px;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.26), transparent 24rem),
+    radial-gradient(circle at left bottom, rgba(37, 99, 235, 0.12), transparent 20rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--surface) 92%, #eff6ff), var(--surface));
+  box-shadow: 0 22px 44px rgba(15, 23, 42, 0.08);
+}
+
+.manager-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -4rem -5rem auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.manager-hero-grid,
+.manager-grid-2,
+.manager-grid-3,
+.manager-grid-4 {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.manager-hero-grid,
+.manager-grid-2 {
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.95fr);
+}
+
+.manager-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.manager-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.hero-kpis,
+.manager-kpis {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.manager-card,
+.manager-panel,
+.manager-kpi,
+.manager-action,
+.manager-list-item,
+.manager-timeline-item,
+.manager-member-card,
+.manager-project-card {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+}
+
+.manager-panel,
+.manager-card,
+.manager-member-card,
+.manager-project-card {
+  padding: 1.2rem;
+}
+
+.manager-kpi {
+  padding: 1rem 1.05rem;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, white), color-mix(in srgb, var(--surface) 90%, var(--bg)));
+}
+
+.manager-kpi .kpi-icon,
+.manager-action .kpi-icon,
+.manager-list-item .kpi-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--primary) 14%, white);
+  color: var(--primary);
+}
+
+.manager-kpi strong {
+  display: block;
+  margin-top: 0.85rem;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.manager-kpi span,
+.manager-stat-line,
+.muted-line {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.manager-action-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+.manager-action {
+  display: block;
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.manager-action:hover,
+.manager-member-card:hover,
+.manager-project-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.09);
+}
+
+.manager-action strong,
+.manager-member-card strong,
+.manager-project-card strong {
+  display: block;
+  margin: 0.85rem 0 0.45rem;
+}
+
+.manager-panel header,
+.manager-section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.manager-section-head h2,
+.manager-panel header h2 {
+  margin: 0.2rem 0 0;
+}
+
+.manager-panel header p,
+.manager-section-head p,
+.manager-project-card p,
+.manager-member-card p,
+.manager-chat-meta,
+.manager-list-item p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.eyebrow-line {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.manager-inline-metrics,
+.manager-badges,
+.manager-meta-grid,
+.manager-filter-row,
+.manager-button-row,
+.manager-member-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.manager-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.38rem 0.72rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.manager-progress {
+  overflow: hidden;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--bg));
+}
+
+.manager-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--info) 72%, white));
+}
+
+.manager-list,
+.manager-project-grid,
+.manager-member-grid,
+.manager-chat-list,
+.manager-timeline {
+  display: grid;
+  gap: 1rem;
+}
+
+.manager-project-grid,
+.manager-member-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.manager-list-item,
+.manager-timeline-item {
+  padding: 1rem;
+}
+
+.manager-list-item {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.manager-timeline-item {
+  display: grid;
+  gap: 0.5rem;
+  border-left: 4px solid color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.manager-chat-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.45fr);
+}
+
+.manager-chat-sidebar,
+.manager-chat-thread {
+  min-height: 560px;
+}
+
+.manager-chat-thread {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.manager-chat-messages {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  min-height: 280px;
+}
+
+.manager-message {
+  max-width: min(84%, 38rem);
+  padding: 0.9rem 1rem;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg) 88%, white);
+  border: 1px solid var(--border);
+}
+
+.manager-message.self {
+  margin-left: auto;
+  background: color-mix(in srgb, var(--primary) 10%, white);
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+}
+
+.manager-message-head,
+.manager-row-between {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.manager-message-tools,
+.manager-chat-input-tools {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.manager-icon-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 0.65rem 0.8rem;
+  cursor: pointer;
+}
+
+.manager-chat-compose textarea,
+.manager-field textarea,
+.manager-field input,
+.manager-field select {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.85rem 0.95rem;
+  font: inherit;
+}
+
+.manager-chat-compose textarea,
+.manager-field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.manager-form,
+.manager-form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.manager-form-grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.manager-form-grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.manager-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.manager-field label,
+.manager-field span {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.manager-project-card footer,
+.manager-member-card footer {
+  margin-top: 1rem;
+}
+
+.manager-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.manager-member-head {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.manager-member-stats {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.manager-surface-note {
+  padding: 0.95rem 1rem;
+  border-radius: 18px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 26%, var(--border));
+  background: color-mix(in srgb, var(--primary) 5%, white);
+  color: var(--text);
+}
+
+.manager-mini-map {
+  min-height: 140px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(37, 99, 235, 0.08)),
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.55) 10px, rgba(255, 255, 255, 0.55) 20px);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+.manager-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.manager-table th,
+.manager-table td {
+  padding: 0.95rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.manager-table th {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.manager-table tr:last-child td {
+  border-bottom: none;
+}
+
+.manager-empty {
+  padding: 1.2rem;
+  border-radius: 18px;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 1180px) {
+  .manager-hero-grid,
+  .manager-grid-2,
+  .manager-chat-layout,
+  .manager-form-grid.two,
+  .manager-form-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .manager-hero {
+    padding: 1.35rem;
+  }
+
+  .manager-grid-3,
+  .manager-grid-4,
+  .manager-project-grid,
+  .manager-member-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-panel,
+  .manager-card,
+  .manager-member-card,
+  .manager-project-card {
+    padding: 1rem;
+  }
+
+  .manager-section-head,
+  .manager-panel header,
+  .manager-message-head,
+  .manager-row-between {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

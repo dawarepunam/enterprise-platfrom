@@ -1,0 +1,774 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance Center – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    .perf-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--pm-border);
+      padding-bottom: 0;
+    }
+    .perf-tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--pm-text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+    .perf-tab-btn.active {
+      color: var(--pm-accent);
+      border-bottom-color: var(--pm-accent);
+    }
+    .perf-tab-btn:hover { color: var(--pm-text); }
+
+    .perf-section { display: none; }
+    .perf-section.active { display: block; }
+
+    .overview-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .pm-chart-card {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 24px;
+      box-shadow: var(--pm-shadow-sm);
+    }
+
+    .pm-chart-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: var(--pm-text);
+    }
+
+    .pm-chart-card p {
+      font-size: 12px;
+      color: var(--pm-text-muted);
+      margin: 0 0 20px 0;
+    }
+
+    .leaderboard-card {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 24px;
+      box-shadow: var(--pm-shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .leaderboard-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--pm-text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lb-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--pm-bg);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .lb-rank {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--pm-accent);
+      width: 24px;
+      flex-shrink: 0;
+    }
+
+    .lb-name {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--pm-text);
+      flex: 1;
+      padding: 0 8px;
+    }
+
+    .lb-score {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--pm-accent);
+    }
+
+    /* Employee Cards Grid */
+    .emp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    .emp-card {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 20px;
+      box-shadow: var(--pm-shadow-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .emp-card:hover {
+      box-shadow: var(--pm-shadow);
+      transform: translateY(-2px);
+      border-color: var(--pm-accent);
+    }
+
+    .emp-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .emp-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--pm-accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .emp-info-name {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--pm-text);
+    }
+
+    .emp-info-role {
+      font-size: 11px;
+      color: var(--pm-text-muted);
+      margin-top: 1px;
+    }
+
+    .emp-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .emp-metric-box {
+      background: var(--pm-bg);
+      border-radius: 6px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .emp-metric-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--pm-text-muted);
+      margin-bottom: 3px;
+    }
+
+    .emp-metric-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--pm-text);
+    }
+
+    .emp-score-bar {
+      margin-top: auto;
+    }
+
+    .score-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--pm-text-muted);
+      margin-bottom: 5px;
+    }
+
+    .score-track {
+      height: 6px;
+      background: var(--pm-bg);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .badge-rating {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+
+    .rating-top { background: #dcfce7; color: #16a34a; }
+    .rating-avg { background: #dbeafe; color: #2563eb; }
+    .rating-low { background: #fee2e2; color: #dc2626; }
+
+    /* Project table */
+    .proj-table-card {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--pm-shadow-sm);
+    }
+
+    /* Modal */
+    .pm-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .pm-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .pm-modal {
+      background: #fff; width: 620px; max-width: 95%; max-height: 85vh; overflow-y: auto;
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transform: translateY(20px); transition: transform .3s ease; padding: 24px;
+    }
+    .pm-modal-overlay.active .pm-modal { transform: translateY(0); }
+    .pm-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .pm-modal-title { font-size: 16px; font-weight: 700; color: var(--pm-text); display: flex; align-items: center; gap: 8px; }
+    .pm-modal-close { cursor: pointer; color: var(--pm-text-muted); font-size: 18px; }
+
+    .modal-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-stat {
+      background: var(--pm-bg);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .modal-stat-label { font-size: 10px; text-transform: uppercase; font-weight: 700; color: var(--pm-text-muted); margin-bottom: 4px; }
+    .modal-stat-value { font-size: 20px; font-weight: 800; color: var(--pm-text); }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--pm-text-muted);
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      opacity: 0.25;
+      margin-bottom: 12px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Performance Center</span>
+          </div>
+          <h2 class="pm-page-title">Performance Analytics Center</h2>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div id="searchWrapper" style="display:none">
+            <div class="pm-header-search" style="margin:0; box-shadow:none; border:1px solid var(--pm-border)">
+              <i class="fa fa-search"></i>
+              <input type="text" id="empSearch" placeholder="Search employee..." oninput="filterEmployees()" style="padding: 8px 12px 8px 32px;" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Bar -->
+      <div class="perf-tabs">
+        <button class="perf-tab-btn active" onclick="switchTab('projects')">
+          <i class="fa fa-folder-open"></i> Project Performance
+        </button>
+        <button class="perf-tab-btn" onclick="switchTab('employees')">
+          <i class="fa fa-users"></i> Employee Performance
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="empty-state">
+        <i class="fa fa-spinner fa-spin" style="opacity:1; font-size:36px; color:var(--pm-accent)"></i>
+        <p>Fetching live analytics data...</p>
+      </div>
+
+      <!-- === Projects Tab === -->
+      <div class="perf-section" id="tab-projects">
+        <div class="overview-row">
+          <!-- Project Chart -->
+          <div class="pm-chart-card">
+            <h3>Project Completion Rates</h3>
+            <p>Percentage of completed tasks per project compared across all active projects.</p>
+            <div style="height:300px; position:relative;">
+              <canvas id="projectChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Top Projects Leaderboard -->
+          <div class="leaderboard-card">
+            <div class="leaderboard-title"><i class="fa fa-trophy" style="color:#eab308"></i> Top Projects</div>
+            <div id="topProjectsList"></div>
+          </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="proj-table-card">
+          <table class="pm-table">
+            <thead>
+              <tr>
+                <th>Project Name</th>
+                <th>Status</th>
+                <th>Total Tasks</th>
+                <th>Completed</th>
+                <th>Completion Rate</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- === Employees Tab === -->
+      <div class="perf-section" id="tab-employees">
+        <div class="overview-row">
+          <!-- Team chart -->
+          <div class="pm-chart-card">
+            <h3>Team Efficiency Comparison</h3>
+            <p>Overall KPI efficiency score (%) for each team member based on task completion ratio.</p>
+            <div style="height:300px; position:relative;">
+              <canvas id="teamChart"></canvas>
+            </div>
+          </div>
+          <!-- Employee Leaderboard -->
+          <div class="leaderboard-card">
+            <div class="leaderboard-title"><i class="fa fa-star" style="color:#eab308"></i> Top Performers</div>
+            <div id="topEmployeesList"></div>
+          </div>
+        </div>
+
+        <!-- Employee Grid -->
+        <div class="emp-grid" id="employeeGrid"></div>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+
+<!-- Employee Detail Modal -->
+<div class="pm-modal-overlay" id="empDetailModal">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title" id="modalTitle">
+        <i class="fa fa-user-chart" style="color:var(--pm-accent)"></i>
+        Employee Performance Detail
+      </div>
+      <div class="pm-modal-close" onclick="closeModal()"><i class="fa fa-times"></i></div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+      <div class="emp-avatar" id="modalAvatar" style="width:52px; height:52px; font-size:18px;"></div>
+      <div>
+        <div id="modalName" style="font-size:16px; font-weight:700; color:var(--pm-text);"></div>
+        <div id="modalRole" style="font-size:12px; color:var(--pm-text-muted);"></div>
+      </div>
+    </div>
+
+    <div class="modal-stat-grid">
+      <div class="modal-stat">
+        <div class="modal-stat-label">Tasks Done</div>
+        <div class="modal-stat-value" id="mCompleted" style="color:var(--green)">0</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-label">In Progress</div>
+        <div class="modal-stat-value" id="mInProgress" style="color:var(--pm-accent)">0</div>
+      </div>
+      <div class="modal-stat">
+        <div class="modal-stat-label">Efficiency Score</div>
+        <div class="modal-stat-value" id="mEfficiency">0%</div>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--pm-border); border-radius:8px; padding:20px; background:#fff;">
+      <h4 style="margin:0 0 14px 0; font-size:13.5px; font-weight:700;">Month-wise Task Completion Trend</h4>
+      <div style="height:220px; position:relative;">
+        <canvas id="modalChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let activeTab = 'projects';
+  let perfData = { projects: [], employees: [] };
+  let filteredEmployees = [];
+  let projectChartInst = null;
+  let teamChartInst = null;
+  let modalChartInst = null;
+
+  function getInitials(name) {
+    if (!name) return 'U';
+    return name.trim().split(/\s+/).map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  }
+
+  function ratingClass(score) {
+    if (score >= 75) return 'rating-top';
+    if (score >= 40) return 'rating-avg';
+    return 'rating-low';
+  }
+
+  function ratingLabel(score) {
+    if (score >= 75) return 'Top Performer';
+    if (score >= 40) return 'Consistent';
+    return 'Needs Support';
+  }
+
+  function scoreColor(score) {
+    if (score >= 75) return 'var(--green)';
+    if (score >= 40) return 'var(--pm-accent)';
+    return 'var(--red)';
+  }
+
+  function switchTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.perf-tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', (i === 0 && tab === 'projects') || (i === 1 && tab === 'employees'));
+    });
+    document.querySelectorAll('.perf-section').forEach(s => s.classList.remove('active'));
+    const section = document.getElementById('tab-' + tab);
+    if (section) section.classList.add('active');
+
+    document.getElementById('searchWrapper').style.display = tab === 'employees' ? 'block' : 'none';
+  }
+
+  async function loadData() {
+    try {
+      const token = window.getToken ? window.getToken() : localStorage.getItem('token') || localStorage.getItem('jmkc_token');
+      const response = await fetch('/api/analytics/performance', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const res = await response.json();
+      if (res && res.success && res.data) {
+        perfData = res.data;
+        filteredEmployees = [...perfData.employees];
+        document.getElementById('loadingState').style.display = 'none';
+        
+        renderProjects();
+        renderEmployees();
+        switchTab('projects');
+      } else {
+        throw new Error('No data returned');
+      }
+    } catch (err) {
+      console.error("Performance API error:", err);
+      document.getElementById('loadingState').innerHTML = `
+        <i class="fa fa-exclamation-circle" style="opacity:1; color:var(--red); font-size:36px;"></i>
+        <p>Could not load performance data. Please check backend connection.</p>
+      `;
+    }
+  }
+
+  function renderProjects() {
+    const projects = perfData.projects || [];
+
+    // Chart
+    if (projectChartInst) projectChartInst.destroy();
+    const ctx = document.getElementById('projectChart').getContext('2d');
+    projectChartInst = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: projects.map(p => p.name.length > 20 ? p.name.substring(0, 20) + '...' : p.name),
+        datasets: [{
+          label: 'Completion %',
+          data: projects.map(p => p.completionRate),
+          backgroundColor: projects.map(p =>
+            p.completionRate >= 75 ? 'rgba(34,197,94,0.8)' :
+            p.completionRate >= 40 ? 'rgba(59,130,246,0.8)' :
+            'rgba(239,68,68,0.8)'
+          ),
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 100, ticks: { font: { family: 'Inter' } } },
+          x: { ticks: { font: { family: 'Inter' }, maxRotation: 30 } }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    // Leaderboard (top 5)
+    const lb = document.getElementById('topProjectsList');
+    lb.innerHTML = '';
+    projects.slice(0, 5).forEach((p, i) => {
+      lb.innerHTML += `
+        <div class="lb-item">
+          <span class="lb-rank">#${i+1}</span>
+          <span class="lb-name">${p.name}</span>
+          <span class="lb-score">${p.completionRate}%</span>
+        </div>
+      `;
+    });
+
+    if (projects.length === 0) {
+      lb.innerHTML = `<div style="text-align:center; padding:16px; color:var(--pm-text-muted); font-size:12.5px;">No projects found</div>`;
+    }
+
+    // Table
+    const tbody = document.getElementById('projectsTableBody');
+    tbody.innerHTML = '';
+
+    if (projects.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fa fa-folder-open"></i>No projects found in the system.</td></tr>`;
+      return;
+    }
+
+    projects.forEach(p => {
+      const color = p.completionRate >= 75 ? 'var(--green)' : p.completionRate >= 40 ? 'var(--pm-accent)' : 'var(--red)';
+      tbody.innerHTML += `
+        <tr>
+          <td style="font-weight:600">${p.name}</td>
+          <td><span class="badge" style="background:var(--pm-accent-light);color:var(--pm-accent)">${p.status}</span></td>
+          <td>${p.totalTasks}</td>
+          <td style="color:var(--green); font-weight:700">${p.completedTasks}</td>
+          <td>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="font-weight:700; font-size:13px; color:${color}; width:38px;">${p.completionRate}%</div>
+              <div style="flex:1; height:6px; background:var(--pm-bg); border-radius:3px; overflow:hidden;">
+                <div style="height:100%; width:${p.completionRate}%; background:${color}; border-radius:3px;"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  function renderEmployees() {
+    const employees = filteredEmployees;
+
+    // Team Chart
+    if (teamChartInst) teamChartInst.destroy();
+    const ctx2 = document.getElementById('teamChart').getContext('2d');
+    teamChartInst = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: employees.map(e => e.name.split(' ')[0]),
+        datasets: [
+          {
+            label: 'KPI Score (%)',
+            data: employees.map(e => e.efficiency),
+            backgroundColor: 'rgba(59,130,246,0.8)',
+            borderRadius: 4,
+            yAxisID: 'y'
+          },
+          {
+            label: 'Completed Tasks',
+            data: employees.map(e => e.completed),
+            backgroundColor: 'rgba(34,197,94,0.7)',
+            borderRadius: 4,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { type: 'linear', position: 'left', max: 100, ticks: { font: { family: 'Inter' } } },
+          y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { family: 'Inter' } } }
+        }
+      }
+    });
+
+    // Leaderboard
+    const lb2 = document.getElementById('topEmployeesList');
+    lb2.innerHTML = '';
+    employees.slice(0, 5).forEach((e, i) => {
+      lb2.innerHTML += `
+        <div class="lb-item">
+          <span class="lb-rank">#${i+1}</span>
+          <span class="lb-name">${e.name}</span>
+          <span class="lb-score">${e.efficiency}%</span>
+        </div>
+      `;
+    });
+
+    if (employees.length === 0) {
+      lb2.innerHTML = `<div style="text-align:center; padding:16px; color:var(--pm-text-muted); font-size:12.5px;">No employees found</div>`;
+    }
+
+    // Grid Cards
+    const grid = document.getElementById('employeeGrid');
+    grid.innerHTML = '';
+
+    if (employees.length === 0) {
+      grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:40px; color:var(--pm-text-muted)">
+        <i class="fa fa-user-slash" style="font-size:40px; opacity:0.2; margin-bottom:12px; display:block;"></i>
+        No employees match your search.
+      </div>`;
+      return;
+    }
+
+    employees.forEach(e => {
+      const initials = getInitials(e.name);
+      const cls = ratingClass(e.efficiency);
+      const lbl = ratingLabel(e.efficiency);
+      const col = scoreColor(e.efficiency);
+
+      grid.innerHTML += `
+        <div class="emp-card" onclick="openEmployeeModal('${e._id}')">
+          <span class="badge-rating ${cls}">${lbl}</span>
+          <div class="emp-card-top">
+            <div class="emp-avatar">${initials}</div>
+            <div>
+              <div class="emp-info-name">${e.name}</div>
+              <div class="emp-info-role">${e.role}</div>
+            </div>
+          </div>
+          <div class="emp-metrics">
+            <div class="emp-metric-box">
+              <div class="emp-metric-label">Done</div>
+              <div class="emp-metric-value" style="color:var(--green)">${e.completed}</div>
+            </div>
+            <div class="emp-metric-box">
+              <div class="emp-metric-label">Pending</div>
+              <div class="emp-metric-value" style="color:var(--pm-accent)">${e.inProgress}</div>
+            </div>
+          </div>
+          <div class="emp-score-bar">
+            <div class="score-label"><span>KPI Score</span><span>${e.efficiency}%</span></div>
+            <div class="score-track">
+              <div class="score-fill" style="width:${e.efficiency}%; background:${col};"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function openEmployeeModal(id) {
+    const emp = perfData.employees.find(e => String(e._id) === String(id));
+    if (!emp) return;
+
+    document.getElementById('modalAvatar').textContent = getInitials(emp.name);
+    document.getElementById('modalName').textContent = emp.name;
+    document.getElementById('modalRole').textContent = emp.role;
+    document.getElementById('mCompleted').textContent = emp.completed;
+    document.getElementById('mInProgress').textContent = emp.inProgress;
+    document.getElementById('mEfficiency').textContent = emp.efficiency + '%';
+
+    document.getElementById('empDetailModal').classList.add('active');
+
+    setTimeout(() => {
+      const ctx = document.getElementById('modalChart').getContext('2d');
+      if (modalChartInst) modalChartInst.destroy();
+
+      const trend = emp.monthlyTrend || {};
+      modalChartInst = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Object.keys(trend),
+          datasets: [{
+            label: 'Tasks Completed',
+            data: Object.values(trend),
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59,130,246,0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2,
+            pointBackgroundColor: '#3b82f6'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1, font: { family: 'Inter' } } },
+            x: { ticks: { font: { family: 'Inter' } } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+    }, 50);
+  }
+
+  function closeModal() {
+    document.getElementById('empDetailModal').classList.remove('active');
+  }
+
+  function filterEmployees() {
+    const q = document.getElementById('empSearch').value.toLowerCase().trim();
+    filteredEmployees = q
+      ? perfData.employees.filter(e => e.name.toLowerCase().includes(q))
+      : [...perfData.employees];
+    renderEmployees();
+  }
+
+  document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>

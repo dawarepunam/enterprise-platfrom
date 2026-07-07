@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payslips | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/common.css">
+  <style>
+    .month-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .month-card { background: var(--white); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: var(--transition); }
+    .month-card:hover { border-color: var(--primary-blue); background: #f0fdf4; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transform: translateY(-3px); }
+    .month-card.active { border-color: var(--primary-blue); background: var(--primary-blue); color: var(--white); }
+    
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+    .popup-overlay.active { display: flex; }
+    .popup-content { background: var(--white); width: 650px; max-width: 95%; border-radius: 12px; box-shadow: var(--glass-shadow); padding: 25px; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+    .popup-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: var(--transition); }
+    .btn-primary { background: var(--primary-blue); color: var(--white); }
+    .btn-primary:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><i class="fas fa-building"></i> JMKC HRMS</div>
+      <nav class="sidebar-nav">
+        <a href="/hr/dashboard" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+        <div class="nav-accordion active">
+          <div class="nav-item accordion-header active"><i class="fas fa-money-check-alt"></i> Payroll <i class="fas fa-chevron-down ml-auto"></i></div>
+          <div class="accordion-content open">
+            <a href="/hr/payroll">Dashboard</a>
+            <a href="/hr/payroll/processed">Processed Payroll</a>
+            <a href="/hr/payroll/salary-structure">Salary Structure</a>
+            <a href="/hr/payroll/payslips" class="active">Payslips</a>
+            <a href="/hr/payroll/bonuses">Bonuses & Arrears</a>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-left">
+          <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+          <div class="breadcrumb">HR / Payroll / Payslips</div>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-primary" id="generatePayslipBtn"><i class="fas fa-file-invoice"></i> Generate Payslip</button>
+        </div>
+      </header>
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards" style="margin-bottom: 20px;">
+          <div class="glass-card kpi-card">
+            <div class="card-icon blue"><i class="fas fa-file-invoice"></i></div>
+            <div class="card-info"><h3>Total Payslips</h3><h2>1,200</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon green"><i class="fas fa-download"></i></div>
+            <div class="card-info"><h3>Downloads</h3><h2>850</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon orange"><i class="fas fa-envelope"></i></div>
+            <div class="card-info"><h3>Pending Email</h3><h2>12</h2></div>
+          </div>
+        </div>
+
+        <div class="month-cards">
+          <div class="month-card active">June</div>
+          <div class="month-card">May</div>
+          <div class="month-card">April</div>
+          <div class="month-card">March</div>
+          <div class="month-card">February</div>
+          <div class="month-card">January</div>
+        </div>
+
+        <div class="table-container glass-card mt-4">
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Month</th>
+                  <th>Total Salary</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="payslipTableBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Drawer for View -->
+      <div class="drawer-overlay" id="viewDrawerOverlay"></div>
+      <div class="right-drawer" id="viewDrawer">
+        <div class="drawer-header">
+          <h3>Payslip Details</h3>
+          <button class="close-drawer" id="closeViewDrawer">&times;</button>
+        </div>
+        <div class="drawer-content">
+          <div class="tabs">
+            <button class="tab-btn active" data-target="tab-overview">Overview</button>
+            <button class="tab-btn" data-target="tab-breakdown">Salary Breakdown</button>
+            <button class="tab-btn" data-target="tab-deductions">Deductions</button>
+            <button class="tab-btn" data-target="tab-tax">Tax</button>
+            <button class="tab-btn" data-target="tab-history">History</button>
+          </div>
+          <div class="tab-content active" id="tab-overview"><p>Overview content here.</p></div>
+          <div class="tab-content" id="tab-breakdown"><p>Salary Breakdown.</p></div>
+          <div class="tab-content" id="tab-deductions"><p>Deductions details.</p></div>
+          <div class="tab-content" id="tab-tax"><p>Tax details.</p></div>
+          <div class="tab-content" id="tab-history"><p>History log.</p></div>
+        </div>
+      </div>
+
+      <!-- Email Popup -->
+      <div class="popup-overlay" id="emailPopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <h3>Email Payslip</h3>
+            <button class="popup-close" id="closeEmailBtn">&times;</button>
+          </div>
+          <form id="emailForm">
+            <div class="form-group"><label>Employee Email</label><input type="email" required></div>
+            <div class="form-group"><label>CC Email</label><input type="email"></div>
+            <div class="form-group"><label>Message</label><textarea>Please find your payslip attached.</textarea></div>
+            <div style="text-align: right;"><button type="submit" class="btn btn-primary">Send Email</button></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Generate Popup -->
+      <div class="popup-overlay" id="generatePopup">
+        <div class="popup-content" style="width: 750px;">
+          <div class="popup-header">
+            <h3>Generate Payslip</h3>
+            <button class="popup-close" id="closeGenerateBtn">&times;</button>
+          </div>
+          <form id="generateForm">
+            <div style="display:flex; gap:15px;">
+              <div class="form-group" style="flex:1"><label>Month</label><select><option>June 2026</option></select></div>
+              <div class="form-group" style="flex:1"><label>Department</label><select><option>All</option><option>Engineering</option></select></div>
+            </div>
+            <div class="form-group"><label>Employee Type</label><select><option>Permanent</option><option>Contract</option></select></div>
+            <div class="form-group"><label>Remarks</label><input type="text"></div>
+            <div style="text-align: right;"><button type="submit" class="btn btn-primary">Generate</button></div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/payslips.js"></script>
+</body>
+</html>

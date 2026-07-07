@@ -1,0 +1,83 @@
+/* Light Premium Theme - Project Manager */
+:root {
+  --primary-h: 220;
+  --primary-s: 15%;
+  --primary-l: 90%;
+  --bg-color: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+  --card-bg: hsl(0, 0%, 100%);
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --text-color: #333;
+  --accent-color: hsl(220, 80%, 50%);
+}
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+.pm-dashboard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1 1 200px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px var(--card-shadow);
+}
+.card[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+.card:hover[data-tooltip]::after {
+  opacity: 1;
+}
+.action-btn {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.action-btn:hover {
+  background: hsl(var(--primary-h), 80%, 45%);
+}
+.updates {
+  margin-top: 1rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px var(--card-shadow);
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .cards { flex-direction: column; }
+}

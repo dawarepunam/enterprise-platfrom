@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designations - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .designation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .designation-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .designation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+        .designation-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .designation-info p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+        .designation-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item active">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>People</span> > Designations</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Designations</h1>
+                <button class="btn btn-primary" onclick="showToast('Add Designation logic here', 'info')"><i class="fa-solid fa-plus"></i> Add Designation</button>
+            </div>
+
+            <div class="designation-grid">
+                <div class="designation-card" onclick="window.location.href='employees.html?designation=intern'">
+                    <div class="designation-info">
+                        <h3>Intern</h3>
+                        <p>12 Employees</p>
+                    </div>
+                    <div class="designation-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="designation-card" onclick="window.location.href='employees.html?designation=executive'">
+                    <div class="designation-info">
+                        <h3>Executive</h3>
+                        <p>154 Employees</p>
+                    </div>
+                    <div class="designation-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="designation-card" onclick="window.location.href='employees.html?designation=senior-executive'">
+                    <div class="designation-info">
+                        <h3>Senior Executive</h3>
+                        <p>84 Employees</p>
+                    </div>
+                    <div class="designation-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="designation-card">
+                    <div class="designation-info">
+                        <h3>Lead</h3>
+                        <p>32 Employees</p>
+                    </div>
+                    <div class="designation-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="designation-card">
+                    <div class="designation-info">
+                        <h3>Manager</h3>
+                        <p>18 Employees</p>
+                    </div>
+                    <div class="designation-icon"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0</div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

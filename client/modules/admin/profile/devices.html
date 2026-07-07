@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Active Devices</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="devices">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Devices</p>
+                        <h1>Active devices and sessions</h1>
+                        <p class="muted">Track trusted endpoints and remove access when a session looks risky.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <a class="btn btn-primary" href="security.html">Review Security</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div id="deviceGrid" class="device-grid"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

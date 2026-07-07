@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Manager – Health Center</title>
+  <link rel="stylesheet" href="/modules/project-manager/health-center/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1><i class="fa-solid fa-heart-pulse"></i> Health Center</h1>
+  </header>
+
+  <main class="container">
+    <div class="health-overview glass">
+      <h2>Project Health Status</h2>
+      <p>Overall system health, risk factors, and performance metrics.</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3>Schedule Variance</h3>
+          <p class="value positive">-5%</p>
+        </div>
+        <div class="metric-card">
+          <h3>Budget Variance</h3>
+          <p class="value warning">+2%</p>
+        </div>
+        <div class="metric-card">
+          <h3>Active Risks</h3>
+          <p class="value negative">3</p>
+        </div>
+      </div>
+    </div>
+      <!-- PM Standard Footer -->
+      
+  </main>
+
+  <script>
+    async function apiFetch(url, opts = {}) {
+      const token = localStorage.getItem('jwt');
+      const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      const res = await fetch(url, { ...opts, headers });
+      return res.json();
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await apiFetch('/api/analytics/pm-dashboard');
+        const data = res.data;
+
+        if (data && data.taskDistribution) {
+          const totalTasks = Object.values(data.taskDistribution).reduce((a, b) => a + b, 0);
+          const doneTasks = data.taskDistribution.DONE || 0;
+          const progress = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+          
+          document.querySelector('.metrics-grid').innerHTML = `
+            <div class="metric-card">
+              <h3>Overall Progress</h3>
+              <p class="value ${progress > 50 ? 'positive' : 'warning'}">${progress}%</p>
+            </div>
+            <div class="metric-card">
+              <h3>Active Projects</h3>
+              <p class="value positive">${data.projectHealth.length}</p>
+            </div>
+            <div class="metric-card">
+              <h3>Total Tasks</h3>
+              <p class="value">${totalTasks}</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Error fetching health center analytics:', err);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<div class="hr-attendance-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Top Banner -->
+  <div style="background:linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%); border-radius:var(--hr-radius); padding:2rem; color:white; display:flex; justify-content:space-between; align-items:center; box-shadow:0 10px 15px -3px rgba(59,130,246,0.3);">
+    <div>
+      <h2 style="margin:0 0 0.5rem 0; font-size:1.5rem;">Good Morning HR 👋</h2>
+      <div style="color:rgba(255,255,255,0.8); font-size:0.875rem;">Today's Attendance Summary</div>
+    </div>
+    <div style="display:flex; gap:2rem; text-align:center;">
+      <div>
+        <div style="font-size:2rem; font-weight:700;" id="bannerPresentCount">125</div>
+        <div style="font-size:0.875rem; color:rgba(255,255,255,0.8);">Present</div>
+      </div>
+      <div>
+        <div style="font-size:2rem; font-weight:700;" id="bannerAbsentCount">12</div>
+        <div style="font-size:0.875rem; color:rgba(255,255,255,0.8);">Absent</div>
+      </div>
+      <div>
+        <div style="font-size:2rem; font-weight:700;" id="bannerLateCount">7</div>
+        <div style="font-size:0.875rem; color:rgba(255,255,255,0.8);">Late</div>
+      </div>
+      <div>
+        <div style="font-size:2rem; font-weight:700;" id="bannerWfhCount">18</div>
+        <div style="font-size:0.875rem; color:rgba(255,255,255,0.8);">WFH</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.2); padding:0.5rem 1rem; border-radius:20px; font-size:0.875rem; display:flex; align-items:center; gap:0.5rem; backdrop-filter:blur(4px);">
+      <div style="width:8px; height:8px; background:#10B981; border-radius:50%; box-shadow:0 0 10px #10B981;"></div>
+      Live Sync
+    </div>
+  </div>
+
+  <!-- KPI Cards Grid -->
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1.5rem;">
+    
+    <div class="hr-card hoverable" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:1.5rem; border-bottom:4px solid #10B981;" onclick="window.App.navigate('/hr/attendance?status=present')">
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; margin-bottom:0.25rem;">Present</div>
+        <div style="font-size:1.5rem; font-weight:700;">125 <span style="font-size:0.75rem; font-weight:normal; color:var(--hr-text-muted);">Employees</span></div>
+        <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+      </div>
+      <div style="width:48px; height:48px; border-radius:12px; background:#D1FAE5; display:flex; justify-content:center; align-items:center; font-size:1.5rem;">👤</div>
+    </div>
+
+    <div class="hr-card hoverable" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:1.5rem; border-bottom:4px solid #EF4444;" onclick="window.App.navigate('/hr/attendance?status=absent')">
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; margin-bottom:0.25rem;">Absent</div>
+        <div style="font-size:1.5rem; font-weight:700;">12 <span style="font-size:0.75rem; font-weight:normal; color:var(--hr-text-muted);">Employees</span></div>
+        <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+      </div>
+      <div style="width:48px; height:48px; border-radius:12px; background:#FEE2E2; display:flex; justify-content:center; align-items:center; font-size:1.5rem;">❌</div>
+    </div>
+
+    <div class="hr-card hoverable" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:1.5rem; border-bottom:4px solid #F59E0B;" onclick="window.App.navigate('/hr/attendance?status=late')">
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; margin-bottom:0.25rem;">Late</div>
+        <div style="font-size:1.5rem; font-weight:700;">7 <span style="font-size:0.75rem; font-weight:normal; color:var(--hr-text-muted);">Employees</span></div>
+        <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+      </div>
+      <div style="width:48px; height:48px; border-radius:12px; background:#FEF3C7; display:flex; justify-content:center; align-items:center; font-size:1.5rem;">⏰</div>
+    </div>
+
+    <div class="hr-card hoverable" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:1.5rem; border-bottom:4px solid #3B82F6;" onclick="window.App.navigate('/hr/attendance?status=wfh')">
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; margin-bottom:0.25rem;">WFH</div>
+        <div style="font-size:1.5rem; font-weight:700;">18 <span style="font-size:0.75rem; font-weight:normal; color:var(--hr-text-muted);">Employees</span></div>
+        <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+      </div>
+      <div style="width:48px; height:48px; border-radius:12px; background:#DBEAFE; display:flex; justify-content:center; align-items:center; font-size:1.5rem;">🏠</div>
+    </div>
+
+  </div>
+
+  <!-- Filters & Actions -->
+  <div class="hr-card" style="display:flex; justify-content:space-between; align-items:center; padding:1rem;">
+    <div style="display:flex; gap:1rem;">
+      <input type="text" placeholder="Search employee..." style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; width:200px;" />
+      <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;">
+        <option value="">All Departments</option>
+        <option value="sales">Sales</option>
+        <option value="hr">HR</option>
+      </select>
+      <input type="date" value="2026-05-16" style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+    </div>
+    <div style="display:flex; gap:1rem;">
+      <button class="hr-icon-btn" style="border:1px solid var(--hr-border); background:white; padding:0.5rem 1rem; border-radius:8px;">Export Excel</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Department</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Check In</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Check Out</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Hours</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500; text-align:right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="hrAttendanceTableBody">
+        <!-- Injected via script -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Right Drawer for View Logs -->
+<div id="hrAttendanceDrawer" class="hr-drawer hidden" style="width:500px; display:flex; flex-direction:column;">
+  <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center; background:#F8FAFC;">
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img id="drawerAttPhoto" src="" style="width:40px; height:40px; border-radius:50%;" />
+      <div>
+        <h3 id="drawerAttName" style="margin:0;">Employee Name</h3>
+        <div id="drawerAttId" style="color:var(--hr-text-muted); font-size:0.875rem;">EMP000</div>
+      </div>
+    </div>
+    <button onclick="window.UI.closeAttendanceDrawer()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+  </div>
+  
+  <div style="display:flex; border-bottom:1px solid var(--hr-border);">
+    <div class="hr-tab active" onclick="window.UI.switchAttTab('today')" style="padding:1rem; flex:1; text-align:center; cursor:pointer; color:var(--hr-primary); border-bottom:2px solid var(--hr-primary); font-weight:500;">Today's Logs</div>
+    <div class="hr-tab" onclick="window.UI.switchAttTab('location')" style="padding:1rem; flex:1; text-align:center; cursor:pointer; color:var(--hr-text-muted);">Location</div>
+    <div class="hr-tab" onclick="window.UI.switchAttTab('timeline')" style="padding:1rem; flex:1; text-align:center; cursor:pointer; color:var(--hr-text-muted);">Timeline</div>
+  </div>
+
+  <div style="flex:1; overflow-y:auto; padding:1.5rem; background:#FFF;">
+    
+    <!-- Today's Logs -->
+    <div id="att-tab-today" class="att-pane">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem;">
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border);">
+          <div style="color:var(--hr-text-muted); font-size:0.75rem;">Check In</div>
+          <div style="font-weight:600; font-size:1.25rem;">09:05 AM</div>
+        </div>
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border);">
+          <div style="color:var(--hr-text-muted); font-size:0.75rem;">Check Out</div>
+          <div style="font-weight:600; font-size:1.25rem;">06:15 PM</div>
+        </div>
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border);">
+          <div style="color:var(--hr-text-muted); font-size:0.75rem;">Total Hours</div>
+          <div style="font-weight:600; font-size:1.25rem;">09:10</div>
+        </div>
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border);">
+          <div style="color:var(--hr-text-muted); font-size:0.75rem;">Break Time</div>
+          <div style="font-weight:600; font-size:1.25rem;">45 Min</div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <button class="primary-btn" onclick="window.App.navigate('/hr/profile?id=EMP001')">View Full Profile →</button>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div id="att-tab-location" class="att-pane hidden">
+      <h4 style="margin-top:0;">Check-In Location</h4>
+      <div style="display:flex; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Latitude</div>
+          <div style="font-weight:500;">18.5204</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Longitude</div>
+          <div style="font-weight:500;">73.8567</div>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Address</div>
+        <div style="font-weight:500;">JMKC Tech Park, Hinjewadi, Pune</div>
+      </div>
+      <div style="width:100%; height:200px; background:#E2E8F0; border-radius:8px; display:flex; justify-content:center; align-items:center;">
+        <span style="color:var(--hr-text-muted);">🗺️ Map Rendered Here</span>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div id="att-tab-timeline" class="att-pane hidden">
+      <div style="position:relative; border-left:2px solid var(--hr-border); padding-left:1.5rem; margin-left:0.5rem;">
+        
+        <div style="position:relative; margin-bottom:2rem;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#10B981; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">09:05 AM</div>
+          <div style="font-weight:500;">Web Check-In</div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted); margin-top:0.25rem;">IP: 192.168.1.5 • Device: Chrome Windows</div>
+        </div>
+
+        <div style="position:relative; margin-bottom:2rem;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#F59E0B; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">01:05 PM</div>
+          <div style="font-weight:500;">Break Start</div>
+        </div>
+
+        <div style="position:relative; margin-bottom:2rem;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#10B981; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">01:50 PM</div>
+          <div style="font-weight:500;">Break End</div>
+        </div>
+
+        <div style="position:relative;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#3B82F6; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">06:15 PM</div>
+          <div style="font-weight:500;">Web Check-Out</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Regularize Popup Modal -->
+<div id="hrRegularizeModal" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="hr-card" style="width:500px; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Regularize Attendance</h3>
+      <button onclick="window.UI.closeRegularizeModal()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+
+    <div style="padding:2rem;">
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Date</label>
+        <input type="date" value="2026-05-16" readonly style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; background:#F1F5F9;" />
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Reason</label>
+        <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+          <option>Forgot to Check-In</option>
+          <option>Forgot to Check-Out</option>
+          <option>Client Meeting</option>
+          <option>Technical Issue</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Remarks</label>
+        <textarea placeholder="Client meeting outside office." rows="3" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; resize:none;"></textarea>
+      </div>
+    </div>
+
+    <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+      <button onclick="window.UI.closeRegularizeModal()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.75rem 1.5rem; font-weight:500; cursor:pointer;">Cancel</button>
+      <button onclick="window.UI.submitRegularization()" class="primary-btn" style="padding:0.75rem 1.5rem;">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/hr/attendance/script.js"></script>

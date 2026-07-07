@@ -1,0 +1,193 @@
+/* ------------------------------------------------------------
+   Project Manager – Team Module UI Styles
+   Light‑Premium (HSL 220, 15%, 90% background) with glassmorphism
+   ------------------------------------------------------------ */
+
+:root {
+  --bg-primary: hsl(220, 15%, 90%);
+  --bg-card: hsla(0, 0%, 100%, 0.6);
+  --bg-card-hover: hsla(0, 0%, 100%, 0.9);
+  --shadow: rgba(0, 0, 0, 0.12);
+  --primary: hsl(220, 70%, 45%);
+  --accent: hsl(340, 70%, 45%);
+  --text: hsl(220, 10%, 20%);
+  --radius: 12px;
+}
+
+body {
+  background: var(--bg-primary);
+  font-family: "Inter", system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+}
+
+.pm-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.pm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pm-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: hsl(220, 70%, 40%);
+}
+
+/* Grid for team cards */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.team-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px var(--shadow);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.team-card:hover {
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+}
+
+.team-card .avatar {
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.team-card .info {
+  text-align: center;
+}
+
+.team-card .info h3 {
+  margin: 0.2rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.team-card .info p {
+  margin: 0.1rem 0;
+  font-size: 0.9rem;
+  color: hsl(220, 10%, 40%);
+}
+
+/* Tooltip (hover card) */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+[data-tooltip]:hover::after {
+  opacity: 0.9;
+}
+
+/* Modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 420px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 12px var(--shadow);
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .pm-header {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}

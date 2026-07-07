@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Files & Documents - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: flex !important; flex-direction: column !important; min-height: calc(100vh - 80px); }
+
+    /* ── Page Header ── */
+    .pg-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .fm-search-box { position: relative; }
+    .fm-search-box i { position: absolute; left: 12px; top: 12px; color: #a3aed1; }
+    .fm-search-input { padding: 10px 16px 10px 36px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #fff; width: 250px; transition: .2s; }
+    .fm-search-input:focus { border-color: #3965FF; box-shadow: 0 4px 12px rgba(57,101,255,0.1); }
+    
+    .view-toggles { display: flex; background: #fff; border-radius: 12px; border: 1.5px solid #e2e8f0; overflow: hidden; }
+    .fvt-btn { padding: 8px 12px; border: none; background: transparent; color: #a3aed1; cursor: pointer; transition: .2s; }
+    .fvt-btn.active { background: #f4f7fe; color: #3965FF; }
+
+    .btn-upload { background: #3965FF; color: #fff; padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: .2s; }
+    .btn-upload:hover { background: #274ccf; }
+
+    /* ── Stats Row ── */
+    .fm-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .fm-stat { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); text-align: center; }
+    .fms-val { font-size: 24px; font-weight: 800; color: #2b3674; margin-bottom: 4px; }
+    .fms-label { font-size: 12px; color: #a3aed1; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── Breadcrumb ── */
+    .fm-breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 600; color: #5d6d8a; margin-bottom: 20px; }
+    .fm-breadcrumb span { cursor: pointer; transition: .2s; }
+    .fm-breadcrumb span:hover { color: #3965FF; }
+    .fm-breadcrumb .separator { color: #a3aed1; margin: 0 4px; }
+    .fm-breadcrumb .active-crumb { color: #3965FF; cursor: default; }
+
+    /* ── Main Layout ── */
+    .fm-layout { display: flex; gap: 24px; align-items: stretch; }
+
+    /* Tree */
+    .fm-sidebar { width: 250px; background: #fff; border-radius: 20px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); flex-shrink: 0; }
+    .fm-sidebar h3 { font-size: 14px; font-weight: 800; color: #2b3674; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .fm-tree { display: flex; flex-direction: column; gap: 8px; }
+    
+    .tree-item { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #5d6d8a; padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: .2s; }
+    .tree-item:hover { background: #f0f4ff; color: #3965FF; }
+    .tree-item.active { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .tree-item i { font-size: 16px; color: #a3aed1; }
+    .tree-item.active i { color: #3965FF; }
+
+    /* Main Area */
+    .fm-main-area { flex: 1; background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); position: relative; }
+    
+    .fm-drop-overlay { position: absolute; inset: 0; background: rgba(57,101,255,0.9); border-radius: 20px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; border: 2px dashed #fff; }
+
+    /* Grid View */
+    .fm-file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .fm-file-grid.list-view { grid-template-columns: 1fr; gap: 10px; }
+    .fm-file-card { border: 1.5px solid #eef2ff; border-radius: 14px; padding: 18px; transition: .2s; cursor: pointer; position: relative; background: #fff; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .fm-file-card:hover { border-color: #3965FF; box-shadow: 0 10px 30px rgba(57,101,255,0.1); transform: translateY(-3px); }
+    .ffc-icon { width: 54px; height: 54px; border-radius: 14px; background: #f4f7fe; color: #3965FF; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 12px; }
+    .ffc-name { width: 100%; font-size: 14px; font-weight: 800; color: #2b3674; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+    .ffc-folder { font-size: 11px; color: #5d6d8a; background: #f8fafc; border-radius: 999px; padding: 3px 8px; margin-bottom: 6px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ffc-meta { font-size: 11px; color: #a3aed1; text-align: center; }
+    .ffc-actions { display: flex; gap: 6px; margin-top: 12px; }
+    .ffc-act-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid #e2e8f0; background: #fff; color: #5d6d8a; cursor: pointer; }
+    .ffc-act-btn:hover { border-color: #3965FF; color: #3965FF; background: #f4f7fe; }
+    .ffc-act-btn.danger:hover { border-color: #ef4444; color: #ef4444; background: #fef2f2; }
+    .ffc-shared { position: absolute; top: 10px; left: 10px; font-size: 10px; background: rgba(5,205,153,0.12); color: #059669; padding: 3px 7px; border-radius: 999px; font-weight: 800; }
+    .fm-file-grid.list-view .fm-file-card { min-height: 72px; flex-direction: row; justify-content: flex-start; text-align: left; padding-right: 120px; }
+    .fm-file-grid.list-view .ffc-icon { margin: 0 12px 0 0; width: 44px; height: 44px; font-size: 21px; flex-shrink: 0; }
+    .fm-file-grid.list-view .ffc-name { text-align: left; margin: 0; }
+    .fm-file-grid.list-view .ffc-folder { margin: 2px 0 0 0; }
+    .fm-file-grid.list-view .ffc-meta { margin-left: auto; white-space: nowrap; }
+    .fm-file-grid.list-view .ffc-actions { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); margin: 0; }
+    .file-card { border: 1.5px solid #f0f4ff; border-radius: 16px; padding: 20px; transition: .2s; cursor: pointer; position: relative; }
+    .file-card:hover { border-color: #3965FF; box-shadow: 0 10px 30px rgba(57,101,255,0.1); transform: translateY(-4px); }
+    .fc-icon { font-size: 40px; margin-bottom: 16px; text-align: center; }
+    .fc-icon.folder { color: #FFB547; }
+    .fc-icon.pdf { color: #EE5D50; }
+    .fc-icon.img { color: #05CD99; }
+    .fc-icon.doc { color: #3965FF; }
+    .fc-name { font-size: 14px; font-weight: 700; color: #2b3674; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+    .fc-meta { font-size: 11px; color: #a3aed1; text-align: center; }
+
+    .fm-empty { padding: 60px; text-align: center; color: #a3aed1; }
+    .fm-empty i { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+
+    /* ── Modals ── */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(43,54,116,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-box { background: #fff; border-radius: 20px; padding: 28px; width: 600px; max-width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #a3aed1; cursor: pointer; border: none; background: none; }
+    .modal-title { font-size: 20px; font-weight: 800; color: #2b3674; margin-bottom: 20px; }
+    
+    .preview-content { padding: 20px; background: #f8fafc; border-radius: 12px; margin-bottom: 20px; text-align: center; border: 1px solid #e2e8f0; }
+    .preview-info { font-size: 13px; color: #5d6d8a; margin-bottom: 20px; line-height: 1.5; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 12px; }
+    
+    .btn-ghost { padding: 10px 20px; border-radius: 12px; font-weight: 600; color: #2b3674; background: #f4f7fe; border: none; cursor: pointer; }
+    .btn-action { padding: 10px 20px; border-radius: 12px; font-weight: 600; color: #fff; background: #3965FF; border: none; cursor: pointer; }
+
+    @media (max-width: 900px) { .fm-layout { flex-direction: column; } .fm-sidebar { width: 100%; } .fm-stats-row { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-folder-open" style="color:#3965FF;margin-right:8px;"></i>Files & Documents</h1>
+          <p>Access your shared documents, resources, and policies safely.</p>
+        </div>
+        <div class="header-actions">
+          <div class="fm-search-box">
+            <i class="fa fa-search"></i>
+            <input type="text" id="fmSearch" placeholder="Search files..." class="fm-search-input"/>
+          </div>
+          <div class="view-toggles">
+            <button class="fvt-btn active" id="btnGridView" title="Grid View"><i class="fa fa-th-large"></i></button>
+            <button class="fvt-btn" id="btnListView" title="List View"><i class="fa fa-list"></i></button>
+          </div>
+          <button class="btn-upload" id="btnUpload"><i class="fa fa-cloud-upload-alt"></i> Upload Files</button>
+          <input type="file" id="fmFileInput" multiple style="display:none"/>
+        </div>
+      </div>
+
+      <div class="fm-stats-row" id="fmStatsRow">
+        <div class="fm-stat"><div class="fms-val" id="statFiles">—</div><div class="fms-label">Total Files</div></div>
+        <div class="fm-stat"><div class="fms-val" id="statSize">—</div><div class="fms-label">Storage Used</div></div>
+        <div class="fm-stat"><div class="fms-val" id="statFolders">—</div><div class="fms-label">Folders</div></div>
+        <div class="fm-stat"><div class="fms-val" id="statShared">—</div><div class="fms-label">Shared Files</div></div>
+      </div>
+
+      <div class="fm-breadcrumb" id="fmBreadcrumb">
+        <span><i class="fa fa-home"></i> Home</span>
+      </div>
+
+      <div class="fm-layout">
+        
+        <div class="fm-sidebar">
+          <h3>Quick Access</h3>
+          <div class="fm-tree" id="fmTree">
+            <div class="tree-item active" onclick="navigateTo('')"><i class="fa fa-folder"></i> My Files</div>
+            <div class="tree-item" onclick="navigateTo('Team Shared')"><i class="fa fa-users"></i> Team Shared</div>
+            <div class="tree-item" onclick="navigateTo('Company Policies')"><i class="fa fa-building"></i> Company Policies</div>
+            <div class="tree-item" onclick="navigateTo('Starred')"><i class="fa fa-star"></i> Starred</div>
+            <div class="tree-item" onclick="navigateTo('Trash')"><i class="fa fa-trash"></i> Trash</div>
+          </div>
+        </div>
+
+        <div class="fm-main-area">
+          <div class="fm-drop-overlay" id="fmDropOverlay" style="display:none">
+            <i class="fa fa-cloud-upload-alt" style="font-size:64px;margin-bottom:16px;"></i>
+            <span class="fdo-text">Drop files here to upload</span>
+          </div>
+
+          <div class="fm-file-grid" id="fmGrid">
+            <!-- Rendered via JS -->
+            <div style="grid-column:1/-1;text-align:center;padding:40px;color:#a3aed1;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+          </div>
+
+          <div class="fm-empty" id="fmEmpty" style="display:none">
+            <i class="fa fa-folder-open"></i>
+            <h3>This folder is empty</h3>
+            <p>Upload files or drag and drop them here.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="previewModal" style="display:none">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('previewModal').style.display='none'"><i class="fa fa-times"></i></button>
+    <div class="modal-title" id="previewTitle">File Preview</div>
+    <div class="preview-content" id="previewContent"></div>
+    <div class="preview-info" id="previewInfo"></div>
+    <div class="modal-footer" id="previewActions"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="versionModal" style="display:none">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('versionModal').style.display='none'"><i class="fa fa-times"></i></button>
+    <div class="modal-title">Version History</div>
+    <div id="versionContent" style="margin-top:20px;"></div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/files/app.js"></script>
+</body>
+</html>

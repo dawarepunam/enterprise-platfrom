@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <!-- FullCalendar CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- FullCalendar JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.js" integrity="sha512-..." crossorigin="anonymous"></script>
+
+  <style>
+    .cal-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
+      min-height: calc(100vh - 160px);
+    }
+
+    .cal-sidebar {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 20px;
+      box-shadow: var(--pm-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cal-sidebar-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--pm-text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .cal-main {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      padding: 20px;
+      box-shadow: var(--pm-shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* FullCalendar Overrides for Premium Look */
+    .fc-theme-standard td, .fc-theme-standard th, .fc-theme-standard .fc-scrollgrid {
+      border-color: var(--pm-border) !important;
+    }
+    .fc .fc-toolbar-title {
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      color: var(--pm-text);
+    }
+    .fc .fc-button-primary {
+      background: #fff !important;
+      border: 1px solid var(--pm-border) !important;
+      color: var(--pm-text) !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+      text-transform: capitalize;
+    }
+    .fc .fc-button-primary:hover {
+      background: var(--pm-bg) !important;
+      border-color: var(--pm-text-muted) !important;
+    }
+    .fc .fc-button-primary:not(:disabled).fc-button-active,
+    .fc .fc-button-primary:not(:disabled):active {
+      background: var(--pm-accent-light) !important;
+      color: var(--pm-accent) !important;
+      border-color: var(--pm-accent) !important;
+    }
+    .fc-event {
+      border-radius: 4px !important;
+      border: none !important;
+      padding: 2px 4px;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .fc-event:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    .fc-daygrid-day-number {
+      font-weight: 500;
+      color: var(--pm-text);
+    }
+    .fc-daygrid-day.fc-day-today {
+      background-color: var(--pm-accent-light) !important;
+    }
+    .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+      color: var(--pm-accent);
+      font-weight: 700;
+    }
+
+    /* Filters */
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--pm-text);
+      cursor: pointer;
+    }
+    .filter-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    /* Modal */
+    .pm-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .pm-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .pm-modal {
+      background: #fff; width: 450px; max-width: 90%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transform: translateY(20px); transition: transform .3s ease; padding: 24px;
+    }
+    .pm-modal-overlay.active .pm-modal { transform: translateY(0); }
+    .pm-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .pm-modal-title { font-size: 16px; font-weight: 700; color: var(--pm-text); display: flex; align-items: center; gap: 8px; }
+    .pm-modal-close { cursor: pointer; color: var(--pm-text-muted); font-size: 18px; }
+    
+    .pm-form-group { margin-bottom: 16px; }
+    .pm-form-label { display: block; font-size: 12px; font-weight: 600; color: var(--pm-text-muted); margin-bottom: 6px; }
+    .pm-form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--pm-border); border-radius: 6px; font-size: 13px; transition: border-color .2s; }
+    .pm-form-input:focus { border-color: var(--pm-accent); outline: none; box-shadow: 0 0 0 3px var(--pm-accent-light); }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Calendar</span>
+          </div>
+          <h2 class="pm-page-title">Calendar</h2>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button id="addEventBtn" class="pm-btn pm-btn-primary" onclick="openEventModal()"><i class="fa-solid fa-plus"></i> New Event</button>
+        </div>
+      </div>
+      
+      <div class="cal-layout">
+        <!-- Sidebar -->
+        <div class="cal-sidebar">
+          <div>
+            <div class="cal-sidebar-section-title">Mini Calendar</div>
+            <div id="mini-calendar" style="font-size: 10px;"></div>
+          </div>
+          <hr style="border:0; border-top: 1px solid var(--pm-border); margin: 0;"/>
+          <div>
+            <div class="cal-sidebar-section-title">Event Types</div>
+            <label class="filter-item"><input type="checkbox" checked><div class="filter-color" style="background: #3b82f6;"></div> Meetings</label>
+            <label class="filter-item"><input type="checkbox" checked><div class="filter-color" style="background: #22c55e;"></div> Deadlines</label>
+            <label class="filter-item"><input type="checkbox" checked><div class="filter-color" style="background: #a855f7;"></div> Milestones</label>
+            <label class="filter-item"><input type="checkbox" checked><div class="filter-color" style="background: #f59e0b;"></div> Reminders</label>
+          </div>
+        </div>
+        
+        <!-- Main Calendar -->
+        <div class="cal-main">
+          <div id="calendar" style="height: 100%;"></div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+</div>
+
+<!-- Add Event Modal -->
+<div class="pm-modal-overlay" id="eventModalOverlay">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-calendar-plus" style="color:var(--pm-accent)"></i> Schedule Event</div>
+      <div class="pm-modal-close" onclick="closeEventModal()"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="eventForm">
+      <div class="pm-form-group">
+        <label class="pm-form-label">Event Title</label>
+        <input type="text" class="pm-form-input" id="evTitle" required placeholder="e.g. Q3 Planning Meeting">
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Event Type</label>
+        <select class="pm-form-input" id="evType">
+          <option value="Meeting">Meeting (Blue)</option>
+          <option value="Deadline">Deadline (Green)</option>
+          <option value="Milestone">Milestone (Purple)</option>
+          <option value="Reminder">Reminder (Orange)</option>
+        </select>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="pm-form-group">
+          <label class="pm-form-label">Start Date & Time</label>
+          <input type="datetime-local" class="pm-form-input" id="evStart" required>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">End Date & Time</label>
+          <input type="datetime-local" class="pm-form-input" id="evEnd" required>
+        </div>
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Description / Link</label>
+        <textarea class="pm-form-input" id="evDesc" rows="3" placeholder="Meeting agenda or Zoom link..."></textarea>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px;">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeEventModal()">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary">Save Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let mainCalendar;
+  let miniCalendar;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const miniCalendarEl = document.getElementById('mini-calendar');
+
+    mainCalendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      selectable: true,
+      select: function(info) {
+        document.getElementById('evStart').value = info.startStr + "T09:00";
+        document.getElementById('evEnd').value = info.startStr + "T10:00";
+        openEventModal();
+      },
+      eventClick: function(info) {
+        alert("Event: " + info.event.title);
+      },
+      events: async function(fetchInfo, successCallback, failureCallback) {
+        try {
+          // Wrap API call in shell's auth
+          const headers = { 'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}` };
+          const res = await fetch('/api/calendar?start=' + fetchInfo.startStr + '&end=' + fetchInfo.endStr, { headers });
+          if(!res.ok) throw new Error("API failed");
+          const data = await res.json();
+          successCallback(data.data || []);
+        } catch (e) { 
+          console.warn("Using placeholder events since API failed or returned 404");
+          // Placeholder events for mockup
+          successCallback([
+            { title: 'Sprint Planning', start: new Date().toISOString().split('T')[0] + 'T10:00:00', end: new Date().toISOString().split('T')[0] + 'T11:30:00', backgroundColor: '#3b82f6' },
+            { title: 'Beta Release', start: new Date(new Date().setDate(new Date().getDate() + 2)).toISOString().split('T')[0], backgroundColor: '#a855f7', allDay: true },
+            { title: 'Project Deadline', start: new Date(new Date().setDate(new Date().getDate() + 5)).toISOString().split('T')[0], backgroundColor: '#22c55e', allDay: true }
+          ]);
+        }
+      }
+    });
+
+    miniCalendar = new FullCalendar.Calendar(miniCalendarEl, {
+      initialView: 'dayGridMonth',
+      headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+      height: 250,
+      selectable: true,
+      dateClick: function(info) {
+        mainCalendar.gotoDate(info.date);
+      }
+    });
+
+    mainCalendar.render();
+    miniCalendar.render();
+
+    // Form Submits
+    document.getElementById('eventForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      const typeColors = {
+        'Meeting': '#3b82f6',
+        'Deadline': '#22c55e',
+        'Milestone': '#a855f7',
+        'Reminder': '#f59e0b'
+      };
+
+      const payload = {
+        title: document.getElementById('evTitle').value,
+        type: document.getElementById('evType').value,
+        start: document.getElementById('evStart').value,
+        end: document.getElementById('evEnd').value,
+        description: document.getElementById('evDesc').value,
+        backgroundColor: typeColors[document.getElementById('evType').value]
+      };
+
+      try {
+        const headers = { 
+          'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}`,
+          'Content-Type': 'application/json'
+        };
+        await fetch('/api/calendar', { method: 'POST', headers, body: JSON.stringify(payload) });
+      } catch (err) {
+        // If API doesn't exist yet, we just add it to UI locally for demonstration
+      }
+      
+      mainCalendar.addEvent(payload);
+      closeEventModal();
+      e.target.reset();
+    });
+  });
+
+  function openEventModal() {
+    document.getElementById('eventModalOverlay').classList.add('active');
+  }
+  
+  function closeEventModal() {
+    document.getElementById('eventModalOverlay').classList.remove('active');
+  }
+</script>
+</body>
+</html>

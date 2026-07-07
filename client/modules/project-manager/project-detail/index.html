@@ -1,0 +1,1245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Details – Project Manager | JMKC CRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+    <style>
+        .pm-tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid var(--pm-border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 0;
+            background: var(--pm-card);
+            border-radius: var(--pm-radius) var(--pm-radius) 0 0;
+            padding: 0 8px;
+        }
+        
+        .pm-tab {
+            padding: 14px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--pm-text-muted);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: var(--pm-transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .pm-tab:hover {
+            color: var(--pm-accent);
+        }
+        
+        .pm-tab.active {
+            color: var(--pm-accent);
+            border-bottom-color: var(--pm-accent);
+            background: var(--pm-accent-light);
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp .3s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pd-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .pd-overview-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .pd-overview-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--pm-border);
+        }
+        
+        .pd-overview-item:last-child {
+            border-bottom: none;
+        }
+        
+        .pd-overview-item span:first-child {
+            color: var(--pm-text-muted);
+        }
+        
+        .pd-overview-item span:last-child {
+            font-weight: 600;
+        }
+        /* Team Grid */
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .team-card {
+            background: var(--pm-card);
+            border: 1px solid var(--pm-border);
+            border-radius: var(--pm-radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            cursor: pointer;
+            transition: var(--pm-transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--pm-accent);
+        }
+        
+        .team-card:hover {
+            border-color: var(--pm-accent);
+            transform: translateY(-3px);
+            box-shadow: var(--pm-shadow);
+        }
+        
+        .team-card-header {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        
+        .team-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pm-accent), #6366f1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .team-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .team-role {
+            font-size: 11px;
+            color: var(--pm-text-muted);
+        }
+        
+        .team-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            background: var(--pm-bg);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .team-metric {
+            text-align: center;
+        }
+        
+        .team-metric-val {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--pm-accent);
+        }
+        
+        .team-metric-lbl {
+            font-size: 9.5px;
+            color: var(--pm-text-muted);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-top: 2px;
+        }
+        
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            display: inline-block;
+            margin-right: 4px;
+        }
+        /* Task table */
+        
+        .task-row-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--pm-border);
+        }
+        
+        .task-row-mini:last-child {
+            border: none;
+        }
+        
+        .task-row-title {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .task-row-assignee {
+            font-size: 11px;
+            color: var(--pm-text-muted);
+            min-width: 80px;
+        }
+        /* File list */
+        
+        .file-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--pm-border);
+        }
+        
+        .file-row:last-child {
+            border: none;
+        }
+        
+        .file-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: var(--pm-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .file-meta {
+            font-size: 11px;
+            color: var(--pm-text-muted);
+        }
+        /* Progress bar inline */
+        
+        .mini-progress {
+            height: 5px;
+            background: var(--pm-border);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        
+        .mini-progress-bar {
+            height: 100%;
+            background: var(--pm-accent);
+            border-radius: 99px;
+            transition: width .6s ease;
+        }
+        
+        @media (max-width: 900px) {
+            .pd-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="pm-shell">
+      <div id="pm-sidebar-root"></div>
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div id="pm-header-root"></div>
+
+        <main class="pm-main">
+          <div class="pm-page-header">
+            <div>
+              <div class="pm-breadcrumb">
+                <a href="/project-manager/dashboard"><i class="fa fa-home"></i>
+                  Dashboard</a>
+                <i class="fa fa-chevron-right"></i>
+                <a href="/project-manager/projects">Projects</a>
+                <i class="fa fa-chevron-right"></i>
+                <span id="bc-proj-name">Loading...</span>
+              </div>
+              <h1 class="pm-page-title" id="page-proj-name">Loading...</h1>
+              <div class="pm-page-subtitle" id="page-proj-client">Client:
+                —</div>
+            </div>
+            <div class="flex gap-8">
+              <button class="pm-btn pm-btn-outline pm-btn-sm"
+                onclick="history.back()">
+                <i class="fa fa-arrow-left"></i> Back
+              </button>
+              <button class="pm-btn pm-btn-outline pm-btn-sm"
+                onclick="window.location='/project-manager/tasks?project='+currentProjectId">
+                <i class="fa fa-tasks"></i> All Tasks
+              </button>
+              <button class="pm-btn pm-btn-primary pm-btn-sm"
+                onclick="openAddMemberModal()">
+                <i class="fa fa-user-plus"></i> Add Member
+              </button>
+            </div>
+          </div>
+
+          <!-- Top KPI Cards -->
+          <div class="pm-kpi-grid" style="margin-bottom:24px">
+            <div class="pm-kpi-card blue">
+              <div class="pm-kpi-icon"><i class="fa fa-chart-line"></i></div>
+              <div class="pm-kpi-value" id="kpi-progress">0%</div>
+              <div class="pm-kpi-label">Progress</div>
+            </div>
+            <div class="pm-kpi-card green">
+              <div class="pm-kpi-icon"><i class="fa fa-check-circle"></i></div>
+              <div class="pm-kpi-value" id="kpi-completed-tasks">0</div>
+              <div class="pm-kpi-label">Completed Tasks</div>
+            </div>
+            <div class="pm-kpi-card orange">
+              <div class="pm-kpi-icon"><i class="fa fa-clock"></i></div>
+              <div class="pm-kpi-value" id="kpi-pending-tasks">0</div>
+              <div class="pm-kpi-label">Pending Tasks</div>
+            </div>
+            <div class="pm-kpi-card purple">
+              <div class="pm-kpi-icon"><i class="fa fa-users"></i></div>
+              <div class="pm-kpi-value" id="kpi-members">0</div>
+              <div class="pm-kpi-label">Team Members</div>
+            </div>
+            <div class="pm-kpi-card yellow">
+              <div class="pm-kpi-icon"><i class="fa fa-rupee-sign"></i></div>
+              <div class="pm-kpi-value" id="kpi-budget">₹0</div>
+              <div class="pm-kpi-label">Budget</div>
+            </div>
+            <div class="pm-kpi-card red">
+              <div class="pm-kpi-icon"><i class="fa fa-folder-open"></i></div>
+              <div class="pm-kpi-value" id="kpi-files">0</div>
+              <div class="pm-kpi-label">Files</div>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="pm-tabs">
+            <div class="pm-tab active" onclick="switchTab('overview')"
+              id="tab-btn-overview"><i class="fa fa-info-circle"></i>
+              Overview</div>
+            <div class="pm-tab" onclick="switchTab('team')" id="tab-btn-team"><i
+                class="fa fa-users"></i> Team</div>
+            <div class="pm-tab" onclick="switchTab('tasks')"
+              id="tab-btn-tasks"><i class="fa fa-tasks"></i> Tasks</div>
+            <div class="pm-tab" onclick="switchTab('files')"
+              id="tab-btn-files"><i class="fa fa-folder-open"></i> Files &
+              Docs</div>
+            <div class="pm-tab" onclick="switchTab('attendance')"
+              id="tab-btn-attendance"><i class="fa fa-clock"></i>
+              Attendance</div>
+            <div class="pm-tab" onclick="switchTab('leave')"
+              id="tab-btn-leave"><i class="fa fa-calendar-minus"></i>
+              Leave</div>
+            <div class="pm-tab" onclick="switchTab('updates')"
+              id="tab-btn-updates"><i class="fa fa-clipboard-list"></i> Daily
+              Updates</div>
+            <div class="pm-tab" onclick="switchTab('timeline')"
+              id="tab-btn-timeline"><i class="fa fa-stream"></i> Timeline</div>
+          </div>
+
+          <!-- Tab: Overview -->
+          <div id="tab-overview" class="tab-content active">
+            <div class="pd-grid">
+              <div class="pm-card">
+                <div class="pm-card-header">
+                  <div class="pm-card-title"><i class="fa fa-info-circle"
+                      style="color:var(--pm-accent)"></i> Project Details</div>
+                </div>
+                <div class="pd-overview-list">
+                  <div class="pd-overview-item"><span>Project Name</span><span
+                      id="ov-name">—</span></div>
+                  <div class="pd-overview-item"><span>Client Name</span><span
+                      id="ov-client">—</span></div>
+                  <div class="pd-overview-item"><span>Department</span><span
+                      id="ov-dept">—</span></div>
+                  <div class="pd-overview-item"><span>Priority</span><span
+                      id="ov-prio"><span
+                        class="pm-badge neutral">—</span></span>
+                  </div>
+                  <div class="pd-overview-item"><span>Status</span><span
+                      id="ov-status"><span
+                        class="pm-badge neutral">—</span></span>
+                  </div>
+                  <div class="pd-overview-item"><span>Assigned By</span><span
+                      id="ov-assigned-by">—</span></div>
+                  <div class="pd-overview-item"><span>Start Date</span><span
+                      id="ov-date">—</span></div>
+                  <div class="pd-overview-item"><span>Deadline</span><span
+                      id="ov-deadline">—</span></div>
+                  <div class="pd-overview-item"><span>Budget</span><span
+                      id="ov-budget">—</span></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:16px">
+                <div class="pm-card">
+                  <div class="pm-card-header">
+                    <div class="pm-card-title"><i class="fa fa-align-left"
+                        style="color:var(--pm-accent)"></i> Description</div>
+                  </div>
+                  <p id="ov-desc"
+                    style="font-size:13px;line-height:1.7;color:var(--pm-text-muted)">No
+                    description provided.</p>
+                </div>
+                <div class="pm-card">
+                  <div class="pm-card-header">
+                    <div class="pm-card-title"><i class="fa fa-chart-bar"
+                        style="color:var(--pm-accent)"></i> Progress</div>
+                  </div>
+                  <div
+                    style="font-size:32px;font-weight:800;color:var(--pm-accent);text-align:center;padding:8px 0"
+                    id="ov-progress-num">0%</div>
+                  <div class="mini-progress">
+                    <div class="mini-progress-bar" id="ov-progress-bar"
+                      style="width:0%"></div>
+                  </div>
+                  <div
+                    style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+                    <div
+                      style="text-align:center;background:var(--pm-bg);padding:10px;border-radius:8px">
+                      <div
+                        style="font-size:18px;font-weight:800;color:var(--green)"
+                        id="ov-completed">0</div>
+                      <div
+                        style="font-size:10px;color:var(--pm-text-muted)">Completed</div>
+                    </div>
+                    <div
+                      style="text-align:center;background:var(--pm-bg);padding:10px;border-radius:8px">
+                      <div
+                        style="font-size:18px;font-weight:800;color:var(--orange)"
+                        id="ov-pending">0</div>
+                      <div
+                        style="font-size:10px;color:var(--pm-text-muted)">Pending</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab: Team -->
+          <div id="tab-team" class="tab-content">
+            <div class="pm-card-header"
+              style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+              <div class="pm-card-title"><i class="fa fa-users"
+                  style="color:var(--pm-accent)"></i> Project Team</div>
+              <button class="pm-btn pm-btn-primary pm-btn-sm"
+                onclick="openAddMemberModal()"><i class="fa fa-user-plus"></i>
+                Add Member</button>
+            </div>
+            <div class="team-grid" id="team-list">
+              <div
+                style="grid-column:1/-1;text-align:center;padding:24px;color:var(--pm-text-muted)"><i
+                  class="fa fa-spinner fa-spin"></i> Loading team...</div>
+            </div>
+          </div>
+
+          <!-- Tab: Tasks -->
+          <div id="tab-tasks" class="tab-content">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div class="pm-card-title"><i class="fa fa-tasks"
+                  style="color:var(--pm-accent)"></i> Project Tasks</div>
+              <button class="pm-btn pm-btn-primary pm-btn-sm"
+                onclick="openCreateTaskModal()"><i class="fa fa-plus"></i> New
+                Task</button>
+            </div>
+            <!-- Filter row -->
+            <div
+              style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+              <select id="taskStatusFilter" class="pm-form-input"
+                style="max-width:150px;padding:7px 12px"
+                onchange="renderProjectTasks()">
+                <option value>All Status</option>
+                <option value="TODO">To Do</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="REVIEW">Review</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="BACKLOG">Backlog</option>
+              </select>
+              <select id="taskPrioFilter" class="pm-form-input"
+                style="max-width:150px;padding:7px 12px"
+                onchange="renderProjectTasks()">
+                <option value>All Priority</option>
+                <option value="CRITICAL">Critical</option>
+                <option value="HIGH">High</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LOW">Low</option>
+              </select>
+            </div>
+            <div class="pm-card" style="padding:0;overflow:hidden">
+              <table class="pm-table" id="project-tasks-table">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Assignee</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="project-tasks-body">
+                  <tr>
+                    <td colspan="6"
+                      style="text-align:center;padding:24px;color:var(--pm-text-muted)"><i
+                        class="fa fa-spinner fa-spin"></i> Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab: Files -->
+          <div id="tab-files" class="tab-content">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div class="pm-card-title"><i class="fa fa-folder-open"
+                  style="color:var(--pm-accent)"></i> Project Files</div>
+            </div>
+            <div class="pm-card" id="files-container">
+              <div
+                style="text-align:center;padding:24px;color:var(--pm-text-muted)"><i
+                  class="fa fa-spinner fa-spin"></i> Loading files...</div>
+            </div>
+          </div>
+
+          <!-- Tab: Attendance -->
+          <div id="tab-attendance" class="tab-content">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div class="pm-card-title"><i class="fa fa-clock"
+                  style="color:var(--pm-accent)"></i> Team Attendance</div>
+            </div>
+            <div class="pm-card" style="padding:0;overflow:hidden">
+              <table class="pm-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>In / Out</th>
+                    <th>Hours</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody id="attendance-body">
+                  <tr>
+                    <td colspan="6"
+                      style="text-align:center;padding:24px;color:var(--pm-text-muted)">No
+                      attendance records.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab: Leave -->
+          <div id="tab-leave" class="tab-content">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div class="pm-card-title"><i class="fa fa-calendar-minus"
+                  style="color:var(--pm-accent)"></i> Leave Requests</div>
+            </div>
+            <div class="pm-card" style="padding:0;overflow:hidden">
+              <table class="pm-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    <th>Type</th>
+                    <th>Dates</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="leave-body">
+                  <tr>
+                    <td colspan="5"
+                      style="text-align:center;padding:24px;color:var(--pm-text-muted)">No
+                      leave requests.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab: Daily Updates -->
+          <div id="tab-updates" class="tab-content">
+            <div
+              style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+              <div class="pm-card-title"><i class="fa fa-clipboard-list"
+                  style="color:var(--pm-accent)"></i> Daily Updates</div>
+            </div>
+            <div class="pm-card" id="updates-container">
+              <div
+                style="text-align:center;padding:24px;color:var(--pm-text-muted)">No
+                daily updates submitted yet.</div>
+            </div>
+          </div>
+
+          <!-- Tab: Timeline -->
+          <div id="tab-timeline" class="tab-content">
+            <div class="pm-card-title" style="margin-bottom:20px"><i
+                class="fa fa-stream" style="color:var(--pm-accent)"></i> Project
+              Timeline</div>
+            <div id="timeline-list" class="pm-card" style="padding:20px">
+              <div
+                style="text-align:center;padding:24px;color:var(--pm-text-muted)"><i
+                  class="fa fa-spinner fa-spin"></i> Loading timeline...</div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div class="pm-modal-overlay" id="modal-add-member">
+      <div class="pm-modal" style="max-width:480px">
+        <div class="pm-modal-header">
+          <div class="pm-modal-title"><i class="fa fa-user-plus"
+              style="color:var(--pm-accent)"></i> Add Team Member</div>
+          <div class="pm-modal-close"
+            onclick="closeModal('modal-add-member')"><i
+              class="fa fa-times"></i></div>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">Select Employee</label>
+          <select class="pm-form-input" id="addMemberSelect">
+            <option value>Loading employees...</option>
+          </select>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">Role</label>
+          <select class="pm-form-input" id="addMemberRole">
+            <option value="MEMBER">Employee</option>
+            <option value="TEAM_LEAD">Team Lead</option>
+          </select>
+        </div>
+        <div class="flex gap-8"
+          style="justify-content:flex-end;margin-top:20px">
+          <button class="pm-btn pm-btn-outline"
+            onclick="closeModal('modal-add-member')">Cancel</button>
+          <button class="pm-btn pm-btn-primary" onclick="submitAddMember()"><i
+              class="fa fa-save"></i> Add Member</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Task Modal (Project-scoped) -->
+    <div class="pm-modal-overlay" id="modal-create-task">
+      <div class="pm-modal" style="max-width:520px">
+        <div class="pm-modal-header">
+          <div class="pm-modal-title"><i class="fa fa-plus-circle"
+              style="color:var(--pm-accent)"></i> Create Task</div>
+          <div class="pm-modal-close"
+            onclick="closeModal('modal-create-task')"><i
+              class="fa fa-times"></i></div>
+        </div>
+        <form id="formCreateProjectTask" onsubmit="submitProjectTask(event)">
+          <div class="pm-form-group">
+            <label class="pm-form-label">Task Title *</label>
+            <input type="text" class="pm-form-input" name="title"
+              placeholder="Enter task title" required />
+          </div>
+          <div class="pm-form-group">
+            <label class="pm-form-label">Description</label>
+            <textarea class="pm-form-input" name="description" rows="2"
+              style="resize:vertical"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="pm-form-group">
+              <label class="pm-form-label">Assign To *</label>
+              <select class="pm-form-input" name="assigneeId"
+                id="newTaskAssignee" required>
+                <option value>Select member</option>
+              </select>
+            </div>
+            <div class="pm-form-group">
+              <label class="pm-form-label">Priority</label>
+              <select class="pm-form-input" name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="pm-form-group">
+              <label class="pm-form-label">Due Date</label>
+              <input type="date" class="pm-form-input" name="deadline" />
+            </div>
+            <div class="pm-form-group">
+              <label class="pm-form-label">Estimated Hours</label>
+              <input type="number" class="pm-form-input" name="estimatedHours"
+                placeholder="8" min="1" />
+            </div>
+          </div>
+          <div class="flex gap-8"
+            style="justify-content:flex-end;margin-top:16px">
+            <button type="button" class="pm-btn pm-btn-outline"
+              onclick="closeModal('modal-create-task')">Cancel</button>
+            <button type="submit" class="pm-btn pm-btn-primary"
+              id="createTaskSubmitBtn"><i class="fa fa-save"></i> Create
+              Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="pm-modal-overlay" id="modal-logout">
+      <div class="pm-modal" style="max-width:360px;text-align:center">
+        <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+        <h3 style="font-weight:700;margin-bottom:8px">Confirm Logout?</h3>
+        <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+          <button class="pm-btn pm-btn-outline"
+            onclick="closeModal('modal-logout')">Cancel</button>
+          <button class="pm-btn pm-btn-primary" style="background:var(--red)"
+            onclick="performLogout()"><i class="fa fa-sign-out-alt"></i>
+            Logout</button>
+        </div>
+      </div>
+    </div>
+    <div class="pm-toast-container" id="pmToastContainer"></div>
+
+    <script src="/assets/js/api.js"></script>
+    <script src="/modules/project-manager/pm-shell.js"></script>
+    <script>
+        let currentProjectId = null;
+        let projectData = null;
+        let projectTasks = [];
+        let projectTeam = [];
+        let projectFiles = [];
+        let projectAttendance = [];
+        let projectLeaves = [];
+        let projectUpdates = [];
+
+        // ── Tab switching ────────────────────────────────────────────
+        function switchTab(tabId) {
+            document.querySelectorAll('.pm-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-btn-' + tabId) ? .classList.add('active');
+            document.getElementById('tab-' + tabId) ? .classList.add('active');
+            // Lazy load tab data
+            if (tabId === 'team') renderTeam();
+            if (tabId === 'tasks') renderProjectTasks();
+            if (tabId === 'files') renderFiles();
+            if (tabId === 'attendance') renderAttendance();
+            if (tabId === 'leave') renderLeaves();
+            if (tabId === 'updates') renderUpdates();
+            if (tabId === 'timeline') renderTimeline();
+        }
+        window.switchTab = switchTab;
+
+        // ── Priority / Status helpers ────────────────────────────────
+        const prioClass = {
+            Critical: 'purple',
+            High: 'danger',
+            Medium: 'orange',
+            Low: 'success',
+            CRITICAL: 'purple',
+            HIGH: 'danger',
+            MEDIUM: 'orange',
+            LOW: 'success'
+        };
+        const statusClass = {
+            'To Do': 'neutral',
+            'In Progress': 'info',
+            Review: 'warning',
+            Completed: 'success',
+            Planning: 'neutral',
+            Pending: 'neutral',
+            TODO: 'neutral',
+            IN_PROGRESS: 'info',
+            REVIEW: 'warning',
+            COMPLETED: 'success',
+            BACKLOG: 'neutral'
+        };
+        const normalizeProjectStatus = value => ({
+            TODO: 'To Do',
+            IN_PROGRESS: 'In Progress',
+            REVIEW: 'Review',
+            COMPLETED: 'Completed',
+            BACKLOG: 'Planning'
+        })[value] || value || 'To Do';
+
+        // ── Render Team ──────────────────────────────────────────────
+        function renderTeam() {
+            const el = document.getElementById('team-list');
+            if (!el) return;
+            if (!projectTeam.length) {
+                el.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--pm-text-muted)"><i class="fa fa-users" style="font-size:32px;margin-bottom:12px;display:block;opacity:.4"></i><p>No team members assigned yet.</p><button class="pm-btn pm-btn-primary pm-btn-sm" style="margin-top:12px" onclick="openAddMemberModal()"><i class="fa fa-user-plus"></i> Add Member</button></div>';
+                return;
+            }
+            const colors = ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#06b6d4'];
+            el.innerHTML = projectTeam.map((m, i) => {
+                        const initials = (m.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                        const color = colors[i % colors.length];
+                        const perfScore = m.performanceScore || (m.assignedTasks ? Math.round((m.completedTasks || 0) / m.assignedTasks * 100) : 0);
+                        const online = (m.onlineStatus || m.status || '').toUpperCase() !== 'OFFLINE';
+                        return `<div class="team-card" onclick="window.location='/project-manager/employee-profile?id=${m._id}'">
+      <div class="team-card-header">
+        <div class="team-avatar" style="background:${color}">${m.profilePhoto ? `<img src="${m.profilePhoto}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">` : initials}</div>
+        <div>
+          <div class="team-name">${m.name || 'Unknown'}</div>
+          <div class="team-role"><span class="online-dot" style="background:${online?'var(--green)':'#94a3b8'}"></span>${m.designation || m.role || 'Member'} ${m.department ? '· '+m.department : ''}</div>
+          <div style="font-size:10.5px;color:var(--pm-text-muted);margin-top:2px">${m.email||''}</div>
+        </div>
+      </div>
+      <div class="team-metrics">
+        <div class="team-metric"><div class="team-metric-val">${m.assignedTasks||0}</div><div class="team-metric-lbl">Tasks</div></div>
+        <div class="team-metric"><div class="team-metric-val">${m.completedTasks||0}</div><div class="team-metric-lbl">Done</div></div>
+        <div class="team-metric"><div class="team-metric-val" style="color:${perfScore>=70?'var(--green)':perfScore>=40?'var(--orange)':'var(--red)'}">${perfScore}%</div><div class="team-metric-lbl">Perf</div></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:2px">
+        <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="event.stopPropagation();window.location='/project-manager/employee-profile?id=${m._id}'"><i class="fa fa-eye"></i> Profile</button>
+        <button class="pm-btn pm-btn-outline pm-btn-sm" style="color:var(--red);border-color:var(--red)" onclick="event.stopPropagation();removeMember('${m._id}')"><i class="fa fa-user-minus"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Render Tasks ─────────────────────────────────────────────
+function renderProjectTasks() {
+  const tbody = document.getElementById('project-tasks-body'); if (!tbody) return;
+  const statusF = document.getElementById('taskStatusFilter')?.value || '';
+  const prioF   = document.getElementById('taskPrioFilter')?.value || '';
+  let tasks = projectTasks;
+  if (statusF) tasks = tasks.filter(t => normalizeProjectStatus(statusF) === t.status || statusF === t.status);
+  if (prioF) tasks = tasks.filter(t => String(t.priority||'').toUpperCase() === prioF);
+
+  if (!tasks.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="pm-empty-state"><i class="fa fa-tasks"></i><p>No tasks found.</p><button class="pm-btn pm-btn-primary pm-btn-sm" style="margin-top:12px" onclick="openCreateTaskModal()"><i class="fa fa-plus"></i> Add Task</button></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = tasks.map(t => {
+    const assignee = t.assignedTo?.name || t.assignee || t.assigneeName || '—';
+    const due = t.deadline ? new Date(t.deadline).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'}) : '—';
+    const overdue = t.deadline && t.status !== 'COMPLETED' && new Date(t.deadline) < new Date();
+    return `<tr style="cursor:pointer" onclick="window.location='/project-manager/tasks/${t._id}'">
+      <td><strong>${t.title||'—'}</strong><div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">${t.description?.slice(0,60)||''}</div></td>
+      <td><span style="font-size:12px">${assignee}</span></td>
+      <td><span class="pm-badge ${prioClass[t.priority]||'neutral'}" style="font-size:10px">${t.priority||'—'}</span></td>
+      <td><span class="pm-badge ${statusClass[t.status]||'neutral'}" style="font-size:10px">${(t.status||'—').replace('_',' ')}</span></td>
+      <td><span style="font-size:12px;color:${overdue?'var(--red)':'inherit'}">${overdue?'⚠️ ':''}${due}</span></td>
+      <td>
+        <button class="pm-btn pm-btn-outline pm-btn-sm" onclick="event.stopPropagation();window.location='/project-manager/tasks/${t._id}'"><i class="fa fa-eye"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+window.renderProjectTasks = renderProjectTasks;
+
+// ── Render Files ─────────────────────────────────────────────
+function renderFiles() {
+  const el = document.getElementById('files-container'); if (!el) return;
+  if (!projectFiles.length) {
+    el.innerHTML = '<div class="pm-empty-state"><i class="fa fa-folder-open"></i><p>No files or documents uploaded yet.</p></div>';
+    return;
+  }
+  const icons = { 'application/pdf':'📄', 'image/':'🖼️', 'video/':'🎬', 'application/vnd':'📊' };
+  el.innerHTML = '<div style="padding:4px 0">' + projectFiles.map(f => {
+    const icon = Object.entries(icons).find(([k]) => (f.mimeType||f.fileType||'').startsWith(k))?.[1] || '📁';
+    const uploadedBy = f.uploadedBy?.name || f.uploaderName || 'Unknown';
+    const date = f.createdAt ? new Date(f.createdAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : '—';
+    return `<div class="file-row">
+      <div class="file-icon">${icon}</div>
+      <div class="file-info">
+        <div class="file-name">${f.name||f.title||f.filename||'Unnamed file'}</div>
+        <div class="file-meta">${uploadedBy} • ${date} ${(f.size||f.fileSize) ? '• '+Math.round((f.size||f.fileSize)/1024)+'KB' : ''}</div>
+      </div>
+      ${f.url||f.oneDriveUrl||f.oneDriveShareUrl||f.filePath ? `<a href="${f.url||f.oneDriveUrl||f.oneDriveShareUrl||f.filePath}" target="_blank" class="pm-btn pm-btn-outline pm-btn-sm"><i class="fa fa-download"></i></a>` : ''}
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function renderAttendance() {
+  const tbody = document.getElementById('attendance-body'); if (!tbody) return;
+  if (!projectAttendance.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--pm-text-muted)">No attendance records for this project team.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = projectAttendance.map(a => {
+    const employee = a.userName || a.employee || a.uploadedByName || 'Unknown';
+    const date = a.date || (a.createdAt ? new Date(a.createdAt).toLocaleDateString('en-IN') : '—');
+    const hours = Number(a.effectiveHours || a.totalHours || a.hours || 0);
+    const inTime = a.punchInAt ? new Date(a.punchInAt).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) : (a.checkIn || a.checkInAt || '—');
+    const outTime = a.punchOutAt ? new Date(a.punchOutAt).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) : (a.checkOut || a.checkOutAt || '—');
+    return `<tr>
+      <td><strong>${employee}</strong><div style="font-size:11px;color:var(--pm-text-muted)">${a.department||a.role||''}</div></td>
+      <td>${date}</td>
+      <td><span class="pm-badge ${String(a.status||'').toLowerCase().includes('present')?'success':'warning'}">${a.status||'—'}</span></td>
+      <td>${inTime} / ${outTime}</td>
+      <td>${hours ? hours.toFixed(1) : '0'}h</td>
+      <td>${a.note || a.remarks || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderLeaves() {
+  const tbody = document.getElementById('leave-body'); if (!tbody) return;
+  if (!projectLeaves.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--pm-text-muted)">No leave requests from this project team.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = projectLeaves.map(l => {
+    const status = String(l.status || 'Pending');
+    const badge = status.toLowerCase().includes('approved') ? 'success' : status.toLowerCase().includes('reject') ? 'danger' : 'warning';
+    return `<tr>
+      <td><strong>${l.employee || l.userName || l.name || 'Unknown'}</strong><div style="font-size:11px;color:var(--pm-text-muted)">${l.department||l.role||''}</div></td>
+      <td>${l.leaveType || l.category || 'Leave'}</td>
+      <td>${l.fromDate || '—'} ${l.toDate && l.toDate !== l.fromDate ? 'to '+l.toDate : ''}</td>
+      <td><span class="pm-badge ${badge}">${status}</span></td>
+      <td>${l.reason || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function getUpdateText(update, keys) {
+  for (const key of keys) {
+    const value = update?.[key];
+    if (typeof value === 'string' && value.trim()) return value.trim();
+    if (Array.isArray(value) && value.length) return String(value[0]).trim();
+  }
+  return '';
+}
+
+function getAttachmentItems(attachments) {
+  if (!attachments) return [];
+  if (Array.isArray(attachments)) {
+    return attachments.flatMap((item) => {
+      if (!item) return [];
+      if (typeof item === 'string') return [{ name: 'Attachment', url: item }];
+      const url = item.url || item.link || item.href || item.fileUrl || item.path || item.downloadUrl || '';
+      const name = item.name || item.filename || item.fileName || item.title || 'Attachment';
+      return url ? [{ name, url }] : [];
+    });
+  }
+  if (typeof attachments === 'string') return [{ name: 'Attachment', url: attachments }];
+  return [];
+}
+
+function getAttachmentHtml(attachments) {
+  const items = getAttachmentItems(attachments);
+  if (!items.length) return '';
+  return `<div style="margin-top:10px;padding:10px 12px;border:1px solid var(--pm-border);border-radius:10px;background:#f8fafc">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--pm-text-muted);margin-bottom:8px">Attachments</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      ${items.map(item => `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--pm-border);font-size:12px;color:var(--pm-accent);text-decoration:none"><i class="fa fa-paperclip"></i> ${escapeHtml(item.name)}</a>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderUpdates() {
+  const el = document.getElementById('updates-container'); if (!el) return;
+  if (!projectUpdates.length) {
+    el.innerHTML = '<div class="pm-empty-state"><i class="fa fa-clipboard-list"></i><p>No daily updates submitted yet.</p></div>';
+    return;
+  }
+  el.innerHTML = projectUpdates.map(u => {
+    const date = u.createdAt ? new Date(u.createdAt).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : (u.date || '—');
+    const completion = Number(u.completion || u.progress || 0);
+    const workText = getUpdateText(u, ['todayWork','work','description','summary','note']);
+    const blockersText = getUpdateText(u, ['blockers','issues','blocker']);
+    const tomorrowText = getUpdateText(u, ['tomorrowPlan','tomorrow','nextPlan']);
+    const hoursText = u.hoursWorked || u.hoursLogged || u.hours || '';
+    const statusText = u.status || 'Submitted';
+    return `<div class="file-row" style="align-items:flex-start">
+      <div class="file-icon"><i class="fa fa-clipboard-check" style="color:var(--pm-accent)"></i></div>
+      <div class="file-info" style="flex:1;min-width:0">
+        <div class="file-name">${escapeHtml(u.memberName || u.author || u.employee || u.userName || 'Team member')} ${completion ? `• ${completion}%` : ''}</div>
+        <div class="file-meta">${escapeHtml(u.taskTitle || u.taskName || u.title || 'Daily update')} • ${escapeHtml(date)} ${hoursText ? '• ' + escapeHtml(hoursText) + 'h' : ''}</div>
+        ${workText ? `<div style="font-size:12px;color:var(--pm-text);margin-top:8px;white-space:pre-wrap">${escapeHtml(workText)}</div>` : ''}
+        ${blockersText ? `<div style="font-size:12px;color:var(--red);margin-top:6px"><i class="fa fa-exclamation-triangle"></i> ${escapeHtml(blockersText)}</div>` : ''}
+        ${tomorrowText ? `<div style="font-size:12px;color:var(--pm-text-muted);margin-top:6px"><strong>Plan:</strong> ${escapeHtml(tomorrowText)}</div>` : ''}
+        ${getAttachmentHtml(u.attachments)}
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <span class="pm-badge ${statusText.toLowerCase()==='draft'?'warning':'success'}" style="font-size:10px">${escapeHtml(statusText)}</span>
+          ${u._id ? `<a href="/employee/daily-updates/detail?id=${u._id}" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:var(--pm-accent);font-weight:600;text-decoration:none"><i class="fa fa-arrow-up-right-from-square"></i> View full update</a>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Render Timeline ──────────────────────────────────────────
+function renderTimeline() {
+  const el = document.getElementById('timeline-list'); if (!el) return;
+  const items = (projectData?.timeline||[]).slice(0, 20);
+  if (!items.length) {
+    el.innerHTML = '<div class="pm-empty-state"><i class="fa fa-stream"></i><p>No timeline events yet.</p></div>';
+    return;
+  }
+  const typeColors = { 'Task Assigned':'var(--blue)', 'Team Created':'var(--purple)', 'File Uploaded':'var(--green)', 'Email Sent':'var(--orange)', 'Meeting Scheduled':'var(--pm-accent)' };
+  el.innerHTML = '<div style="position:relative;padding-left:24px">' + items.map((item, i) => {
+    const color = typeColors[item.type] || 'var(--pm-text-muted)';
+    const date = item.createdAt ? new Date(item.createdAt).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    return `<div style="position:relative;padding-bottom:16px;${i===items.length-1?'padding-bottom:0':''}">
+      <div style="position:absolute;left:-20px;width:10px;height:10px;border-radius:50%;background:${color};top:4px;box-shadow:0 0 0 3px ${color}33"></div>
+      ${i<items.length-1?`<div style="position:absolute;left:-16px;top:14px;bottom:0;width:2px;background:var(--pm-border)"></div>`:''}
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:.05em">${item.type}</div>
+          <div style="font-size:13px;font-weight:600;margin-top:2px">${item.title||'—'}</div>
+          ${item.meta ? `<div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">${item.meta}</div>` : ''}
+        </div>
+        <div style="font-size:11px;color:var(--pm-text-muted);white-space:nowrap;margin-left:12px">${date}</div>
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+// ── Add Member Modal ─────────────────────────────────────────
+async function openAddMemberModal() {
+  openModal('modal-add-member');
+  const sel = document.getElementById('addMemberSelect');
+  if (sel) sel.innerHTML = '<option value="">Loading employees...</option>';
+  try {
+    const [userRes, memberRes] = await Promise.all([
+      apiFetch('/api/users?role=MEMBER,TEAM_LEAD&status=ACTIVE&limit=500').catch(() => ({ data: [] })),
+      apiFetch('/api/manager/members?limit=500').catch(() => ({ data: [] })),
+    ]);
+    const assignedIds = new Set(projectTeam.map(m => String(m._id)));
+    const merged = [...(userRes.data || []), ...(memberRes.data || [])];
+    const byId = new Map();
+    merged.forEach(u => {
+      if (u?._id && !assignedIds.has(String(u._id))) byId.set(String(u._id), u);
+    });
+    const users = Array.from(byId.values()).sort((a,b) => String(a.name||'').localeCompare(String(b.name||'')));
+    if (sel) {
+      sel.innerHTML = users.length
+        ? '<option value="">Select employee</option>' + users.map(u => `<option value="${u._id}">${u.name} (${u.role === 'TEAM_LEAD' ? 'Team Lead' : 'Employee'})</option>`).join('')
+        : '<option value="">No available employees found</option>';
+    }
+  } catch(e) { pmToast('Failed to load employees', 'error'); }
+}
+window.openAddMemberModal = openAddMemberModal;
+
+async function submitAddMember() {
+  const userId = document.getElementById('addMemberSelect')?.value;
+  const role = document.getElementById('addMemberRole')?.value || 'MEMBER';
+  if (!userId) { pmToast('Please select an employee', 'warning'); return; }
+  try {
+    await apiFetch(`/api/manager/projects/${currentProjectId}/members`, {
+      method: 'POST',
+      body: JSON.stringify({ userId, role })
+    });
+    closeModal('modal-add-member');
+    pmToast('Member added successfully! ✅', 'success');
+    await loadProjectDetail();
+    switchTab('team');
+  } catch(e) { pmToast(e.message||'Failed to add member', 'error'); }
+}
+window.submitAddMember = submitAddMember;
+
+async function removeMember(userId) {
+  if (!confirm('Remove this member from the project?')) return;
+  try {
+    await apiFetch(`/api/manager/projects/${currentProjectId}/members/${userId}`, { method: 'DELETE' });
+    pmToast('Member removed', 'success');
+    await loadProjectDetail();
+    renderTeam();
+  } catch(e) { pmToast(e.message||'Failed', 'error'); }
+}
+window.removeMember = removeMember;
+
+// ── Create Task (project-scoped) ─────────────────────────────
+function openCreateTaskModal() {
+  // Populate assignees from team
+  const sel = document.getElementById('newTaskAssignee');
+  if (sel && projectTeam.length) {
+    sel.innerHTML = '<option value="">Select member</option>' +
+      projectTeam.map(m => `<option value="${m._id}">${m.name}</option>`).join('');
+  }
+  openModal('modal-create-task');
+}
+window.openCreateTaskModal = openCreateTaskModal;
+
+async function submitProjectTask(e) {
+  e.preventDefault();
+  const btn = document.getElementById('createTaskSubmitBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Creating...';
+  try {
+    const data = Object.fromEntries(new FormData(e.target));
+    const assignee = projectTeam.find(m => String(m._id) === String(data.assigneeId));
+    data.projectId = currentProjectId;
+    data.projectName = projectData?.projectName || projectData?.name || '';
+    data.assignee = assignee?.name || '';
+    data.assigneeEmail = assignee?.email || '';
+    data.status = 'To Do';
+    data.estimatedHours = Number(data.estimatedHours || 0);
+    await apiFetch('/api/manager/tasks', { method:'POST', body: JSON.stringify(data) });
+    closeModal('modal-create-task');
+    e.target.reset();
+    pmToast('Task created! 📋', 'success');
+    await loadProjectDetail();
+    renderProjectTasks();
+  } catch(err) { pmToast(err.message||'Failed to create task', 'error'); }
+  finally { btn.disabled = false; btn.innerHTML = '<i class="fa fa-save"></i> Create Task'; }
+}
+window.submitProjectTask = submitProjectTask;
+
+// ── Load Project Detail ──────────────────────────────────────
+async function loadProjectDetail() {
+  const pathParts = window.location.pathname.split('/');
+  currentProjectId = pathParts[pathParts.length - 1];
+  if (!currentProjectId || currentProjectId === 'project-detail') {
+    pmToast('Invalid project ID', 'error'); return;
+  }
+
+  try {
+    // Try manager API first for enriched data
+    let p, tasks = [], team = [], files = [];
+    try {
+      const mRes = await apiFetch('/api/manager/projects/' + currentProjectId);
+      p = mRes.data || mRes;
+      tasks = p.tasks || [];
+      team  = p.teamMembers || [];
+      files = [...(p.files || []), ...(p.documents || [])];
+    } catch {
+      // Fallback to projects API
+      const pRes = await apiFetch('/api/projects/' + currentProjectId);
+      p = pRes.data || pRes;
+      // Load tasks separately
+      const tRes = await apiFetch('/api/manager/tasks?projectId=' + currentProjectId + '&size=200').catch(() => apiFetch('/api/tasks?projectId=' + currentProjectId + '&size=200')).catch(() => ({ data:[] }));
+      tasks = tRes.data || [];
+    }
+
+    if (!team.length) {
+      const memberIds = (p.teamMemberIds || []).map(item => String(item?._id || item)).filter(Boolean);
+      const memberNames = (p.teamMembers || []).map(item => String(item?.name || item)).filter(Boolean);
+      const memberRes = await apiFetch('/api/manager/members?size=500').catch(() => ({ data: [] }));
+      team = (memberRes.data || []).filter(member => memberIds.includes(String(member._id)) || memberNames.includes(member.name));
+    }
+    const extraFiles = await apiFetch('/api/manager/files/' + currentProjectId).catch(() => ({ data: { files: [] } }));
+    const managerFiles = Array.isArray(extraFiles.data?.files) ? extraFiles.data.files : [];
+    files = [...files, ...managerFiles].filter((file, idx, arr) => arr.findIndex(item => String(item._id || item.url || item.filePath) === String(file._id || file.url || file.filePath)) === idx);
+    if (!p.dailyUpdates?.length) {
+      const updateRes = await apiFetch('/api/manager/daily-updates?projectId=' + currentProjectId).catch(() => ({ data: [] }));
+      p.dailyUpdates = (updateRes.data || []).filter(update => String(update.projectId || '') === String(currentProjectId) || String(update.projectName || '') === String(p.projectName || p.name || ''));
+    }
+
+    projectData = p;
+    projectTasks = tasks;
+    projectTeam  = team;
+    projectFiles = files;
+    projectAttendance = p.attendance || [];
+    projectLeaves = p.leaves || [];
+    projectUpdates = p.dailyUpdates || [];
+
+    // ── Update KPIs ──────────────────────────────────────────
+    const pName = p.projectName || p.name || 'Unnamed Project';
+    document.getElementById('page-proj-name').textContent = pName;
+    document.getElementById('bc-proj-name').textContent   = pName;
+    document.getElementById('page-proj-client').textContent = 'Client: ' + (p.clientName||p.client||'Internal');
+    document.title = pName + ' – Project Manager | JMKC CRM';
+
+    const progress = Math.round(p.progress || p.completionRate || 0);
+    document.getElementById('kpi-progress').textContent         = progress + '%';
+    document.getElementById('kpi-budget').textContent           = p.budget ? '₹' + Number(p.budget).toLocaleString('en-IN') : '₹0';
+    document.getElementById('kpi-files').textContent            = (p.filesCount !== undefined ? p.filesCount : files.length) || 0;
+    document.getElementById('kpi-members').textContent          = (p.teamSize !== undefined ? p.teamSize : team.length) || 0;
+
+    const completedTasks = tasks.filter(t => ['Completed','COMPLETED','Approved'].includes(t.status)).length;
+    const pendingTasks   = tasks.filter(t => !['Completed','COMPLETED','Approved'].includes(t.status)).length;
+    document.getElementById('kpi-completed-tasks').textContent  = completedTasks;
+    document.getElementById('kpi-pending-tasks').textContent    = pendingTasks;
+
+    // ── Overview ─────────────────────────────────────────────
+    document.getElementById('ov-name').textContent      = pName;
+    document.getElementById('ov-client').textContent    = p.clientName||p.client||'—';
+    document.getElementById('ov-dept').textContent      = p.department||'—';
+    document.getElementById('ov-assigned-by').textContent = p.assignedBy?.name || p.managerName || p.manager || 'Admin';
+    document.getElementById('ov-date').textContent      = p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-IN') : '—';
+    document.getElementById('ov-deadline').textContent  = p.deadline  ? new Date(p.deadline).toLocaleDateString('en-IN')  : '—';
+    document.getElementById('ov-budget').textContent    = p.budget ? '₹'+Number(p.budget).toLocaleString('en-IN') : '—';
+    document.getElementById('ov-desc').textContent      = p.description || 'No description available.';
+    document.getElementById('ov-progress-num').textContent = progress + '%';
+    document.getElementById('ov-progress-bar').style.width = progress + '%';
+    document.getElementById('ov-completed').textContent = completedTasks;
+    document.getElementById('ov-pending').textContent   = pendingTasks;
+
+    const prioColorMap = { HIGH:'danger', CRITICAL:'purple', MEDIUM:'orange', LOW:'success' };
+    const statusColorMap = { Active:'success', Completed:'success', 'On Hold':'warning', Planning:'info', Cancelled:'danger', Assigned:'info' };
+    document.getElementById('ov-prio').innerHTML   = `<span class="pm-badge ${prioColorMap[p.priority]||'neutral'}">${p.priority||'—'}</span>`;
+    document.getElementById('ov-status').innerHTML = `<span class="pm-badge ${statusColorMap[p.status]||'neutral'}">${p.status||'—'}</span>`;
+
+  } catch(e) {
+    console.error(e);
+    pmToast('Failed to load project details: ' + e.message, 'error');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadProjectDetail().then(() => {
+    renderTeam(); // Render default team on overview
+  });
+});
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning & Training - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <style>
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .course-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-gray);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
+        }
+        .course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary-blue); }
+        .course-img { height: 140px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #fff; }
+        .course-content { padding: 20px; }
+        .course-title { font-size: 1.1rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 8px; }
+        .course-meta { font-size: .85rem; color: var(--text-gray); display: flex; gap: 12px; margin-bottom: 16px; }
+        
+        .enrollment-stats { background: var(--bg-color); border-radius: var(--radius-md); padding: 12px; display: flex; justify-content: space-between; font-size: .85rem; margin-bottom: 16px; }
+        .stat-col { text-align: center; }
+        .stat-col .val { font-size: 1.1rem; font-weight: 700; color: var(--dark-navy); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span>People</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-calendar-check"></i><span>Workforce</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-briefcase"></i><span>Recruitment</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active"><i class="fa-solid fa-bullseye"></i><span>Talent</span><i class="fa-solid fa-chevron-up chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="goals.html" class="submenu-item">Goals & OKRs</a>
+                            <a href="appraisals.html" class="submenu-item">Appraisals</a>
+                            <a href="training.html" class="submenu-item active">Learning & Training</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding:4px 10px;font-size:.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Talent</span> > Learning</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Corporate Training Catalog</h1>
+                <button class="btn btn-primary" onclick="openModal('addCourseModal')"><i class="fa-solid fa-plus"></i> Add Course</button>
+            </div>
+
+            <!-- Course Grid -->
+            <div class="course-grid">
+                <!-- Course 1 -->
+                <div class="course-card">
+                    <div class="course-img" style="background: linear-gradient(135deg, #fca5a5, #ef4444);"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="course-content">
+                        <span class="badge badge-danger" style="margin-bottom:8px; display:inline-block;">Mandatory</span>
+                        <div class="course-title">POSH Compliance 2026</div>
+                        <div class="course-meta">
+                            <span><i class="fa-solid fa-clock"></i> 2 Hours</span>
+                            <span><i class="fa-solid fa-laptop"></i> Online</span>
+                        </div>
+                        <div class="enrollment-stats">
+                            <div class="stat-col"><div class="val">145</div>Enrolled</div>
+                            <div class="stat-col"><div class="val" style="color:var(--success-green)">120</div>Completed</div>
+                            <div class="stat-col"><div class="val" style="color:var(--danger-red)">25</div>Pending</div>
+                        </div>
+                        <button class="btn btn-outline" style="width:100%;" onclick="showToast('Reminder emails sent to 25 pending employees.','info')"><i class="fa-solid fa-bell"></i> Nudge Pending</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card">
+                    <div class="course-img" style="background: linear-gradient(135deg, #93c5fd, #3b82f6);"><i class="fa-solid fa-code"></i></div>
+                    <div class="course-content">
+                        <span class="badge badge-primary" style="margin-bottom:8px; display:inline-block; background:rgba(37,99,235,.1);color:var(--primary-blue);">Upskilling</span>
+                        <div class="course-title">Advanced React Patterns</div>
+                        <div class="course-meta">
+                            <span><i class="fa-solid fa-clock"></i> 8 Hours</span>
+                            <span><i class="fa-solid fa-chalkboard-user"></i> Workshop</span>
+                        </div>
+                        <div class="enrollment-stats">
+                            <div class="stat-col"><div class="val">18</div>Enrolled</div>
+                            <div class="stat-col"><div class="val" style="color:var(--success-green)">12</div>Completed</div>
+                            <div class="stat-col"><div class="val" style="color:var(--warning-orange)">6</div>In Progress</div>
+                        </div>
+                        <button class="btn btn-outline" style="width:100%;">View Report</button>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card">
+                    <div class="course-img" style="background: linear-gradient(135deg, #a78bfa, #8b5cf6);"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="course-content">
+                        <span class="badge badge-warning" style="margin-bottom:8px; display:inline-block;">Leadership</span>
+                        <div class="course-title">First-Time Managers Training</div>
+                        <div class="course-meta">
+                            <span><i class="fa-solid fa-clock"></i> 12 Hours</span>
+                            <span><i class="fa-solid fa-building"></i> In-Person</span>
+                        </div>
+                        <div class="enrollment-stats">
+                            <div class="stat-col"><div class="val">8</div>Enrolled</div>
+                            <div class="stat-col"><div class="val" style="color:var(--success-green)">0</div>Completed</div>
+                            <div class="stat-col"><div class="val">8</div>Pending</div>
+                        </div>
+                        <button class="btn btn-outline" style="width:100%;">View Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Add Course Modal -->
+    <div class="modal-overlay" id="addCourseModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Add New Training Course</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Course Title</label>
+                    <input type="text" class="form-control" placeholder="E.g. Data Security Basics">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Type</label>
+                        <select class="form-control"><option>Mandatory</option><option>Upskilling</option><option>Leadership</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration</label>
+                        <input type="text" class="form-control" placeholder="E.g. 2 Hours">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Assign To</label>
+                    <select class="form-control">
+                        <option>All Employees</option>
+                        <option>Specific Department</option>
+                        <option>Specific Employees</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('addCourseModal');showToast('Course Created and Assigned!','success')">Create Course</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

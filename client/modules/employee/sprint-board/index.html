@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint Board - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: flex !important; flex-direction: column !important; height: calc(100vh - 80px) !important; }
+
+    /* Header */
+    .pg-hdr { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px 0; flex-wrap: wrap; gap: 12px; }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .filter-select { padding: 8px 14px; border-radius: 10px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #fff; }
+
+    /* Sprint Progress Card */
+    .sprint-progress-card { margin: 20px 24px 0; background: linear-gradient(135deg, #4318FF, #3965FF); border-radius: 20px; padding: 24px; color: #fff; box-shadow: 0 10px 30px rgba(67,24,255,0.3); }
+    .spc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .spc-title { font-size: 18px; font-weight: 800; }
+    .sprint-deadline-badge { background: rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .spc-days { font-size: 13px; font-weight: 700; opacity: 0.9; margin-bottom: 16px; }
+    .spc-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 10px; height: 8px; margin-bottom: 20px; overflow: hidden; }
+    .progress-bar { height: 100%; background: #fff; border-radius: 10px; transition: width .8s; }
+    .sprint-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+    .sprint-stat { text-align: center; }
+    .sprint-stat-val { font-size: 22px; font-weight: 800; }
+    .sprint-stat-lbl { font-size: 11px; opacity: 0.8; font-weight: 600; }
+
+    /* Board */
+    .sb-board { flex: 1; display: flex; gap: 20px; padding: 20px 24px 24px; overflow-x: auto; min-height: 0; }
+    .sb-col { display: flex; flex-direction: column; min-width: 270px; width: 270px; }
+    .sb-col-hdr { background: #fff; border-radius: 14px 14px 0 0; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-top: 4px solid var(--cc); }
+    .sb-col-hdr span:first-child { font-size: 13px; font-weight: 800; color: #2b3674; display: flex; align-items: center; gap: 6px; }
+    .sprint-col-count { background: #f4f7fe; color: #5d6d8a; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+    .sprint-col-body { flex: 1; background: #f0f4ff; border-radius: 0 0 14px 14px; padding: 10px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 150px; transition: background .2s; }
+    .sprint-col-body.drag-over { background: #dde8ff; }
+
+    .sb-card { background: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 2px 8px rgba(112,144,176,0.08); cursor: grab; transition: .2s; border-left: 3px solid #e2e8f0; }
+    .sb-card:hover { box-shadow: 0 6px 18px rgba(57,101,255,0.1); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-rocket" style="color:#4318FF;margin-right:8px;"></i>Sprint Board</h1>
+          <p id="sprintMeta">Loading sprint...</p>
+        </div>
+        <select class="filter-select" id="projectSelect"><option value="">Select Project...</option></select>
+      </div>
+
+      <div class="sprint-progress-card" id="sprintProgressCard">
+        <div class="spc-top">
+          <div class="spc-title" id="sprintName">Current Sprint</div>
+          <div class="sprint-deadline-badge" id="sprintDeadline">Loading...</div>
+        </div>
+        <div class="spc-days"><span id="sprintDaysLeft">— days left</span></div>
+        <div class="spc-bar-wrap">
+          <div class="progress-bar" id="sprintProgressBar" style="width:0%"></div>
+        </div>
+        <div class="sprint-stats">
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sTodo">0</div><div class="sprint-stat-lbl">Todo</div></div>
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sInProg">0</div><div class="sprint-stat-lbl">In Progress</div></div>
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sReview">0</div><div class="sprint-stat-lbl">Review</div></div>
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sDone">0</div><div class="sprint-stat-lbl">Done</div></div>
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sTotal">0</div><div class="sprint-stat-lbl">Total</div></div>
+          <div class="sprint-stat"><div class="sprint-stat-val" id="sVelocity">0</div><div class="sprint-stat-lbl">Pts Done</div></div>
+        </div>
+      </div>
+
+      <div class="sb-board">
+        <div class="sb-col">
+          <div class="sb-col-hdr" style="--cc:#FFB547"><span><i class="fa fa-circle" style="color:#FFB547;"></i> Backlog / Todo</span><span class="sprint-col-count" id="colTodoCount">0</span></div>
+          <div class="sprint-col-body" id="colTodo" ondragover="event.preventDefault()" ondrop="drop(event,'pending')"></div>
+        </div>
+        <div class="sb-col">
+          <div class="sb-col-hdr" style="--cc:#3965FF"><span><i class="fa fa-spinner" style="color:#3965FF;"></i> In Progress</span><span class="sprint-col-count" id="colProgCount">0</span></div>
+          <div class="sprint-col-body" id="colProg" ondragover="event.preventDefault()" ondrop="drop(event,'in-progress')"></div>
+        </div>
+        <div class="sb-col">
+          <div class="sb-col-hdr" style="--cc:#4318FF"><span><i class="fa fa-eye" style="color:#4318FF;"></i> Review</span><span class="sprint-col-count" id="colRevCount">0</span></div>
+          <div class="sprint-col-body" id="colRev" ondragover="event.preventDefault()" ondrop="drop(event,'review')"></div>
+        </div>
+        <div class="sb-col">
+          <div class="sb-col-hdr" style="--cc:#05CD99"><span><i class="fa fa-check-circle" style="color:#05CD99;"></i> Done</span><span class="sprint-col-count" id="colDoneCount">0</span></div>
+          <div class="sprint-col-body" id="colDone" ondragover="event.preventDefault()" ondrop="drop(event,'done')"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/sprint-board/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+/* Top Banner */
+.top-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-blue), #60a5fa);
+  color: var(--white);
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+
+.top-banner h1 { margin-bottom: 5px; font-size: 1.8rem; }
+.top-banner p { opacity: 0.9; font-weight: 500; }
+
+.banner-stats { display: flex; gap: 30px; }
+.banner-stats div { text-align: right; }
+.banner-stats span { font-size: 0.85rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+.banner-stats h3 { font-size: 1.5rem; margin-top: 5px; }
+
+/* KPI Cards */
+.kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.kpi-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+.card-icon.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.card-icon.orange { background: linear-gradient(135deg, #fbbf24, #d97706); }
+.card-icon.green { background: linear-gradient(135deg, #34d399, #059669); }
+.card-icon.red { background: linear-gradient(135deg, #f87171, #dc2626); }
+
+.card-info h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; }
+.card-info h2 { font-size: 1.5rem; color: var(--dark-navy); }
+
+.card-hover-details {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: var(--primary-blue);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 15px;
+  text-align: center;
+}
+
+.kpi-card:hover .card-hover-details { opacity: 1; }
+.card-hover-details p { font-size: 0.85rem; margin-bottom: 5px; }
+.card-hover-details span { font-size: 0.8rem; font-weight: 700; margin-top: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .top-banner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .banner-stats { width: 100%; justify-content: space-between; }
+  .banner-stats div { text-align: left; }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Time Tracking</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Time Tracking</p>
+                            <h1>Track estimated hours, actual hours, timers, and worklogs</h1>
+                            <p class="hero-text">Members can start, pause, resume, and stop timers. Manager gets worklog history, productivity ratio, and visible effort variance across tasks.</p>
+                        </div>
+                        <div id="timeMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Timer Entry</p><h2>Manual timer record</h2></div></header>
+                        <form id="timeForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Member</span><select id="timeMember"></select></div>
+                                <div class="manager-field"><span>Task</span><select id="timeTask"></select></div>
+                            </div>
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Started At</span><input id="timeStart" type="datetime-local" required /></div>
+                                <div class="manager-field"><span>Ended At</span><input id="timeEnd" type="datetime-local" required /></div>
+                            </div>
+                            <div class="manager-field"><span>Comment</span><textarea id="timeComment" placeholder="Work summary for generated worklog"></textarea></div>
+                            <div class="manager-button-row"><button class="btn btn-primary" type="submit">Save Time Entry</button></div>
+                        </form>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Risk View</p><h2>Effort variance</h2></div></header>
+                        <div id="timeVariance" class="manager-list"></div>
+                    </article>
+                </section>
+
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Time Entries</p><h2>Saved timer history</h2></div></header>
+                        <div id="timeEntryList" class="manager-list"></div>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Worklogs</p><h2>Daily generated logs</h2></div></header>
+                        <div id="worklogList" class="manager-list"></div>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="time-tracking.js"></script>
+</body>
+</html>

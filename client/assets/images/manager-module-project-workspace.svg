@@ -1,0 +1,62 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="920" rx="30" fill="#050816"/>
+  <text x="40" y="60" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="34" font-weight="700">Project Workspace View</text>
+  <text x="40" y="92" fill="#93A9CD" font-family="Arial, sans-serif" font-size="18">Project card click opens the complete manager execution workspace.</text>
+  <rect x="32" y="120" width="350" height="740" rx="26" fill="#081225" stroke="#183259"/>
+  <rect x="406" y="120" width="780" height="740" rx="26" fill="#081225" stroke="#6D4AFF" stroke-opacity="0.5"/>
+  <rect x="1210" y="120" width="358" height="740" rx="26" fill="#081225" stroke="#183259"/>
+
+  <text x="58" y="160" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Left Panel</text>
+  <g font-family="Arial, sans-serif">
+    <text x="58" y="208" fill="#DCE8FF" font-size="26">School ERP System</text>
+    <text x="58" y="246" fill="#8DA4C8" font-size="18">Client: Bright Future School</text>
+    <text x="58" y="278" fill="#8DA4C8" font-size="18">Budget: INR 25,00,000</text>
+    <text x="58" y="310" fill="#8DA4C8" font-size="18">Deadline: 25 Aug 2026</text>
+    <text x="58" y="342" fill="#8DA4C8" font-size="18">Priority: High</text>
+    <text x="58" y="374" fill="#8DA4C8" font-size="18">Stack: React, Node, MongoDB, Socket.IO</text>
+    <text x="58" y="406" fill="#8DA4C8" font-size="18">Manager: Poonam Daware</text>
+    <rect x="58" y="446" width="298" height="54" rx="18" fill="#0D1B33"/><text x="84" y="479" fill="#D8E6FF" font-size="20">View Client</text>
+    <rect x="58" y="516" width="298" height="54" rx="18" fill="#0D1B33"/><text x="84" y="549" fill="#D8E6FF" font-size="20">Send Update</text>
+    <rect x="58" y="586" width="298" height="54" rx="18" fill="#6D4AFF"/><text x="84" y="619" fill="#FFFFFF" font-size="20">Open Client Portal</text>
+  </g>
+
+  <text x="434" y="160" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Center Workspace</text>
+  <g font-family="Arial, sans-serif" font-size="18">
+    <rect x="434" y="184" width="696" height="44" rx="18" fill="#0D1B33"/>
+    <text x="458" y="212" fill="#FFFFFF">Overview</text><text x="560" y="212" fill="#93A9CD">Kanban</text><text x="644" y="212" fill="#93A9CD">Tasks</text><text x="720" y="212" fill="#93A9CD">Timeline</text><text x="818" y="212" fill="#93A9CD">Files</text><text x="886" y="212" fill="#93A9CD">Activity</text><text x="978" y="212" fill="#93A9CD">Reports</text>
+    <rect x="434" y="252" width="330" height="170" rx="22" fill="#0B1730"/>
+    <text x="460" y="286" fill="#FFFFFF" font-size="22">Overall Progress</text>
+    <circle cx="598" cy="338" r="56" stroke="#1D4ED8" stroke-width="18"/><path d="M598 282 A56 56 0 1 1 549 367" stroke="#2DD4BF" stroke-width="18" stroke-linecap="round"/>
+    <text x="568" y="347" fill="#FFFFFF" font-size="34" font-weight="700">72%</text>
+    <text x="530" y="384" fill="#36E0A1" font-size="18">On Track</text>
+    <rect x="784" y="252" width="346" height="170" rx="22" fill="#0B1730"/>
+    <text x="810" y="286" fill="#FFFFFF" font-size="22">Overview Widgets</text>
+    <text x="810" y="324" fill="#9FB4D8" font-size="18">Progress bar with completed / remaining / delayed hover data</text>
+    <text x="810" y="356" fill="#9FB4D8" font-size="18">Recent activity timeline</text>
+    <text x="810" y="388" fill="#9FB4D8" font-size="18">Upcoming meetings panel</text>
+    <rect x="434" y="446" width="696" height="320" rx="22" fill="#0B1730"/>
+    <text x="460" y="482" fill="#FFFFFF" font-size="22">Click Inside Workspace</text>
+    <text x="460" y="526" fill="#9FB4D8" font-size="20">Overview tab -> health, progress, pending tasks, meetings</text>
+    <text x="460" y="562" fill="#9FB4D8" font-size="20">Kanban tab -> board view for task movement</text>
+    <text x="460" y="598" fill="#9FB4D8" font-size="20">Tasks tab -> list view with edit / assign / comment</text>
+    <text x="460" y="634" fill="#9FB4D8" font-size="20">Timeline tab -> gantt or milestone execution plan</text>
+    <text x="460" y="670" fill="#9FB4D8" font-size="20">Files tab -> OneDrive documents and version history</text>
+    <text x="460" y="706" fill="#9FB4D8" font-size="20">Reports tab -> progress, delay, velocity, delivery snapshots</text>
+  </g>
+
+  <text x="1238" y="160" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Right Panel</text>
+  <g font-family="Arial, sans-serif" font-size="20">
+    <rect x="1238" y="196" width="302" height="52" rx="18" fill="#6D4AFF"/><text x="1264" y="229" fill="#FFFFFF">Assign Developer</text>
+    <rect x="1238" y="262" width="302" height="52" rx="18" fill="#0D1B33"/><text x="1264" y="295" fill="#D8E6FF">Create Task</text>
+    <rect x="1238" y="328" width="302" height="52" rx="18" fill="#0D1B33"/><text x="1264" y="361" fill="#D8E6FF">Upload Files</text>
+    <rect x="1238" y="394" width="302" height="52" rx="18" fill="#0D1B33"/><text x="1264" y="427" fill="#D8E6FF">Create Sprint</text>
+    <rect x="1238" y="460" width="302" height="52" rx="18" fill="#0D1B33"/><text x="1264" y="493" fill="#D8E6FF">Schedule Meeting</text>
+    <rect x="1238" y="526" width="302" height="52" rx="18" fill="#0D1B33"/><text x="1264" y="559" fill="#D8E6FF">Generate Report</text>
+    <rect x="1238" y="616" width="302" height="178" rx="22" fill="#101D37"/>
+    <text x="1264" y="654" fill="#FFFFFF" font-size="22">Redirect Logic</text>
+    <text x="1264" y="692" fill="#9FB4D8" font-size="18">Project list -> project details route</text>
+    <text x="1264" y="722" fill="#9FB4D8" font-size="18">Client buttons -> portal / update modal</text>
+    <text x="1264" y="752" fill="#9FB4D8" font-size="18">Tab click -> changes center workspace</text>
+    <text x="1264" y="782" fill="#9FB4D8" font-size="18">Action click -> modal or linked page</text>
+  </g>
+</svg>

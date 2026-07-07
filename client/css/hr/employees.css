@@ -1,0 +1,115 @@
+#employeeSearch {
+  min-width: min(360px, 100%);
+}
+
+#employeeDepartmentFilter,
+#employeeStatusFilter {
+  max-width: 220px;
+}
+
+.employee-card-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.employee-mini-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.82), rgba(30, 41, 59, 0.62));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+  cursor: pointer;
+}
+
+.employee-mini-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.34);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.employee-mini-card:hover .employee-hover-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.employee-mini-card-head,
+.employee-mini-card-meta,
+.employee-mini-card-actions,
+.employee-hover-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.employee-mini-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.employee-mini-card-meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.employee-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.employee-tag {
+  display: inline-flex;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, 0.14);
+  color: #ddd6fe;
+  font-size: 0.8rem;
+}
+
+.employee-hover-panel {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.22s ease;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.employee-mini-card-actions,
+.employee-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.employee-mini-card-actions {
+  margin-top: 16px;
+}
+
+.employee-actions {
+  opacity: 0.22;
+  transform: translateX(16px);
+  transition: all 0.2s ease;
+}
+
+.hr-table tbody tr:hover .employee-actions {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 1200px) {
+  .employee-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .employee-card-grid {
+    grid-template-columns: 1fr;
+  }
+}

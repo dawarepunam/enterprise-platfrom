@@ -1,0 +1,22 @@
+@import url("../../../assets/css/role-workspace.css");
+
+.workflow-hero {
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.96), rgba(16, 185, 129, 0.88));
+  color: #eff6ff;
+}
+
+.workflow-hero .hero-text,
+.workflow-hero .eyebrow,
+.workflow-hero h1 {
+  color: inherit;
+}
+
+.member-grid {
+  grid-template-columns: 1fr 0.9fr;
+}
+
+@media (max-width: 1100px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+}

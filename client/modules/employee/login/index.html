@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JMKC CRM – Employee Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-illustration">
+      <!-- Placeholder illustration -->
+      <img src="/assets/illustration.svg" alt="JMKC CRM" />
+    </div>
+    <div class="login-form">
+      <h2>Employee Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-options">
+          <label><input type="checkbox" id="rememberMe" /> Remember Me</label>
+          <a href="#" id="forgotPassword">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn primary">Login</button>
+      </form>
+    </div>
+  </div>
+  <script src="/modules/employee/login/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Meetings — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .meeting-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:20px; }
+    .meeting-card { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:20px; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden; }
+    .meeting-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.1); border-color:var(--primary); }
+    .meeting-card-accent { position:absolute; top:0; left:0; right:0; height:4px; border-radius:16px 16px 0 0; }
+    .meeting-time-block { background:var(--primary-light); color:var(--primary); border-radius:12px; padding:10px 14px; display:inline-flex; flex-direction:column; align-items:center; min-width:64px; }
+    .meeting-time-hour { font-size:18px; font-weight:800; line-height:1; }
+    .meeting-time-ampm { font-size:10px; font-weight:700; margin-top:2px; }
+    .meeting-info { flex:1; }
+    .meeting-title { font-size:15px; font-weight:700; color:var(--text-1); margin-bottom:4px; }
+    .meeting-meta { font-size:12px; color:var(--text-4); display:flex; gap:12px; flex-wrap:wrap; }
+    .meeting-actions { display:flex; gap:8px; margin-top:12px; }
+    .empty-meetings { text-align:center; padding:80px 20px; color:var(--text-4); }
+    .empty-meetings .icon { font-size:64px; margin-bottom:16px; }
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">📹 Meetings</div>
+      <div class="page-subtitle">Schedule and manage team meetings</div>
+    </div>
+    <div class="page-top-actions">
+      <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+        <option value="">All Meetings</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <button class="btn btn-primary" onclick="openModal('addMeetingModal')">+ Schedule Meeting</button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid mb-24" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card kpi-card-blue" onclick="filterByCard('total')" style="cursor:pointer">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-blue">📹</div></div>
+      <div class="kpi-value" id="kpiTotal">0</div>
+      <div class="kpi-label">Total Meetings</div>
+    </div>
+    <div class="kpi-card kpi-card-green" onclick="filterByCard('today')" style="cursor:pointer">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-green">🟢</div></div>
+      <div class="kpi-value" id="kpiToday">0</div>
+      <div class="kpi-label">Today's Meetings</div>
+    </div>
+    <div class="kpi-card kpi-card-orange" onclick="filterByCard('upcoming')" style="cursor:pointer">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-orange">⏳</div></div>
+      <div class="kpi-value" id="kpiUpcoming">0</div>
+      <div class="kpi-label">Upcoming</div>
+    </div>
+    <div class="kpi-card kpi-card-red" onclick="filterByCard('completed')" style="cursor:pointer">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-red">✅</div></div>
+      <div class="kpi-value" id="kpiCompleted">0</div>
+      <div class="kpi-label">Completed</div>
+    </div>
+  </div>
+
+  <!-- Search bar -->
+  <div class="table-wrap mb-16" style="padding:12px 16px">
+    <div class="table-search" style="max-width:400px">
+      <span class="table-search-icon">🔍</span>
+      <input class="table-search-input" id="meetSearch" placeholder="Search meetings..." oninput="applyFilters()"/>
+    </div>
+  </div>
+
+  <!-- Meetings Grid -->
+  <div id="meetingGrid" class="meeting-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:40px">
+      <div class="loader-spinner" style="margin:0 auto"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Add Meeting Modal -->
+<div class="modal-overlay hidden" id="addMeetingModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">📹 Schedule Meeting</div>
+      <button class="modal-close" onclick="closeModal('addMeetingModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group" style="grid-column:1/-1">
+          <label class="form-label">Meeting Title *</label>
+          <input class="form-control" id="mTitle" placeholder="e.g. Weekly Team Sync"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date *</label>
+          <input class="form-control" id="mDate" type="date"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time *</label>
+          <input class="form-control" id="mTime" type="time"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration (minutes)</label>
+          <select class="form-control" id="mDuration">
+            <option value="15">15 min</option>
+            <option value="30">30 min</option>
+            <option value="45" selected>45 min</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Meeting Type</label>
+          <select class="form-control" id="mType">
+            <option value="Team Sync">Team Sync</option>
+            <option value="Client Meeting">Client Meeting</option>
+            <option value="Project Review">Project Review</option>
+            <option value="One on One">One on One</option>
+            <option value="Interview">Interview</option>
+            <option value="Training">Training</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="mDesc" rows="3" placeholder="Meeting agenda, topics to discuss..."></textarea>
+        </div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label class="form-label">Meeting Link (Teams/Zoom/Meet)</label>
+          <input class="form-control" id="mLink" placeholder="https://teams.microsoft.com/..."/>
+        </div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label class="form-label">Attendees</label>
+          <select class="form-control" id="mAttendees" multiple style="height:100px">
+            <option value="">Loading...</option>
+          </select>
+          <div style="font-size:11px;color:var(--text-4);margin-top:4px">Hold Ctrl/Cmd to select multiple</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addMeetingModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitMeeting()">📹 Schedule</button>
+    </div>
+  </div>
+</div>
+
+<!-- Meeting Detail Modal -->
+<div class="modal-overlay hidden" id="meetDetailModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="detailTitle">Meeting Details</div>
+      <button class="modal-close" onclick="closeModal('meetDetailModal')">✕</button>
+    </div>
+    <div class="modal-body" id="meetDetailBody">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('meetDetailModal')">Close</button>
+      <button class="btn btn-danger btn-sm" id="cancelMeetBtn" onclick="cancelMeeting()">🚫 Cancel Meeting</button>
+      <button class="btn btn-success" id="joinMeetBtn">🔗 Join Meeting</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script>
+  let allMeetings = [], filteredMeetings = [], currentMeetId = null;
+
+  function openModal(id) { document.getElementById(id)?.classList.remove('hidden'); }
+  function closeModal(id) { document.getElementById(id)?.classList.add('hidden'); }
+  window.openModal = openModal; window.closeModal = closeModal;
+  document.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) e.target.classList.add('hidden'); });
+
+  // Set default date to today
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('mDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('mTime').value = '10:00';
+    loadMeetings();
+    loadAttendees();
+  });
+
+  async function loadMeetings() {
+    try {
+      const data = await AdminAPI.getMeetings('?limit=100');
+      allMeetings = data.meetings || data.data || [];
+      updateKPIs();
+      applyFilters();
+    } catch (err) {
+      console.warn('Meetings API error, loading demo:', err.message);
+      loadDemoMeetings();
+    }
+  }
+
+  function loadDemoMeetings() {
+    const today = new Date().toISOString().split('T')[0];
+    allMeetings = [
+      { _id:'1', title:'Weekly Team Sync', date: today, time:'10:00', duration:45, type:'Team Sync', status:'Scheduled', attendees:['Rahul Sharma','Priya Patil','Amit Kumar'], description:'Weekly sync to discuss progress and blockers', meetingLink:'https://teams.microsoft.com/meeting1' },
+      { _id:'2', title:'Client Presentation: TechSoft', date: today, time:'14:30', duration:60, type:'Client Meeting', status:'Scheduled', attendees:['Rahul Sharma','Neha Singh'], description:'Present Q3 project deliverables to TechSoft client', meetingLink:'https://meet.google.com/meeting2' },
+      { _id:'3', title:'Project Apollo Review', date: today, time:'16:00', duration:30, type:'Project Review', status:'Completed', attendees:['Ravi Desai'], description:'Monthly review of Project Apollo status', meetingLink:'' },
+      { _id:'4', title:'New Hire Interview - Dev Role', date: new Date(Date.now()+86400000).toISOString().split('T')[0], time:'11:00', duration:60, type:'Interview', status:'Scheduled', attendees:['HR Team'], description:'Interview for Senior Developer position', meetingLink:'https://zoom.us/meeting4' },
+    ];
+    updateKPIs();
+    applyFilters();
+  }
+
+  function updateKPIs() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('kpiTotal').textContent = allMeetings.length;
+    document.getElementById('kpiToday').textContent = allMeetings.filter(m => {
+      const d = m.date ? new Date(m.date).toISOString().split('T')[0] : '';
+      return d === today;
+    }).length;
+    document.getElementById('kpiUpcoming').textContent = allMeetings.filter(m => {
+      const d = m.date ? new Date(m.date).toISOString().split('T')[0] : '';
+      return m.status === 'Scheduled' && d >= today;
+    }).length;
+    document.getElementById('kpiCompleted').textContent = allMeetings.filter(m => m.status === 'Completed').length;
+  }
+
+  let currentCardFilter = 'total';
+
+  function filterByCard(type) {
+    if (currentCardFilter === type) {
+      currentCardFilter = 'total'; // toggle off
+    } else {
+      currentCardFilter = type;
+    }
+    
+    // Highlight selected card
+    document.querySelectorAll('.kpi-card').forEach(c => c.style.opacity = '0.6');
+    if (currentCardFilter === 'total') document.querySelectorAll('.kpi-card').forEach(c => c.style.opacity = '1');
+    else if (currentCardFilter === 'today') document.querySelector('.kpi-card-green').style.opacity = '1';
+    else if (currentCardFilter === 'upcoming') document.querySelector('.kpi-card-orange').style.opacity = '1';
+    else if (currentCardFilter === 'completed') document.querySelector('.kpi-card-red').style.opacity = '1';
+
+    applyFilters();
+  }
+  window.filterByCard = filterByCard;
+
+  function applyFilters() {
+    const q = (document.getElementById('meetSearch')?.value || '').toLowerCase();
+    const status = document.getElementById('filterStatus')?.value || '';
+    const today = new Date().toISOString().split('T')[0];
+
+    filteredMeetings = allMeetings.filter(m => {
+      const matchQ = !q || (m.title||'').toLowerCase().includes(q) || (m.type||'').toLowerCase().includes(q);
+      const matchS = !status || m.status === status;
+      
+      let matchCard = true;
+      const d = m.date ? new Date(m.date).toISOString().split('T')[0] : '';
+      if (currentCardFilter === 'today') matchCard = (d === today);
+      if (currentCardFilter === 'upcoming') matchCard = m.status === 'Scheduled' && (d >= today);
+      if (currentCardFilter === 'completed') matchCard = m.status === 'Completed';
+
+      return matchQ && matchS && matchCard;
+    });
+    renderMeetings();
+  }
+  window.applyFilters = applyFilters;
+
+  const accentColors = { 'Team Sync':'#2563EB', 'Client Meeting':'#059669', 'Project Review':'#7C3AED', 'One on One':'#D97706', 'Interview':'#DC2626', 'Training':'#0891B2' };
+
+  function renderMeetings() {
+    const grid = document.getElementById('meetingGrid');
+    if (!filteredMeetings.length) {
+      grid.innerHTML = `<div class="empty-meetings" style="grid-column:1/-1">
+        <div class="icon">📹</div>
+        <div style="font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:8px">No meetings found</div>
+        <div style="margin-bottom:24px">Schedule your first meeting to get started</div>
+        <button class="btn btn-primary" onclick="openModal('addMeetingModal')">+ Schedule Meeting</button>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = filteredMeetings.sort((a,b) => {
+      const da = (a.date||'') + (a.time||'');
+      const db = (b.date||'') + (b.time||'');
+      return da.localeCompare(db);
+    }).map(m => {
+      const color = accentColors[m.type] || '#2563EB';
+      const timeStr = m.time || (m.scheduledAt ? new Date(m.scheduledAt).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) : '--:--');
+      const dateStr = m.date ? new Date(m.date).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}) : (m.scheduledAt ? window.fmt.date(m.scheduledAt) : '-');
+      const attendeeList = Array.isArray(m.attendees) ? m.attendees : [];
+      const statusClass = m.status === 'Completed' ? 'success' : m.status === 'Cancelled' ? 'gray' : m.status === 'Ongoing' ? 'info' : 'warning';
+      
+      return `<div class="meeting-card" onclick="openMeetingDetail('${m._id}')">
+        <div class="meeting-card-accent" style="background:${color}"></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-top:8px">
+          <div class="meeting-time-block" style="background:${color}20;color:${color}">
+            <div class="meeting-time-hour">${timeStr}</div>
+            <div class="meeting-time-ampm">${m.type||'Meeting'}</div>
+          </div>
+          <div class="meeting-info">
+            <div class="meeting-title">${m.title||'Untitled Meeting'}</div>
+            <div class="meeting-meta">
+              <span>📅 ${dateStr}</span>
+              <span>⏱️ ${m.duration||45} min</span>
+              ${attendeeList.length ? `<span>👥 ${attendeeList.length} attendees</span>` : ''}
+            </div>
+            ${m.description ? `<div style="font-size:12px;color:var(--text-3);margin-top:6px;line-height:1.4">${window.fmt.truncate(m.description, 80)}</div>` : ''}
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-light)">
+          <span class="badge badge-${statusClass}">${m.status||'Scheduled'}</span>
+          <div style="display:flex;gap:6px" onclick="event.stopPropagation()">
+            ${m.meetingLink ? `<button class="btn btn-success btn-sm" onclick="joinMeeting('${m.meetingLink}')">🔗 Join</button>` : ''}
+            <button class="btn btn-icon btn-sm" onclick="openMeetingDetail('${m._id}')">👁️</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function openMeetingDetail(id) {
+    const m = allMeetings.find(x => x._id === id);
+    if (!m) return;
+    currentMeetId = id;
+    document.getElementById('detailTitle').textContent = m.title || 'Meeting Details';
+
+    const attendeeList = Array.isArray(m.attendees) ? m.attendees : [];
+    const timeStr = m.time || (m.scheduledAt ? new Date(m.scheduledAt).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) : '--:--');
+    const dateStr = m.date ? new Date(m.date).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : window.fmt.date(m.scheduledAt);
+
+    document.getElementById('meetDetailBody').innerHTML = `
+      <div style="display:grid;gap:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:4px">Date</div><div style="font-weight:600">📅 ${dateStr}</div></div>
+          <div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:4px">Time</div><div style="font-weight:600">⏰ ${timeStr} (${m.duration||45} min)</div></div>
+          <div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:4px">Type</div><div style="font-weight:600">${m.type||'Meeting'}</div></div>
+          <div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:4px">Status</div>${window.statusBadge(m.status||'Scheduled')}</div>
+        </div>
+        ${m.description ? `<div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:6px">Agenda</div><div style="background:var(--bg);border-radius:8px;padding:12px;font-size:13px;line-height:1.6;color:var(--text-2)">${m.description}</div></div>` : ''}
+        ${m.meetingLink ? `<div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:6px">Meeting Link</div><a href="${m.meetingLink}" target="_blank" style="color:var(--primary);word-break:break-all">${m.meetingLink}</a></div>` : ''}
+        ${attendeeList.length ? `<div><div style="font-size:11px;color:var(--text-4);font-weight:600;text-transform:uppercase;margin-bottom:8px">Attendees (${attendeeList.length})</div><div style="display:flex;gap:8px;flex-wrap:wrap">${attendeeList.map(a=>window.avatar(a,32)).join('')}</div></div>` : ''}
+      </div>`;
+
+    // Update Join button
+    const joinBtn = document.getElementById('joinMeetBtn');
+    if (m.meetingLink) {
+      joinBtn.style.display = '';
+      joinBtn.onclick = () => joinMeeting(m.meetingLink);
+    } else {
+      joinBtn.style.display = 'none';
+    }
+
+    openModal('meetDetailModal');
+  }
+  window.openMeetingDetail = openMeetingDetail;
+
+  function joinMeeting(link) {
+    if (link) window.open(link, '_blank');
+    else window.showToast('No Link', 'No meeting link available', 'error');
+  }
+  window.joinMeeting = joinMeeting;
+
+  async function cancelMeeting() {
+    if (!currentMeetId) return;
+    if (!confirm('Cancel this meeting?')) return;
+    try {
+      await AdminAPI.updateMeeting(currentMeetId, { status: 'Cancelled' });
+      closeModal('meetDetailModal');
+      window.showToast('Cancelled', 'Meeting has been cancelled', 'success');
+      loadMeetings();
+    } catch (err) {
+      // Update in local list
+      const m = allMeetings.find(x => x._id === currentMeetId);
+      if (m) m.status = 'Cancelled';
+      closeModal('meetDetailModal');
+      updateKPIs(); applyFilters();
+      window.showToast('Cancelled', 'Meeting status updated', 'success');
+    }
+  }
+  window.cancelMeeting = cancelMeeting;
+
+  async function submitMeeting() {
+    const title = document.getElementById('mTitle').value.trim();
+    const date = document.getElementById('mDate').value;
+    const time = document.getElementById('mTime').value;
+    if (!title || !date || !time) {
+      window.showToast('Validation', 'Title, date and time are required', 'error'); return;
+    }
+
+    const attendeeSel = document.getElementById('mAttendees');
+    const attendees = Array.from(attendeeSel.selectedOptions).map(o => o.text);
+
+    const payload = {
+      title, date, time,
+      duration: parseInt(document.getElementById('mDuration').value),
+      type: document.getElementById('mType').value,
+      description: document.getElementById('mDesc').value,
+      meetingLink: document.getElementById('mLink').value,
+      attendees,
+      status: 'Scheduled',
+    };
+
+    try {
+      await AdminAPI.createMeeting(payload);
+      closeModal('addMeetingModal');
+      window.showToast('Scheduled!', `${title} has been scheduled.`, 'success');
+      loadMeetings();
+      // Reset form
+      document.getElementById('mTitle').value = '';
+      document.getElementById('mDesc').value = '';
+      document.getElementById('mLink').value = '';
+    } catch (err) {
+      // Add to local list as fallback
+      allMeetings.unshift({ ...payload, _id: Date.now().toString() });
+      closeModal('addMeetingModal');
+      updateKPIs(); applyFilters();
+      window.showToast('Scheduled!', `${title} has been scheduled.`, 'success');
+    }
+  }
+  window.submitMeeting = submitMeeting;
+
+  async function loadAttendees() {
+    try {
+      const data = await AdminAPI.getUsers('?limit=200');
+      const users = data.users || data.data || [];
+      document.getElementById('mAttendees').innerHTML = users.map(u =>
+        `<option value="${u._id}">${u.name} (${u.designation || u.role || 'Employee'})</option>`
+      ).join('');
+    } catch { }
+  }
+</script>
+</body>
+</html>

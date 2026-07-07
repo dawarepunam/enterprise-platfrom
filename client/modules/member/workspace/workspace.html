@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Workspace</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+  <link rel="stylesheet" href="workspace.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page member-shell">
+      <section class="workspace-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">Project Workspace</p>
+          <h1 id="workspaceHeroTitle">Open project workspace</h1>
+          <p id="workspaceHeroText" class="hero-text">Chat, files, calls, meetings, updates and task activity stay together inside the same project context.</p>
+          <div id="workspaceHeroChips" class="hero-badges"></div>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Active Room</span><strong id="workspaceRoomState">Pending</strong></article>
+          <article class="signal-card"><span>Live Timer</span><strong id="workspaceTimerState">00:00:00</strong></article>
+          <article class="signal-card accent-card"><span>Unread Alerts</span><strong id="workspaceNotificationCount">0</strong><small>Project and review reminders</small></article>
+        </div>
+      </section>
+
+      <section class="workspace-layout-grid">
+        <aside class="workspace-sidebar">
+          <article class="workspace-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Assigned Rooms</p>
+                <h2>Projects</h2>
+              </div>
+            </div>
+            <div id="workspaceRoomList" class="workspace-room-list"></div>
+          </article>
+
+          <article class="workspace-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Project Snapshot</p>
+                <h2>Execution status</h2>
+              </div>
+            </div>
+            <div id="workspaceTiles" class="workspace-tile-grid"></div>
+          </article>
+
+          <article class="workspace-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Daily Update</p>
+                <h2>Share completed work</h2>
+              </div>
+            </div>
+            <form id="workspaceUpdateForm" class="workspace-update-form">
+              <select id="workspaceUpdateSubtask"></select>
+              <input id="workspaceUpdateHours" type="number" min="0" step="0.5" placeholder="Hours spent" />
+              <input id="workspaceUpdateCompletion" type="number" min="0" max="100" placeholder="Completion %" />
+              <textarea id="workspaceUpdateSummary" rows="3" placeholder="Work completed"></textarea>
+              <textarea id="workspaceUpdateBlockers" rows="2" placeholder="Blockers"></textarea>
+              <button class="btn btn-primary" type="submit">Submit Update</button>
+            </form>
+          </article>
+        </aside>
+
+        <section class="workspace-main">
+          <article class="workspace-panel workspace-chat-shell">
+            <div class="workspace-titlebar">
+              <div>
+                <p class="eyebrow">Collaboration</p>
+                <h2 id="activeWorkspaceTitle">Select a project</h2>
+                <p id="activeWorkspaceMeta" class="workspace-note">Previous chat history and files will appear here.</p>
+              </div>
+              <div class="panel-actions">
+                <button id="workspaceCallBtn" class="btn ghost-btn" type="button">Call</button>
+                <button id="workspaceMeetingBtn" class="btn btn-primary" type="button">Meeting</button>
+              </div>
+            </div>
+
+            <div class="workspace-toolbar">
+              <input id="workspaceMessageSearch" class="message-search" type="search" placeholder="Search messages in this project" />
+              <div class="tool-grid">
+                <button class="tool-btn" type="button" data-tool="attach" aria-label="Attach file"></button>
+                <button class="tool-btn" type="button" data-tool="screenshot" aria-label="Share screenshot"></button>
+                <button class="tool-btn" type="button" data-tool="zip" aria-label="Share zip"></button>
+                <button class="tool-btn" type="button" data-tool="code" aria-label="Share code"></button>
+                <button class="tool-btn" type="button" data-tool="location" aria-label="Share location"></button>
+                <button class="tool-btn" type="button" data-tool="voice" aria-label="Share voice note"></button>
+                <button class="tool-btn is-wide" type="button" data-tool="pin">Pin</button>
+              </div>
+              <input id="workspaceFileInput" type="file" hidden />
+            </div>
+
+            <div id="workspaceEventFeed" class="activity-feed"></div>
+            <div id="workspaceMessageList" class="message-stack"></div>
+            <p id="workspaceTypingIndicator" class="typing-indicator"></p>
+
+            <form id="workspaceComposer" class="workspace-composer">
+              <textarea id="workspaceMessageInput" rows="3" placeholder="Type a message, update, code note or handoff"></textarea>
+              <div class="workspace-composer-grid">
+                <input id="workspaceFileCaption" type="text" placeholder="Optional note for file share" />
+                <button class="btn btn-primary" type="submit">Send</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="workspace-panel">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">My Tasks</p>
+                <h2>Task queue inside this project</h2>
+              </div>
+              <div class="panel-actions">
+                <button id="workspaceTimerAction" class="btn ghost-btn" type="button">Start Timer</button>
+                <button id="workspaceTimerStop" class="btn btn-primary" type="button">Stop Timer</button>
+              </div>
+            </div>
+            <div id="workspaceTaskColumns" class="task-column-grid"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../../../assets/js/utils.js"></script>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../../../assets/js/socket.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="workspace.js"></script>
+</body>
+</html>

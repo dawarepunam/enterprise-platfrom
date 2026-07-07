@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Payroll - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        /* Horizontal Stepper */
+        .payroll-stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+            padding: 0 40px;
+        }
+        .payroll-stepper::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            background: var(--border-gray);
+            z-index: 1;
+        }
+        .payroll-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-color);
+            padding: 0 16px;
+        }
+        .step-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--border-gray);
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition-normal);
+        }
+        .payroll-step.active .step-icon {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        .payroll-step.completed .step-icon {
+            background: var(--success-green);
+            border-color: var(--success-green);
+            color: var(--white);
+        }
+        .step-title {
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .payroll-step.active .step-title { color: var(--primary-blue); }
+        .payroll-step.completed .step-title { color: var(--success-green); }
+
+        .payroll-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            min-height: 400px;
+            display: none;
+        }
+        .payroll-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .summary-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .summary-item { text-align: center; }
+        .summary-item label { color: var(--text-dark); font-size: 0.9rem; margin-bottom: 4px; display: block; }
+        .summary-item .value { font-size: 1.6rem; font-weight: 700; color: var(--dark-navy); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-calendar-check"></i><span>Workforce</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="run-payroll.html" class="submenu-item active">Run Payroll</a>
+                            <a href="salary-structures.html" class="submenu-item">Salary Structures</a>
+                            <a href="payslips.html" class="submenu-item">Payslips</a>
+                            <a href="claims.html" class="submenu-item">Claims / Expenses</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Payroll</span> > Run Payroll</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                <h1 style="font-size: 1.5rem;">Run Payroll - June 2026</h1>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-outline"><i class="fa-solid fa-pause"></i> Save Draft</button>
+                    <button class="btn btn-primary" onclick="window.location.href='payslips.html'">View Past</button>
+                </div>
+            </div>
+
+            <!-- Stepper -->
+            <div class="payroll-stepper">
+                <div class="payroll-step active" id="step1">
+                    <div class="step-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="step-title">Attendance Sync</div>
+                </div>
+                <div class="payroll-step" id="step2">
+                    <div class="step-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                    <div class="step-title">Variable Pay</div>
+                </div>
+                <div class="payroll-step" id="step3">
+                    <div class="step-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                    <div class="step-title">Deductions</div>
+                </div>
+                <div class="payroll-step" id="step4">
+                    <div class="step-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <div class="step-title">Review</div>
+                </div>
+                <div class="payroll-step" id="step5">
+                    <div class="step-icon"><i class="fa-solid fa-check-double"></i></div>
+                    <div class="step-title">Process</div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="payroll-content active" id="content1">
+                <h3>Sync Attendance Data</h3>
+                <p class="text-gray" style="margin-bottom: 24px;">Import attendance, leaves, and LOP (Loss of Pay) data for the current payroll cycle.</p>
+                
+                <div class="summary-banner" style="background:var(--bg-color); border:1px solid var(--border-gray);">
+                    <div class="summary-item"><label>Total Employees</label><div class="value">145</div></div>
+                    <div class="summary-item"><label>Total Working Days</label><div class="value">22</div></div>
+                    <div class="summary-item"><label>Total LOP Days</label><div class="value" style="color:var(--danger-red)">15.5</div></div>
+                    <button class="btn btn-outline" style="height:fit-content" onclick="showToast('Re-syncing from Biometric...', 'info')"><i class="fa-solid fa-rotate"></i> Re-Sync</button>
+                </div>
+
+                <div class="table-container" style="margin-top:24px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Present Days</th>
+                                <th>Paid Leaves</th>
+                                <th>LOP Days</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rahul Sharma (EMP001)</td>
+                                <td>22</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td><span class="badge badge-success">Synced</span></td>
+                            </tr>
+                            <tr>
+                                <td>Priya Patel (EMP002)</td>
+                                <td>20</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td><span class="badge badge-success">Synced</span></td>
+                            </tr>
+                            <tr>
+                                <td>Amit Verma (EMP003)</td>
+                                <td>18</td>
+                                <td>1</td>
+                                <td style="color:var(--danger-red); font-weight:600;">3</td>
+                                <td><span class="badge badge-warning">Needs Review</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; margin-top:24px;">
+                    <button class="btn btn-primary" onclick="nextStep(2)">Confirm & Proceed <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Content Step 4: Review (Mocking straight to Review for demo) -->
+            <div class="payroll-content" id="content4">
+                <h3>Final Payroll Review</h3>
+                <p class="text-gray" style="margin-bottom: 24px;">Review the final computed gross and net pay before locking the payroll.</p>
+                
+                <div class="summary-banner">
+                    <div class="summary-item"><label>Gross Pay</label><div class="value">₹ 84,50,000</div></div>
+                    <div class="summary-item"><label>Total Deductions</label><div class="value" style="color:var(--danger-red)">₹ 9,20,000</div></div>
+                    <div class="summary-item"><label>Net Payable</label><div class="value" style="color:var(--success-green)">₹ 75,30,000</div></div>
+                </div>
+
+                <div class="table-container" style="margin-top:24px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Gross Pay</th>
+                                <th>Taxes/Deductions</th>
+                                <th>Net Pay</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Rahul Sharma (EMP001)</td>
+                                <td>₹ 85,000</td>
+                                <td>₹ 8,200</td>
+                                <td style="font-weight:600">₹ 76,800</td>
+                                <td><button class="btn btn-outline btn-sm">Preview</button></td>
+                            </tr>
+                            <tr>
+                                <td>Priya Patel (EMP002)</td>
+                                <td>₹ 45,000</td>
+                                <td>₹ 3,500</td>
+                                <td style="font-weight:600">₹ 41,500</td>
+                                <td><button class="btn btn-outline btn-sm">Preview</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:24px;">
+                    <button class="btn btn-outline" onclick="nextStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <button class="btn btn-primary" onclick="showToast('Payroll Locked and Processed!', 'success'); nextStep(5)">Lock & Process Payroll</button>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        // Simplified stepper logic for UI demonstration
+        function nextStep(step) {
+            // In a real app, we'd have all 5 content blocks.
+            // For this UI mockup, jumping from 1 to 4 to show workflow.
+            document.querySelectorAll('.payroll-step').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.payroll-content').forEach(el => el.classList.remove('active'));
+            
+            if(step === 2) { step = 4; } // Skip to Review for demo
+            
+            for(let i=1; i<step; i++) {
+                let s = document.getElementById(`step${i}`);
+                if(s) { s.classList.add('completed'); }
+            }
+            
+            let currentStep = document.getElementById(`step${step}`);
+            if(currentStep) { currentStep.classList.add('active'); }
+            
+            let currentContent = document.getElementById(`content${step}`);
+            if(currentContent) { currentContent.classList.add('active'); }
+        }
+    </script>
+</body>
+</html>

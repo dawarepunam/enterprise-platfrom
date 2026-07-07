@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Support Tickets — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">🎫 Support Tickets</div><div class="page-subtitle">Manage client and internal support requests</div></div>
+    <div class="page-top-actions"><button class="btn btn-primary">+ Create Ticket</button></div>
+  </div>
+
+  <div class="proj-status-tabs mb-16" style="display:flex;gap:6px;flex-wrap:wrap;">
+    <button class="proj-tab active">All</button>
+    <button class="proj-tab">🔴 Open</button>
+    <button class="proj-tab">⏳ In Progress</button>
+    <button class="proj-tab">✅ Resolved</button>
+    <button class="proj-tab">🚫 Closed</button>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Ticket ID</th><th>Subject</th><th>Client/User</th><th>Priority</th><th>Status</th><th>Created</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>#TKT-1042</td><td><strong>Login Issue</strong></td><td>TechSoft Solutions</td><td><span class="badge badge-danger">High</span></td><td><span class="badge badge-danger">Open</span></td><td>Today, 10:30 AM</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+        <tr><td>#TKT-1041</td><td><strong>Billing Question</strong></td><td>MegaCorp</td><td><span class="badge badge-warning">Medium</span></td><td><span class="badge badge-info">In Progress</span></td><td>Yesterday</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+        <tr><td>#TKT-1040</td><td><strong>Feature Request</strong></td><td>InfoByte Corp</td><td><span class="badge badge-success">Low</span></td><td><span class="badge badge-success">Resolved</span></td><td>Oct 15, 2023</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+</body>
+</html>

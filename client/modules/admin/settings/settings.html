@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Settings — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/settings/settings.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">⚙️ Settings</div><div class="page-subtitle">Configure system preferences and integrations</div></div>
+  </div>
+
+  <div class="settings-layout">
+    <div class="settings-sidebar">
+      <div class="settings-nav">
+        <div class="settings-nav-item active" onclick="switchTab('profile',this)">👤 My Profile</div>
+        <div class="settings-nav-item" onclick="switchTab('company',this)">🏢 Company Details</div>
+        <div class="settings-nav-item" onclick="switchTab('security',this)">🔒 Security & 2FA</div>
+        <div class="settings-nav-item" onclick="switchTab('roles',this)">👥 Roles & Permissions</div>
+        <div class="settings-nav-item" onclick="switchTab('integrations',this)">🪟 Integrations</div>
+        <div class="settings-nav-item" onclick="switchTab('notifications',this)">🔔 Notifications</div>
+      </div>
+    </div>
+    <div class="settings-content">
+      
+      <!-- Profile -->
+      <div id="st-profile" class="st-section active">
+        <div class="st-title">My Profile</div>
+        <div class="st-subtitle">Update your personal information and profile photo</div>
+        <div style="display:flex;gap:20px;margin-bottom:24px;align-items:center;">
+          <div style="width:80px;height:80px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">AD</div>
+          <button class="btn btn-outline btn-sm">Change Photo</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" value="Admin User"/></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input class="form-control" value="admin@jmkc.com" disabled/></div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input class="form-control" value="+91 98765 43210"/></div>
+          <div class="form-group"><label class="form-label">Timezone</label><select class="form-control"><option>Asia/Kolkata (IST)</option></select></div>
+        </div>
+        <button class="btn btn-primary mt-16" onclick="window.showToast('Saved','Profile updated','success')">Save Changes</button>
+      </div>
+
+      <!-- Security -->
+      <div id="st-security" class="st-section">
+        <div class="st-title">Security Settings</div>
+        <div class="st-subtitle">Manage your password and secure your account</div>
+        <div class="form-grid mb-24">
+          <div class="form-group span-2"><label class="form-label">Current Password</label><input class="form-control" type="password"/></div>
+          <div class="form-group"><label class="form-label">New Password</label><input class="form-control" type="password"/></div>
+          <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-control" type="password"/></div>
+          <div class="form-group span-2"><button class="btn btn-outline" onclick="window.showToast('Updated','Password changed','success')">Update Password</button></div>
+        </div>
+        <div class="st-row">
+          <div><div class="st-label">Two-Factor Authentication (2FA)</div><div class="st-desc">Add an extra layer of security to your account.</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="st-row">
+          <div><div class="st-label">Active Sessions</div><div class="st-desc">You are currently logged in on 2 devices.</div></div>
+          <button class="btn btn-outline btn-sm">Log out all other devices</button>
+        </div>
+      </div>
+
+      <!-- Integrations -->
+      <div id="st-integrations" class="st-section">
+        <div class="st-title">Integrations</div>
+        <div class="st-subtitle">Connect JMKC CRM with external services</div>
+        <div class="st-row">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="font-size:32px;">🪟</div>
+            <div><div class="st-label">Microsoft 365</div><div class="st-desc">Sync with Teams, Outlook, OneDrive, and Calendar.</div></div>
+          </div>
+          <button class="btn btn-success btn-sm">Connected ✓</button>
+        </div>
+        <div class="st-row">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="font-size:32px;">💬</div>
+            <div><div class="st-label">WhatsApp Business API</div><div class="st-desc">Send automated messages to clients.</div></div>
+          </div>
+          <button class="btn btn-primary btn-sm">Connect</button>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div id="st-notifications" class="st-section">
+        <div class="st-title">Notification Settings</div>
+        <div class="st-subtitle">Manage how you receive alerts and updates</div>
+        
+        <div class="st-row">
+          <div><div class="st-label">Email Notifications</div><div class="st-desc">Receive daily summaries and critical alerts via email.</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="st-row">
+          <div><div class="st-label">Push Notifications</div><div class="st-desc">Receive real-time alerts in your browser.</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="st-row">
+          <div><div class="st-label">Project Updates</div><div class="st-desc">Get notified when a project status changes or tasks are delayed.</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="st-row">
+          <div><div class="st-label">New Messages</div><div class="st-desc">Get notified when someone sends you a direct message.</div></div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+
+<script src="/modules/admin/settings/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave Management - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+    .btn-apply-leave {
+      background: #3965FF; color: #fff; padding: 10px 20px; border-radius: 12px;
+      font-size: 14px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: .2s;
+    }
+    .btn-apply-leave:hover { background: #274ccf; }
+
+    /* ── Balance Grid ── */
+    .leave-balance-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 32px;
+    }
+    .bc-card {
+      background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      position: relative; overflow: hidden;
+    }
+    .bc-title { font-size: 13px; font-weight: 700; color: #a3aed1; margin-bottom: 8px; text-transform: uppercase; }
+    .bc-val-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 12px; }
+    .bc-avail { font-size: 28px; font-weight: 800; color: #2b3674; }
+    .bc-total { font-size: 14px; color: #a3aed1; font-weight: 500; }
+    .bc-total::before { content: "/ "; }
+    
+    .bc-bar { height: 6px; background: #f0f4ff; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+    .bc-bar-fill { height: 100%; border-radius: 4px; transition: width .6s; }
+    .bc-used { font-size: 11px; color: #a3aed1; font-weight: 600; text-align: right; }
+
+    /* Colors */
+    .c-cl { color: #3965FF; } .bg-cl { background: #3965FF; }
+    .c-sl { color: #EE5D50; } .bg-sl { background: #EE5D50; }
+    .c-el { color: #05CD99; } .bg-el { background: #05CD99; }
+    .c-co { color: #FFB547; } .bg-co { background: #FFB547; }
+    .c-ml { color: #4318FF; } .bg-ml { background: #4318FF; }
+
+    /* ── Main Layout ── */
+    .main-grid {
+      display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: stretch;
+    }
+
+    /* ── Left Content (Requests) ── */
+    .card-box { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); margin-bottom: 0; display: flex; flex-direction: column; }
+    .card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .card-title { font-size: 16px; font-weight: 700; color: #2b3674; display: flex; align-items: center; gap: 8px; }
+    
+    .status-pill-group { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .s-pill {
+      padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;
+      background: #f4f7fe; color: #a3aed1; border: 1.5px solid transparent; transition: .2s; white-space: nowrap;
+    }
+    .s-pill.active { background: #fff; color: #3965FF; border-color: #3965FF; }
+
+    #leaveCardsList { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Right Content (Calendar & History) ── */
+    .cal-nav { display: flex; align-items: center; gap: 12px; }
+    .cal-nav-btn {
+      width: 32px; height: 32px; border-radius: 8px; border: 1px solid #e2e8f0;
+      background: #fff; color: #2b3674; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .cal-month-label { font-size: 14px; font-weight: 700; color: #2b3674; min-width: 120px; text-align: center; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+    .cal-cell {
+      aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600; cursor: pointer; background: #f8fafc; border: 1.5px solid transparent; color: #2b3674;
+    }
+    .cal-cell.empty { background: transparent; cursor: default; }
+
+    .filter-select-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12px; outline: none; font-weight: 600; color: #2b3674; background: #f4f7fe; }
+    .leave-table { width: 100%; border-collapse: collapse; }
+    .leave-table th { padding: 10px 0; font-size: 10px; font-weight: 700; color: #a3aed1; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; text-align: left; }
+    .leave-table td { padding: 12px 0; border-bottom: 1px solid #f0f4ff; font-size: 12px; color: #2b3674; vertical-align: middle; }
+    .leave-table tr:hover td { background: #f8fafc; }
+
+    /* ── Modal Forms ── */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(43,54,116,0.4); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal-box {
+      background: #fff; border-radius: 20px; padding: 28px; width: 500px; max-width: 90%;
+      box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-close-btn { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #a3aed1; cursor: pointer; border: none; background: none; }
+    .modal-title { font-size: 20px; font-weight: 800; color: #2b3674; margin-bottom: 20px; }
+
+    .lv-type-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .lv-type-pill { padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #f4f7fe; color: #a3aed1; cursor: pointer; border: 1.5px solid transparent; transition: .2s; }
+    .lv-type-pill.active { background: rgba(57,101,255,0.1); color: #3965FF; border-color: #3965FF; }
+
+    .form-grp { margin-bottom: 16px; }
+    .form-lbl { display: block; font-size: 12px; font-weight: 600; color: #2b3674; margin-bottom: 6px; }
+    .lv-input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #f4f7fe; }
+    .lv-input:focus { border-color: #3965FF; }
+    .lv-textarea { resize: vertical; }
+
+    .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    
+    .lv-days-val { font-size: 16px; font-weight: 800; color: #3965FF; margin-bottom: 4px; }
+    .lv-balance-hint { font-size: 12px; color: #a3aed1; margin-bottom: 16px; }
+    
+    .btn-row { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+    .btn-cancel { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; background: #f4f7fe; color: #2b3674; border: none; cursor: pointer; }
+    .btn-confirm { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; background: #3965FF; color: #fff; border: none; cursor: pointer; }
+    .btn-danger { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; background: rgba(238,93,80,0.1); color: #EE5D50; border: none; cursor: pointer; }
+
+    /* Responsive */
+    @media (max-width: 1024px) { .leave-balance-grid { grid-template-columns: repeat(3, 1fr); } .main-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .leave-balance-grid { grid-template-columns: repeat(2, 1fr); } .date-row { grid-template-columns: 1fr; } }
+
+    /* ── Leave Cards ── */
+    .leave-card {
+      border: 1.5px solid #f0f4ff;
+      border-left: 4px solid var(--lc, #3965FF);
+      border-radius: 14px; padding: 16px 18px;
+      cursor: pointer; transition: .2s; background: #fff;
+    }
+    .leave-card:hover { border-color: var(--lc, #3965FF); box-shadow: 0 4px 20px rgba(57,101,255,0.1); transform: translateY(-2px); }
+    .lc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .lc-type { font-size: 14px; font-weight: 700; color: #2b3674; }
+    .lc-dates { font-size: 12px; color: #a3aed1; font-weight: 600; margin-bottom: 8px; }
+    .lc-reason { font-size: 13px; color: #5d6d8a; line-height: 1.5; margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lc-bottom { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #a3aed1; font-weight: 600; }
+    .lc-days { background: #f4f7fe; color: #3965FF; padding: 3px 10px; border-radius: 20px; font-weight: 700; font-size: 12px; }
+    .lc-applied { margin-left: auto; }
+
+    /* ── Status Badges ── */
+    .lv-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .lv-pending   { background: rgba(255,181,71,0.12);  color: #FFB547; }
+    .lv-approved  { background: rgba(5,205,153,0.12);   color: #05CD99; }
+    .lv-rejected  { background: rgba(238,93,80,0.12);   color: #EE5D50; }
+    .lv-cancelled { background: rgba(163,174,209,0.12); color: #a3aed1; }
+
+    /* ── Leave Empty State ── */
+    .leave-empty { text-align: center; padding: 48px 24px; color: #a3aed1; font-weight: 600; }
+    .leave-empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* ── Detail Modal ── */
+    .detail-info-grid { display: flex; flex-direction: column; gap: 0; }
+    .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f4ff; }
+    .dr-label { font-size: 12px; font-weight: 600; color: #a3aed1; text-transform: uppercase; }
+    .dr-val { font-size: 13px; font-weight: 600; color: #2b3674; }
+
+    /* ── Workflow Steps ── */
+    .workflow-steps { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .ws { display: flex; align-items: flex-start; gap: 12px; }
+    .ws-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .ws-done { background: rgba(5,205,153,0.12); }
+    .ws-pending-icon { background: rgba(255,181,71,0.12); }
+    .ws-skipped { background: rgba(163,174,209,0.12); }
+    .ws-info { flex: 1; }
+    .ws-title { font-size: 13px; font-weight: 700; color: #2b3674; }
+    .ws-sub { font-size: 11px; color: #a3aed1; margin-top: 2px; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-calendar-alt" style="color:#3965FF;margin-right:8px;"></i>Leave Management</h1>
+          <p>Track your balances, apply for leave, and view request history.</p>
+        </div>
+        <button class="btn-apply-leave" id="btnApplyLeave"><i class="fa fa-plus"></i> Apply Leave</button>
+      </div>
+
+      <!-- Balance Grid -->
+      <div class="leave-balance-grid" id="balanceGrid">
+        <div class="bc-card" style="cursor:pointer;" onclick="setLeaveFilter('cl')">
+          <div class="bc-title c-cl">Casual Leave</div>
+          <div class="bc-val-row"><span class="bc-avail" id="clUsedVal">—</span><span class="bc-total" id="clTotal">—</span></div>
+          <div class="bc-bar"><div class="bc-bar-fill bg-cl" id="clBar" style="width:0%"></div></div>
+          <div class="bc-used" id="clAvailLbl">— available</div>
+        </div>
+        <div class="bc-card" style="cursor:pointer;" onclick="setLeaveFilter('sl')">
+          <div class="bc-title c-sl">Sick Leave</div>
+          <div class="bc-val-row"><span class="bc-avail" id="slUsedVal">—</span><span class="bc-total" id="slTotal">—</span></div>
+          <div class="bc-bar"><div class="bc-bar-fill bg-sl" id="slBar" style="width:0%"></div></div>
+          <div class="bc-used" id="slAvailLbl">— available</div>
+        </div>
+        <div class="bc-card" style="cursor:pointer;" onclick="setLeaveFilter('el')">
+          <div class="bc-title c-el">Earned Leave</div>
+          <div class="bc-val-row"><span class="bc-avail" id="elUsedVal">—</span><span class="bc-total" id="elTotal">—</span></div>
+          <div class="bc-bar"><div class="bc-bar-fill bg-el" id="elBar" style="width:0%"></div></div>
+          <div class="bc-used" id="elAvailLbl">— available</div>
+        </div>
+        <div class="bc-card" style="cursor:pointer;" onclick="setLeaveFilter('co')">
+          <div class="bc-title c-co">Comp Off</div>
+          <div class="bc-val-row"><span class="bc-avail" id="coUsedVal">—</span><span class="bc-total" id="coTotal">—</span></div>
+          <div class="bc-bar"><div class="bc-bar-fill bg-co" id="coBar" style="width:0%"></div></div>
+          <div class="bc-used" id="coAvailLbl">— available</div>
+        </div>
+        <div class="bc-card" style="cursor:pointer;" onclick="setLeaveFilter('ml')">
+          <div class="bc-title c-ml">Maternity / Other</div>
+          <div class="bc-val-row"><span class="bc-avail" id="mlUsedVal">—</span><span class="bc-total" id="mlTotal">—</span></div>
+          <div class="bc-bar"><div class="bc-bar-fill bg-ml" id="mlBar" style="width:0%"></div></div>
+          <div class="bc-used" id="mlAvailLbl">— available</div>
+        </div>
+      </div>
+
+      <!-- Main Layout -->
+      <div class="main-grid">
+        
+        <!-- Left: Requests List -->
+        <div>
+          <div class="card-box" style="height: 100%;">
+            <div class="card-hdr">
+              <div class="card-title"><i class="fa fa-list"></i> My Leave Requests</div>
+            </div>
+            <div class="status-pill-group" id="filterPills" style="margin-bottom:20px;">
+              <div class="s-pill active" data-filter="all">All Requests</div>
+              <div class="s-pill" data-filter="pending">Pending</div>
+              <div class="s-pill" data-filter="approved">Approved</div>
+              <div class="s-pill" data-filter="rejected">Rejected</div>
+            </div>
+            <div id="leaveCardsList" style="flex: 1; overflow-y: auto; padding-right: 8px; min-height: 0;">
+              <div style="text-align:center;padding:40px;color:#a3aed1;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Calendar & Table -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="card-box">
+            <div class="card-hdr">
+              <div class="card-title">Leave Calendar</div>
+              <div class="cal-nav">
+                <button class="cal-nav-btn" id="calPrev"><i class="fa fa-chevron-left"></i></button>
+                <div class="cal-month-label" id="calMonthLabel"></div>
+                <button class="cal-nav-btn" id="calNext"><i class="fa fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+          </div>
+
+          <div class="card-box" style="flex: 1;">
+            <div class="card-hdr">
+              <div class="card-title"><i class="fa fa-chart-bar" style="color:#a3aed1;"></i> Yearly Summary</div>
+              <select class="filter-select-sm" id="yearFilter">
+                <option value="2026">This Year (2026)</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+            <div style="flex: 1; overflow-y: auto; min-height: 0;">
+              <table class="leave-table" id="leaveTable" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid #e2e8f0;">Type</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 4px;border-bottom:1.5px solid #e2e8f0;">From</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 4px;border-bottom:1.5px solid #e2e8f0;">To</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid #e2e8f0;">Days</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid #e2e8f0;">Reason</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid #e2e8f0;">Status</th>
+                    <th style="font-size:11px;font-weight:700;color:#a3aed1;text-transform:uppercase;padding:8px 0;border-bottom:1.5px solid #e2e8f0;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="leaveTableBody">
+                  <tr><td colspan="7" style="text-align:center;padding:24px;"><i class="fa fa-spinner fa-spin"></i></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Apply Leave Modal -->
+<div class="modal-overlay" id="leaveModal" style="display:none;">
+  <div class="modal-box">
+    <button class="modal-close-btn" id="leaveModalClose"><i class="fa fa-times"></i></button>
+    <div class="modal-title">Apply for Leave</div>
+    
+    <div class="form-grp">
+      <span class="form-lbl">Leave Type</span>
+      <div class="lv-type-pills" id="lvTypePills">
+        <div class="lv-type-pill active" data-type="Casual Leave">Casual Leave</div>
+        <div class="lv-type-pill" data-type="Sick Leave">Sick Leave</div>
+        <div class="lv-type-pill" data-type="Earned Leave">Earned Leave</div>
+        <div class="lv-type-pill" data-type="Comp Off">Comp Off</div>
+      </div>
+      <input type="hidden" id="lvType" value="Casual Leave"/>
+    </div>
+
+    <div class="date-row">
+      <div class="form-grp"><span class="form-lbl">From Date</span><input type="date" class="lv-input" id="lvFrom"/></div>
+      <div class="form-grp"><span class="form-lbl">To Date</span><input type="date" class="lv-input" id="lvTo"/></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div class="lv-days-val" id="lvDays">0 days</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <input type="checkbox" id="lvHalfDay"/> <label for="lvHalfDay" style="font-size:13px;color:#2b3674;font-weight:600;">Half Day</label>
+      </div>
+    </div>
+    <div class="lv-balance-hint" id="lvBalanceHint"></div>
+
+    <div class="form-grp">
+      <span class="form-lbl">Reason</span>
+      <textarea class="lv-input lv-textarea" id="lvReason" rows="3" placeholder="Briefly describe the reason for leave..."></textarea>
+    </div>
+
+    <div class="form-grp">
+      <span class="form-lbl">Emergency Contact</span>
+      <input type="text" class="lv-input" id="lvContact" placeholder="Name & number to reach you"/>
+    </div>
+
+    <div class="form-grp">
+      <span class="form-lbl">Medical Certificate / Document (Optional)</span>
+      <label for="lvDoc" style="display:block;padding:12px;border:1.5px dashed #a3aed1;border-radius:10px;text-align:center;cursor:pointer;background:#f8fafc;font-size:12px;color:#a3aed1;">
+        <i class="fa fa-cloud-upload-alt"></i> <span id="lvDocLabel">Click to upload file...</span>
+      </label>
+      <input type="file" id="lvDoc" style="display:none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"/>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-cancel" id="leaveModalCancel">Cancel</button>
+      <button class="btn-confirm" id="btnSubmitLeave">Submit Application</button>
+    </div>
+  </div>
+</div>
+
+<!-- Details Modal -->
+<div class="modal-overlay" id="detailModal" style="display:none;">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="document.getElementById('detailModal').style.display='none'"><i class="fa fa-times"></i></button>
+    <div class="modal-title" id="detailModalTitle">Leave Details</div>
+    <div id="detailModalContent" style="font-size:14px;color:#5d6d8a;line-height:1.6;margin-bottom:24px;"></div>
+    <div class="btn-row">
+      <button class="btn-danger" id="detailCancelBtn" style="display:none">Cancel Leave Request</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/leave/app.js"></script>
+</body>
+</html>

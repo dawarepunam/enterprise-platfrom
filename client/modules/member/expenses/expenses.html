@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Expenses</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="expenses.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout"><div id="sidebar"></div><main class="workspace-page">
+    <section class="workspace-hero workflow-hero"><div class="hero-copy"><p class="eyebrow">Expenses</p><h1>Submit claim amount, purpose and receipt proof</h1><p class="hero-text">Expenses route through Team Lead, Manager and Admin with persistent storage.</p></div></section>
+    <section class="content-grid member-grid">
+      <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">Submit Expense</p><h2>New claim</h2></div></div>
+        <form id="expenseForm" class="form-grid">
+          <label class="field"><span>Expense Title</span><input id="expenseTitle" type="text" required /></label>
+          <label class="field"><span>Amount</span><input id="expenseAmount" type="number" min="0" step="0.01" required /></label>
+          <label class="field"><span>Receipt URL</span><input id="expenseReceipt" type="text" placeholder="Paste receipt link or uploaded image URL" /></label>
+          <label class="field field-wide"><span>Purpose</span><textarea id="expensePurpose" rows="4" required></textarea></label>
+          <div class="btn-row field-wide"><button class="btn btn-primary" type="submit">Submit Expense</button></div>
+        </form>
+      </article>
+      <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">History</p><h2>Submitted expenses</h2></div></div><div id="expenseCards" class="stack-list"></div></article>
+    </section>
+  </main></div>
+  <script src="../../../assets/js/api.js"></script><script src="../../../assets/js/auth.js"></script><script src="../../../assets/js/theme.js"></script><script src="../../../assets/js/notifications.js"></script><script src="../../../assets/js/role-workspace.js"></script><script src="../member-workflow.js"></script><script src="expenses.js"></script>
+</body>
+</html>

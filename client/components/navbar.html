@@ -1,0 +1,136 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <button id="sidebarToggle" class="btn btn-icon" type="button" aria-label="Toggle sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16"></path>
+                <path d="M4 12h16"></path>
+                <path d="M4 17h16"></path>
+            </svg>
+        </button>
+        <a href="/modules/admin/dashboard/dashboard.html" class="navbar-brand">
+            <span><b class="brand-jmkc">JMKC</b> CRM</span>
+            <small>One platform. All your business.</small>
+        </a>
+        <label class="enterprise-navbar-search" for="globalSearchInput">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="globalSearchInput" type="search" placeholder="Search modules, reports, attendance, backup..." />
+        </label>
+    </div>
+
+    <div class="navbar-right">
+        <div class="navbar-dropdown">
+            <button id="quickCreateTrigger" class="btn quick-create-btn" type="button" aria-label="Open quick create" aria-expanded="false">
+                <span class="quick-create-icon">+</span>
+                <span class="quick-create-copy">
+                    <strong>Quick Create</strong>
+                    <small>New record</small>
+                </span>
+            </button>
+            <div id="quickCreateMenu" class="navbar-panel quick-create-menu hidden" aria-hidden="true">
+                <a href="/modules/admin/departments/departments.html" class="profile-menu-item" data-quick-action="primary">
+                    <span class="menu-item-icon">DP</span>
+                    <span>
+                        <strong>Create Department</strong>
+                        <small>Start a clean org structure</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/users/users.html" class="profile-menu-item" data-quick-action="secondary">
+                    <span class="menu-item-icon">US</span>
+                    <span>
+                        <strong>Create User</strong>
+                        <small>Onboard a new employee</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/projects/projects.html" class="profile-menu-item" data-quick-action="tertiary">
+                    <span class="menu-item-icon">PJ</span>
+                    <span>
+                        <strong>Create Project</strong>
+                        <small>Open a delivery flow</small>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <select id="languageSwitch" class="navbar-language" title="Language" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="mr">MR</option>
+            <option value="hi">HI</option>
+        </select>
+        <div class="navbar-dropdown">
+            <button id="notificationBtn" class="btn btn-icon" title="Notifications" type="button" aria-label="Open alerts" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"></path>
+                    <path d="M10 21h4"></path>
+                </svg>
+            <span id="notificationCount" class="notification-pill">0</span>
+            </button>
+            <div id="notificationPanel" class="navbar-panel notification-menu hidden" aria-hidden="true">
+                <div class="panel-header">
+                    <div>
+                        <strong>Alerts</strong>
+                        <span>Live system updates</span>
+                    </div>
+                    <button id="markAllNotificationsBtn" type="button" class="panel-link-btn">Mark all read</button>
+                </div>
+                <div id="notificationList" class="notification-list-panel"></div>
+                <a href="/modules/admin/notifications/notifications.html" class="panel-footer-link">Open notification center</a>
+            </div>
+        </div>
+
+        <div class="profile-menu-wrapper navbar-dropdown">
+            <button id="profileMenuTrigger" class="profile-menu-trigger" type="button" aria-expanded="false">
+                <div class="navbar-meta">
+            <strong id="navbarPageTitle">Admin Workspace</strong>
+            <span id="navbarPageDescription">Enterprise control</span>
+                </div>
+            <img id="navbarAvatar" src="/assets/images/default-avatar.png" alt="Profile" class="profile-avatar" />
+            </button>
+            <div id="profileMenu" class="navbar-panel profile-menu hidden" aria-hidden="true">
+                <a href="/modules/collaboration/meetings/meetings.html" class="profile-menu-item">
+                    <span class="menu-item-icon">ME</span>
+                    <span>
+                        <strong>Meetings</strong>
+                        <small>Calls, schedules and room links</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/profile/profile.html" class="profile-menu-item">
+                    <span class="menu-item-icon">PR</span>
+                    <span>
+                        <strong>Profile</strong>
+                        <small>Overview and personal details</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/profile/security.html" class="profile-menu-item">
+                    <span class="menu-item-icon">SC</span>
+                    <span>
+                        <strong>Security</strong>
+                        <small>Password, devices and access</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/profile/privacy.html" class="profile-menu-item">
+                    <span class="menu-item-icon">PV</span>
+                    <span>
+                        <strong>Privacy</strong>
+                        <small>Preferences and visibility</small>
+                    </span>
+                </a>
+                <a href="/modules/admin/settings/settings.html" class="profile-menu-item">
+                    <span class="menu-item-icon">ST</span>
+                    <span>
+                        <strong>Settings</strong>
+                        <small>Workspace and system options</small>
+                    </span>
+                </a>
+                <button type="button" class="profile-menu-item logout-menu-item" onclick="logout()">
+                    <span class="menu-item-icon">LO</span>
+                    <span>
+                        <strong>Logout</strong>
+                        <small>Exit this admin workspace</small>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

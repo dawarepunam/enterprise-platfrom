@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work - JMKC CRM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/global-ui.css">
+    <link rel="stylesheet" href="../../../assets/css/sidebar.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="../../../assets/js/api.js"></script>
+</head>
+<body class="page-fade-in">
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="main-content">
+        <div class="command-center-header">
+            <div>
+                <h1>Command Center ⚡</h1>
+                <p class="text-secondary">Your personalized workspace for deep work and productivity.</p>
+            </div>
+            <div class="dashboard-actions">
+                <button class="btn btn-primary shadow-hover" id="btn-start-focus">🧠 Start Focus Session</button>
+            </div>
+        </div>
+
+        <!-- Summary Bar -->
+        <div class="summary-bar" id="summaryBarContainer">
+            <div class="skeleton-loader h-20"></div>
+            <div class="skeleton-loader h-20"></div>
+            <div class="skeleton-loader h-20"></div>
+            <div class="skeleton-loader h-20"></div>
+            <div class="skeleton-loader h-20"></div>
+            <div class="skeleton-loader h-20"></div>
+        </div>
+
+        <div class="cc-grid">
+            <!-- Left Column -->
+            <div class="cc-col-left">
+
+                <!-- Focus Mode & Timer Widget -->
+                <div class="widget glass-card focus-widget" id="focusWidget">
+                    <div class="focus-header">
+                        <h2>🎯 Deep Work Timer</h2>
+                        <span class="badge progress" id="focusStatus">Pomodoro Ready</span>
+                    </div>
+                    <div class="focus-body">
+                        <div class="timer-display" id="timerDisplay">25:00</div>
+                        <div class="timer-controls">
+                            <button class="btn btn-primary" id="startTimerBtn">Start</button>
+                            <button class="btn btn-outline" id="pauseTimerBtn">Pause</button>
+                            <button class="btn btn-danger" id="stopTimerBtn">Stop</button>
+                        </div>
+                        <div class="focus-stats">
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="muteNotifs" checked> Mute Notifications</label>
+                            <span id="focusSessionCount">Sessions Today: 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Tracking -->
+                <div class="widget glass-card">
+                    <div class="widget-header">
+                        <h2>⏱️ Time Tracking</h2>
+                    </div>
+                    <div class="widget-body" id="timeTrackingContainer">
+                        <div class="time-tracker-row">
+                            <div class="time-display" id="trackerDisplay">00:00:00</div>
+                            <div class="timer-controls">
+                                <button class="btn btn-primary btn-sm" id="trackerStartBtn">Start</button>
+                                <button class="btn btn-outline btn-sm" id="trackerPauseBtn">Pause</button>
+                                <button class="btn btn-danger btn-sm" id="trackerStopBtn">Stop</button>
+                            </div>
+                        </div>
+                        <div class="time-stats" id="timeStatsContainer">
+                            <div class="skeleton-loader h-10"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Tasks -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>✅ Today's Tasks</h2></div>
+                    <div class="widget-body" id="todayTasksContainer">
+                        <div class="skeleton-loader h-20"></div>
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Overdue Tasks -->
+                <div class="widget glass-card glass-danger">
+                    <div class="widget-header"><h2 class="text-danger">⚠️ Overdue Tasks</h2></div>
+                    <div class="widget-body" id="overdueTasksContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Tasks -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>📅 Upcoming (Next 7 Days)</h2></div>
+                    <div class="widget-body" id="upcomingTasksContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Meetings Today -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🤝 Meetings Today</h2></div>
+                    <div class="widget-body" id="meetingsTodayContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🔄 Recent Activity</h2></div>
+                    <div class="widget-body" id="recentActivityContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="cc-col-right">
+
+                <!-- Workload & Capacity -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🔋 Workload Indicator</h2></div>
+                    <div class="widget-body workload-body" id="workloadContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- AI Assistant Widget -->
+                <div class="widget glass-card ai-widget">
+                    <div class="widget-header"><h2>✨ AI Assistant</h2></div>
+                    <div class="widget-body ai-body">
+                        <button class="btn btn-ai shadow-hover" id="aiDailyReport">Generate Daily Report</button>
+                        <button class="btn btn-ai shadow-hover" id="aiTaskSummary">Summarize Tasks</button>
+                        <button class="btn btn-ai shadow-hover" id="aiMeetingSummary">Summarize Meetings</button>
+                        <button class="btn btn-ai shadow-hover" id="aiStatusUpdate">Generate Status Update</button>
+                    </div>
+                </div>
+
+                <!-- Goals & KPI -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>📈 Goals & KPI Progress</h2></div>
+                    <div class="widget-body" id="goalsContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Deadlines -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🔥 Upcoming Deadlines</h2></div>
+                    <div class="widget-body" id="deadlinesContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Personal Workspace (localStorage) -->
+                <div class="widget glass-card personal-notes">
+                    <div class="widget-header">
+                        <h2>📝 Personal Workspace</h2>
+                        <button class="icon-btn-small" title="Add Note" id="addNoteBtn">➕</button>
+                    </div>
+                    <div class="widget-body" id="notesContainer"></div>
+                </div>
+
+                <!-- Bookmarks Widget -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🔖 Bookmarks</h2></div>
+                    <div class="widget-body" id="bookmarksContainer">
+                        <div class="empty-state"><p style="color:var(--text-secondary);text-align:center">No bookmarks yet.</p></div>
+                    </div>
+                </div>
+
+                <!-- Recent Items Widget -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>🕐 Recent Items</h2></div>
+                    <div class="widget-body" id="recentItemsContainer">
+                        <div class="empty-state"><p style="color:var(--text-secondary);text-align:center">No recent items.</p></div>
+                    </div>
+                </div>
+
+                <!-- Announcements Widget -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>📢 Announcements</h2></div>
+                    <div class="widget-body" id="announcementsContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+
+                <!-- Pending Approvals -->
+                <div class="widget glass-card">
+                    <div class="widget-header"><h2>⏳ Pending Approvals</h2></div>
+                    <div class="widget-body" id="approvalsContainer">
+                        <div class="skeleton-loader h-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../../assets/js/global-ui.js"></script>
+    <script src="/modules/employee/my-work/app.js"></script>
+</body>
+</html>

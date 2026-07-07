@@ -1,0 +1,52 @@
+<div class="hr-designation-details" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Back Button -->
+  <div style="position:absolute; top:-3rem; left:0;">
+    <button onclick="window.App.navigate('/hr/designations')" style="background:transparent; border:none; cursor:pointer; color:var(--hr-primary); font-weight:500;">
+      ← Back to Designations
+    </button>
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <h2 id="desigTitle" style="margin:0; margin-bottom:0.5rem;">Loading...</h2>
+      <div id="desigDesc" style="color:var(--hr-text-muted); font-size:0.875rem;">Handles team operations</div>
+    </div>
+    <button class="hr-icon-btn" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; font-size:0.875rem;">Edit</button>
+  </div>
+
+  <div class="hr-card" style="display:flex; align-items:center; gap:1rem; width:max-content; padding:1rem 2rem;">
+    <div style="font-size:2rem;">👥</div>
+    <div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Total Employees</div>
+      <div id="desigEmpCount" style="font-size:1.5rem; font-weight:700;">-</div>
+    </div>
+  </div>
+
+  <!-- Employee Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <h3 style="margin:0;">Employees with this Role</h3>
+      <a href="javascript:void(0)" style="color:var(--hr-primary); font-size:0.875rem; text-decoration:none;">View All Employees →</a>
+    </div>
+    
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Emp ID</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Name</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Department</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Joining Date</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="desigEmployeeTable">
+        <!-- Rows injected by script -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="/modules/hr/designations/script.js"></script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Dashboard</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero member-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">Team Member Dashboard</p>
+          <h1>Assigned projects, tasks, timer and collaboration in one clean workspace</h1>
+          <p class="hero-text">Project flow stays connected from assignment to delivery, with attendance, updates, files and team communication synced around your daily work.</p>
+          <div id="heroBadges" class="hero-badges"></div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="../projects/projects.html">Open My Projects</a>
+            <a class="btn ghost-btn" href="../workspace/workspace.html">Open Workspace</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Assigned Projects</span><strong id="projectCount">0</strong></article>
+          <article class="signal-card"><span>Running Timer</span><strong id="timerState">00:00:00</strong></article>
+          <article class="signal-card accent-card"><span>Notifications</span><strong id="notificationCount">0</strong><small>Unread alerts and reminders</small></article>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        <article class="metric-card"><span>Today's Tasks</span><strong id="totalCount">0</strong><small>Assigned execution items</small></article>
+        <article class="metric-card"><span>In Progress</span><strong id="activeCount">0</strong><small>Currently active work</small></article>
+        <article class="metric-card"><span>Review Queue</span><strong id="reviewCount">0</strong><small>Waiting for review</small></article>
+        <article class="metric-card"><span>Today's Attendance</span><strong id="attendanceState">-</strong><small>Check-in / check-out state</small></article>
+      </section>
+
+      <section class="content-grid member-grid">
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Assigned Projects</p><h2>Project boards ready for work</h2></div></div>
+          <div id="memberProjects" class="project-grid"></div>
+        </article>
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Quick View</p><h2>My next subtasks</h2></div></div>
+          <div id="memberTaskList" class="stack-list"></div>
+        </article>
+      </section>
+
+      <section class="content-grid member-grid">
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Daily Workflow</p><h2>Shortcuts that stay in sync</h2></div></div>
+          <div id="memberModules" class="action-grid"></div>
+        </article>
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Momentum</p><h2>Summary for today</h2></div></div>
+          <div id="memberInsights" class="workspace-tile-grid"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

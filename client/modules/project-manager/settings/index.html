@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <link rel="stylesheet" href="/modules/project-manager/settings/style.css" />
+  <style>
+    /* Settings Layout Layout */
+    .settings-container {
+      display: flex;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    /* Settings Sidebar */
+    .settings-sidebar {
+      width: 250px;
+      flex-shrink: 0;
+      background: var(--pm-card, #fff);
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 12px;
+      padding: 15px 0;
+      height: max-content;
+    }
+    .settings-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      cursor: pointer;
+      color: var(--pm-text, #111);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .settings-tab:hover {
+      background: var(--pm-bg, #f8fafc);
+    }
+    .settings-tab.active {
+      border-left-color: var(--pm-accent, #3b82f6);
+      background: rgba(59,130,246,0.05);
+      color: var(--pm-accent, #3b82f6);
+    }
+    .settings-tab i {
+      width: 18px;
+      text-align: center;
+      font-size: 16px;
+      color: var(--pm-text-muted, #64748b);
+    }
+    .settings-tab.active i {
+      color: var(--pm-accent, #3b82f6);
+    }
+
+    /* Settings Content */
+    .settings-content {
+      flex: 1;
+      background: var(--pm-card, #fff);
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 12px;
+      padding: 30px;
+    }
+    .settings-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .settings-pane.active {
+      display: block;
+    }
+    .settings-pane h2 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--pm-border, #eef0f4);
+      color: var(--pm-text, #111);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--pm-text-muted, #64748b);
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--pm-accent, #3b82f6);
+    }
+    select.form-control {
+      appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg fill="%2364748b" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center;
+    }
+
+    /* Toggle Switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .toggle-row:last-child {
+      border-bottom: none;
+    }
+    .toggle-info {
+      font-size: 14px;
+      color: var(--pm-text, #111);
+    }
+    .toggle-desc {
+      font-size: 12px;
+      color: var(--pm-text-muted, #64748b);
+      margin-top: 4px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #cbd5e1;
+      transition: .3s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--pm-accent, #3b82f6);
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Action Buttons */
+    .settings-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--pm-border, #eef0f4);
+    }
+    .pm-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pm-btn-primary {
+      background: var(--pm-accent, #3b82f6);
+      color: #fff;
+      border: none;
+    }
+    .pm-btn-primary:hover {
+      background: #2563eb;
+    }
+    .pm-btn-danger {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+    }
+    .pm-btn-danger:hover {
+      background: #dc2626;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+      <div class="pm-page-header">
+        <div>
+          <h1 class="pm-page-title">Settings</h1>
+          <p class="pm-page-subtitle">Manage your account preferences, privacy, and security.</p>
+        </div>
+      </div>
+
+      <div class="settings-container">
+        <!-- Sidebar Navigation -->
+        <div class="settings-sidebar">
+          <div class="settings-tab active" data-target="pane-general">
+            <i class="fa-solid fa-sliders"></i> General
+          </div>
+          <div class="settings-tab" data-target="pane-account">
+            <i class="fa-solid fa-user"></i> Account
+          </div>
+          <div class="settings-tab" data-target="pane-privacy">
+            <i class="fa-solid fa-shield-halved"></i> Privacy & Security
+          </div>
+          <div class="settings-tab" data-target="pane-notifications">
+            <i class="fa-solid fa-bell"></i> Notifications
+          </div>
+          <div class="settings-tab" data-target="pane-integrations">
+            <i class="fa-solid fa-plug"></i> Integrations
+          </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="settings-content">
+          <!-- General Pane -->
+          <div class="settings-pane active" id="pane-general">
+            <h2>General Preferences</h2>
+            <div class="form-group">
+              <label>Theme</label>
+              <select class="form-control" id="themeSelect">
+                <option value="system">System Default</option>
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Language</label>
+              <select class="form-control">
+                <option>English (US)</option>
+                <option>Marathi (मराठी)</option>
+                <option>Hindi (हिन्दी)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Time Zone</label>
+              <select class="form-control">
+                <option>(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                <option>(GMT+00:00) London</option>
+                <option>(GMT-05:00) Eastern Time</option>
+              </select>
+            </div>
+            <div class="settings-actions">
+              <button class="pm-btn pm-btn-primary" onclick="saveSettings()">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- Account Pane -->
+          <div class="settings-pane" id="pane-account">
+            <h2>Account Details</h2>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" value="Project Manager" id="accountName" />
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-control" value="manager@jmkc.com" readonly style="background: #f8fafc;" />
+              <small style="color:#64748b; font-size: 11px; margin-top:4px; display:block;">Contact IT admin to change your email.</small>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" class="form-control" placeholder="+91" />
+            </div>
+            <div class="settings-actions">
+              <button class="pm-btn pm-btn-primary" onclick="saveSettings()">Update Profile</button>
+            </div>
+          </div>
+
+          <!-- Privacy Pane -->
+          <div class="settings-pane" id="pane-privacy">
+            <h2>Privacy & Security</h2>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" class="form-control" placeholder="••••••••" />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" class="form-control" placeholder="Enter new password" />
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" class="form-control" placeholder="Confirm new password" />
+            </div>
+            <button class="pm-btn pm-btn-primary" style="margin-bottom:30px;" onclick="saveSettings()">Update Password</button>
+
+            <h3 style="font-size:15px; margin-bottom:15px;">Privacy Controls</h3>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Profile Visibility</div>
+                <div class="toggle-desc">Allow team members to see your contact info.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Online Status</div>
+                <div class="toggle-desc">Show when you are active on the platform.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Two-Factor Authentication (2FA)</div>
+                <div class="toggle-desc">Require a verification code on login.</div>
+              </div>
+              <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+            
+            <div style="margin-top:40px; padding:20px; border:1px solid #fee2e2; background:#fef2f2; border-radius:8px;">
+              <h3 style="color:#dc2626; font-size:15px; margin-top:0;">Danger Zone</h3>
+              <p style="font-size:13px; color:#991b1b; margin-bottom:15px;">Temporarily deactivate or permanently delete your account.</p>
+              <button class="pm-btn pm-btn-danger">Deactivate Account</button>
+            </div>
+          </div>
+
+          <!-- Notifications Pane -->
+          <div class="settings-pane" id="pane-notifications">
+            <h2>Notification Preferences</h2>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Email Notifications</div>
+                <div class="toggle-desc">Receive daily summaries and critical alerts via email.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Push Notifications</div>
+                <div class="toggle-desc">Show browser push notifications when active.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Task Assignments</div>
+                <div class="toggle-desc">Notify me when a new task is assigned.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div>Meeting Invites</div>
+                <div class="toggle-desc">Notify me of upcoming meetings and invites.</div>
+              </div>
+              <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+          </div>
+
+          <!-- Integrations Pane -->
+          <div class="settings-pane" id="pane-integrations">
+            <h2>Connected Apps</h2>
+            <div class="toggle-row" style="padding:15px 0;">
+              <div style="display:flex; gap:15px; align-items:center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg" alt="Teams" width="30">
+                <div class="toggle-info">
+                  <div>Microsoft Teams</div>
+                  <div class="toggle-desc">Sync meetings and chat messages.</div>
+                </div>
+              </div>
+              <button class="pm-btn pm-btn-outline" style="border:1px solid #cbd5e1; background:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;">Connect</button>
+            </div>
+            <div class="toggle-row" style="padding:15px 0;">
+              <div style="display:flex; gap:15px; align-items:center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg" alt="Outlook" width="30">
+                <div class="toggle-info">
+                  <div>Outlook Calendar</div>
+                  <div class="toggle-desc">Two-way sync for schedules and meetings.</div>
+                </div>
+              </div>
+              <button class="pm-btn pm-btn-outline" style="border:1px solid #cbd5e1; background:#fff; padding:6px 12px; border-radius:6px; cursor:pointer; color:#0ea5e9;">Connected</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- PM Standard Footer -->
+      
+    </main>
+  </div>
+</div>
+
+<script src="/modules/common/utils.js" type="module"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  // Tab Switching Logic
+  const tabs = document.querySelectorAll('.settings-tab');
+  const panes = document.querySelectorAll('.settings-pane');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active from all
+      tabs.forEach(t => t.classList.remove('active'));
+      panes.forEach(p => p.classList.remove('active'));
+
+      // Add active to clicked tab and corresponding pane
+      tab.classList.add('active');
+      const targetId = tab.getAttribute('data-target');
+      document.getElementById(targetId).classList.add('active');
+    });
+  });
+
+  // Mock Save Settings function
+  window.saveSettings = function() {
+    if(window.pmToast) {
+      window.pmToast('Settings saved successfully', 'success');
+    } else {
+      alert('Settings saved successfully!');
+    }
+  };
+
+  // Pre-fill user data if available
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.getUser) {
+      const user = window.getUser();
+      if (user && user.name) {
+        const nameInput = document.getElementById('accountName');
+        if (nameInput) nameInput.value = user.name;
+      }
+    }
+  });
+</script>
+</body>
+</html>

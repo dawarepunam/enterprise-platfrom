@@ -1,0 +1,868 @@
+JMKC CRM — FINAL ADMIN MODULE (PRODUCTION LEVEL)
+
+LOGIN FLOW
+
+System Start
+
+↓
+
+Single Login Page
+
+/login
+
+Fields:
+
+Email
+Password
+Role
+
+Roles:
+
+Admin
+Project Manager
+Product Manager
+HR
+Marketing
+Sales
+Calling Team
+Employee
+Client
+
+↓
+
+Login
+
+↓
+
+Backend Verify
+
+↓
+
+MongoDB User Collection Check
+
+↓
+
+JWT Generate
+
+↓
+
+Role Check
+
+↓
+
+Redirect
+
+ADMIN → /admin/dashboard
+
+PROJECT MANAGER → /pm/dashboard
+
+PRODUCT MANAGER → /product-manager/dashboard
+
+HR → /hr/dashboard
+
+MARKETING → /marketing/dashboard
+
+SALES → /sales/dashboard
+
+CALLING TEAM → /calling/dashboard
+
+EMPLOYEE → /employee/dashboard
+
+CLIENT → /client/dashboard
+
+ADMIN MASTER RESPONSIBILITIES
+
+Company Setup
+
+Department Setup
+
+User Management
+
+Role Assignment
+
+Project Monitoring
+
+Attendance Monitoring
+
+Leave Monitoring
+
+Client Monitoring
+
+Chat Monitoring
+
+Reports
+
+Analytics
+
+Audit Logs
+
+Finance Monitoring
+
+Microsoft Integration
+
+AI Insights
+
+Executive Dashboard
+
+MASTER LAYOUT
+
+Fixed Sidebar
+
+Sticky Header
+
+Scrollable Content
+
+Fixed Footer
+
+Footer
+
+© JMKCGRPINDIA
+Created By Punam
+
+SIDEBAR
+
+Dashboard
+
+Departments
+
+Users
+
+Project Managers
+
+Projects
+
+Tasks
+
+Attendance
+
+Leaves
+
+Clients
+
+Reports
+
+Analytics
+
+Meetings
+
+Microsoft Hub
+
+Chat
+
+Documents
+
+Notifications
+
+Finance
+
+Support Tickets
+
+Audit Logs
+
+AI Center
+
+Executive Overview
+
+Settings
+
+HEADER
+
+Logo
+
+Global Search
+
+Notifications
+
+Messages
+
+Profile Dropdown
+
+Profile Dropdown
+
+My Profile
+
+Security
+
+Privacy
+
+Settings
+
+Integrations
+
+Logout
+
+PROJECT MANAGER MODULE INSIDE ADMIN
+
+Click:
+
+Project Managers
+
+↓
+
+Show List
+
+Filters:
+
+Department
+
+Status
+
+Projects
+
+Attendance
+
+Search
+
+Cards:
+
+PM Name
+
+Department
+
+Projects Assigned
+
+Projects Completed
+
+Attendance %
+
+Performance Score
+
+Click PM
+
+↓
+
+/admin/project-managers/:id
+
+Tabs
+
+Overview
+
+Projects
+
+Tasks
+
+Attendance
+
+Leaves
+
+Meetings
+
+Documents
+
+Analytics
+
+Performance
+
+Chats
+
+Timeline
+
+Show:
+
+Projects Assigned By Admin
+
+Projects Assigned By Product Manager
+
+Total Team Members
+
+Total Tasks
+
+Delayed Tasks
+
+Completed Tasks
+
+Attendance
+
+Leaves
+
+Project Health Score
+
+PRODUCT MANAGER TRACKING
+
+Admin must see:
+
+Projects received from Marketing/Sales
+
+Projects assigned to PM
+
+Project Status
+
+Requirements
+
+Budget
+
+Client
+
+Timeline
+
+Approval Logs
+
+CLIENT MANAGEMENT
+
+Click Client
+
+↓
+
+Client Profile
+
+Show
+
+Company
+
+Contact Person
+
+Projects
+
+Budget
+
+Meetings
+
+Invoices
+
+Chats
+
+Documents
+
+Requirements
+
+Project History
+
+PROJECT MODULE
+
+Projects
+
+↓
+
+Cards
+
+Active
+
+Completed
+
+Delayed
+
+Draft
+
+Click Project
+
+↓
+
+Overview
+
+Tasks
+
+Files
+
+Meetings
+
+Chat
+
+Budget
+
+Activity
+
+Approvals
+
+Analytics
+
+Team Members
+
+Dependencies
+
+Risks
+
+Show
+
+Created By
+
+Assigned By
+
+Assigned To
+
+Department
+
+Project Manager
+
+Product Manager
+
+Employees
+
+Progress %
+
+TASK MANAGEMENT
+
+Task Status
+
+Pending
+
+In Progress
+
+Review
+
+Completed
+
+Blocked
+
+Cancelled
+
+Click Task
+
+↓
+
+Task Details
+
+Files
+
+Comments
+
+History
+
+Dependencies
+
+Approvals
+
+ATTENDANCE
+
+Cards
+
+Present
+
+Absent
+
+Late
+
+On Leave
+
+WFH
+
+Click Card
+
+↓
+
+Filtered Employee List
+
+Click Employee
+
+↓
+
+Attendance Profile
+
+Filters
+
+7 Days
+
+15 Days
+
+30 Days
+
+3 Months
+
+6 Months
+
+1 Year
+
+Show
+
+Check In
+
+Check Out
+
+Hours
+
+Late Count
+
+Attendance %
+
+LEAVES
+
+Workflow
+
+Employee
+
+↓
+
+Project Manager
+
+↓
+
+HR
+
+↓
+
+Admin
+
+Status
+
+Pending
+
+Approved
+
+Rejected
+
+Cancelled
+
+Show
+
+Leave History
+
+Approval Timeline
+
+Attendance Sync
+
+REPORTS
+
+Employee Reports
+
+Attendance Reports
+
+Leave Reports
+
+Project Reports
+
+Revenue Reports
+
+Client Reports
+
+Department Reports
+
+Export
+
+PDF
+
+Excel
+
+CSV
+
+ANALYTICS
+
+Revenue Trend
+
+Attendance Trend
+
+Leave Trend
+
+Department Productivity
+
+Project Success Rate
+
+Lead Conversion
+
+Client Satisfaction
+
+CHAT
+
+Direct Messages
+
+Project Chats
+
+Department Chats
+
+Client Chats
+
+Voice Notes
+
+Files
+
+Images
+
+Read Receipts
+
+Pinned Messages
+
+Search
+
+MICROSOFT HUB
+
+Teams
+
+Outlook
+
+OneDrive
+
+Calendar
+
+Click Teams
+
+↓
+
+Open Teams
+
+Create Meeting
+
+Invite Members
+
+Click Outlook
+
+↓
+
+Send Mail
+
+Click OneDrive
+
+↓
+
+Manage Files
+
+Click Calendar
+
+↓
+
+Schedule Meeting
+
+DOCUMENTS
+
+Project Files
+
+Client Files
+
+HR Files
+
+Invoices
+
+Contracts
+
+Reports
+
+Preview
+
+Download
+
+Share
+
+NOTIFICATIONS
+
+Project Assigned
+
+Task Assigned
+
+Task Completed
+
+Leave Request
+
+Meeting Reminder
+
+Client Message
+
+System Alert
+
+Click Notification
+
+↓
+
+Redirect To Related Page
+
+AUDIT LOGS
+
+User
+
+Action
+
+Module
+
+Date
+
+Time
+
+IP
+
+Device
+
+FINANCE
+
+Revenue
+
+Expenses
+
+Invoices
+
+Payments
+
+Profit
+
+SUPPORT TICKETS
+
+Open
+
+Assigned
+
+In Progress
+
+Resolved
+
+Closed
+
+AI CENTER
+
+AI Weekly Summary
+
+AI Project Risk Detection
+
+AI Attendance Analysis
+
+AI Productivity Insights
+
+AI Revenue Forecast
+
+AI Performance Score
+
+EXECUTIVE OVERVIEW
+
+Total Revenue
+
+Total Projects
+
+Total Employees
+
+Total Clients
+
+Growth %
+
+Profit
+
+Company Health Score
+
+Top Employees
+
+Top Departments
+
+Critical Alerts
+
+SETTINGS (RBAC)
+
+Roles & Permissions
+
+Security
+
+Privacy
+
+Integrations
+
+Notifications
+
+Sessions
+
+Devices
+
+2FA
+
+Microsoft Settings
+
+FOLDER STRUCTURE
+
+admin/
+
+dashboard/
+
+departments/
+
+users/
+
+project-managers/
+
+projects/
+
+tasks/
+
+attendance/
+
+leaves/
+
+clients/
+
+reports/
+
+analytics/
+
+chat/
+
+meetings/
+
+microsoft-hub/
+
+documents/
+
+notifications/
+
+finance/
+
+support/
+
+audit-logs/
+
+ai-center/
+
+executive-overview/
+
+settings/
+
+Each Folder
+
+index.html
+
+index.css
+
+index.js
+
+details/
+
+create/
+
+edit/
+
+analytics/
+
+components/
+
+modals/
+
+tables/
+
+cards/
+
+charts/
+
+UI RULES
+
+Professional Enterprise UI
+
+No Dark Theme
+
+Microsoft + Monday + ClickUp Inspired
+
+Card Based Design
+
+Large Icons
+
+Hover Effects
+
+Tooltips
+
+Dynamic Charts
+
+ApexCharts
+
+Chart.js
+
+Socket.io
+
+MongoDB Driven
+
+No Static Data
+
+Every Row Click Opens Details Page
+
+Every Module Has:
+
+Dashboard
+
+List View
+
+Details View
+
+Analytics View
+
+Reports View
+
+Microsoft Integration View
+
+proper ui banav ani frontend ni backend proper banaun d emla ha project html,css,js,express,node,mongodb madhe ahe tu mla proepr banun de na sidebar proper pratek module madhe pratek page vr pahije proper redirect zala pahije proper next vr disla pahije content mla microsft integration pahije mla pratek module sathi me env madhe data taktey mazya ani na ui pn mla attarctive pahije user friendly website banavayche ahe ani na login cha flow neat banav mnje amdin add karel tya email padd ne login zlaa pahije role wise header footer proper banav scroll kela ke header pn scroll nhi zala pahije mnje content barobar header pn vr nhi gela pahije footer la copyright jmkcgrpindia tak created by punam side bar ne proper navigate zlaa pahije ani na icons proper use kar image sarkhe mnje na lagecg kalan hyt kay ye ani na card proper use kar hover kel ame kontya cocntent vr tr proper data disal pahije ..popup proper ala apahije proper msg plz color combination..ani na ekach page vr sgla nko theu prope page la redirect kar pratek ka che profile ,tyla setting de tyt privachy vagere sgla add kar ui jast dark nko theu me je file dele ahe te me banavle ahe tu proper de mla banaun project company cha project ye proper de mla proper ui banun de ani attractive baav ha plz proper frontend ani backend connect kar database pn proper banunde mla sgla ani pratek module cha filemadhe subfolder madhe html,css,js che file separate thev ani proper banav ui pn proper working banav static nko banau kahi dynamic pahije mla suppose me ekhadya data vr clcick kela tr proper tyacha dtaa disla pahije mnje suppose jr me admin madhe user chya name vr clcik kela ke tyacha sgla realated data disla pahije same sglya module satthi asha banav dynamic folder structure proper kar maza module wise data thev mla new zip file banaun de prper pages la redirect kar ani Microsoft team sglya module madhe integrate kar sidedbar proper disla pahije sglya module chafinal flow de ata detailoed made admibnn cha sgl7ya module chya aacornding je je add karayuchy te sgla de ata mla  hya 2 imahe refer kar pn ui  ajun attractive ani user friendlt banav ani responsive banav mazya hya porject madhe proper banaun de mla 

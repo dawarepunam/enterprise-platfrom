@@ -1,0 +1,59 @@
+<div id="profileDropdown" class="modal">
+    <div class="modal-content" style="max-width: 320px;">
+        <div class="text-center">
+            <img id="dropdownAvatar" src="/assets/images/default-avatar.png"
+                alt="Profile"
+                style="width:80px;height:80px;border-radius:50%;object-fit:cover;" />
+            <h3 id="dropdownName" class="mt-2">User Name</h3>
+            <p id="dropdownRole" style="color:#64748b;">Role</p>
+        </div>
+
+        <hr style="margin: 16px 0;" />
+
+        <a href="/modules/admin/profile/profile.html" class="btn btn-primary"
+            style="display:block;text-align:center;margin-bottom:10px;">
+            My Profile
+        </a>
+
+        <a href="/modules/admin/settings/settings.html" class="btn"
+            style="display:block;text-align:center;border:1px solid #e2e8f0;margin-bottom:10px;">
+            Settings
+        </a>
+
+        <button class="btn" style="width:100%;border:1px solid #e2e8f0;"
+            onclick="logout()">
+            Logout
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+
+        if (user) {
+            document.getElementById("dropdownName").textContent = user.name || "User";
+            document.getElementById("dropdownRole").textContent = user.role || "Member";
+
+            const avatarSrc = window.resolveWorkspaceImageSrc
+                ? window.resolveWorkspaceImageSrc(user.profilePhoto)
+                : (user.profilePhoto || "/assets/images/default-avatar.png");
+            document.getElementById("dropdownAvatar").src = avatarSrc;
+        }
+
+        const avatar = document.getElementById("navbarAvatar");
+        const modal = document.getElementById("profileDropdown");
+
+        if (avatar && modal) {
+            avatar.addEventListener("click", () => {
+                modal.classList.add("active");
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove("active");
+                }
+            });
+        }
+    });
+</script>

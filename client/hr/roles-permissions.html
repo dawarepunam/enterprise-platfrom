@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roles & Permissions - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .roles-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .roles-list {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .rl-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-gray);
+            background: var(--bg-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rl-header h3 { font-size: 1rem; color: var(--dark-navy); }
+        
+        .rl-item {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-gray);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+        }
+        .rl-item:last-child { border-bottom: none; }
+        .rl-item:hover { background: var(--bg-color); }
+        .rl-item.active {
+            background: rgba(37,99,235,.05);
+            border-left-color: var(--primary-blue);
+        }
+        .rl-name { font-weight: 600; color: var(--dark-navy); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+        .rl-meta { font-size: .8rem; color: var(--text-gray); }
+
+        .permissions-panel {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+        }
+        .pp-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex; justify-content: space-between; align-items: flex-start;
+        }
+        .pp-header h2 { font-size: 1.3rem; color: var(--dark-navy); margin-bottom: 4px; }
+        
+        .perm-table { width: 100%; border-collapse: collapse; }
+        .perm-table th { background: var(--bg-color); padding: 12px 24px; text-align: left; font-size: .85rem; color: var(--text-gray); border-bottom: 1px solid var(--border-gray); }
+        .perm-table td { padding: 16px 24px; border-bottom: 1px solid var(--border-gray); font-size: .9rem; }
+        .perm-module { font-weight: 600; color: var(--dark-navy); display: flex; align-items: center; gap: 8px; }
+        .perm-module i { color: var(--primary-blue); width: 16px; text-align: center; }
+
+        .cb-wrap { display: flex; align-items: center; gap: 6px; }
+        .cb-wrap input { width: 16px; height: 16px; accent-color: var(--primary-blue); cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li><a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span>People</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a></li>
+                    <li><a href="#" class="menu-item"><i class="fa-solid fa-calendar-check"></i><span>Workforce</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a></li>
+                    <li><a href="#" class="menu-item"><i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a></li>
+                    <li><a href="#" class="menu-item"><i class="fa-solid fa-briefcase"></i><span>Recruitment</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a></li>
+                    <li><a href="#" class="menu-item"><i class="fa-solid fa-bullseye"></i><span>Talent</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a></li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active"><i class="fa-solid fa-gear"></i><span>Settings</span><i class="fa-solid fa-chevron-up chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="reports.html" class="submenu-item">Analytics & Reports</a>
+                            <a href="settings.html" class="submenu-item">System Settings</a>
+                            <a href="roles-permissions.html" class="submenu-item active">Roles & Permissions</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding:4px 10px;font-size:.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Settings</span> > Roles & Permissions</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=Admin&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Access Control</h1>
+            </div>
+
+            <div class="roles-layout">
+                <!-- Roles List -->
+                <div class="roles-list">
+                    <div class="rl-header">
+                        <h3>Defined Roles</h3>
+                        <button class="btn btn-outline btn-sm" onclick="showToast('Create new role functionality...','info')"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    
+                    <div class="rl-item">
+                        <div class="rl-name">Super Admin <i class="fa-solid fa-lock" style="color:var(--text-gray);font-size:.8rem;"></i></div>
+                        <div class="rl-meta">Full system access</div>
+                    </div>
+                    
+                    <div class="rl-item active">
+                        <div class="rl-name">HR Manager</div>
+                        <div class="rl-meta">8 users assigned</div>
+                    </div>
+                    
+                    <div class="rl-item">
+                        <div class="rl-name">Payroll Admin</div>
+                        <div class="rl-meta">3 users assigned</div>
+                    </div>
+                    
+                    <div class="rl-item">
+                        <div class="rl-name">Recruiter</div>
+                        <div class="rl-meta">5 users assigned</div>
+                    </div>
+                    
+                    <div class="rl-item">
+                        <div class="rl-name">Employee (ESS) <i class="fa-solid fa-lock" style="color:var(--text-gray);font-size:.8rem;"></i></div>
+                        <div class="rl-meta">Default access</div>
+                    </div>
+                </div>
+
+                <!-- Permissions Matrix -->
+                <div class="permissions-panel">
+                    <div class="pp-header">
+                        <div>
+                            <h2>HR Manager</h2>
+                            <p style="color:var(--text-gray);font-size:.9rem;">Can manage employee data, attendance, leaves and performance.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="showToast('Permissions Updated!','success')">Save Changes</button>
+                    </div>
+                    
+                    <table class="perm-table">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>View</th>
+                                <th>Create</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="perm-module"><i class="fa-solid fa-users"></i> Employee Directory</div></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                            </tr>
+                            <tr>
+                                <td><div class="perm-module"><i class="fa-solid fa-calendar-check"></i> Attendance & Leaves</div></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                            </tr>
+                            <tr>
+                                <td><div class="perm-module"><i class="fa-solid fa-indian-rupee-sign"></i> Payroll Processing</div></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                            </tr>
+                            <tr>
+                                <td><div class="perm-module"><i class="fa-solid fa-briefcase"></i> Recruitment</div></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox" checked> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                            </tr>
+                            <tr>
+                                <td><div class="perm-module"><i class="fa-solid fa-gear"></i> System Settings</div></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                                <td><label class="cb-wrap"><input type="checkbox"> Allowed</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Activity Log</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="activity-log">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Audit View</p>
+                        <h1>Recent admin activity log</h1>
+                        <p class="muted">Review high-impact actions, approvals and operational changes in one place.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <a class="btn btn-primary" href="../audit-logs/audit-logs.html">Open Audit Module</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div id="activityList" class="activity-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

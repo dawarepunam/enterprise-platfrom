@@ -1,0 +1,8887 @@
+proper ui banav ani frontend ni backend proper banaun d emla ha project html,css,js,express,node,mongodb madhe ahe tu mla proepr banun de na sidebar proper pratek module madhe pratek page vr pahije proper redirect zala pahije proper next vr disla pahije content mla microsft integration pahije mla pratek module sathi me env madhe data taktey mazya ani na ui pn mla attarctive pahije user friendly website banavayche ahe ani na login cha flow neat banav mnje amdin add karel tya email padd ne login zlaa pahije role wise header footer proper banav scroll kela ke header pn scroll nhi zala pahije mnje content barobar header pn vr nhi gela pahije footer la copyright jmkcgrpindia tak created by punam side bar ne proper navigate zlaa pahije ani na icons proper use kar image sarkhe mnje na lagecg kalan hyt kay ye ani na card proper use kar hover kel ame kontya cocntent vr tr proper data disal pahije ..popup proper ala apahije proper msg plz color combination..ani na ekach page vr sgla nko theu prope page la redirect kar pratek ka che profile ,tyla setting de tyt privachy vagere sgla add kar ui jast dark nko theu me je file dele ahe te me banavle ahe tu proper de mla banaun project company cha project ye proper de mla proper ui banun de ani attractive baav ha plz proper frontend ani backend connect kar database pn proper banunde mla sgla ani pratek module cha filemadhe subfolder madhe html,css,js che file separate thev ani proper banav ui pn proper working banav static nko banau kahi dynamic pahije mla suppose me ekhadya data vr clcick kela tr proper tyacha dtaa disla pahije mnje suppose jr me admin madhe user chya name vr clcik kela ke tyacha sgla realated data disla pahije same sglya module satthi asha banav dynamic folder structure proper kar maza module wise data thev mla new zip file banaun de  prper pages la redirect kar ani Microsoft team sglya module madhe integrate kar sidedbar proper disla pahije sglya module cha # 1. ADMIN MODULE 
+### Admin काय करू शकतो?
+* Company Setup
+* Department Create
+* User Create
+* Role Assign
+* Project Create
+* Draft Project Save
+* Project Assign
+* Attendance Check
+* Leave Approval
+* Reports Generate
+* Analytics View
+* Audit Logs View
+* Microsoft Integration
+* Chat Monitoring
+* Client Requirements Review
+# 2. DEPARTMENT MODULE 🏢
+Departments:
+* IT
+* Mechanical
+* HR
+* Sales
+* Marketing
+* Calling Team
+* Finance
+* Support
+### Admin Click Department
+उदा:IT Department  Employees
+Projects
+Project Managers
+Performance
+Reports
+# 3. USER MANAGEMENT MODULE 👥
+Admin User Create करेल. Roles:
+Project Manager
+Product Manager
+HR
+Sales
+Marketing
+Calling Team
+Employee
+Client
+### User Profile  :Overview
+Projects
+Attendance
+Leaves
+Meetings
+Performance
+Documents
+Chats
+Timeline
+# 4. CLIENT MODULE 🤝
+Client Login
+↓
+Requirement Submit
+Project Requirement
+Budget
+Deadline
+Priority
+Attachments
+↓
+Admin Review
+↓
+Department Assign
+↓Project Manager Assign
+# 5. PROJECT MODULE 📁
+Admin Create Project
+Project Name
+Client
+Budget
+Deadline
+Priority
+Description
+Buttons:
+Save Draft
+Assign Project
+# 6. DRAFT PROJECT MODULE 📝
+Admin Draft Save करू शकतो.
+Page:text
+/projects/drafts
+Options:```text
+Preview
+Edit
+Delete
+Assign
+Publish
+# 7. PROJECT ASSIGNMENT MODULE 🎯
+Admin
+↓
+Select Project
+↓
+Select Department
+↓
+Select Project Manager
+↓
+Assign
+Example:Mechanical Project
+↓
+Mechanical PM
+# 8. PROJECT WORKSPACE MODULE 🚀
+Each Project Page
+Tabs:```text
+Overview
+Tasks
+Files
+Meetings
+Chat
+Reports
+Budget
+Activity
+Approvals
+# 9. TASK MANAGEMENT MODULE ✅
+Status:
+text
+Pending
+In Progress
+Review
+Completed  Admin सर्व Tasks पाहू शकतो.
+# 10. KANBAN MODULE 📋
+
+Monday.com Style
+
+Columns:
+
+```text
+To Do
+
+In Progress
+
+Testing
+
+Done
+```
+
+Drag & Drop.
+
+---
+
+# 11. GANTT CHART MODULE 📊
+
+Timeline View
+
+```text
+Project
+Start Date
+End Date
+Progress
+```
+
+---
+
+# 12. DAILY UPDATE MODULE 📤
+
+PM किंवा Employee Upload करेल
+
+```text
+Images
+Screenshots
+Videos
+PDF
+Excel
+ZIP
+Code
+```
+
+Admin सर्व Updates पाहू शकतो.
+
+---
+
+# 13. CHAT MODULE 💬
+
+Chat Between:
+
+```text
+Admin
+PM
+Employee
+HR
+Client
+```
+
+Features:
+
+```text
+Images
+Files
+Voice Notes
+Pinned Messages
+Read Receipts
+```
+
+---
+
+# 14. MICROSOFT HUB MODULE 🟦
+
+Cards:
+
+```text
+Open Teams
+
+Open Outlook
+
+Open OneDrive
+
+Open Calendar
+```
+
+Direct Redirect.
+
+---
+
+# 15. ATTENDANCE MODULE 📅
+
+Admin View:
+
+```text
+Present
+Absent
+Late
+Attendance %
+```
+
+Filters:
+
+```text
+Department
+Role
+Name
+Date
+```
+
+---
+
+# 16. LEAVE MODULE 🌴
+
+Flow:
+
+```text
+Employee
+
+↓
+
+Project Manager
+
+↓
+
+HR
+
+↓
+
+Admin
+```
+
+Status:
+
+```text
+Pending
+Approved
+Rejected
+```
+
+---
+
+# 17. REPORT MODULE 📄
+
+Generate:
+
+```text
+Employee Report
+
+Attendance Report
+
+Project Report
+
+Revenue Report
+
+Department Report
+```
+
+Export:
+
+```text
+PDF
+Excel
+CSV
+```
+
+---
+
+# 18. ANALYTICS MODULE 📈
+
+Charts:
+
+```text
+Revenue
+
+Lead Conversion
+
+Project Success Rate
+
+Attendance Trend
+
+Department Productivity
+```
+
+---
+
+# 19. APPROVAL CENTER MODULE ✔️
+
+Single Page
+
+```text
+Leave Approval
+
+Expense Approval
+
+Project Approval
+
+Client Approval
+```
+
+---
+
+# 20. DOCUMENT CENTER MODULE 📂
+
+Folders:
+
+```text
+Project Files
+
+Client Files
+
+HR Files
+
+Invoices
+
+Contracts
+```
+
+Search + Preview.
+
+---
+
+# 21. NOTIFICATION MODULE 🔔
+
+Real Time
+
+```text
+Project Assigned
+
+Leave Request
+
+Meeting Reminder
+
+Task Completed
+
+Client Message
+```
+
+---
+
+# 22. AUDIT LOG MODULE 🛡️
+
+Track Everything
+
+```text
+User
+Action
+Date
+Time
+IP
+Device
+```
+
+---
+
+# 23. FINANCE MODULE 💰
+
+Admin Only
+
+```text
+Invoices
+
+Payments
+
+Expenses
+
+Revenue
+```
+
+---
+
+# 24. SUPPORT TICKET MODULE 🎫
+
+Users Raise Ticket
+
+↓
+
+Admin Assign
+
+↓
+
+Support Team Resolve
+
+↓
+
+Close Ticket
+
+---
+
+# 25. SETTINGS MODULE ⚙️
+
+Tabs:
+
+```text
+Profile
+
+Security
+
+Privacy
+
+Notifications
+
+Integrations
+
+Roles & Permissions
+
+Audit Logs
+```
+
+---
+
+# 26. AI MODULE 🤖
+
+Features:
+
+```text
+AI Weekly Summary
+AI Project Risk Detection
+AI Attendance Analysis
+AI Productivity Insights
+AI Performance Analysis
+# 27. EXECUTIVE OVERVIEW MODULE 🏆
+CEO Dashboard
+Revenue
+Projects
+Employees
+Clients
+Growth %
+Profit
+
+
+
+हा Project Manager module आता Admin module सारखाच detailed झाला. पुढे Product Manager module हा यापेक्षा अजून मोठा असेल कारण तो PM ला काम assign करतो आणि roadmap manage करतो.
+
+
+पुढचा सर्वात महत्त्वाचा Module म्हणजे **PRODUCT MANAGER MODULE**.
+
+हा Admin आणि Project Manager यांच्या मध्ये काम करतो.
+
+Product Manager चे काम:
+
+👉 Client Requirement समजून घेणे
+
+👉 Product Planning करणे
+
+👉 Roadmap तयार करणे
+
+👉 Project Manager ला काम Assign करणे
+
+👉 Milestones Track करणे
+
+👉 Product Delivery Monitor करणे
+
+---
+
+# 🚀 JMKC CRM — PRODUCT MANAGER MODULE (ENTERPRISE FLOW)
+
+# ROLE OVERVIEW
+
+Product Manager हा Business आणि Development Team यांच्यातील Bridge असेल.
+
+CAN
+
+✓ Requirement Analysis
+
+✓ Product Roadmap Create
+
+✓ Milestone Planning
+
+✓ Assign Project To PM
+
+✓ Product Reports
+
+✓ Product Analytics
+
+✓ Client Discussion
+
+✓ Meeting Schedule
+
+CANNOT
+
+✗ Create Users
+
+✗ Delete Users
+
+✗ Access Finance
+
+✗ Company Settings
+
+✗ Department Creation
+
+---
+
+# LOGIN FLOW
+
+Role
+
+Product Manager
+
+↓
+
+Login
+
+↓
+
+Redirect
+
+/dashboard/product-manager
+
+---
+
+# SIDEBAR
+
+Dashboard
+
+Requirements
+
+Products
+
+Roadmaps
+
+Projects
+
+Project Managers
+
+Meetings
+
+Documents
+
+Chat
+
+Reports
+
+Analytics
+
+Notifications
+
+Settings
+
+---
+
+# DASHBOARD
+
+URL
+
+/dashboard/product-manager
+
+---
+
+## TOP CARDS
+
+Total Products
+
+Active Products
+
+Completed Products
+
+Pending Requirements
+
+Assigned PMs
+
+Upcoming Releases
+
+---
+
+Hover Card
+
+Example
+
+Active Products
+
+12
+
+Hover
+
+In Development = 7
+
+Testing = 3
+
+Ready = 2
+
+---
+
+# REQUIREMENTS MODULE
+
+Sidebar
+
+Requirements
+
+↓
+
+/requirements
+
+---
+
+TABLE
+
+Requirement ID
+
+Client Name
+
+Priority
+
+Department
+
+Status
+
+Created Date
+
+Action
+
+---
+
+STATUS
+
+New
+
+Under Review
+
+Approved
+
+Rejected
+
+Assigned
+
+---
+
+Click Requirement
+
+↓
+
+/requirement/:id
+
+---
+
+DETAIL PAGE
+
+Requirement Details
+
+Budget
+
+Timeline
+
+Attachments
+
+Client Notes
+
+Meetings
+
+Comments
+
+---
+
+Buttons
+
+Approve
+
+Reject
+
+Assign PM
+
+Create Product
+
+---
+
+# PRODUCT MODULE
+
+Sidebar
+
+Products
+
+↓
+
+/products
+
+---
+
+Cards
+
+Total Products
+
+Active
+
+Testing
+
+Released
+
+Archived
+
+---
+
+Create Product
+
+Fields
+
+Product Name
+
+Client
+
+Department
+
+Version
+
+Priority
+
+Description
+
+Budget
+
+Timeline
+
+---
+
+Buttons
+
+Save Draft
+
+Create Product
+
+---
+
+# PRODUCT DETAILS
+
+/product/:id
+
+---
+
+Tabs
+
+Overview
+
+Requirements
+
+Roadmap
+
+Milestones
+
+Projects
+
+Meetings
+
+Files
+
+Reports
+
+Activity
+
+---
+
+# ROADMAP MODULE
+
+Sidebar
+
+Roadmaps
+
+↓
+
+/roadmaps
+
+---
+
+Create Roadmap
+
+Quarter
+
+Goals
+
+Features
+
+Deadlines
+
+Priority
+
+---
+
+Example
+
+Q1 2026
+
+Feature A
+
+Feature B
+
+Feature C
+
+---
+
+Timeline View
+
+Now
+
+↓
+
+Development
+
+↓
+
+Testing
+
+↓
+
+Release
+
+---
+
+# MILESTONE MANAGEMENT
+
+Milestones
+
+Planning
+
+Design
+
+Development
+
+Testing
+
+Deployment
+
+Support
+
+---
+
+Each Milestone
+
+Shows
+
+Progress
+
+Deadline
+
+Owner
+
+Status
+
+---
+
+# PROJECT ASSIGNMENT FLOW
+
+Requirement Approved
+
+↓
+
+Product Created
+
+↓
+
+Department Selected
+
+↓
+
+Project Manager Selected
+
+↓
+
+Assign Project
+
+↓
+
+Notification Sent
+
+↓
+
+Project Visible To PM
+
+---
+
+# PROJECT MANAGER MONITORING
+
+Sidebar
+
+Project Managers
+
+↓
+
+/product-managers
+
+---
+
+TABLE
+
+PM Name
+
+Projects
+
+Tasks
+
+Performance
+
+Deadlines
+
+Status
+
+---
+
+Click PM
+
+↓
+
+Open PM Profile
+
+---
+
+Can View
+
+Assigned Projects
+
+Task Completion
+
+Updates
+
+Meetings
+
+Performance
+
+---
+
+# PRODUCT ANALYTICS
+
+Charts
+
+Product Progress
+
+Feature Completion
+
+Team Productivity
+
+Release Timeline
+
+Client Satisfaction
+
+---
+
+Real Time Data
+
+Chart.js
+
+ApexCharts
+
+---
+
+# MEETINGS
+
+Create Meeting
+
+Title
+
+Date
+
+Time
+
+Participants
+
+Agenda
+
+---
+
+Buttons
+
+Microsoft Teams
+
+Outlook Calendar
+
+---
+
+Meeting Link Auto Generated
+
+---
+
+# DOCUMENT CENTER
+
+Folders
+
+Requirement Docs
+
+Product Docs
+
+Design Docs
+
+Testing Docs
+
+Release Docs
+
+---
+
+Search
+
+Preview
+
+Version History
+
+---
+
+# CHAT MODULE
+
+Chat With
+
+Admin
+
+Project Manager
+
+Client
+
+Testing Team
+
+Marketing Team
+
+---
+
+Features
+
+File Sharing
+
+Voice Notes
+
+Pinned Messages
+
+Mentions
+
+Read Receipts
+
+---
+
+# REPORT CENTER
+
+Generate
+
+Requirement Report
+
+Roadmap Report
+
+Product Report
+
+Release Report
+
+PM Performance Report
+
+---
+
+Export
+
+PDF
+
+Excel
+
+CSV
+
+---
+
+# ANALYTICS
+
+Product Growth
+
+Release Success Rate
+
+Feature Completion
+
+Deadline Compliance
+
+Department Productivity
+
+---
+
+# PRODUCT RELEASE FLOW
+
+Development Complete
+
+↓
+
+Testing Complete
+
+↓
+
+PM Approval
+
+↓
+
+Product Manager Approval
+
+↓
+
+Client Review
+
+↓
+
+Admin Approval
+
+↓
+
+Release
+
+---
+
+# NOTIFICATIONS
+
+Requirement Submitted
+
+Requirement Approved
+
+Project Assigned
+
+Release Ready
+
+Meeting Scheduled
+
+Client Feedback
+
+---
+
+# SETTINGS
+
+Profile
+
+Notifications
+
+Security
+
+Integrations
+
+Theme
+
+---
+
+# PRODUCT MANAGER WORKFLOW
+
+Client Requirement
+
+↓
+
+Product Manager Review
+
+↓
+
+Requirement Approval
+
+↓
+
+Create Product
+
+↓
+
+Create Roadmap
+
+↓
+
+Define Milestones
+
+↓
+
+Assign Project Manager
+
+↓
+
+Monitor Progress
+
+↓
+
+Review Updates
+
+↓
+
+Client Review
+
+↓
+
+Final Approval
+
+↓
+
+Release Product
+
+छान. आता **HR MODULE** देतो. हा Admin नंतरचा सर्वात data-heavy module आहे कारण Attendance, Leave, Employee Records, Recruitment, Performance, Documents, Payroll Tracking (जर future मध्ये add करायचे असेल) हे सगळं HR हाताळणार.
+
+# 🚀 JMKC CRM — HR MODULE (ENTERPRISE FLOW)
+
+# ROLE OVERVIEW
+
+HR Department Employee Lifecycle Manage करेल.
+
+CAN
+
+✓ Employee Records Manage
+
+✓ Attendance Monitor
+
+✓ Leave Management
+
+✓ Recruitment
+
+✓ Employee Documents
+
+✓ Performance Review
+
+✓ Employee Onboarding
+
+✓ Employee Exit Process
+
+✓ Reports Generate
+
+CANNOT
+
+✗ Create Department
+
+✗ Delete Department
+
+✗ Company Settings
+
+✗ Finance Access
+
+✗ System Configuration
+
+---
+
+# LOGIN FLOW
+
+Role
+
+HR
+
+↓
+
+Login
+
+↓
+
+Redirect
+
+/dashboard/hr
+
+---
+
+# SIDEBAR
+
+Dashboard
+
+Employees
+
+Attendance
+
+Leaves
+
+Recruitment
+
+Onboarding
+
+Documents
+
+Performance
+
+Meetings
+
+Reports
+
+Analytics
+
+Chat
+
+Notifications
+
+Settings
+
+---
+
+# HR DASHBOARD
+
+URL
+
+/dashboard/hr
+
+---
+
+## TOP CARDS
+
+Total Employees
+
+Present Today
+
+Absent Today
+
+Leave Requests
+
+New Joiners
+
+Pending Approvals
+
+---
+
+Hover Card
+
+Example
+
+Present Today
+
+156
+
+Hover
+
+IT = 52
+
+Mechanical = 48
+
+Sales = 23
+
+Marketing = 18
+
+Support = 15
+
+---
+
+# EMPLOYEE MANAGEMENT
+
+Sidebar
+
+Employees
+
+↓
+
+/employees
+
+---
+
+TABLE
+
+Photo
+
+Employee Name
+
+Department
+
+Role
+
+Joining Date
+
+Attendance
+
+Status
+
+Action
+
+---
+
+Filters
+
+Department
+
+Role
+
+Status
+
+Joining Date
+
+---
+
+Search
+
+Employee Name
+
+Employee ID
+
+Email
+
+---
+
+Click Employee
+
+↓
+
+/employee/:id
+
+---
+
+# EMPLOYEE PROFILE
+
+Tabs
+
+Overview
+
+Attendance
+
+Leaves
+
+Projects
+
+Performance
+
+Documents
+
+Meetings
+
+Timeline
+
+Audit Logs
+
+---
+
+## OVERVIEW TAB
+
+Shows
+
+Photo
+
+Name
+
+Employee ID
+
+Department
+
+Role
+
+Joining Date
+
+Manager
+
+Email
+
+Phone
+
+Status
+
+---
+
+# ATTENDANCE TAB
+
+Cards
+
+Present Days
+
+Absent Days
+
+Late Days
+
+Attendance %
+
+---
+
+Graphs
+
+Monthly Attendance
+
+Weekly Attendance
+
+Department Comparison
+
+---
+
+Filters
+
+Date
+
+Department
+
+Role
+
+Employee
+
+---
+
+# ATTENDANCE MANAGEMENT
+
+Sidebar
+
+Attendance
+
+↓
+
+/attendance
+
+---
+
+Top Cards
+
+Present
+
+Absent
+
+Late
+
+Work From Home
+
+---
+
+Table
+
+Employee
+
+Department
+
+Check-In
+
+Check-Out
+
+Working Hours
+
+Status
+
+---
+
+# LEAVE MANAGEMENT
+
+Sidebar
+
+Leaves
+
+↓
+
+/leaves
+
+---
+
+Tabs
+
+Pending
+
+Approved
+
+Rejected
+
+Cancelled
+
+---
+
+Table
+
+Employee
+
+Leave Type
+
+Start Date
+
+End Date
+
+Reason
+
+Approved By
+
+Status
+
+---
+
+Click Leave
+
+↓
+
+Leave Details Page
+
+---
+
+Buttons
+
+Approve
+
+Reject
+
+Add Comment
+
+---
+
+Workflow
+
+Employee
+
+↓
+
+Project Manager
+
+↓
+
+HR
+
+↓
+
+Admin
+
+↓
+
+Approved
+
+---
+
+# RECRUITMENT MODULE
+
+Sidebar
+
+Recruitment
+
+↓
+
+/recruitment
+
+---
+
+Top Cards
+
+Open Positions
+
+Applied Candidates
+
+Interview Scheduled
+
+Offers Sent
+
+---
+
+Create Job Opening
+
+Fields
+
+Job Title
+
+Department
+
+Experience
+
+Skills
+
+Salary Range
+
+Description
+
+---
+
+Buttons
+
+Save Draft
+
+Publish
+
+---
+
+# CANDIDATE MANAGEMENT
+
+Table
+
+Candidate Name
+
+Position
+
+Experience
+
+Status
+
+Resume
+
+Action
+
+---
+
+Statuses
+
+Applied
+
+Shortlisted
+
+Interview
+
+Selected
+
+Rejected
+
+Joined
+
+---
+
+Click Candidate
+
+↓
+
+Candidate Profile
+
+---
+
+# ONBOARDING MODULE
+
+Sidebar
+
+Onboarding
+
+↓
+
+/onboarding
+
+---
+
+Steps
+
+Document Collection
+
+Offer Letter
+
+ID Card
+
+System Access
+
+Training
+
+Department Allocation
+
+---
+
+Progress Tracker
+
+100% Completion
+
+---
+
+# DOCUMENT CENTER
+
+Folders
+
+Employee Documents
+
+Offer Letters
+
+Certificates
+
+Contracts
+
+Policies
+
+ID Proofs
+
+---
+
+Features
+
+Upload
+
+Preview
+
+Download
+
+Version History
+
+---
+
+# PERFORMANCE MANAGEMENT
+
+Sidebar
+
+Performance
+
+↓
+
+/performance
+
+---
+
+Cards
+
+Top Performer
+
+Best Attendance
+
+Highest Productivity
+
+Most Projects
+
+---
+
+Employee Scorecard
+
+Attendance
+
+Project Contribution
+
+Task Completion
+
+Meeting Participation
+
+Leave Record
+
+---
+
+Final Score
+
+92/100
+
+---
+
+# MEETINGS
+
+Create Meeting
+
+Title
+
+Date
+
+Time
+
+Department
+
+Participants
+
+Agenda
+
+---
+
+Buttons
+
+Microsoft Teams
+
+Outlook Calendar
+
+---
+
+Meeting Auto Created
+
+---
+
+# REPORT CENTER
+
+Generate
+
+Employee Report
+
+Attendance Report
+
+Leave Report
+
+Recruitment Report
+
+Performance Report
+
+Department Report
+
+---
+
+Export
+
+PDF
+
+Excel
+
+CSV
+
+---
+
+# ANALYTICS
+
+Charts
+
+Attendance Trends
+
+Leave Trends
+
+Department Productivity
+
+Recruitment Funnel
+
+Employee Growth
+
+Retention Rate
+
+---
+
+# CHAT MODULE
+
+Chat With
+
+Admin
+
+Project Manager
+
+Employees
+
+Support Team
+
+---
+
+Features
+
+File Sharing
+
+Voice Notes
+
+Images
+
+Pinned Messages
+
+---
+
+# NOTIFICATIONS
+
+New Leave Request
+
+New Employee Joined
+
+Interview Scheduled
+
+Document Uploaded
+
+Meeting Reminder
+
+---
+
+# SETTINGS
+
+Profile
+
+Notifications
+
+Security
+
+Integrations
+
+Theme
+
+---
+
+# HR WORKFLOW
+
+Employee Joins
+
+↓
+
+HR Creates Profile
+
+↓
+
+Assign Department
+
+↓
+
+Assign Role
+
+↓
+
+Upload Documents
+
+↓
+
+Attendance Tracking
+
+↓
+
+Leave Tracking
+
+↓
+
+Performance Evaluation
+
+↓
+
+Promotion / Transfer
+
+↓
+
+Exit Process
+
+---
+
+# EXIT MANAGEMENT
+
+Employee Resigns
+
+↓
+
+HR Review
+
+↓
+
+Manager Approval
+
+↓
+
+Document Verification
+
+↓
+
+Asset Return
+
+↓
+
+Final Clearance
+
+↓
+
+Employee Archived
+
+📌 पुढचा Module Sequence:
+
+**Sales Module → Calling Team Module → Client Module → Employee Module**
+
+यापैकी **Sales Module** खूप important आहे कारण Leads → Clients → Revenue → Conversion Pipeline तिथून चालेल. तो CRM चा revenue-generating module असेल.# 🚀 JMKC CRM — MARKETING MODULE (ULTRA ENTERPRISE LEVEL FLOW)
+
+# 🎯 MODULE PURPOSE
+
+Marketing Department चे मुख्य काम:
+
+```text
+Brand Awareness
+
+Lead Generation
+
+Campaign Management
+
+Social Media Management
+
+Email Marketing
+
+SEO
+
+Landing Pages
+
+Marketing Analytics
+
+Lead Handover To Calling Team
+```
+
+Marketing चा End Goal:
+
+```text
+Generate Quality Leads
+
+↓
+
+Send To Calling Team
+
+↓
+
+Convert Into Clients
+```
+
+---
+
+# 🔐 LOGIN FLOW
+
+User
+
+↓
+
+Role Select
+
+```text
+Marketing
+```
+
+↓
+
+Login
+
+↓
+
+Redirect
+
+```text
+/dashboard/marketing
+```
+
+---
+
+# 🎨 MARKETING DASHBOARD UI
+
+URL
+
+```text
+/dashboard/marketing
+```
+
+---
+
+## HEADER
+
+Left
+
+```text
+JMKC Logo
+```
+
+Center
+
+```text
+Global Search
+```
+
+Search
+
+```text
+Campaign
+
+Lead
+
+Content
+
+Social Post
+
+Email Campaign
+```
+
+Right
+
+```text
+Notifications
+
+Messages
+
+Profile
+```
+
+---
+
+## PROFILE DROPDOWN
+
+```text
+My Profile
+
+Settings
+
+Security
+
+Notifications
+
+Help Center
+
+Logout
+```
+
+---
+
+# SIDEBAR
+
+```text
+Dashboard
+
+Campaigns
+
+Lead Center
+
+Social Media
+
+Email Marketing
+
+Landing Pages
+
+Content Studio
+
+Marketing Calendar
+
+Meetings
+
+Documents
+
+Reports
+
+Analytics
+
+Chat
+
+Notifications
+
+Settings
+```
+
+---
+
+# 📊 DASHBOARD
+
+## ROW 1 CARDS
+
+### Generated Leads
+
+Icon
+
+🎯
+
+Card
+
+```text
+1,240 Leads
+```
+
+Hover
+
+```text
+Facebook = 540
+
+Google = 320
+
+LinkedIn = 210
+
+Website = 170
+```
+
+---
+
+### Active Campaigns
+
+Icon
+
+🚀
+
+```text
+15 Campaigns
+```
+
+Hover
+
+```text
+8 Running
+
+5 Scheduled
+
+2 Draft
+```
+
+---
+
+### Conversion Rate
+
+Icon
+
+📈
+
+```text
+32%
+```
+
+Hover
+
+```text
+Last Month = 28%
+
+Growth = +4%
+```
+
+---
+
+### Marketing ROI
+
+Icon
+
+💰
+
+```text
+420%
+```
+
+Hover
+
+```text
+Spent = ₹2.5L
+
+Generated = ₹10.5L
+```
+
+---
+
+### Website Traffic
+
+Icon
+
+🌐
+
+```text
+58K Visitors
+```
+
+Hover
+
+```text
+Organic = 34K
+
+Paid = 24K
+```
+
+---
+
+# 🔥 CAMPAIGNS MODULE
+
+Click
+
+```text
+Campaigns
+```
+
+↓
+
+```text
+/marketing/campaigns
+```
+
+---
+
+# PAGE HEADER
+
+Buttons
+
+```text
++ Create Campaign
+
+Import Campaign
+
+Export Campaign
+```
+
+---
+
+# CAMPAIGN TABLE
+
+```text
+Campaign Name
+
+Type
+
+Budget
+
+Start Date
+
+End Date
+
+Leads
+
+Status
+
+Actions
+```
+
+---
+
+# CREATE CAMPAIGN
+
+Popup Modal
+
+Fields
+
+```text
+Campaign Name
+
+Campaign Type
+
+Platform
+
+Budget
+
+Target Audience
+
+Start Date
+
+End Date
+
+Goal
+
+Description
+```
+
+---
+
+# CAMPAIGN TYPES
+
+```text
+Facebook Ads
+
+Google Ads
+
+LinkedIn Ads
+
+Instagram Ads
+
+Email Campaign
+
+WhatsApp Campaign
+
+SEO Campaign
+
+Content Marketing
+```
+
+---
+
+Button
+
+```text
+Save Draft
+
+Launch Campaign
+```
+
+---
+
+Success Popup
+
+🟢
+
+```text
+Campaign Created Successfully
+```
+
+---
+
+# CAMPAIGN DETAILS PAGE
+
+Click Campaign
+
+↓
+
+```text
+/campaign/:id
+```
+
+Tabs
+
+```text
+Overview
+
+Leads
+
+Performance
+
+Budget
+
+Files
+
+Timeline
+
+Reports
+```
+
+---
+
+# OVERVIEW TAB
+
+Shows
+
+```text
+Campaign Name
+
+Status
+
+Budget
+
+Spent Amount
+
+Leads Generated
+
+Conversion Rate
+```
+
+---
+
+# LEADS TAB
+
+Generated Leads
+
+Table
+
+```text
+Lead Name
+
+Phone
+
+Email
+
+Source
+
+Status
+
+Assigned
+```
+
+---
+
+Button
+
+```text
+Assign To Calling Team
+```
+
+---
+
+# SOCIAL MEDIA MODULE
+
+Click
+
+```text
+Social Media
+```
+
+↓
+
+```text
+/marketing/social-media
+```
+
+---
+
+# PLATFORM CARDS
+
+Facebook
+
+Instagram
+
+LinkedIn
+
+YouTube
+
+Twitter
+
+---
+
+Each Card
+
+```text
+Followers
+
+Reach
+
+Engagement
+
+Clicks
+
+Conversions
+```
+
+---
+
+Hover
+
+Detailed Stats
+
+```text
+Daily Reach
+
+Weekly Reach
+
+Monthly Reach
+```
+
+---
+
+# SOCIAL CONTENT
+
+Create Post
+
+Fields
+
+```text
+Post Title
+
+Description
+
+Image
+
+Video
+
+Platform
+
+Schedule Date
+```
+
+Buttons
+
+```text
+Publish
+
+Schedule
+```
+
+---
+
+# EMAIL MARKETING
+
+Click
+
+```text
+Email Marketing
+```
+
+↓
+
+```text
+/marketing/email
+```
+
+---
+
+Cards
+
+```text
+Sent Emails
+
+Opened Emails
+
+Clicked Emails
+
+Conversions
+```
+
+---
+
+Create Campaign
+
+Fields
+
+```text
+Campaign Name
+
+Subject
+
+Recipients
+
+Template
+
+Attachments
+```
+
+---
+
+Buttons
+
+```text
+Save Draft
+
+Send Now
+
+Schedule
+```
+
+---
+
+# LANDING PAGE MODULE
+
+Click
+
+```text
+Landing Pages
+```
+
+↓
+
+```text
+/marketing/landing-pages
+```
+
+---
+
+Create Landing Page
+
+Fields
+
+```text
+Page Name
+
+URL
+
+Headline
+
+Subheadline
+
+CTA Button
+
+Lead Form
+```
+
+---
+
+Preview Button
+
+↓
+
+Live Preview
+
+---
+
+Analytics
+
+```text
+Visitors
+
+Conversions
+
+Bounce Rate
+
+Form Submissions
+```
+
+---
+
+# CONTENT STUDIO
+
+Click
+
+```text
+Content Studio
+```
+
+↓
+
+```text
+/marketing/content
+```
+
+---
+
+Folders
+
+```text
+Blogs
+
+Images
+
+Videos
+
+Social Posts
+
+Email Templates
+
+Case Studies
+```
+
+---
+
+Features
+
+```text
+Upload
+
+Preview
+
+Download
+
+Edit
+
+Share
+```
+
+---
+
+# LEAD CENTER
+
+Click
+
+```text
+Lead Center
+```
+
+↓
+
+```text
+/marketing/leads
+```
+
+---
+
+Table
+
+```text
+Lead Name
+
+Source
+
+Campaign
+
+Phone
+
+Email
+
+Status
+```
+
+---
+
+Lead Status
+
+```text
+New
+
+Assigned
+
+Qualified
+
+Rejected
+```
+
+---
+
+Button
+
+```text
+Assign Lead
+```
+
+↓
+
+Assign To
+
+```text
+Calling Team
+```
+
+---
+
+# MARKETING CALENDAR
+
+Click
+
+```text
+Marketing Calendar
+```
+
+↓
+
+```text
+/calendar/marketing
+```
+
+---
+
+Shows
+
+```text
+Campaign Launches
+
+Scheduled Posts
+
+Email Campaigns
+
+Meetings
+
+Events
+```
+
+---
+
+Views
+
+```text
+Day
+
+Week
+
+Month
+```
+
+---
+
+# REPORT CENTER
+
+Generate
+
+```text
+Campaign Report
+
+Lead Report
+
+ROI Report
+
+Email Report
+
+Social Media Report
+```
+
+---
+
+Export
+
+```text
+PDF
+
+Excel
+
+CSV
+```
+
+---
+
+# ANALYTICS CENTER
+
+Click
+
+```text
+Analytics
+```
+
+↓
+
+```text
+/marketing/analytics
+```
+
+---
+
+Charts
+
+```text
+Lead Sources
+
+Campaign ROI
+
+Traffic Sources
+
+Conversion Funnel
+
+Audience Growth
+
+Email Performance
+```
+
+---
+
+# CONVERSION FUNNEL
+
+```text
+Visitors
+
+↓
+
+Leads
+
+↓
+
+Qualified Leads
+
+↓
+
+Clients
+```
+
+---
+
+# CHAT MODULE
+
+Can Chat With
+
+```text
+Admin
+
+Calling Team
+
+Sales Team
+
+Clients
+```
+
+---
+
+Features
+
+```text
+File Sharing
+
+Voice Notes
+
+Images
+
+Pinned Messages
+
+Read Receipts
+```
+
+---
+
+# DOCUMENT CENTER
+
+Folders
+
+```text
+Campaign Files
+
+Marketing Assets
+
+Images
+
+Videos
+
+Templates
+```
+
+---
+
+# NOTIFICATIONS
+
+```text
+New Lead Generated
+
+Campaign Started
+
+Campaign Ended
+
+Lead Assigned
+
+Meeting Reminder
+```
+
+---
+
+# SETTINGS
+
+Tabs
+
+```text
+Profile
+
+Notifications
+
+Security
+
+Integrations
+
+Theme
+```
+
+---
+
+# 🤖 AI FEATURES
+
+AI Lead Prediction
+
+AI Campaign Suggestions
+
+AI Best Posting Time
+
+AI Audience Analysis
+
+AI Content Suggestions
+
+AI Conversion Forecast
+
+---
+
+# KPI TRACKING
+
+```text
+Lead Generation
+
+Cost Per Lead
+
+ROI
+
+Website Traffic
+
+Engagement Rate
+
+Conversion Rate
+
+Audience Growth
+```
+
+---
+
+# COMPLETE WORKFLOW
+
+Marketing Campaign
+
+↓
+
+Lead Generated
+
+↓
+
+Lead Stored In CRM
+
+↓
+
+Lead Assigned To Calling Team
+
+↓
+
+Calling Team Qualification
+
+↓
+
+Sales Team
+
+↓
+
+Client
+
+↓
+
+Admin
+
+↓
+
+Project Created
+
+↓
+
+Project Manager
+
+↓
+
+Employee
+
+↓
+
+Project Delivery
+
+---
+
+# 🎨 UI DESIGN
+
+Theme
+
+```text
+Background = #F8FAFC
+
+Primary = #2563EB
+
+Success = #22C55E
+
+Warning = #F59E0B
+
+Danger = #EF4444
+```
+
+Cards
+
+```text
+Glassmorphism
+
+16px Radius
+
+Hover Lift Effect
+
+Soft Shadow
+```
+
+Tables
+
+```text
+Sticky Header
+
+Filters
+
+Sorting
+
+Pagination
+```
+
+Popups
+
+```text
+Animated Success
+
+Animated Error
+
+Blur Background
+```
+
+Marketing Dashboard Feel:
+
+```text
+HubSpot + Salesforce Marketing Cloud + Zoho Marketing Automation + Monday.com
+```
+
+पुढचा logical module **Calling Team Module** आहे. हा module Marketing कडून आलेल्या Leads ला qualify करून Sales Team कडे पाठवतो. हा पूर्ण CRM pipeline मधला bridge module आहे.
+# 🚀 JMKC CRM — CALLING TEAM MODULE FLOW (Enterprise Level)
+
+हा Module फक्त Lead Calling, Follow-up, Appointment Booking, Client Communication आणि Lead Conversion साठी असेल.
+
+Admin आणि Sales Head ला Calling Team ची प्रत्येक Activity दिसेल.
+
+---
+
+# 🎯 CALLING TEAM ROLE PURPOSE
+
+Calling Team चे काम:
+
+```text
+New Leads ला Contact करणे
+
+Follow-up करणे
+
+Meeting Schedule करणे
+
+Interested Lead Sales Team ला Transfer करणे
+
+Lead Status Update करणे
+
+Daily Calling Report Submit करणे
+```
+
+---
+
+# 🔐 LOGIN FLOW
+
+User Login
+
+```text
+Role = Calling Team
+```
+
+↓
+
+Redirect
+
+```text
+/ dashboard / calling-team
+```
+
+---
+
+# 🎨 DASHBOARD UI
+
+## Top Header
+
+Left
+
+📞 Calling Team Dashboard
+
+Center
+
+🔍 Search Lead
+
+Right
+
+```text
+Notifications
+
+Messages
+
+Profile
+```
+
+---
+
+## Profile Dropdown
+
+```text
+My Profile
+
+Daily Report
+
+Settings
+
+Logout
+```
+
+---
+
+# 📊 DASHBOARD OVERVIEW
+
+## Top Cards
+
+### Total Leads
+
+```text
+1,250
+```
+
+Hover
+
+```text
+New Leads: 120
+
+Contacted: 800
+
+Pending: 330
+```
+
+---
+
+### Today's Calls
+
+```text
+52 Calls
+```
+
+Hover
+
+```text
+Connected: 35
+
+Not Connected: 17
+```
+
+---
+
+### Follow Ups Due
+
+```text
+18
+```
+
+Hover
+
+```text
+Today: 12
+
+Overdue: 6
+```
+
+---
+
+### Meetings Scheduled
+
+```text
+9 Meetings
+```
+
+Hover
+
+```text
+Today: 4
+
+Upcoming: 5
+```
+
+---
+
+### Lead Conversion
+
+```text
+18%
+```
+
+Hover
+
+```text
+Interested Leads: 75
+
+Converted: 14
+```
+
+---
+
+# 📌 DASHBOARD SECTION 2
+
+## Today's Tasks
+
+Table
+
+```text
+Lead Name
+
+Phone
+
+Status
+
+Follow-up Date
+
+Action
+```
+
+Example
+
+```text
+Rahul Sharma
+
+9876543210
+
+Interested
+
+15 Jun
+
+Call Now
+```
+
+---
+
+Click
+
+```text
+Call Now
+```
+
+↓
+
+Lead Detail Open
+
+---
+
+# 👥 LEAD MANAGEMENT
+
+Sidebar
+
+```text
+Leads
+```
+
+↓
+
+```text
+/ calling-team/leads
+```
+
+---
+
+## Lead List
+
+Table
+
+```text
+Lead Name
+
+Phone
+
+Email
+
+Source
+
+Status
+
+Assigned Date
+```
+
+---
+
+Filters
+
+```text
+New
+
+Contacted
+
+Interested
+
+Follow Up
+
+Not Interested
+
+Converted
+```
+
+---
+
+Search
+
+```text
+Search Lead
+```
+
+---
+
+# 👤 LEAD PROFILE
+
+Click Lead
+
+↓
+
+```text
+/lead/:id
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Lead Name
+
+Phone
+
+Email
+
+Location
+
+Source
+
+Assigned Date
+```
+
+---
+
+## Call History Tab
+
+Shows
+
+```text
+Call Date
+
+Duration
+
+Outcome
+```
+
+Example
+
+```text
+10 Jun
+
+5 Min
+
+Interested
+```
+
+---
+
+## Notes Tab
+
+Calling Agent Notes
+
+```text
+Interested in CRM
+
+Budget ₹50,000
+
+Need Demo
+```
+
+---
+
+## Follow-up Tab
+
+Shows
+
+```text
+Next Follow-up Date
+
+Reminder
+
+Priority
+```
+
+---
+
+# 📞 CALL LOGGING SYSTEM
+
+After Every Call
+
+Popup Opens
+
+```text
+Call Outcome
+```
+
+Options
+
+```text
+Connected
+
+Not Connected
+
+Busy
+
+Switch Off
+
+Interested
+
+Not Interested
+
+Call Back Later
+```
+
+---
+
+## Notes
+
+Textarea
+
+```text
+Customer Interested
+
+Need Demo
+```
+
+---
+
+Button
+
+```text
+Save Call Log
+```
+
+---
+
+Success Popup
+
+🟢
+
+```text
+Call Saved Successfully
+```
+
+---
+
+# 🔄 FOLLOW-UP MANAGEMENT
+
+Sidebar
+
+```text
+Follow Ups
+```
+
+---
+
+Table
+
+```text
+Lead
+
+Last Call
+
+Next Follow-up
+
+Priority
+```
+
+---
+
+Priority Badge
+
+```text
+High
+
+Medium
+
+Low
+```
+
+---
+
+Overdue Follow-up
+
+🔴 Red Highlight
+
+---
+
+# 📅 MEETING BOOKING
+
+Lead Interested
+
+↓
+
+Click
+
+```text
+Schedule Meeting
+```
+
+---
+
+Popup
+
+Fields
+
+```text
+Meeting Title
+
+Date
+
+Time
+
+Meeting Type
+```
+
+---
+
+Meeting Type
+
+```text
+Teams
+
+Google Meet
+
+Physical
+```
+
+---
+
+Button
+
+```text
+Create Meeting
+```
+
+---
+
+System
+
+↓
+
+Meeting Created
+
+↓
+
+Notification Sent
+
+↓
+
+Sales Team Notified
+
+---
+
+# 🔥 LEAD TRANSFER FLOW
+
+Interested Lead
+
+↓
+
+Click
+
+```text
+Transfer To Sales
+```
+
+---
+
+Popup
+
+```text
+Assign Sales Person
+```
+
+Select
+
+```text
+Amit Sales
+```
+
+---
+
+Button
+
+```text
+Transfer
+```
+
+---
+
+Notification
+
+```text
+Lead Assigned To Sales Team
+```
+
+---
+
+# 📈 DAILY REPORT MODULE
+
+Sidebar
+
+```text
+Daily Reports
+```
+
+---
+
+Form
+
+```text
+Total Calls
+
+Connected Calls
+
+Interested Leads
+
+Meetings Booked
+
+Remarks
+```
+
+---
+
+Example
+
+```text
+52 Calls
+
+35 Connected
+
+8 Interested
+
+3 Meetings
+
+Good Response
+```
+
+---
+
+Submit
+
+↓
+
+Admin Can View
+
+↓
+
+Sales Manager Can View
+
+---
+
+# 💬 CHAT MODULE
+
+Calling Team Can Chat With
+
+```text
+Sales
+
+Admin
+
+Marketing
+
+Project Manager
+```
+
+---
+
+Features
+
+```text
+File Sharing
+
+Images
+
+Voice Notes
+
+Read Receipts
+
+Pinned Messages
+```
+
+---
+
+# 🔔 NOTIFICATIONS
+
+Real Time
+
+```text
+New Lead Assigned
+
+Follow-up Reminder
+
+Meeting Reminder
+
+Lead Transferred
+
+Daily Report Approved
+```
+
+---
+
+# 📊 PERFORMANCE PAGE
+
+Sidebar
+
+```text
+Performance
+```
+
+---
+
+Cards
+
+```text
+Total Calls
+
+Connected Calls
+
+Meetings
+
+Lead Conversions
+```
+
+---
+
+Graphs
+
+```text
+Weekly Calls
+
+Monthly Calls
+
+Conversion Trend
+
+Meeting Trend
+```
+
+---
+
+## Scorecard
+
+Formula
+
+```text
+Calls = 30%
+
+Follow Ups = 20%
+
+Meetings = 20%
+
+Lead Conversion = 30%
+```
+
+---
+
+Output
+
+```text
+Performance Score
+
+91/100
+```
+
+---
+
+# 🏆 RANKING SYSTEM
+
+Dashboard Widget
+
+```text
+Top Calling Agents
+```
+
+Example
+
+```text
+#1 Sneha
+
+#2 Priya
+
+#3 Rahul
+```
+
+---
+
+# 📂 DOCUMENTS
+
+Calling Scripts
+
+```text
+Sales Script
+
+Cold Call Script
+
+Follow-up Script
+
+FAQ Documents
+```
+
+---
+
+# 🤖 AI FEATURES
+
+AI Suggestion
+
+```text
+Best Time To Call
+
+Lead Priority Prediction
+
+Conversion Probability
+
+Call Performance Insights
+```
+
+---
+
+# 🎨 UI DESIGN
+
+### Sidebar Icon Set
+
+```text
+🏠 Dashboard
+
+👥 Leads
+
+📞 Follow Ups
+
+📅 Meetings
+
+📊 Reports
+
+💬 Chat
+
+📈 Performance
+
+📂 Documents
+
+⚙ Settings
+```
+
+### Colors
+
+```text
+Primary Blue #2563EB
+
+Success Green #22C55E
+
+Warning Orange #F59E0B
+
+Danger Red #EF4444
+
+Background #F8FAFC
+```
+
+### Cards
+
+```text
+Glassmorphism
+
+Hover Lift Effect
+
+Animated Counters
+
+Real-time Updates
+```
+
+### Tables
+
+```text
+Sticky Header
+
+Search
+
+Filters
+
+Pagination
+
+Export Excel
+```
+
+हा Calling Team Module Monday.com + HubSpot + Zoho CRM सारखा Lead Management आणि Calling Workflow देईल. पुढचा module **Sales Module (Enterprise Level Detailed Flow)** आहे.
+# 🚀 JMKC CRM — SALES MODULE FLOW (Enterprise Level)
+
+हा Module Calling Team कडून आलेल्या Leads ला Deal मध्ये Convert करण्यासाठी, Proposal पाठवण्यासाठी, Meeting घेण्यासाठी आणि Revenue Generate करण्यासाठी आहे.
+
+Sales Team म्हणजे कंपनीचा Revenue Engine.
+
+---
+
+# 🎯 SALES TEAM ROLE PURPOSE
+
+Sales Team चे काम:
+
+```text
+Calling Team कडून Lead Receive करणे
+
+Lead Qualification
+
+Requirement Discussion
+
+Proposal Send करणे
+
+Client Meeting घेणे
+
+Negotiation करणे
+
+Deal Close करणे
+
+Project Admin कडे Transfer करणे
+```
+
+---
+
+# 🔐 LOGIN FLOW
+
+User Login
+
+```text
+Role = Sales
+```
+
+↓
+
+Redirect
+
+```text
+/dashboard/sales
+```
+
+---
+
+# 🎨 SALES DASHBOARD UI
+
+## Header
+
+Left
+
+💼 Sales Dashboard
+
+Center
+
+🔍 Search Leads / Deals
+
+Right
+
+```text
+Notifications
+
+Messages
+
+Profile
+```
+
+---
+
+## Profile Dropdown
+
+```text
+My Profile
+
+Sales Reports
+
+Performance
+
+Settings
+
+Logout
+```
+
+---
+
+# 📊 DASHBOARD OVERVIEW
+
+## Top KPI Cards
+
+### Total Leads
+
+```text
+1,250
+```
+
+Hover
+
+```text
+New: 120
+
+Qualified: 350
+
+Proposal Sent: 210
+
+Won: 95
+```
+
+---
+
+### Active Deals
+
+```text
+185
+```
+
+Hover
+
+```text
+Under Discussion
+
+Proposal Pending
+
+Negotiation Stage
+```
+
+---
+
+### Revenue Generated
+
+```text
+₹48,50,000
+```
+
+Hover
+
+```text
+Monthly Target: ₹60,00,000
+
+Achieved: 81%
+```
+
+---
+
+### Meetings Scheduled
+
+```text
+24
+```
+
+Hover
+
+```text
+Today's Meetings: 8
+```
+
+---
+
+### Conversion Rate
+
+```text
+22%
+```
+
+Hover
+
+```text
+Won Deals
+
+Lost Deals
+```
+
+---
+
+# 👥 LEAD PIPELINE
+
+Sidebar
+
+```text
+Lead Pipeline
+```
+
+↓
+
+```text
+/sales/pipeline
+```
+
+---
+
+## Kanban Board
+
+```text
+New Lead
+
+Qualified
+
+Proposal Sent
+
+Negotiation
+
+Won
+
+Lost
+```
+
+Drag & Drop Enabled
+
+(Monday.com Style)
+
+---
+
+# 👤 LEAD PROFILE
+
+Click Lead
+
+↓
+
+```text
+/lead/:id
+```
+
+---
+
+## Overview Tab
+
+```text
+Lead Name
+
+Company Name
+
+Phone
+
+Email
+
+Source
+
+Budget
+
+Requirement
+```
+
+---
+
+## Communication Tab
+
+Shows
+
+```text
+Calls
+
+Meetings
+
+Emails
+
+WhatsApp Logs
+```
+
+---
+
+## Notes Tab
+
+```text
+Client Needs CRM
+
+Budget ₹2 Lakhs
+
+Interested In Custom Features
+```
+
+---
+
+## Documents Tab
+
+```text
+Proposal PDF
+
+Requirement Documents
+
+Quotations
+
+Contracts
+```
+
+---
+
+# 📋 LEAD QUALIFICATION FLOW
+
+Sales Opens Lead
+
+↓
+
+Button
+
+```text
+Qualify Lead
+```
+
+---
+
+Popup
+
+Fields
+
+```text
+Budget
+
+Decision Maker
+
+Timeline
+
+Requirement Fit
+```
+
+---
+
+Lead Score Auto Generated
+
+Example
+
+```text
+92/100
+```
+
+---
+
+Badge
+
+🟢 Hot Lead
+
+```text
+High Conversion Chance
+```
+
+---
+
+# 📑 PROPOSAL MANAGEMENT
+
+Sidebar
+
+```text
+Proposals
+```
+
+---
+
+Create Proposal
+
+Fields
+
+```text
+Lead Name
+
+Project Cost
+
+Timeline
+
+Services
+
+Terms & Conditions
+```
+
+---
+
+Buttons
+
+```text
+Save Draft
+
+Send Proposal
+```
+
+---
+
+Client Receives Proposal
+
+↓
+
+Status
+
+```text
+Viewed
+
+Pending
+
+Approved
+
+Rejected
+```
+
+---
+
+# 🤝 MEETING MANAGEMENT
+
+Button
+
+```text
+Schedule Meeting
+```
+
+---
+
+Fields
+
+```text
+Meeting Title
+
+Date
+
+Time
+
+Participants
+
+Platform
+```
+
+---
+
+Platform
+
+```text
+Microsoft Teams
+
+Google Meet
+
+Offline
+```
+
+---
+
+System
+
+↓
+
+Meeting Link Generated
+
+↓
+
+Notification Sent
+
+↓
+
+Calendar Updated
+
+---
+
+# 💰 DEAL MANAGEMENT
+
+Sidebar
+
+```text
+Deals
+```
+
+---
+
+Table
+
+```text
+Deal Name
+
+Client
+
+Value
+
+Stage
+
+Probability
+```
+
+---
+
+Example
+
+```text
+CRM Project
+
+ABC Ltd
+
+₹3,50,000
+
+Negotiation
+
+80%
+```
+
+---
+
+# 🏆 DEAL WON FLOW
+
+Sales
+
+↓
+
+Click
+
+```text
+Mark As Won
+```
+
+---
+
+Popup
+
+```text
+Final Amount
+
+Contract Upload
+
+Project Start Date
+```
+
+---
+
+System
+
+↓
+
+Admin Notification
+
+↓
+
+Project Request Created
+
+↓
+
+Admin Review
+
+↓
+
+Project Creation Flow Starts
+
+---
+
+# ❌ LOST DEAL FLOW
+
+Button
+
+```text
+Mark As Lost
+```
+
+---
+
+Reason
+
+```text
+Budget Issue
+
+Competitor Chosen
+
+No Response
+
+Cancelled
+```
+
+---
+
+Analytics Updated
+
+---
+
+# 📧 EMAIL CENTER
+
+Sidebar
+
+```text
+Email Center
+```
+
+---
+
+Features
+
+```text
+Send Proposal
+
+Follow-up Email
+
+Bulk Email Campaign
+```
+
+---
+
+Microsoft Outlook Integration
+
+```text
+Send via Outlook
+```
+
+---
+
+# 📅 FOLLOW-UP MANAGEMENT
+
+Sidebar
+
+```text
+Follow Ups
+```
+
+---
+
+Table
+
+```text
+Client
+
+Last Contact
+
+Next Follow Up
+
+Priority
+```
+
+---
+
+Priority
+
+```text
+High
+
+Medium
+
+Low
+```
+
+---
+
+Overdue
+
+🔴 Red Highlight
+
+---
+
+# 💬 SALES CHAT
+
+Can Chat With
+
+```text
+Admin
+
+Calling Team
+
+Marketing
+
+Client
+```
+
+---
+
+Features
+
+```text
+Files
+
+Voice Notes
+
+Proposal Sharing
+
+Meeting Links
+```
+
+---
+
+History Forever Stored
+
+---
+
+# 📈 PERFORMANCE MODULE
+
+Sidebar
+
+```text
+Performance
+```
+
+---
+
+Cards
+
+```text
+Leads Handled
+
+Deals Won
+
+Revenue Generated
+
+Meetings Conducted
+```
+
+---
+
+Graphs
+
+```text
+Monthly Revenue
+
+Lead Conversion
+
+Won vs Lost Deals
+
+Meeting Trends
+```
+
+---
+
+# 🏅 SALES SCORECARD
+
+Formula
+
+```text
+Revenue = 40%
+
+Conversions = 30%
+
+Meetings = 15%
+
+Follow Ups = 15%
+```
+
+---
+
+Output
+
+```text
+Performance Score
+
+94/100
+```
+
+---
+
+# 🏆 SALES LEADERBOARD
+
+Dashboard Widget
+
+```text
+Top Sales Performers
+```
+
+Example
+
+```text
+#1 Amit
+
+#2 Rahul
+
+#3 Sneha
+```
+
+---
+
+# 📊 SALES ANALYTICS
+
+Charts
+
+```text
+Lead Sources
+
+Revenue Trend
+
+Conversion Funnel
+
+Sales Growth
+
+Target vs Achievement
+```
+
+---
+
+# 🔔 NOTIFICATIONS
+
+Real Time
+
+```text
+New Lead Assigned
+
+Proposal Viewed
+
+Meeting Reminder
+
+Deal Won
+
+Deal Lost
+```
+
+---
+
+# 📂 DOCUMENT CENTER
+
+Stores
+
+```text
+Proposals
+
+Quotations
+
+Contracts
+
+Invoices
+
+Meeting Notes
+```
+
+---
+
+# 🤖 AI FEATURES
+
+AI Suggestions
+
+```text
+Lead Conversion Probability
+
+Best Follow-up Time
+
+Revenue Forecast
+
+Deal Risk Detection
+
+Client Interest Prediction
+```
+
+---
+
+# 🔄 SALES → ADMIN FLOW
+
+```text
+Calling Team
+
+↓
+
+Sales Team
+
+↓
+
+Lead Qualified
+
+↓
+
+Proposal Sent
+
+↓
+
+Meeting Done
+
+↓
+
+Deal Won
+
+↓
+
+Admin Notification
+
+↓
+
+Project Created
+
+↓
+
+Project Assigned To Department
+
+↓
+
+Project Manager
+```
+
+---
+
+# 🎨 UI DESIGN
+
+### Sidebar
+
+```text
+🏠 Dashboard
+
+👥 Lead Pipeline
+
+💰 Deals
+
+📑 Proposals
+
+📅 Meetings
+
+📧 Email Center
+
+📞 Follow Ups
+
+💬 Chat
+
+📈 Performance
+
+📊 Analytics
+
+📂 Documents
+
+⚙ Settings
+```
+
+### Cards
+
+```text
+White Glass Cards
+
+16px Radius
+
+Soft Shadow
+
+Hover Lift Animation
+
+Animated Numbers
+```
+
+### Colors
+
+```text
+Primary Blue #2563EB
+
+Success Green #22C55E
+
+Warning Orange #F59E0B
+
+Danger Red #EF4444
+
+Background #F8FAFC
+```
+
+### Premium Features
+
+```text
+Deal Pipeline
+
+Revenue Dashboard
+
+Proposal Tracking
+
+Client Communication Center
+
+Lead Scoring
+
+AI Revenue Forecast
+
+Sales Leaderboard
+
+Target Tracking
+```
+
+हा Sales Module पूर्ण झाल्यावर पुढचा महत्त्वाचा Module **HR Module (Enterprise Level Detailed Flow)** आहे, जो Attendance, Leave, Employee Records, Payroll Requests, Performance Tracking आणि Recruitment Handle करेल.# 🚀 JMKC CRM — CLIENT MODULE FLOW (Enterprise Level)
+
+हा Client Module साधा "Client Dashboard" नाही. हा पूर्ण **Client Relationship Center** आहे.
+
+Client ला Project Request करायची, Requirement Submit करायची, Proposal पाहायची, Chat करायची, Documents Download करायचे, Meeting Join करायची, Project Progress Track करायची आणि Invoice पाहायची सुविधा असेल.
+
+Admin ला Client चा पूर्ण History दिसेल.
+
+---
+
+# 🎯 CLIENT ROLE PURPOSE
+
+Client चे काम:
+
+```text
+Requirement Submit करणे
+
+Budget देणे
+
+Project Request करणे
+
+Proposal Approve करणे
+
+Project Progress पाहणे
+
+Documents पाहणे
+
+Meetings Join करणे
+
+Admin/PM शी Chat करणे
+
+Invoices पाहणे
+
+Final Project Approve करणे
+```
+
+---
+
+# 🔐 CLIENT LOGIN FLOW
+
+Client Login
+
+```text
+Role = Client
+```
+
+↓
+
+Redirect
+
+```text
+/dashboard/client
+```
+
+---
+
+# 🎨 CLIENT DASHBOARD UI
+
+## Header
+
+Left
+
+```text
+JMKC CRM
+```
+
+Center
+
+```text
+Global Search
+```
+
+Search
+
+```text
+Projects
+
+Documents
+
+Meetings
+
+Invoices
+```
+
+Right
+
+```text
+Notifications
+
+Messages
+
+Profile
+```
+
+---
+
+## Profile Dropdown
+
+```text
+My Profile
+
+Settings
+
+Privacy
+
+Documents
+
+Logout
+```
+
+---
+
+# 📊 CLIENT DASHBOARD
+
+## Welcome Card
+
+```text
+Welcome Back ABC Pvt Ltd
+
+You Have 4 Active Projects
+```
+
+---
+
+## KPI Cards
+
+### Active Projects
+
+```text
+4
+```
+
+Hover
+
+```text
+2 In Development
+
+1 In Testing
+
+1 In Review
+```
+
+---
+
+### Total Budget
+
+```text
+₹12,50,000
+```
+
+Hover
+
+```text
+Paid = ₹8,00,000
+
+Pending = ₹4,50,000
+```
+
+---
+
+### Meetings
+
+```text
+12
+```
+
+Hover
+
+```text
+Upcoming = 3
+```
+
+---
+
+### Open Tickets
+
+```text
+2
+```
+
+Hover
+
+```text
+Support Tickets Pending
+```
+
+---
+
+# 📝 REQUIREMENT CENTER
+
+Sidebar
+
+```text
+Requirements
+```
+
+↓
+
+```text
+/client/requirements
+```
+
+---
+
+## Create Requirement
+
+Button
+
+```text
++ New Requirement
+```
+
+---
+
+Popup
+
+Fields
+
+```text
+Requirement Title
+
+Description
+
+Budget
+
+Deadline
+
+Priority
+
+Attachments
+```
+
+Priority
+
+```text
+Low
+
+Medium
+
+High
+
+Urgent
+```
+
+---
+
+Upload
+
+```text
+PDF
+
+DOCX
+
+Excel
+
+Images
+
+ZIP
+```
+
+---
+
+Click
+
+```text
+Submit Requirement
+```
+
+---
+
+System
+
+↓
+
+Admin Notification
+
+↓
+
+Admin Review
+
+↓
+
+Assign Department
+
+↓
+
+Assign Project Manager
+
+---
+
+# 👨‍💼 CLIENT PROFILE PAGE
+
+```text
+/client/profile
+```
+
+---
+
+Tabs
+
+```text
+Overview
+
+Projects
+
+Meetings
+
+Documents
+
+Invoices
+
+Support
+
+Chats
+```
+
+---
+
+# 📂 PROJECTS TAB
+
+Click
+
+```text
+Projects
+```
+
+---
+
+Table
+
+```text
+Project Name
+
+Department
+
+Project Manager
+
+Status
+
+Progress
+
+Deadline
+```
+
+---
+
+Example
+
+```text
+CRM Development
+
+IT Department
+
+Rahul PM
+
+In Progress
+
+68%
+```
+
+---
+
+Click Project
+
+↓
+
+```text
+/project/:id
+```
+
+---
+
+# 📁 PROJECT WORKSPACE (CLIENT VIEW)
+
+Tabs
+
+```text
+Overview
+
+Progress
+
+Files
+
+Meetings
+
+Chat
+
+Invoices
+
+Approvals
+```
+
+---
+
+# 📈 PROGRESS TAB
+
+Client ला Real-Time Progress दिसेल
+
+Cards
+
+```text
+Tasks Completed
+
+Tasks Pending
+
+Project Completion %
+
+Deadline
+```
+
+---
+
+Progress Bar
+
+```text
+68% Completed
+```
+
+---
+
+Hover
+
+```text
+Completed Tasks = 34
+
+Remaining Tasks = 16
+```
+
+---
+
+# 📷 DAILY UPDATES TAB
+
+PM Upload
+
+```text
+Images
+
+Screenshots
+
+Videos
+
+PDF
+
+Excel
+
+ZIP
+```
+
+---
+
+Client View
+
+```text
+Latest Updates
+```
+
+Example
+
+```text
+UI Design Completed
+
+API Integration Completed
+
+Testing Started
+```
+
+---
+
+Client Comment
+
+```text
+Looks Good 👍
+```
+
+---
+
+# 📄 DOCUMENT CENTER
+
+Sidebar
+
+```text
+Documents
+```
+
+---
+
+Folders
+
+```text
+Project Files
+
+Contracts
+
+Invoices
+
+Meeting Notes
+
+Reports
+```
+
+---
+
+Features
+
+```text
+Preview
+
+Download
+
+Search
+```
+
+---
+
+# 💬 CLIENT CHAT
+
+Sidebar
+
+```text
+Chat
+```
+
+---
+
+Can Chat With
+
+```text
+Admin
+
+Project Manager
+
+Sales Team
+```
+
+---
+
+Features
+
+```text
+File Sharing
+
+Images
+
+Voice Notes
+
+Emoji
+
+Pinned Messages
+
+Read Receipts
+```
+
+---
+
+Chat History
+
+```text
+Permanent Storage
+```
+
+MongoDB
+
+---
+
+# 📅 MEETING CENTER
+
+Sidebar
+
+```text
+Meetings
+```
+
+---
+
+Table
+
+```text
+Meeting Name
+
+Date
+
+Time
+
+Organizer
+
+Status
+```
+
+---
+
+Button
+
+```text
+Join Meeting
+```
+
+---
+
+Microsoft Teams Integration
+
+↓
+
+Direct Redirect
+
+---
+
+# 📑 PROPOSAL CENTER
+
+Sidebar
+
+```text
+Proposals
+```
+
+---
+
+Table
+
+```text
+Proposal Name
+
+Amount
+
+Status
+
+Date
+```
+
+---
+
+Status
+
+```text
+Pending
+
+Approved
+
+Rejected
+```
+
+---
+
+Open Proposal
+
+↓
+
+Preview PDF
+
+---
+
+Buttons
+
+```text
+Approve
+
+Reject
+
+Request Changes
+```
+
+---
+
+# 💰 INVOICE CENTER
+
+Sidebar
+
+```text
+Invoices
+```
+
+---
+
+Cards
+
+```text
+Total Amount
+
+Paid
+
+Pending
+```
+
+---
+
+Table
+
+```text
+Invoice No
+
+Project
+
+Amount
+
+Due Date
+
+Status
+```
+
+---
+
+Status
+
+```text
+Paid
+
+Pending
+
+Overdue
+```
+
+---
+
+Download
+
+```text
+PDF Invoice
+```
+
+---
+
+# ✅ PROJECT APPROVAL FLOW
+
+Project Completed
+
+↓
+
+PM Marks Complete
+
+↓
+
+Client Notification
+
+```text
+Project Ready For Review
+```
+
+↓
+
+Client Opens Project
+
+↓
+
+Review
+
+---
+
+Buttons
+
+```text
+Approve Project
+
+Request Changes
+```
+
+---
+
+If Approve
+
+↓
+
+Admin Notification
+
+↓
+
+Project Closed
+
+---
+
+If Request Changes
+
+↓
+
+PM Notification
+
+↓
+
+Project Reopened
+
+---
+
+# 🎫 SUPPORT CENTER
+
+Sidebar
+
+```text
+Support Tickets
+```
+
+---
+
+Create Ticket
+
+Fields
+
+```text
+Title
+
+Issue Type
+
+Description
+
+Attachments
+```
+
+---
+
+Priority
+
+```text
+Low
+
+Medium
+
+High
+
+Critical
+```
+
+---
+
+Submit
+
+↓
+
+Admin Notification
+
+↓
+
+Support Team Assigned
+
+---
+
+# 📊 CLIENT ANALYTICS
+
+Client ला फक्त त्याच्या Projects चे Analytics दिसतील
+
+Charts
+
+```text
+Project Progress
+
+Budget Usage
+
+Timeline
+
+Task Completion
+```
+
+---
+
+# 🔔 NOTIFICATIONS
+
+Real-Time
+
+```text
+Proposal Received
+
+Project Assigned
+
+Meeting Scheduled
+
+Invoice Generated
+
+Project Completed
+
+Support Ticket Updated
+```
+
+---
+
+# ⭐ CLIENT FEEDBACK CENTER
+
+Project Completion नंतर
+
+Popup
+
+```text
+Rate Your Experience
+```
+
+Rating
+
+```text
+⭐ 1-5 Stars
+```
+
+---
+
+Fields
+
+```text
+Feedback
+
+Suggestions
+```
+
+---
+
+Stored In
+
+```text
+Admin Analytics
+```
+
+---
+
+# 🤖 AI FEATURES
+
+Client Side AI
+
+```text
+AI Project Summary
+
+AI Progress Summary
+
+AI Meeting Summary
+
+AI Budget Insights
+```
+
+---
+
+Example
+
+```text
+Your CRM Project is 68% Completed.
+
+UI Module Completed.
+
+Backend Module Under Development.
+
+Expected Delivery: 10 Days.
+```
+
+---
+
+# 🔄 CLIENT → ADMIN → PM FLOW
+
+```text
+Client
+
+↓
+
+Create Requirement
+
+↓
+
+Admin Review
+
+↓
+
+Assign Department
+
+↓
+
+Assign Project Manager
+
+↓
+
+PM Starts Project
+
+↓
+
+Daily Updates
+
+↓
+
+Client Review
+
+↓
+
+Approval
+
+↓
+
+Project Complete
+```
+
+---
+
+# 🎨 CLIENT MODULE UI DESIGN
+
+## Sidebar
+
+```text
+🏠 Dashboard
+
+📝 Requirements
+
+📂 Projects
+
+📄 Documents
+
+💬 Chat
+
+📅 Meetings
+
+📑 Proposals
+
+💰 Invoices
+
+🎫 Support Tickets
+
+📊 Analytics
+
+⚙ Settings
+```
+
+---
+
+## Cards
+
+```text
+White Glass Cards
+
+16px Radius
+
+Soft Shadow
+
+Hover Lift Animation
+
+Animated Counters
+```
+
+---
+
+## Colors
+
+```text
+Primary Blue #2563EB
+
+Success Green #22C55E
+
+Warning Orange #F59E0B
+
+Danger Red #EF4444
+
+Background #F8FAFC
+```
+
+---
+
+## Premium Features
+
+```text
+Client Relationship Center
+
+Real-Time Project Tracking
+
+Project Approval Workflow
+
+Meeting Center
+
+Proposal Center
+
+Invoice Center
+
+Support Ticket System
+
+Client Feedback System
+
+AI Progress Summary
+```
+
+हा Client Module पूर्णपणे Monday.com + ClickUp + Zoho Projects + HubSpot Client Portal सारखा Enterprise-Level अनुभव देईल आणि Client ला Project ची पूर्ण visibility मिळेल.
+# 🚀 JMKC CRM — PROJECT MANAGER MODULE (FINAL DETAILED FLOW)
+
+हा Flow असा आहे की **Project Manager (PM)** हा Admin आणि Product Manager यांच्या मधला मुख्य Execution Controller असेल.
+
+PM ला Project Admin कडून किंवा Product Manager कडून मिळू शकतो.
+
+---
+
+# 1️⃣ PROJECT MANAGER LOGIN
+
+User Login
+
+```text
+Role = Project Manager
+Email
+Password
+```
+
+Login Success
+
+↓
+
+```text
+/pm/dashboard
+```
+
+---
+
+# 2️⃣ PROJECT MANAGER DASHBOARD
+
+PM Dashboard वर खालील Real-Time Data दिसेल:
+
+### Cards
+
+```text
+Assigned Projects
+
+Active Projects
+
+Completed Projects
+
+Pending Tasks
+
+Overdue Tasks
+
+Today's Meetings
+
+Team Members
+
+Project Health Score
+```
+
+Example
+
+```text
+Assigned Projects = 12
+
+Active = 8
+
+Completed = 4
+
+Pending Tasks = 37
+```
+
+---
+
+### Recent Activity
+
+```text
+New Project Assigned
+
+New Task Assigned
+
+Client Comment
+
+Team Update Uploaded
+
+Meeting Scheduled
+```
+
+---
+
+### Quick Actions
+
+```text
+Create Task
+
+Schedule Meeting
+
+Upload Update
+
+Generate Report
+
+Open Teams Meeting
+```
+
+---
+
+# 3️⃣ PROJECT RECEIVING FLOW
+
+Project येऊ शकतो:
+
+### Method 1
+
+Admin
+
+↓
+
+Assign Project
+
+↓
+
+Project Manager
+
+---
+
+### Method 2
+
+Product Manager
+
+↓
+
+Assign Project
+
+↓
+
+Project Manager
+
+---
+
+Notification
+
+```text
+New Project Assigned
+
+Project Name:
+CRM V2
+
+Assigned By:
+Admin
+```
+
+---
+
+PM Dashboard वर
+
+```text
+Assigned Projects
+```
+
+Card Count वाढेल.
+
+---
+
+# 4️⃣ ASSIGNED PROJECTS PAGE
+
+Click
+
+```text
+Assigned Projects
+```
+
+↓
+
+```text
+/pm/projects
+```
+
+---
+
+Table
+
+```text
+Project Name
+
+Department
+
+Assigned By
+
+Deadline
+
+Priority
+
+Status
+
+Progress
+```
+
+---
+
+Filters
+
+```text
+Department
+
+Status
+
+Priority
+
+Deadline
+```
+
+---
+
+Search
+
+```text
+Search Project
+```
+
+---
+
+# 5️⃣ PROJECT DETAILS PAGE
+
+Click Project
+
+↓
+
+```text
+/project/:id
+```
+
+---
+
+Tabs
+
+```text
+Overview
+
+Tasks
+
+Team
+
+Files
+
+Meetings
+
+Chats
+
+Timeline
+
+Daily Updates
+
+Reports
+
+Risks
+
+Budget
+
+Activity Logs
+```
+
+---
+
+# 6️⃣ OVERVIEW TAB
+
+Shows
+
+```text
+Project Name
+
+Client
+
+Department
+
+Priority
+
+Deadline
+
+Progress
+
+Project Health
+```
+
+---
+
+Project Health
+
+```text
+Healthy
+
+Warning
+
+Critical
+```
+
+---
+
+Health Calculate From
+
+```text
+Task Completion
+
+Daily Updates
+
+Deadline
+
+Risks
+```
+
+---
+
+# 7️⃣ TEAM TAB
+
+PM ला Project Team दिसेल.
+
+Shows
+
+```text
+Developers
+
+Testers
+
+Designers
+
+Employees
+```
+
+---
+
+Example
+
+```text
+Rahul
+Developer
+
+Amit
+Tester
+
+Sneha
+Designer
+```
+
+---
+
+PM Actions
+
+```text
+Assign Task
+
+Remove Member
+
+Add Member
+```
+
+---
+
+# 8️⃣ TASK MANAGEMENT
+
+Click
+
+```text
+Tasks
+```
+
+---
+
+PM Create Task
+
+Fields
+
+```text
+Task Name
+
+Description
+
+Assign Employee
+
+Priority
+
+Deadline
+
+Attachments
+```
+
+---
+
+Assign
+
+↓
+
+Notification
+
+↓
+
+Employee Dashboard
+
+---
+
+Statuses
+
+```text
+Pending
+
+In Progress
+
+Review
+
+Completed
+```
+
+---
+
+# 9️⃣ KANBAN BOARD
+
+PM View
+
+```text
+To Do
+
+In Progress
+
+Testing
+
+Done
+```
+
+---
+
+Drag Drop
+
+```text
+Task Card
+```
+
+Move
+
+↓
+
+Status Auto Change
+
+---
+
+# 🔟 DAILY UPDATE SYSTEM
+
+Most Important
+
+PM रोज Update Upload करेल.
+
+---
+
+Click
+
+```text
+Daily Updates
+```
+
+↓
+
+```text
+Create Update
+```
+
+---
+
+Upload
+
+```text
+Image
+
+Screenshot
+
+Video
+
+PDF
+
+Excel
+
+Word
+
+ZIP
+
+Source Code
+
+Links
+```
+
+---
+
+Text Update
+
+```text
+Completed Login API
+
+Fixed Dashboard Bug
+
+Created Attendance Module
+```
+
+---
+
+Submit
+
+↓
+
+Admin View
+
+↓
+
+Product Manager View
+
+↓
+
+Stored Forever
+
+---
+
+# 1️⃣1️⃣ FILE CENTER
+
+PM Upload
+
+```text
+Design Files
+
+Source Code
+
+Reports
+
+Testing Reports
+
+PDF
+
+ZIP
+```
+
+---
+
+Admin View Anytime
+
+---
+
+# 1️⃣2️⃣ CHAT MODULE
+
+PM Chat With
+
+```text
+Admin
+
+Product Manager
+
+Employees
+
+Client
+```
+
+---
+
+Features
+
+```text
+Text
+
+Files
+
+Images
+
+Voice Notes
+
+Pinned Messages
+
+Read Receipts
+```
+
+---
+
+Project Wise Chat
+
+Example
+
+```text
+CRM V2 Chat Room
+```
+
+---
+
+History Never Deleted
+
+---
+
+# 1️⃣3️⃣ CLIENT COMMUNICATION
+
+Client Comment
+
+↓
+
+PM Notification
+
+---
+
+Client Request
+
+```text
+Need Dashboard Changes
+```
+
+↓
+
+PM Review
+
+↓
+
+Create Task
+
+↓
+
+Assign Employee
+
+---
+
+# 1️⃣4️⃣ MEETING MODULE
+
+### Microsoft Teams Integration
+
+PM Click
+
+```text
+Meetings
+```
+
+---
+
+Cards
+
+```text
+Open Teams
+
+Open Outlook
+
+Open Calendar
+```
+
+---
+
+PM Create Meeting
+
+Fields
+
+```text
+Title
+
+Date
+
+Time
+
+Participants
+```
+
+---
+
+Generate
+
+↓
+
+Teams Link
+
+↓
+
+Outlook Invite
+
+↓
+
+Calendar Event
+
+---
+
+Yes, Microsoft Teams + Outlook + Calendar integration should be available in PM module.
+
+---
+
+# 1️⃣5️⃣ PROJECT TIMELINE
+
+Timeline View
+
+```text
+Project Started
+
+Task Created
+
+Task Completed
+
+Meeting Held
+
+File Uploaded
+
+Project Delivered
+```
+
+---
+
+PM Full History पाहू शकतो.
+
+---
+
+# 1️⃣6️⃣ PROJECT RISKS
+
+PM Create Risk
+
+Example
+
+```text
+Developer Unavailable
+
+Deadline Risk
+
+Budget Risk
+```
+
+---
+
+Risk Level
+
+```text
+Low
+
+Medium
+
+High
+
+Critical
+```
+
+---
+
+Admin Alert
+
+---
+
+# 1️⃣7️⃣ REPORTS
+
+Generate
+
+```text
+Project Progress Report
+
+Team Performance Report
+
+Task Completion Report
+
+Weekly Report
+
+Monthly Report
+```
+
+---
+
+Export
+
+```text
+PDF
+
+Excel
+
+CSV
+```
+
+---
+
+# 1️⃣8️⃣ PERFORMANCE TRACKING
+
+PM ला दिसेल
+
+```text
+Employee Name
+
+Assigned Tasks
+
+Completed Tasks
+
+Pending Tasks
+
+Performance Score
+```
+
+---
+
+Example
+
+```text
+Rahul
+
+35 Assigned
+
+31 Completed
+
+89 Score
+```
+
+---
+
+# 1️⃣9️⃣ APPROVAL FLOW
+
+PM Approve
+
+```text
+Task Completion
+
+Employee Leave
+
+Project Update
+```
+
+---
+
+Forward To
+
+```text
+HR
+
+Admin
+
+Product Manager
+```
+
+---
+
+# 2️⃣0️⃣ NOTIFICATIONS
+
+Real Time
+
+```text
+New Project Assigned
+
+Task Completed
+
+Client Message
+
+Meeting Reminder
+
+File Uploaded
+
+Leave Request
+
+Project Comment
+```
+
+---
+
+# 2️⃣1️⃣ WHAT PM CAN SEE
+
+PM Can See
+
+```text
+Assigned Projects
+
+Team Members
+
+Tasks
+
+Updates
+
+Meetings
+
+Files
+
+Reports
+
+Client Comments
+```
+
+---
+
+# 2️⃣2️⃣ WHAT PM CANNOT SEE
+
+PM Cannot See
+
+```text
+Finance Module
+
+Role Manager
+
+Company Settings
+
+Other Department Private Data
+
+Admin Controls
+```
+
+---
+
+# FINAL PROJECT MANAGER RESPONSIBILITY FLOW
+
+```text
+Admin
+      ↓
+Assign Project
+      ↓
+Project Manager
+      ↓
+Create Team
+      ↓
+Create Tasks
+      ↓
+Assign Employees
+      ↓
+Monitor Work
+      ↓
+Upload Daily Updates
+      ↓
+Client Communication
+      ↓
+Meetings (Teams/Outlook)
+      ↓
+Generate Reports
+      ↓
+Project Completion
+      ↓
+Admin Review
+      ↓
+Client Approval
+      ↓
+Project Closed
+```
+
+हा Flow implement केलास तर Project Manager हा पूर्ण Project Execution Controller म्हणून काम करेल आणि Admin, Product Manager, Employees आणि Client यांच्यामधला मुख्य bridge बनेल.
+# 🚀 JMKC CRM — EMPLOYEE MODULE (FINAL DETAILED FLOW)
+
+Employee हा CRM मधला सर्वात महत्त्वाचा End User आहे. त्याला फक्त त्याच्याशी संबंधित Projects, Tasks, Attendance, Leaves, Meetings आणि Updates दिसतील.
+
+---
+
+# 1️⃣ EMPLOYEE LOGIN
+
+Employee Login करतो.
+
+```text
+Role = Employee
+
+Email
+
+Password
+```
+
+Login Success
+
+↓
+
+```text
+/dashboard/employee
+```
+
+---
+
+# 2️⃣ EMPLOYEE DASHBOARD
+
+## Top Cards
+
+```text
+Assigned Projects
+
+Pending Tasks
+
+Completed Tasks
+
+Attendance %
+
+Leaves Balance
+
+Upcoming Meetings
+```
+
+Example
+
+```text
+Projects = 5
+
+Pending Tasks = 12
+
+Attendance = 98%
+
+Leaves Left = 8
+```
+
+---
+
+## Recent Activities Widget
+
+```text
+Task Assigned
+
+Task Completed
+
+Project Update Added
+
+Meeting Scheduled
+
+Leave Approved
+```
+
+---
+
+## Quick Actions
+
+Buttons
+
+```text
+Mark Attendance
+
+Apply Leave
+
+Update Task
+
+Upload Work
+
+Join Meeting
+```
+
+---
+
+# 3️⃣ MY PROJECTS
+
+Sidebar
+
+```text
+My Projects
+```
+
+Click
+
+↓
+
+```text
+/projects/my-projects
+```
+
+---
+
+Shows Cards
+
+```text
+Project Name
+
+Client Name
+
+Deadline
+
+Progress %
+
+Priority
+```
+
+Example
+
+```text
+CRM Project
+
+Progress 72%
+
+Deadline 20 Jun
+```
+
+---
+
+Click Project
+
+↓
+
+```text
+/project/:id
+```
+
+---
+
+# 4️⃣ PROJECT DETAILS PAGE
+
+Tabs
+
+```text
+Overview
+
+Tasks
+
+Files
+
+Meetings
+
+Updates
+
+Team
+
+Chat
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Project Description
+
+Deadline
+
+Budget
+
+Assigned By
+
+Department
+
+Priority
+```
+
+---
+
+## Team Tab
+
+Shows
+
+```text
+Project Manager
+
+Product Manager
+
+Developers
+
+Testers
+
+Designers
+```
+
+Employee Team Members पाहू शकतो.
+
+---
+
+# 5️⃣ TASK MANAGEMENT
+
+Sidebar
+
+```text
+My Tasks
+```
+
+---
+
+Table
+
+```text
+Task Name
+
+Project
+
+Assigned By
+
+Deadline
+
+Status
+```
+
+---
+
+Status
+
+```text
+Pending
+
+In Progress
+
+Review
+
+Completed
+```
+
+---
+
+Click Task
+
+↓
+
+```text
+/task/:id
+```
+
+---
+
+# 6️⃣ TASK DETAILS PAGE
+
+Shows
+
+```text
+Task Description
+
+Priority
+
+Attachments
+
+Comments
+
+Deadline
+```
+
+---
+
+Buttons
+
+```text
+Start Task
+
+Upload Work
+
+Submit For Review
+```
+
+---
+
+# 7️⃣ DAILY WORK UPDATE SYSTEM
+
+Employee Daily Update देईल.
+
+Button
+
+```text
+Add Daily Update
+```
+
+---
+
+Fields
+
+```text
+Title
+
+Description
+
+Work Done Today
+
+Challenges
+
+Tomorrow Plan
+```
+
+---
+
+Attachments
+
+```text
+Images
+
+Screenshots
+
+PDF
+
+Excel
+
+ZIP
+
+Code Files
+
+Videos
+```
+
+---
+
+Submit
+
+↓
+
+Notification
+
+↓
+
+Project Manager
+
+↓
+
+Product Manager
+
+↓
+
+Admin
+
+सर्वांना Update दिसेल.
+
+---
+
+# 8️⃣ FILE UPLOAD CENTER
+
+Employee Upload करू शकतो.
+
+```text
+Design Files
+
+Code Files
+
+PDF
+
+Excel
+
+Reports
+
+Images
+```
+
+---
+
+Each Upload
+
+Shows
+
+```text
+Uploaded By
+
+Date
+
+Version
+```
+
+---
+
+Version History Stored.
+
+---
+
+# 9️⃣ ATTENDANCE MODULE
+
+Sidebar
+
+```text
+Attendance
+```
+
+---
+
+Dashboard
+
+```text
+Present Days
+
+Absent Days
+
+Late Days
+
+Attendance %
+```
+
+---
+
+Graph
+
+```text
+Monthly Attendance Trend
+```
+
+---
+
+Button
+
+```text
+Mark Attendance
+```
+
+---
+
+If GPS/System Enabled
+
+```text
+Check In
+
+Check Out
+```
+
+---
+
+# 🔟 LEAVE MODULE
+
+Sidebar
+
+```text
+Leaves
+```
+
+---
+
+Cards
+
+```text
+Total Leaves
+
+Used Leaves
+
+Remaining Leaves
+```
+
+---
+
+Button
+
+```text
+Apply Leave
+```
+
+---
+
+Fields
+
+```text
+Leave Type
+
+From Date
+
+To Date
+
+Reason
+
+Attachment
+```
+
+---
+
+Workflow
+
+```text
+Employee
+
+↓
+
+Project Manager
+
+↓
+
+HR
+
+↓
+
+Admin
+```
+
+---
+
+Status
+
+```text
+Pending
+
+Approved
+
+Rejected
+```
+
+---
+
+# 1️⃣1️⃣ MEETINGS MODULE
+
+Sidebar
+
+```text
+Meetings
+```
+
+---
+
+Shows
+
+```text
+Meeting Title
+
+Organizer
+
+Date
+
+Time
+```
+
+---
+
+Button
+
+```text
+Join Meeting
+```
+
+---
+
+Integration
+
+```text
+Microsoft Teams
+
+Outlook Calendar
+```
+
+---
+
+Click
+
+↓
+
+Direct Teams Meeting Open
+
+---
+
+# 1️⃣2️⃣ CHAT MODULE
+
+Sidebar
+
+```text
+Chat
+```
+
+---
+
+Employee Chat करू शकतो.
+
+```text
+Project Manager
+
+Product Manager
+
+HR
+
+Admin
+
+Team Members
+```
+
+---
+
+Features
+
+```text
+File Sharing
+
+Images
+
+Voice Notes
+
+Emoji
+
+Read Receipts
+
+Pinned Messages
+```
+
+---
+
+Chat History
+
+Permanent Stored.
+
+---
+
+# 1️⃣3️⃣ NOTIFICATIONS
+
+Bell Icon
+
+Shows
+
+```text
+New Task Assigned
+
+Task Deadline Near
+
+Meeting Scheduled
+
+Leave Approved
+
+Project Updated
+```
+
+---
+
+Real Time
+
+```text
+Socket.io
+```
+
+---
+
+# 1️⃣4️⃣ MY PERFORMANCE
+
+Sidebar
+
+```text
+Performance
+```
+
+---
+
+Cards
+
+```text
+Attendance Score
+
+Task Completion Score
+
+Project Contribution
+
+Meeting Participation
+```
+
+---
+
+Performance Score
+
+```text
+89/100
+```
+
+---
+
+Calculation
+
+```text
+Attendance 30%
+
+Tasks 40%
+
+Updates 20%
+
+Meetings 10%
+```
+
+---
+
+# 1️⃣5️⃣ DOCUMENT CENTER
+
+Sidebar
+
+```text
+Documents
+```
+
+---
+
+Folders
+
+```text
+Project Files
+
+Training Files
+
+Policies
+
+Reports
+```
+
+---
+
+Employee Download करू शकतो.
+
+---
+
+# 1️⃣6️⃣ PROFILE PAGE
+
+Top Right
+
+```text
+Profile
+```
+
+---
+
+Tabs
+
+```text
+Personal Info
+
+Attendance
+
+Leaves
+
+Projects
+
+Tasks
+
+Documents
+
+Settings
+```
+
+---
+
+# 1️⃣7️⃣ SETTINGS
+
+Tabs
+
+```text
+Profile
+
+Security
+
+Notifications
+
+Privacy
+```
+
+---
+
+Security
+
+```text
+Change Password
+
+2FA
+
+Active Sessions
+
+Login History
+```
+
+---
+
+# 1️⃣8️⃣ EMPLOYEE PERMISSIONS
+
+Employee करू शकतो:
+
+```text
+View Assigned Projects
+
+View Assigned Tasks
+
+Upload Daily Updates
+
+Upload Files
+
+Apply Leave
+
+Join Meetings
+
+Chat With Team
+```
+
+---
+
+Employee करू शकत नाही:
+
+```text
+Create Departments
+
+Create Users
+
+Assign Projects
+
+Delete Projects
+
+Approve Leaves
+
+View Other Departments Data
+```
+
+---
+
+# 🔥 COMPLETE EMPLOYEE FLOW
+
+```text
+Login
+
+↓
+
+Dashboard
+
+↓
+
+My Projects
+
+↓
+
+Open Project
+
+↓
+
+View Tasks
+
+↓
+
+Start Task
+
+↓
+
+Upload Daily Update
+
+↓
+
+Submit Work
+
+↓
+
+PM Review
+
+↓
+
+Product Manager Review
+
+↓
+
+Admin Can Track
+
+↓
+
+Task Completed
+
+↓
+
+Performance Updated
+
+↓
+
+Reports Generated
+```
+
+### Microsoft Integration
+
+हो, Employee Module मध्ये सुद्धा:
+
+```text
+Microsoft Teams Integration
+
+Outlook Calendar Integration
+
+OneDrive File Access
+```
+
+हे Direct Redirect + OAuth Integration ने काम करेल, त्यामुळे Employee Meeting Join, Calendar Sync आणि Files Access करू शकेल.# 🚀 JMKC CRM — HR MODULE (Enterprise Level Detailed Flow)
+
+तुझ्या CRM मध्ये HR हा फक्त Leave Approver नसावा. HR हा **Employee Lifecycle Manager** असावा. Admin ला सर्व System Control असेल, पण HR ला सर्व Employee Related Operations हाताळता आल्या पाहिजेत.
+
+---
+
+# 👤 HR LOGIN FLOW
+
+HR Login
+
+↓
+
+```text
+/dashboard/hr
+```
+
+HR ला फक्त HR Related Data दिसेल.
+
+तो Admin सारखा Projects Create किंवा Delete करू शकणार नाही.
+
+---
+
+# HR SIDEBAR
+
+```text
+Dashboard
+
+Employees
+
+Attendance
+
+Leaves
+
+Recruitment
+
+Departments
+
+Documents
+
+Meetings
+
+Announcements
+
+Reports
+
+Performance
+
+Payroll Overview
+
+Support Requests
+
+Notifications
+
+Settings
+```
+
+---
+
+# 1️⃣ HR DASHBOARD
+
+## Top KPI Cards
+
+```text
+Total Employees
+
+Present Today
+
+Absent Today
+
+Pending Leaves
+
+Open Positions
+
+New Joiners
+
+Resigned Employees
+
+Department Strength
+```
+
+Hover
+
+↓
+
+```text
+Present Today
+
+178 Employees
+
++12% From Yesterday
+```
+
+---
+
+## Attendance Overview
+
+Graph
+
+```text
+Present
+
+Absent
+
+Late
+
+Half Day
+```
+
+Department Wise
+
+```text
+IT
+
+Mechanical
+
+Marketing
+
+Sales
+
+HR
+
+Calling Team
+```
+
+---
+
+## Leave Summary
+
+Cards
+
+```text
+Pending Leave
+
+Approved Leave
+
+Rejected Leave
+```
+
+Click
+
+↓
+
+Leave Details Page
+
+---
+
+## New Joiners
+
+Table
+
+```text
+Photo
+
+Name
+
+Department
+
+Role
+
+Joining Date
+```
+
+---
+
+## Employee Alerts
+
+```text
+Probation Ending
+
+Document Missing
+
+Contract Expiring
+
+Birthday Today
+
+Work Anniversary
+```
+
+---
+
+# 2️⃣ EMPLOYEE MANAGEMENT
+
+Sidebar
+
+```text
+Employees
+```
+
+↓
+
+```text
+/hr/employees
+```
+
+---
+
+## Employee List
+
+Table
+
+```text
+Photo
+
+Name
+
+Employee ID
+
+Department
+
+Role
+
+Attendance
+
+Projects
+
+Status
+```
+
+---
+
+Filters
+
+```text
+Department
+
+Role
+
+Status
+
+Joining Date
+```
+
+Search
+
+```text
+Search Employee
+```
+
+---
+
+# EMPLOYEE PROFILE
+
+Click Employee
+
+↓
+
+```text
+/employee/:id
+```
+
+---
+
+Tabs
+
+```text
+Overview
+
+Attendance
+
+Leaves
+
+Projects
+
+Performance
+
+Documents
+
+Meetings
+
+Activity Timeline
+```
+
+---
+
+# Overview Tab
+
+```text
+Photo
+
+Employee ID
+
+Name
+
+Department
+
+Role
+
+Manager
+
+Joining Date
+
+Employment Type
+```
+
+---
+
+# Attendance Tab
+
+Graph
+
+```text
+Monthly Attendance
+```
+
+Cards
+
+```text
+Present
+
+Absent
+
+Late
+
+Half Day
+```
+
+---
+
+# Leaves Tab
+
+```text
+Leave History
+
+Pending
+
+Approved
+
+Rejected
+```
+
+---
+
+# Projects Tab
+
+Shows
+
+```text
+Assigned Projects
+
+Completed Projects
+
+Current Tasks
+```
+
+Admin Assigned?
+
+PM Assigned?
+
+Display Both
+
+---
+
+# Performance Tab
+
+Auto Generated
+
+```text
+Attendance Score
+
+Task Completion
+
+Project Participation
+
+Meeting Attendance
+
+Discipline Score
+```
+
+---
+
+# Documents Tab
+
+Files
+
+```text
+Offer Letter
+
+ID Proof
+
+Certificates
+
+Contract
+
+Appraisal Letters
+```
+
+Preview Available
+
+---
+
+# Activity Timeline
+
+```text
+Marked Attendance
+
+Applied Leave
+
+Joined Meeting
+
+Uploaded Document
+
+Completed Task
+```
+
+---
+
+# 3️⃣ ATTENDANCE MANAGEMENT
+
+Sidebar
+
+```text
+Attendance
+```
+
+↓
+
+```text
+/hr/attendance
+```
+
+---
+
+Cards
+
+```text
+Present
+
+Absent
+
+Late
+
+On Leave
+```
+
+---
+
+Table
+
+```text
+Employee
+
+Department
+
+Check In
+
+Check Out
+
+Status
+```
+
+---
+
+Filters
+
+```text
+Date
+
+Department
+
+Role
+
+Employee
+```
+
+---
+
+Sort
+
+```text
+Highest Attendance
+
+Lowest Attendance
+```
+
+---
+
+Top Performer
+
+🏆
+
+```text
+100% Attendance
+```
+
+---
+
+# 4️⃣ LEAVE MANAGEMENT
+
+Sidebar
+
+```text
+Leaves
+```
+
+↓
+
+```text
+/hr/leaves
+```
+
+---
+
+Leave Requests
+
+```text
+Pending
+
+Approved
+
+Rejected
+```
+
+---
+
+Click Request
+
+Shows
+
+```text
+Employee Name
+
+Department
+
+Reason
+
+From Date
+
+To Date
+
+Attachment
+```
+
+---
+
+Buttons
+
+```text
+Approve
+
+Reject
+
+Forward To Admin
+```
+
+---
+
+Approval Flow
+
+```text
+Employee
+
+↓
+
+Project Manager
+
+↓
+
+HR
+
+↓
+
+Admin (Optional)
+```
+
+---
+
+# 5️⃣ RECRUITMENT MODULE
+
+Sidebar
+
+```text
+Recruitment
+```
+
+---
+
+Cards
+
+```text
+Open Positions
+
+Applied Candidates
+
+Interviews
+
+Selected
+```
+
+---
+
+Create Job
+
+Fields
+
+```text
+Position
+
+Department
+
+Experience
+
+Skills
+
+Description
+```
+
+---
+
+Candidate Profile
+
+```text
+Resume
+
+Experience
+
+Education
+
+Interview Notes
+```
+
+---
+
+Status
+
+```text
+Applied
+
+Screening
+
+Interview
+
+Selected
+
+Rejected
+```
+
+---
+
+# 6️⃣ DEPARTMENT MANAGEMENT
+
+Sidebar
+
+```text
+Departments
+```
+
+---
+
+Department Cards
+
+```text
+IT
+
+Mechanical
+
+Marketing
+
+Sales
+
+Calling Team
+
+HR
+```
+
+---
+
+Click Department
+
+↓
+
+```text
+/department/:id
+```
+
+---
+
+Shows
+
+```text
+Employees
+
+Managers
+
+Attendance
+
+Performance
+
+Projects
+```
+
+---
+
+# 7️⃣ DOCUMENT CENTER
+
+Sidebar
+
+```text
+Documents
+```
+
+---
+
+Folders
+
+```text
+Employee Documents
+
+Policies
+
+Contracts
+
+Offer Letters
+
+Certificates
+```
+
+---
+
+Features
+
+```text
+Upload
+
+Preview
+
+Download
+
+Version History
+```
+
+---
+
+# 8️⃣ MEETING CENTER
+
+Sidebar
+
+```text
+Meetings
+```
+
+---
+
+Microsoft Integration
+
+```text
+Open Teams
+
+Open Outlook Calendar
+```
+
+---
+
+Create Meeting
+
+```text
+Title
+
+Date
+
+Time
+
+Participants
+```
+
+---
+
+Teams Link Auto Generated
+
+---
+
+# 9️⃣ ANNOUNCEMENTS
+
+Sidebar
+
+```text
+Announcements
+```
+
+---
+
+Create Notice
+
+```text
+Holiday Notice
+
+Meeting Notice
+
+Policy Update
+
+Training Notice
+```
+
+---
+
+Visibility
+
+```text
+All Employees
+
+Department Wise
+
+Role Wise
+```
+
+---
+
+# 🔟 REPORT CENTER
+
+Sidebar
+
+```text
+Reports
+```
+
+---
+
+Generate
+
+```text
+Attendance Report
+
+Leave Report
+
+Employee Report
+
+Department Report
+
+Performance Report
+```
+
+---
+
+Export
+
+```text
+PDF
+
+Excel
+
+CSV
+```
+
+---
+
+# 1️⃣1️⃣ PERFORMANCE MANAGEMENT
+
+Sidebar
+
+```text
+Performance
+```
+
+---
+
+Employee Scorecard
+
+```text
+Attendance
+
+Task Completion
+
+Projects
+
+Meeting Participation
+
+Behavior Score
+```
+
+---
+
+Final Score
+
+```text
+92/100
+```
+
+---
+
+Badges
+
+```text
+Top Performer
+
+Employee Of Month
+
+Best Attendance
+```
+
+---
+
+# 1️⃣2️⃣ PAYROLL OVERVIEW
+
+(Actual Salary Processing Admin/Finance कडे राहील)
+
+HR ला दिसेल
+
+```text
+Employee
+
+Department
+
+Salary Status
+
+Attendance Impact
+
+Leave Impact
+```
+
+---
+
+# 1️⃣3️⃣ SUPPORT REQUESTS
+
+Employees HR ला Request करू शकतात
+
+```text
+Document Request
+
+Policy Question
+
+HR Help
+```
+
+---
+
+HR
+
+```text
+Approve
+
+Resolve
+
+Close
+```
+
+---
+
+# 1️⃣4️⃣ NOTIFICATIONS
+
+Real Time
+
+```text
+Leave Request
+
+New Employee
+
+Document Uploaded
+
+Meeting Reminder
+
+Interview Scheduled
+```
+
+---
+
+# 1️⃣5️⃣ SETTINGS
+
+Tabs
+
+```text
+Profile
+
+Notifications
+
+Privacy
+
+Security
+
+Integrations
+```
+
+---
+
+# 🔥 HR SPECIAL POWERS
+
+HR पाहू शकतो:
+
+✅ सर्व Employees
+
+✅ Attendance
+
+✅ Leave Requests
+
+✅ Recruitment
+
+✅ Documents
+
+✅ Meetings
+
+✅ Performance
+
+✅ Department Data
+
+---
+
+HR पाहू शकत नाही:
+
+❌ Finance Revenue
+
+❌ Project Budget
+
+❌ Client Contracts
+
+❌ System Settings
+
+❌ User Deletion
+
+❌ Project Creation
+
+---
+
+# FINAL HR RESPONSIBILITY
+
+```text
+Employee Onboarding
+
+Employee Records
+
+Attendance Tracking
+
+Leave Approval
+
+Recruitment
+
+Performance Tracking
+
+Employee Documents
+
+Announcements
+
+HR Reports
+
+Employee Support
+```

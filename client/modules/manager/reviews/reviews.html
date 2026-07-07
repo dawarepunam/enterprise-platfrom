@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager 1-on-1 Reviews</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">1-on-1 Reviews</p>
+                            <h1>Save private performance and growth conversations</h1>
+                            <p class="hero-text">Manager can document goals, concerns, promotion discussion, and action items for private review sessions with team members.</p>
+                        </div>
+                        <div id="reviewMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">New Review</p><h2>Capture review</h2></div></header>
+                        <form id="reviewForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Member</span><select id="reviewMember"></select></div>
+                                <div class="manager-field"><span>Topic</span><input id="reviewTopic" type="text" value="Monthly 1-on-1" /></div>
+                            </div>
+                            <div class="manager-field"><span>Goals</span><textarea id="reviewGoals" placeholder="One goal per line"></textarea></div>
+                            <div class="manager-field"><span>Concerns</span><textarea id="reviewConcerns" placeholder="Concerns or blockers"></textarea></div>
+                            <div class="manager-field"><span>Promotion Discussion</span><textarea id="reviewPromotion" placeholder="Growth or promotion notes"></textarea></div>
+                            <div class="manager-button-row"><button class="btn btn-primary" type="submit">Save Review</button></div>
+                        </form>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Saved Sessions</p><h2>Review history</h2></div></header>
+                        <div id="reviewList" class="manager-list"></div>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="reviews.js"></script>
+</body>
+</html>

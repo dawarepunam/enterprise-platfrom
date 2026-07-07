@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sales Revenue Workspace</title>
+    <link rel="stylesheet" href="/modules/sales/dashboard/dashboard.css" />
+  </head>
+  <body>
+    <div class="sales-app">
+      <aside class="sales-sidebar" id="salesSidebar">
+        <div class="brand-row">
+          <div class="brand-mark">J</div>
+          <div>
+            <strong>JMKC CRM</strong>
+            <span>Sales Revenue</span>
+          </div>
+          <button class="icon-btn sidebar-close" id="closeSidebar" type="button" aria-label="Close sidebar">x</button>
+        </div>
+
+        <nav class="side-nav" aria-label="Sales navigation">
+          <button class="nav-link active" data-panel="dashboard" type="button">Dashboard</button>
+          <button class="nav-link" data-panel="pipeline" type="button">Deal Pipeline</button>
+          <button class="nav-link" data-panel="rescue" type="button">Rescue Queue</button>
+          <button class="nav-link" data-panel="approvals" type="button">Approvals</button>
+          <button class="nav-link" data-panel="reports" type="button">Reports</button>
+          <button class="nav-link" data-panel="settings" type="button">Settings</button>
+        </nav>
+
+        <div class="profile-card" id="profileCard"></div>
+      </aside>
+
+      <main class="sales-main">
+        <header class="topbar">
+          <div class="topbar-title">
+            <button class="icon-btn menu-btn" id="openSidebar" type="button" aria-label="Open sidebar">=</button>
+            <div>
+              <p>Good Morning, <span id="firstName">Sales</span></p>
+              <h1>Revenue Management System</h1>
+            </div>
+          </div>
+          <label class="search-box">
+            <span>Search</span>
+            <input id="globalSearch" type="search" placeholder="Search company, contact, stage..." />
+          </label>
+          <div class="top-actions">
+            <button class="ghost-btn" id="refreshButton" type="button">Refresh</button>
+            <button class="primary-btn" id="newDealButton" type="button">New Deal</button>
+            <button class="icon-btn" id="logoutButton" type="button" aria-label="Logout">L</button>
+          </div>
+        </header>
+
+        <section class="kpi-grid" id="kpiGrid"></section>
+
+        <section class="panel-page active" data-page="dashboard">
+          <div class="dashboard-grid">
+            <section class="panel lead-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Smart Lead Queue</p>
+                  <h2>Deals needing action</h2>
+                </div>
+                <select id="stageFilter" aria-label="Filter by stage">
+                  <option value="">All stages</option>
+                  <option value="New">New</option>
+                  <option value="Interested">Interested</option>
+                  <option value="Requirement Discussed">Requirement Discussed</option>
+                  <option value="Quotation Sent">Quotation Sent</option>
+                  <option value="Negotiation">Negotiation</option>
+                  <option value="Converted">Won</option>
+                  <option value="Lost">Lost</option>
+                </select>
+              </div>
+              <div class="deal-list" id="dealList"></div>
+            </section>
+
+            <section class="panel insight-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">AI Next Best Action</p>
+                  <h2 id="selectedDealTitle">Select a deal</h2>
+                </div>
+                <span class="status-pill" id="riskBadge">-</span>
+              </div>
+              <div id="dealInsight"></div>
+            </section>
+          </div>
+
+          <div class="secondary-grid">
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Follow-Up Sequence</p>
+                  <h2>Call, email, WhatsApp, meeting</h2>
+                </div>
+              </div>
+              <div id="sequencePanel"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Revenue Leaderboard</p>
+                  <h2>Top revenue and closures</h2>
+                </div>
+              </div>
+              <div class="leaderboard" id="leaderboard"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel-page" data-page="pipeline">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Deal Pipeline</p>
+                <h2>Stage aging and revenue probability</h2>
+              </div>
+            </div>
+            <div class="pipeline-board" id="pipelineBoard"></div>
+          </section>
+        </section>
+
+        <section class="panel-page" data-page="rescue">
+          <div class="secondary-grid">
+            <section class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Lead Rescue Team</p><h2>Lost or high-risk deals</h2></div></div>
+              <div class="compact-list" id="rescueQueue"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Reassignment Engine</p><h2>No activity warnings</h2></div></div>
+              <div class="compact-list" id="reassignmentQueue"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel-page" data-page="approvals">
+          <section class="panel">
+            <div class="panel-head"><div><p class="eyebrow">Approval Workflow</p><h2>Discounts and manager review</h2></div></div>
+            <div class="compact-list" id="approvalQueue"></div>
+          </section>
+        </section>
+
+        <section class="panel-page" data-page="reports">
+          <div class="report-grid">
+            <section class="panel metric-panel"><span>Expected Revenue</span><strong id="expectedRevenue">₹0</strong></section>
+            <section class="panel metric-panel"><span>Active Pipeline</span><strong id="activePipeline">₹0</strong></section>
+            <section class="panel metric-panel"><span>Relationship Score</span><strong id="relationshipAverage">0%</strong></section>
+            <section class="panel metric-panel"><span>High Risk Deals</span><strong id="highRiskDeals">0</strong></section>
+            <section class="panel wide-panel">
+              <div class="panel-head"><div><p class="eyebrow">Lost Deal Analysis</p><h2>Reason capture</h2></div></div>
+              <div class="compact-list" id="lostReasons"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel-page" data-page="settings">
+          <section class="panel settings-panel">
+            <div class="panel-head"><div><p class="eyebrow">Settings</p><h2>Sales preferences</h2></div></div>
+            <label><span>Default daily target</span><input id="dailyTarget" type="number" min="1" max="200" value="20" /></label>
+            <label><span>Risk threshold days</span><input id="riskDays" type="number" min="1" max="60" value="10" /></label>
+            <button class="primary-btn" id="saveSettingsButton" type="button">Save Changes</button>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <aside class="deal-drawer hidden" id="dealDrawer" aria-label="Deal details">
+      <div class="drawer-head">
+        <div>
+          <p class="eyebrow">Deal War Room</p>
+          <h2 id="drawerTitle">Deal</h2>
+        </div>
+        <button class="icon-btn" id="closeDrawer" type="button" aria-label="Close drawer">x</button>
+      </div>
+      <div class="drawer-tabs">
+        <button class="tab-btn active" data-tab="overview" type="button">Overview</button>
+        <button class="tab-btn" data-tab="contacts" type="button">Contacts</button>
+        <button class="tab-btn" data-tab="proposal" type="button">Proposal</button>
+        <button class="tab-btn" data-tab="discussion" type="button">Discussion</button>
+      </div>
+      <div id="drawerBody"></div>
+    </aside>
+
+    <div class="modal-backdrop hidden" id="dealModal">
+      <form class="modal" id="dealForm">
+        <div class="drawer-head">
+          <h2>Create Deal</h2>
+          <button class="icon-btn" data-close-modal type="button">x</button>
+        </div>
+        <label><span>Company</span><input id="dealCompany" required /></label>
+        <label><span>Contact</span><input id="dealContact" /></label>
+        <label><span>Phone</span><input id="dealPhone" /></label>
+        <label><span>Expected Value</span><input id="dealValue" type="number" min="0" /></label>
+        <label><span>Stage</span><select id="dealStage"><option>New</option><option>Interested</option><option>Requirement Discussed</option><option>Quotation Sent</option><option>Negotiation</option></select></label>
+        <label><span>Notes</span><textarea id="dealNotes" rows="4"></textarea></label>
+        <button class="primary-btn" type="submit">Save Deal</button>
+      </form>
+    </div>
+
+    <div class="toast-stack" id="toastStack"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/assets/js/api.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/socket.js"></script>
+    <script src="/modules/sales/dashboard/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<svg width="1400" height="900" viewBox="0 0 1400 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="900" rx="36" fill="#EEF4FF"/>
+  <rect x="50" y="50" width="1300" height="800" rx="32" fill="#FBFCFF"/>
+  <rect x="94" y="96" width="280" height="708" rx="28" fill="url(#side)"/>
+  <text x="126" y="154" fill="white" font-family="Arial, sans-serif" font-size="34" font-weight="700">Marketing Sidebar</text>
+  <g fill="white" font-family="Arial, sans-serif" font-size="22">
+    <text x="126" y="228">Dashboard</text>
+    <text x="126" y="286">Campaigns</text>
+    <text x="126" y="344">Create Campaign</text>
+    <text x="126" y="402">Audience</text>
+    <text x="126" y="460">Templates</text>
+    <text x="126" y="518">Preview &amp; Schedule</text>
+    <text x="126" y="576">Lead Pipeline</text>
+    <text x="126" y="634">Sales Dashboard</text>
+    <text x="126" y="692">Analytics</text>
+    <text x="126" y="750">Settings</text>
+  </g>
+  <g font-family="Arial, sans-serif">
+    <rect x="444" y="130" width="824" height="112" rx="24" fill="#E0EAFF"/>
+    <text x="482" y="176" fill="#0F172A" font-size="28" font-weight="700">Topbar</text>
+    <text x="482" y="212" fill="#475569" font-size="18">Search, notifications, Teams, Outlook, profile menu</text>
+    <rect x="444" y="286" width="824" height="180" rx="24" fill="#FFFFFF"/>
+    <text x="482" y="334" fill="#0F172A" font-size="28" font-weight="700">Dashboard Page</text>
+    <text x="482" y="372" fill="#475569" font-size="18">Hero heading, KPI cards, reach chart, source pie, activity panel</text>
+    <text x="482" y="404" fill="#475569" font-size="18">Card hover: glow + mini graph + "click to open" hint</text>
+    <rect x="444" y="502" width="392" height="220" rx="24" fill="#FFFFFF"/>
+    <text x="478" y="548" fill="#0F172A" font-size="26" font-weight="700">Campaign Detail</text>
+    <text x="478" y="586" fill="#475569" font-size="18">Banner, analytics tabs, leads table, files</text>
+    <rect x="876" y="502" width="392" height="220" rx="24" fill="#FFFFFF"/>
+    <text x="910" y="548" fill="#0F172A" font-size="26" font-weight="700">Lead Detail</text>
+    <text x="910" y="586" fill="#475569" font-size="18">Timeline, notes, assign to sales, meetings</text>
+  </g>
+  <defs>
+    <linearGradient id="side" x1="94" y1="96" x2="374" y2="804" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+</svg>

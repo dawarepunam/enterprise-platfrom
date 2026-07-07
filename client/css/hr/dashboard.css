@@ -1,0 +1,114 @@
+.dashboard-chart-grid,
+.dashboard-secondary-grid,
+.dashboard-panels,
+.dashboard-activity-grid {
+  margin-top: 22px;
+}
+
+#dashboardCards .hr-metric-card {
+  min-height: 206px;
+}
+
+.dashboard-mini,
+.hr-metric-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--hr-muted);
+  font-size: 0.9rem;
+}
+
+.hr-metric-badge {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 0.8rem;
+}
+
+.dashboard-insight-strip {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.insight-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 150px;
+}
+
+.insight-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -30px -50px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.34), transparent 66%);
+}
+
+.insight-card strong,
+.insight-card .hr-meta,
+.insight-card .insight-value {
+  position: relative;
+  z-index: 1;
+}
+
+.insight-value {
+  display: block;
+  margin-top: 16px;
+  font-size: 2rem;
+}
+
+.chart-card {
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.34);
+}
+
+.snapshot-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.snapshot-item {
+  position: relative;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.snapshot-item:hover .snapshot-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.snapshot-stat {
+  display: block;
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+
+.snapshot-hover {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.22s ease;
+  margin-top: 10px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-insight-strip {
+    grid-template-columns: 1fr;
+  }
+}

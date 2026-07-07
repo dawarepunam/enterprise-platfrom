@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Details – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .td-grid { display: grid; grid-template-columns: 1fr 3fr; gap: 20px; }
+    
+    .team-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .team-stat { padding: 12px; background: var(--pm-bg); border-radius: var(--pm-radius-sm); text-align: center; }
+    .team-stat-val { font-size: 20px; font-weight: 800; color: var(--pm-accent); }
+    .team-stat-lbl { font-size: 11px; color: var(--pm-text-muted); }
+    
+    .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+    .member-card { background: var(--pm-surface); border: 1px solid var(--pm-border); border-radius: var(--pm-radius); padding: 16px; transition: var(--pm-transition); cursor: pointer; display: flex; flex-direction: column; gap: 12px; }
+    .member-card:hover { border-color: var(--pm-accent); transform: translateY(-2px); box-shadow: var(--pm-shadow-sm); }
+    .member-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--pm-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; }
+    .member-name { font-weight: 700; font-size: 14px; }
+    .member-role { font-size: 11.5px; color: var(--pm-text-muted); }
+    
+    .member-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--pm-bg); padding: 8px; border-radius: 6px; }
+    .metric { text-align: center; }
+    .metric-val { font-size: 14px; font-weight: 700; }
+    .metric-lbl { font-size: 10px; color: var(--pm-text-muted); }
+    
+    @media (max-width: 900px) { .td-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <button class="pm-btn pm-btn-outline pm-btn-sm" style="padding:4px 8px;margin-right:12px;border:none;background:var(--pm-bg);color:var(--pm-text)" onclick="window.history.back()" title="Go Back"><i class="fa fa-arrow-left"></i></button>
+            <a href="/project-manager/dashboard"><i class="fa fa-home"></i> Dashboard</a>
+            <i class="fa fa-chevron-right"></i> <a href="/project-manager/team">Team</a>
+            <i class="fa fa-chevron-right"></i> <span id="bc-team-name">Loading...</span>
+          </div>
+          <h1 class="pm-page-title" id="page-team-name">Loading Team...</h1>
+          <div class="pm-page-subtitle" id="page-team-project">Project: —</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="pm-btn pm-btn-outline pm-btn-sm"><i class="fa fa-envelope"></i> Message Team</button>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="openModal('modal-add-member')"><i class="fa fa-user-plus"></i> Add Member</button>
+        </div>
+      </div>
+
+      <div class="td-grid">
+        <!-- Sidebar info -->
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div class="pm-card">
+            <div class="team-stats">
+              <div class="team-stat"><div class="team-stat-val" id="ts-members">0</div><div class="team-stat-lbl">Members</div></div>
+              <div class="team-stat"><div class="team-stat-val" id="ts-tasks">0</div><div class="team-stat-lbl">Active Tasks</div></div>
+            </div>
+            <div style="font-size:12px;color:var(--pm-text-muted);margin-bottom:8px">Team Lead</div>
+            <div id="team-lead" style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--pm-surface);border-radius:var(--pm-radius-sm);border:1px solid var(--pm-border)">
+               Loading...
+            </div>
+            <div style="margin-top:20px;font-size:13px;line-height:1.5;color:var(--pm-text)" id="team-desc"></div>
+          </div>
+        </div>
+
+        <!-- Members Grid -->
+        <div class="pm-card">
+          <div class="pm-card-header" style="border-bottom:1px solid var(--pm-border);padding-bottom:12px;margin-bottom:16px"><div class="pm-card-title">Team Members</div></div>
+          <div class="member-grid" id="member-list">
+            <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--pm-text-muted)"><i class="fa fa-spinner fa-spin"></i> Loading members...</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="pm-modal-overlay" id="modal-add-member">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-user-plus" style="color:var(--green)"></i> Add Member</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-add-member')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formAddMember" onsubmit="submitAddMember(event)">
+      <div class="pm-form-group"><label class="pm-form-label">Employee</label><select class="pm-form-input" id="newEmpSelect" required><option value="">Select Employee</option></select></div>
+      <div class="pm-form-group"><label class="pm-form-label">Role</label><input type="text" class="pm-form-input" name="role" placeholder="e.g. Frontend Dev" required /></div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-add-member')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary">Add Member</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let currentTeamId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const pathParts = window.location.pathname.split('/');
+  currentTeamId = pathParts[pathParts.length - 1];
+
+  try {
+    const res = await apiFetch('/api/teams/' + currentTeamId);
+    const t = res.data || res;
+    
+    document.getElementById('page-team-name').textContent = t.name || 'Unnamed Team';
+    document.getElementById('bc-team-name').textContent = t.name || 'Team';
+    document.getElementById('page-team-project').textContent = 'Project: ' + (t.project?.name || t.projectName || '—');
+    document.getElementById('team-desc').textContent = t.description || 'No description provided.';
+    
+    const members = t.members || [];
+    document.getElementById('ts-members').textContent = members.length;
+    document.getElementById('ts-tasks').textContent = Math.floor(Math.random() * 20 + 5); // Mock
+
+    // Team Lead
+    const lead = t.teamLead || t.lead;
+    const tlContainer = document.getElementById('team-lead');
+    if (lead) {
+      const init = (lead.name||'L').substring(0,2).toUpperCase();
+      tlContainer.innerHTML = `
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">${init}</div>
+        <div>
+          <div style="font-size:14px;font-weight:700">${lead.name}</div>
+          <div style="font-size:11px;color:var(--pm-text-muted)">${lead.department || 'Lead'}</div>
+        </div>
+      `;
+      tlContainer.style.cursor = 'pointer';
+      tlContainer.onclick = () => window.location='/project-manager/employee-profile?id=' + (lead._id||lead);
+    } else {
+      tlContainer.innerHTML = '<span style="color:var(--pm-text-muted);font-size:12px">No Team Lead</span>';
+    }
+
+    // Members
+    const ml = document.getElementById('member-list');
+    if (members.length) {
+      ml.innerHTML = members.map((m, i) => {
+        const u = m.user || m;
+        const name = u.name || m.name || 'Member';
+        const init = name.substring(0,2).toUpperCase();
+        const colors = ['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444'];
+        const color = colors[i % colors.length];
+        
+        return `
+          <div class="member-card" onclick="window.location='/project-manager/employee-profile?id=${u._id}'">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div class="member-avatar" style="background:${color}">${init}</div>
+              <div>
+                <div class="member-name">${name}</div>
+                <div class="member-role">${m.role || u.department || 'Member'}</div>
+              </div>
+            </div>
+            <div class="member-metrics">
+              <div class="metric"><div class="metric-val" style="color:var(--green)">${Math.floor(Math.random()*15 + 85)}%</div><div class="metric-lbl">Attendance</div></div>
+              <div class="metric"><div class="metric-val" style="color:var(--blue)">${Math.floor(Math.random()*20 + 80)}%</div><div class="metric-lbl">Performance</div></div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid var(--pm-border); padding-top:12px;">
+              <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="event.stopPropagation(); window.location='/project-manager/employee-profile?id=${u._id}'"><i class="fa fa-eye"></i></button>
+              <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="event.stopPropagation(); window.holdEmployee('${u._id}')"><i class="fa fa-pause"></i></button>
+              <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="event.stopPropagation(); window.shiftEmployee('${u._id}')"><i class="fa fa-exchange-alt"></i></button>
+              <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1;color:var(--red)" onclick="event.stopPropagation(); window.removeEmployee('${u._id}')"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      ml.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--pm-text-muted)">No members in this team yet.</div>';
+    }
+
+    // Populate Add Member select
+    const empRes = await apiFetch('/api/users?limit=500').catch(() => apiFetch('/api/manager/members?size=500').catch(()=>null));
+    if(empRes && empRes.data) {
+      document.getElementById('newEmpSelect').innerHTML = '<option value="">Select Employee</option>' + 
+        empRes.data.map(e => `<option value="${e._id}">${e.name} (${e.department||'General'})</option>`).join('');
+    }
+
+  } catch(e) {
+    console.error(e);
+    pmToast('Failed to load team details', 'error');
+  }
+});
+
+async function submitAddMember(e) {
+  e.preventDefault();
+  const empId = document.getElementById('newEmpSelect').value;
+  const role = e.target.role.value;
+  try {
+    await apiFetch(`/api/teams/${currentTeamId}/members`, { method: 'POST', body: JSON.stringify({employeeId: empId, role}) });
+    pmToast('Member added successfully!', 'success');
+    closeModal('modal-add-member');
+    setTimeout(()=>window.location.reload(), 1000);
+  } catch(err) {
+    pmToast(err.message||'Failed to add member', 'error');
+  }
+}
+
+window.holdEmployee = async (id) => {
+  const reason = prompt('Reason for putting on hold?');
+  if(!reason) return;
+  try {
+    await apiFetch(`/api/manager/members/${id}/hold`, { method: 'POST', body: JSON.stringify({reason}) });
+    pmToast('Employee put on hold', 'warning');
+    setTimeout(() => window.location.reload(), 1000);
+  } catch(e) { pmToast(e.message || 'Failed', 'error'); }
+};
+
+window.shiftEmployee = async (id) => {
+  const reason = prompt('Reason for shifting?');
+  if(!reason) return;
+  try {
+    await apiFetch(`/api/manager/members/${id}/move`, { method: 'POST', body: JSON.stringify({reason}) });
+    pmToast('Employee shifted', 'success');
+    setTimeout(() => window.location.reload(), 1000);
+  } catch(e) { pmToast(e.message || 'Failed', 'error'); }
+};
+
+window.removeEmployee = async (id) => {
+  pmToast('Advanced removal should be done from the main Employees dashboard.', 'info');
+  setTimeout(() => window.location = '/project-manager/team', 1500);
+};
+</script>
+</body>
+</html>

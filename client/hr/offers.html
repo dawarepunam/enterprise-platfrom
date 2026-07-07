@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Letters - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .offer-letter-preview {
+            background: #fff;
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            font-size: .9rem;
+            line-height: 1.8;
+            box-shadow: 0 4px 16px rgba(0,0,0,.06);
+        }
+        .offer-letter-preview h2 {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+            color: var(--dark-navy);
+        }
+        .offer-letter-preview .company-header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        .offer-letter-preview table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .offer-letter-preview table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border-gray);
+        }
+        .offer-letter-preview table td:first-child {
+            background: var(--bg-color);
+            font-weight: 600;
+            width: 40%;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span>People</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-calendar-check"></i><span>Workforce</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active"><i class="fa-solid fa-briefcase"></i><span>Recruitment</span><i class="fa-solid fa-chevron-up chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="jobs.html" class="submenu-item">Job Postings</a>
+                            <a href="applications.html" class="submenu-item">Applications Pipeline</a>
+                            <a href="interviews.html" class="submenu-item">Interviews</a>
+                            <a href="offers.html" class="submenu-item active">Offer Letters</a>
+                            <a href="onboarding.html" class="submenu-item">Onboarding</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding:4px 10px;font-size:.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Recruitment</span> > Offer Letters</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Offer Letters</h1>
+                <button class="btn btn-primary" onclick="openModal('generateOfferModal')"><i class="fa-solid fa-file-circle-plus"></i> Generate Offer</button>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Sent Offers</h3>
+                    <div class="table-actions">
+                        <select class="form-control" style="width:auto;padding:6px 12px;">
+                            <option>All Status</option>
+                            <option>Pending</option>
+                            <option>Accepted</option>
+                            <option>Declined</option>
+                        </select>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Candidate</th>
+                            <th>Position</th>
+                            <th>CTC Offered</th>
+                            <th>DOJ</th>
+                            <th>Sent On</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Meera+Pillai&background=random" class="employee-avatar">
+                                    <div><div style="font-weight:500;">Meera Pillai</div></div>
+                                </div>
+                            </td>
+                            <td>Senior Frontend Developer</td>
+                            <td style="font-weight:600;">₹ 14 LPA</td>
+                            <td>01 Jul 2026</td>
+                            <td>12 Jun 2026</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('offerDrawer')"><i class="fa-solid fa-eye"></i> Preview</button>
+                                    <button class="btn btn-outline btn-sm" onclick="showToast('Reminder sent!','info')"><i class="fa-solid fa-bell"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Aisha+Khan&background=random" class="employee-avatar">
+                                    <div><div style="font-weight:500;">Aisha Khan</div></div>
+                                </div>
+                            </td>
+                            <td>Senior Frontend Developer</td>
+                            <td style="font-weight:600;">₹ 12 LPA</td>
+                            <td>01 Jul 2026</td>
+                            <td>08 Jun 2026</td>
+                            <td><span class="badge badge-success">Accepted ✓</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="window.location.href='onboarding.html'"><i class="fa-solid fa-arrow-right"></i> Start Onboarding</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Offer Preview Drawer -->
+    <div class="drawer-overlay" id="offerDrawer">
+        <div class="drawer" style="width:580px;" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3>Offer Letter Preview</h3>
+                <button class="drawer-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:16px;">
+                    <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> PDF</button>
+                    <button class="btn btn-primary btn-sm" onclick="showToast('Offer letter emailed to candidate!','success')"><i class="fa-solid fa-paper-plane"></i> Resend Email</button>
+                </div>
+                <div class="offer-letter-preview">
+                    <div class="company-header">
+                        <h2>JMKC Group India</h2>
+                        <p style="color:var(--text-gray);font-size:.85rem;">Mumbai, Maharashtra | hr@jmkc.com</p>
+                    </div>
+
+                    <p><strong>Date:</strong> 12 June 2026</p>
+                    <p><strong>To:</strong><br>Meera Pillai<br>Mumbai, Maharashtra</p>
+
+                    <p>Dear <strong>Meera</strong>,</p>
+                    <p>We are pleased to offer you the position of <strong>Senior Frontend Developer</strong> at JMKC Group India. After carefully evaluating your qualifications and experience, we believe you will be a great addition to our team.</p>
+
+                    <table>
+                        <tr><td>Designation</td><td>Senior Frontend Developer</td></tr>
+                        <tr><td>Department</td><td>Development</td></tr>
+                        <tr><td>Location</td><td>Mumbai, Maharashtra</td></tr>
+                        <tr><td>Date of Joining</td><td>01 July 2026</td></tr>
+                        <tr><td>Annual CTC</td><td><strong>₹ 14,00,000</strong></td></tr>
+                        <tr><td>Employment Type</td><td>Full-time / Permanent</td></tr>
+                    </table>
+
+                    <p>Kindly confirm your acceptance by clicking "Accept Offer" in the portal link sent to your email.</p>
+                    <p>We look forward to welcoming you aboard.</p>
+                    <p><br>Regards,<br><strong>HR Department</strong><br>JMKC Group India</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Offer Modal -->
+    <div class="modal-overlay" id="generateOfferModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Generate Offer Letter</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Candidate</label>
+                    <select class="form-control">
+                        <option>Priya Iyer — Frontend Dev</option>
+                        <option>Nikhil Joshi — Frontend Dev</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Position</label>
+                    <input type="text" class="form-control" value="Senior Frontend Developer">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group">
+                        <label class="form-label">CTC Offered (₹ LPA)</label>
+                        <input type="number" class="form-control" placeholder="e.g. 12">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date of Joining</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Offer Template</label>
+                    <select class="form-control">
+                        <option>Standard IT Offer Template</option>
+                        <option>Sales Executive Template</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('generateOfferModal');showToast('Offer Letter Generated & Sent to Candidate!','success')"><i class="fa-solid fa-paper-plane"></i> Generate & Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

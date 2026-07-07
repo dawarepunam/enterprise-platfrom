@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin Dashboard — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/dashboard/dashboard.css"/>
+</head>
+<body class="admin-body">
+
+<main class="admin-content" id="mainContent">
+
+  <!-- Page Header -->
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">Dashboard</div>
+      <div class="page-subtitle" id="greetMsg">Welcome back! Here's your company overview.</div>
+    </div>
+    <div class="page-top-actions">
+      <span id="liveClock" style="font-size:13px;color:var(--text-3);font-weight:500;"></span>
+      <button class="btn btn-outline btn-sm" onclick="refreshDashboard()">🔄 Refresh</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('addUserModal')">+ Add User</button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="kpiGrid">
+    <a class="kpi-card kpi-card-blue" href="/admin/users">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-blue">👥</div>
+        <div class="kpi-trend kpi-trend-up" id="usersTrend">+0%</div>
+      </div>
+      <div class="kpi-value" id="kpiTotalUsers">—</div>
+      <div class="kpi-label">Total Users</div>
+      <div class="kpi-footer">Active this month</div>
+    </a>
+    <a class="kpi-card kpi-card-green" href="/admin/projects">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-green">📁</div>
+        <div class="kpi-trend kpi-trend-up" id="projectsTrend">+0%</div>
+      </div>
+      <div class="kpi-value" id="kpiProjects">—</div>
+      <div class="kpi-label">Total Projects</div>
+      <div class="kpi-footer">Across all departments</div>
+    </a>
+    <a class="kpi-card kpi-card-teal" href="/admin/clients">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-teal">🤝</div>
+        <div class="kpi-trend kpi-trend-up" id="clientsTrend">+0%</div>
+      </div>
+      <div class="kpi-value" id="kpiClients">—</div>
+      <div class="kpi-label">Total Clients</div>
+      <div class="kpi-footer">Active relationships</div>
+    </a>
+    <div class="kpi-card kpi-card-orange">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-orange">💰</div>
+        <div class="kpi-trend kpi-trend-up" id="revenueTrend">+0%</div>
+      </div>
+      <div class="kpi-value" id="kpiRevenue">—</div>
+      <div class="kpi-label">Total Revenue</div>
+      <div class="kpi-footer">This financial year</div>
+    </div>
+    <a class="kpi-card kpi-card-purple" href="/admin/attendance">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-purple">📅</div>
+        <div class="kpi-trend kpi-trend-up" id="attTrend">Today</div>
+      </div>
+      <div class="kpi-value" id="kpiAttendance">—</div>
+      <div class="kpi-label">Attendance Today</div>
+      <div class="kpi-footer">Present employees</div>
+    </a>
+    <a class="kpi-card kpi-card-red" href="/admin/tasks">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon-red">✅</div>
+        <div class="kpi-trend kpi-trend-up" id="tasksTrend">Active</div>
+      </div>
+      <div class="kpi-value" id="kpiTasks">—</div>
+      <div class="kpi-label">Open Tasks</div>
+      <div class="kpi-footer">Pending completion</div>
+    </a>
+  </div>
+
+  <!-- Row: System Health + Quick Actions -->
+  <div class="grid-2 mb-24">
+    <!-- System Health -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">⚡ System Health</div>
+          <div class="card-subtitle">Real-time infrastructure status</div>
+        </div>
+        <span class="badge badge-success">All Systems Operational</span>
+      </div>
+      <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="health-item">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;font-weight:600;color:var(--text-2)">🖥️ Server</span>
+            <span class="badge badge-success" id="serverStatus">Healthy</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill green" style="width:98%"></div></div>
+          <div style="font-size:11px;color:var(--text-4);margin-top:3px;">98% uptime</div>
+        </div>
+        <div class="health-item">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;font-weight:600;color:var(--text-2)">🗄️ Database</span>
+            <span class="badge badge-success" id="dbStatus">Connected</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill green" style="width:95%"></div></div>
+          <div style="font-size:11px;color:var(--text-4);margin-top:3px;">MongoDB Atlas</div>
+        </div>
+        <div class="health-item">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;font-weight:600;color:var(--text-2)">💾 Storage</span>
+            <span class="badge badge-warning" id="storageStatus">82%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill orange" style="width:82%"></div></div>
+          <div style="font-size:11px;color:var(--text-4);margin-top:3px;">82 GB of 100 GB used</div>
+        </div>
+        <div class="health-item">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;font-weight:600;color:var(--text-2)">🔌 API</span>
+            <span class="badge badge-success" id="apiStatus">Active</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+          <div style="font-size:11px;color:var(--text-4);margin-top:3px;">All endpoints running</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">⚡ Quick Actions</div>
+          <div class="card-subtitle">Launch tasks instantly</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <button class="quick-action-btn" onclick="openModal('addUserModal')">
+          <span class="qa-icon" style="background:var(--primary-light)">👤</span>
+          <span class="qa-label">Create User</span>
+        </button>
+        <button class="quick-action-btn" onclick="window.location.href='/admin/projects?create=1'">
+          <span class="qa-icon" style="background:var(--success-light)">📁</span>
+          <span class="qa-label">New Project</span>
+        </button>
+        <button class="quick-action-btn" onclick="openModal('addDeptModal')">
+          <span class="qa-icon" style="background:var(--warning-light)">🏢</span>
+          <span class="qa-label">Add Department</span>
+        </button>
+        <button class="quick-action-btn" onclick="window.location.href='/admin/meetings?create=1'">
+          <span class="qa-icon" style="background:var(--info-light)">📹</span>
+          <span class="qa-label">Schedule Meeting</span>
+        </button>
+        <button class="quick-action-btn" onclick="window.location.href='/admin/reports'">
+          <span class="qa-icon" style="background:var(--purple-light)">📊</span>
+          <span class="qa-label">Generate Report</span>
+        </button>
+        <button class="quick-action-btn" onclick="window.location.href='/admin/ai-center'">
+          <span class="qa-icon" style="background:var(--orange-light)">🤖</span>
+          <span class="qa-label">AI Insights</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid-2 mb-24">
+    <div class="chart-box">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">📈 Revenue Trend</div>
+          <div class="chart-subtitle">Monthly revenue overview</div>
+        </div>
+        <select class="filter-select" id="revenueFilter" onchange="loadRevenueChart()">
+          <option value="6">Last 6 Months</option>
+          <option value="12">Last 12 Months</option>
+        </select>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="revenueChart" height="200"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">📊 Project Status</div>
+          <div class="chart-subtitle">Distribution by status</div>
+        </div>
+      </div>
+      <div class="chart-canvas-wrap" style="max-width:260px;margin:0 auto;">
+        <canvas id="projectChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="grid-2 mb-24">
+    <!-- Recent Activities -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🕐 Recent Activities</div>
+        <a href="/admin/audit-logs" style="font-size:12px;color:var(--primary);font-weight:500;">View All</a>
+      </div>
+      <div class="card-body" style="padding:12px 16px;" id="activityFeed">
+        <div class="skeleton sk-text mb-8" style="width:80%;"></div>
+        <div class="skeleton sk-text mb-8" style="width:60%;"></div>
+        <div class="skeleton sk-text mb-8" style="width:70%;"></div>
+      </div>
+    </div>
+
+    <!-- Departments Overview -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🏢 Departments</div>
+        <a href="/admin/departments" style="font-size:12px;color:var(--primary);font-weight:500;">Manage</a>
+      </div>
+      <div class="card-body" style="padding:0;" id="deptList">
+        <div style="padding:20px;">
+          <div class="skeleton sk-text mb-8" style="width:80%;"></div>
+          <div class="skeleton sk-text mb-8" style="width:60%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leave Requests & Upcoming Meetings -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🌿 Pending Leave Requests</div>
+        <a href="/admin/leaves" style="font-size:12px;color:var(--primary);font-weight:500;">View All</a>
+      </div>
+      <div class="card-body" style="padding:0; max-height:320px; overflow-y:auto;" id="leaveRequests">
+        <div style="padding:20px;"><div class="skeleton sk-text" style="width:70%;"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📹 Today's Meetings</div>
+        <a href="/admin/meetings" style="font-size:12px;color:var(--primary);font-weight:500;">View All</a>
+      </div>
+      <div class="card-body" style="padding:0; max-height:320px; overflow-y:auto;" id="todayMeetings">
+        <div style="padding:20px;"><div class="skeleton sk-text" style="width:70%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Add User Modal -->
+<div class="modal-overlay hidden" id="addUserModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">➕ Create New User</div>
+      <button class="modal-close" onclick="closeModal('addUserModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="addUserForm" class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Full Name <span class="required">*</span></label>
+          <input class="form-control" id="uName" placeholder="Enter full name" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="required">*</span></label>
+          <input class="form-control" id="uEmail" type="email" placeholder="email@jmkc.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-control" id="uPhone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role <span class="required">*</span></label>
+          <select class="form-control" id="uRole" required>
+            <option value="">Select Role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="MANAGER">Project Manager</option>
+            <option value="PRODUCT_MANAGER">Product Manager</option>
+            <option value="HR">HR</option>
+            <option value="MARKETING">Marketing</option>
+            <option value="SALES">Sales</option>
+            <option value="CALLING">Calling Team</option>
+            <option value="MEMBER">Employee</option>
+            <option value="CLIENT">Client</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <select class="form-control" id="uDept">
+            <option value="">Select Department</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password <span class="required">*</span></label>
+          <input class="form-control" id="uPass" type="password" placeholder="Create password" required/>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddUser()">✅ Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Dept Modal -->
+<div class="modal-overlay hidden" id="addDeptModal">
+  <div class="modal-box modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">🏢 Add Department</div>
+      <button class="modal-close" onclick="closeModal('addDeptModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Department Name <span class="required">*</span></label>
+        <input class="form-control" id="dName" placeholder="e.g. Engineering" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" id="dDesc" placeholder="Brief description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Head of Department</label>
+        <select class="form-control" id="dHead">
+          <option value="">Select User</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addDeptModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddDept()">✅ Create</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/dashboard/dashboard.js"></script>
+</body>
+</html>

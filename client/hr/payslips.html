@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payslips - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .slip-preview {
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .slip-preview table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .slip-preview th, .slip-preview td {
+            border: 1px solid var(--border-gray);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .slip-preview th { background: var(--bg-color); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-calendar-check"></i><span>Workforce</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="run-payroll.html" class="submenu-item">Run Payroll</a>
+                            <a href="salary-structures.html" class="submenu-item">Salary Structures</a>
+                            <a href="payslips.html" class="submenu-item active">Payslips</a>
+                            <a href="claims.html" class="submenu-item">Claims / Expenses</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Payroll</span> > Payslips</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Payslips - May 2026</h1>
+                <div style="display:flex; gap:12px;">
+                    <select class="form-control" style="width:150px;">
+                        <option>May 2026</option>
+                        <option>April 2026</option>
+                    </select>
+                    <button class="btn btn-outline"><i class="fa-solid fa-envelope"></i> Email All</button>
+                    <button class="btn btn-primary"><i class="fa-solid fa-file-pdf"></i> Download All (ZIP)</button>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:24px;">
+                <div class="kpi-card" style="padding:20px; border-left:4px solid var(--success-green);">
+                    <div class="kpi-title">Generated Slips</div>
+                    <div class="kpi-value" style="font-size:1.8rem;">145</div>
+                </div>
+                <div class="kpi-card" style="padding:20px; border-left:4px solid var(--warning-orange);">
+                    <div class="kpi-title">Pending</div>
+                    <div class="kpi-value" style="font-size:1.8rem;">0</div>
+                </div>
+                <div class="kpi-card" style="padding:20px; border-left:4px solid var(--primary-blue);">
+                    <div class="kpi-title">Emailed Successfully</div>
+                    <div class="kpi-value" style="font-size:1.8rem;">145</div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Net Payable</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" checked></td>
+                            <td>EMP001</td>
+                            <td>Rahul Sharma</td>
+                            <td style="font-weight:600">₹ 76,800</td>
+                            <td><span class="badge badge-success">Generated</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('slipDrawer')"><i class="fa-solid fa-eye"></i> View</button>
+                                    <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" checked></td>
+                            <td>EMP002</td>
+                            <td>Priya Patel</td>
+                            <td style="font-weight:600">₹ 41,500</td>
+                            <td><span class="badge badge-success">Generated</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('slipDrawer')"><i class="fa-solid fa-eye"></i> View</button>
+                                    <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Drawer Preview -->
+    <div class="drawer-overlay" id="slipDrawer">
+        <div class="drawer" style="width:600px;" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3>Payslip Preview</h3>
+                <button class="drawer-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
+                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-download"></i> Download PDF</button>
+                </div>
+                
+                <div class="slip-preview">
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <h2 style="font-family:var(--font-heading);">JMKC Group India</h2>
+                        <p>Payslip for the month of May 2026</p>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                        <div>
+                            <strong>Employee:</strong> Rahul Sharma<br>
+                            <strong>ID:</strong> EMP001<br>
+                            <strong>Designation:</strong> Frontend Developer
+                        </div>
+                        <div style="text-align:right;">
+                            <strong>Bank A/c:</strong> XXXX-1234<br>
+                            <strong>UAN:</strong> 100XXXXX23<br>
+                            <strong>PAN:</strong> ABCDE1234F
+                        </div>
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <th>Earnings</th>
+                            <th>Amount (₹)</th>
+                            <th>Deductions</th>
+                            <th>Amount (₹)</th>
+                        </tr>
+                        <tr>
+                            <td>Basic</td>
+                            <td>42,500</td>
+                            <td>PF</td>
+                            <td>1,800</td>
+                        </tr>
+                        <tr>
+                            <td>HRA</td>
+                            <td>17,000</td>
+                            <td>Professional Tax</td>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>Special Allowance</td>
+                            <td>25,500</td>
+                            <td>TDS</td>
+                            <td>6,200</td>
+                        </tr>
+                        <tr>
+                            <th>Total Earnings</th>
+                            <th>85,000</th>
+                            <th>Total Deductions</th>
+                            <th>8,200</th>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top:20px; font-size:1.1rem; border-top:2px solid var(--dark-navy); padding-top:10px;">
+                        <strong>Net Payable:</strong> ₹ 76,800
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

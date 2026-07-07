@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core HR Foundation | Smart Enterprise</title>
+  
+  <!-- Global Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- HR Module Specific CSS -->
+  <link rel="stylesheet" href="/modules/hr/core/theme.css" />
+</head>
+<body>
+  
+  <!-- Fixed Header -->
+  <header class="hr-header">
+    <div class="hr-header-left">
+      <div class="hr-logo">JMKC CRM</div>
+      <div class="hr-module-badge">HR Module</div>
+      <div class="hr-breadcrumb" id="hrBreadcrumb">Dashboard > Employees</div>
+    </div>
+    
+    <div class="hr-header-center">
+      <div class="hr-search-bar">
+        <span class="hr-icon">🔍</span>
+        <input type="text" placeholder="Search Employee, Department, Document..." />
+        <span class="hr-shortcut">Ctrl + K</span>
+      </div>
+    </div>
+    
+    <div class="hr-header-right">
+      <div class="hr-dropdown" style="position:relative;">
+        <button class="hr-icon-btn primary-btn" onclick="document.getElementById('createMenu').classList.toggle('hidden')">Create +</button>
+        <div id="createMenu" class="hidden" style="position:absolute; top:40px; right:0; background:white; border:1px solid var(--hr-border); border-radius:8px; width:200px; box-shadow:0 4px 6px rgba(0,0,0,0.1); z-index:100;">
+          <a href="#" style="display:block; padding:0.75rem 1rem; color:var(--hr-text); text-decoration:none; border-bottom:1px solid var(--hr-border);">Create Goal</a>
+          <a href="#" style="display:block; padding:0.75rem 1rem; color:var(--hr-text); text-decoration:none; border-bottom:1px solid var(--hr-border);">Start Review</a>
+          <a href="#" style="display:block; padding:0.75rem 1rem; color:var(--hr-text); text-decoration:none; border-bottom:1px solid var(--hr-border);">Assign Training</a>
+          <a href="#" style="display:block; padding:0.75rem 1rem; color:var(--hr-text); text-decoration:none; border-bottom:1px solid var(--hr-border);">Create Promotion</a>
+          <a href="#" style="display:block; padding:0.75rem 1rem; color:var(--hr-text); text-decoration:none;">Launch Survey</a>
+        </div>
+      </div>
+      <div class="hr-bell-wrapper hoverable" onclick="window.UI.toggleNotificationDrawer()">
+        <span class="hr-icon">🔔</span>
+        <span class="hr-badge">5</span>
+      </div>
+      <button class="hr-icon-btn">✓</button>
+      <button class="hr-icon-btn">💬</button>
+      <div class="hr-profile-trigger">
+        <img src="https://ui-avatars.com/api/?name=HR+Manager&background=random" alt="Profile" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Drawer -->
+  <div id="hrNotificationDrawer" class="hr-drawer right-drawer hidden" style="width:350px;">
+    <div class="hr-drawer-header" style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between;">
+      <h3 style="margin:0;">Notifications</h3>
+      <button onclick="window.UI.toggleNotificationDrawer()" style="background:transparent; border:none; cursor:pointer;">✕</button>
+    </div>
+    <div class="hr-drawer-content" style="padding:1rem;">
+      <div class="hr-notification-item hoverable" onclick="window.App.navigate('/hr/goals')" style="padding:1rem; border-bottom:1px solid var(--hr-border); cursor:pointer;">
+        <strong style="color:var(--hr-primary);">Goal Assigned</strong>
+        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:var(--hr-text-muted);">You have a new goal assigned</p>
+      </div>
+      <div class="hr-notification-item hoverable" onclick="window.App.navigate('/hr/performance')" style="padding:1rem; border-bottom:1px solid var(--hr-border); cursor:pointer;">
+        <strong style="color:#F59E0B;">Review Pending</strong>
+        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:var(--hr-text-muted);">Rahul Sharma review is pending</p>
+      </div>
+      <div class="hr-notification-item hoverable" onclick="window.App.navigate('/hr/training')" style="padding:1rem; border-bottom:1px solid var(--hr-border); cursor:pointer;">
+        <strong style="color:#10B981;">Training Reminder</strong>
+        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:var(--hr-text-muted);">Leadership Training Tomorrow</p>
+      </div>
+      <div class="hr-notification-item hoverable" onclick="window.App.navigate('/hr/promotions')" style="padding:1rem; border-bottom:1px solid var(--hr-border); cursor:pointer;">
+        <strong style="color:#8B5CF6;">Promotion Request</strong>
+        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:var(--hr-text-muted);">Priya Patel promotion request</p>
+      </div>
+      <div class="hr-notification-item hoverable" onclick="window.App.navigate('/hr/feedback')" style="padding:1rem; cursor:pointer;">
+        <strong style="color:#EF4444;">Feedback Request</strong>
+        <p style="margin:0.25rem 0 0 0; font-size:0.875rem; color:var(--hr-text-muted);">360 Feedback is pending</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr-main-layout">
+    <!-- Sidebar -->
+    <aside class="hr-sidebar">
+      <nav>
+        <a href="javascript:void(0)" onclick="window.App.navigate('/hr/dashboard')" data-route="/hr/dashboard" class="hr-nav-item">Dashboard</a>
+        
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title">▼ People</div>
+          <a href="javascript:void(0)" onclick="window.App.navigate('/hr/employees')" data-route="/hr/employees" class="hr-nav-item">Employee Directory</a>
+          <a href="javascript:void(0)" onclick="window.App.navigate('/hr/departments')" data-route="/hr/departments" class="hr-nav-item">Departments</a>
+          <a href="javascript:void(0)" onclick="window.App.navigate('/hr/designations')" data-route="/hr/designations" class="hr-nav-item">Designations</a>
+          <a href="javascript:void(0)" onclick="window.App.navigate('/hr/documents')" data-route="/hr/documents" class="hr-nav-item">Documents</a>
+          <a href="javascript:void(0)" onclick="window.App.navigate('/hr/assets')" data-route="/hr/assets" class="hr-nav-item">Assets</a>
+        </div>
+        
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Workforce</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/attendance')" data-route="/hr/attendance" class="hr-nav-item">Attendance</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/leaves')" data-route="/hr/leaves" class="hr-nav-item">Leaves</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/shifts')" data-route="/hr/shifts" class="hr-nav-item">Shift Management</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/holidays')" data-route="/hr/holidays" class="hr-nav-item">Holiday Calendar</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/ess')" data-route="/hr/ess" class="hr-nav-item">ESS Requests</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/overtime')" data-route="/hr/overtime" class="hr-nav-item">Overtime</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/compoff')" data-route="/hr/compoff" class="hr-nav-item">Comp-Off</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/attendance/analytics')" data-route="/hr/attendance/analytics" class="hr-nav-item">Attendance Analytics</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/calendar')" data-route="/hr/calendar" class="hr-nav-item">Calendar Center</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/attendance/policies')" data-route="/hr/attendance/policies" class="hr-nav-item">Attendance Policies</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/leave-balances')" data-route="/hr/leave-balances" class="hr-nav-item">Leave Balances</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/team-attendance')" data-route="/hr/team-attendance" class="hr-nav-item">Team Attendance</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/attendance/exceptions')" data-route="/hr/attendance/exceptions" class="hr-nav-item">Attendance Exceptions</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Talent</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/performance')" data-route="/hr/performance" class="hr-nav-item">Performance</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/goals')" data-route="/hr/goals" class="hr-nav-item">Goals & OKR</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/kpi')" data-route="/hr/kpi" class="hr-nav-item">KPI / KRA</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/appraisals')" data-route="/hr/appraisals" class="hr-nav-item">Appraisals</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/feedback')" data-route="/hr/feedback" class="hr-nav-item">360 Feedback</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/training')" data-route="/hr/training" class="hr-nav-item">Training</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/certifications')" data-route="/hr/certifications" class="hr-nav-item">Certifications</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/skills')" data-route="/hr/skills" class="hr-nav-item">Skills Matrix</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/promotions')" data-route="/hr/promotions" class="hr-nav-item">Promotions</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/transfers')" data-route="/hr/transfers" class="hr-nav-item">Transfers</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/awards')" data-route="/hr/awards" class="hr-nav-item">Awards</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/career-path')" data-route="/hr/career-path" class="hr-nav-item">Career Path</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/succession')" data-route="/hr/succession" class="hr-nav-item">Succession</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/surveys')" data-route="/hr/surveys" class="hr-nav-item">Surveys</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/performance/analytics')" data-route="/hr/performance/analytics" class="hr-nav-item">Analytics</a>
+          </div>
+        </div>
+        
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Payroll</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/payroll')" data-route="/hr/payroll" class="hr-nav-item">Payroll Dashboard</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/claims')" data-route="/hr/claims" class="hr-nav-item">Claims Management</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Recruitment</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/recruitment/jobs')" data-route="/hr/recruitment/jobs" class="hr-nav-item">ATS & Jobs</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/recruitment/candidates')" data-route="/hr/recruitment/candidates" class="hr-nav-item">Candidates Pipeline</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/recruitment/interviews')" data-route="/hr/recruitment/interviews" class="hr-nav-item">Interview Calendar</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Lifecycle</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/onboarding')" data-route="/hr/onboarding" class="hr-nav-item">Onboarding</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/exit')" data-route="/hr/exit" class="hr-nav-item">Exit Management</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ AI & Analytics</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/ai/copilot')" data-route="/ai/copilot" class="hr-nav-item">AI Copilot</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/ai/attrition')" data-route="/ai/attrition" class="hr-nav-item">Attrition Prediction</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/analytics/forecasting')" data-route="/analytics/forecasting" class="hr-nav-item">Workforce Forecasting</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/analytics/skills')" data-route="/analytics/skills" class="hr-nav-item">Skill Gap Analytics</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/analytics/executive')" data-route="/analytics/executive" class="hr-nav-item">Executive Dashboard</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Digital Workplace</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/social')" data-route="/social" class="hr-nav-item">Social Feed</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/recognition-wall')" data-route="/hr/recognition-wall" class="hr-nav-item">Recognition Wall</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/communities')" data-route="/hr/communities" class="hr-nav-item">Communities</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/wellness')" data-route="/hr/wellness" class="hr-nav-item">Wellness Center</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/visitors')" data-route="/hr/visitors" class="hr-nav-item">Visitor Management</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/hr/meeting-rooms')" data-route="/hr/meeting-rooms" class="hr-nav-item">Meeting Rooms</a>
+          </div>
+        </div>
+
+        <div class="hr-nav-group">
+          <div class="hr-nav-group-title hr-expandable" onclick="this.parentElement.classList.toggle('expanded')">▼ Administration</div>
+          <div class="hr-nav-group-items">
+            <a href="javascript:void(0)" onclick="window.App.navigate('/admin/workflows')" data-route="/admin/workflows" class="hr-nav-item">Workflow Builder</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/admin/audit')" data-route="/admin/audit" class="hr-nav-item">Audit Logs</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/admin/roles')" data-route="/admin/roles" class="hr-nav-item">Role Matrix</a>
+            <a href="javascript:void(0)" onclick="window.App.navigate('/admin/security')" data-route="/admin/security" class="hr-nav-item">Security Center</a>
+          </div>
+        </div>
+      </nav>
+      
+      <div class="hr-footer-info">
+        <p>© 2026 JMKC Group India</p>
+        <p>Version 1.0</p>
+        <p>Server Status 🟢</p>
+        <p>Last Backup 02:00 AM</p>
+        <p>Created By Punam</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="hr-content-area" id="hrMainContent">
+      <!-- Views will be injected here -->
+      <div style="padding: 3rem; text-align: center; color: #64748B;">
+        Loading module...
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modals Container -->
+  <div id="hrModalOverlay" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    
+    <!-- Add Employee Wizard Modal -->
+    <div id="addEmployeeWizard" class="hr-card" style="width:700px; max-height:90vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+      <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="margin:0;">Add New Employee</h3>
+        <button onclick="window.UI.closeAddEmployeeWizard()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+      </div>
+
+      <!-- Stepper -->
+      <div style="display:flex; padding:1.5rem; background:#F8FAFC; border-bottom:1px solid var(--hr-border);">
+        <div id="step1Indicator" style="flex:1; text-align:center; color:var(--hr-primary); font-weight:600; border-bottom:3px solid var(--hr-primary); padding-bottom:0.5rem;">1. Personal</div>
+        <div id="step2Indicator" style="flex:1; text-align:center; color:var(--hr-text-muted); font-weight:500; border-bottom:3px solid var(--hr-border); padding-bottom:0.5rem;">2. Employment</div>
+        <div id="step3Indicator" style="flex:1; text-align:center; color:var(--hr-text-muted); font-weight:500; border-bottom:3px solid var(--hr-border); padding-bottom:0.5rem;">3. Account</div>
+      </div>
+
+      <!-- Wizard Content -->
+      <div style="padding:2rem; overflow-y:auto; flex:1;">
+        <!-- Step 1: Personal -->
+        <div id="wizardStep1">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Full Name</label>
+              <input type="text" placeholder="John Doe" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Email Address</label>
+              <input type="email" placeholder="john@jmkc.com" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Phone Number</label>
+              <input type="text" placeholder="+91 9000000000" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Date of Birth</label>
+              <input type="date" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Employment -->
+        <div id="wizardStep2" class="hidden">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Department</label>
+              <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+                <option>Select Department</option>
+                <option>Development</option>
+                <option>Marketing</option>
+                <option>Sales</option>
+                <option>HR</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Designation</label>
+              <input type="text" placeholder="e.g. Software Engineer" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Reporting Manager</label>
+              <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+                <option>Select Manager</option>
+                <option>Amit Verma</option>
+                <option>Neha Patil</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Joining Date</label>
+              <input type="date" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Account -->
+        <div id="wizardStep3" class="hidden">
+          <div style="display:grid; grid-template-columns:1fr; gap:1.5rem;">
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Temporary Password</label>
+              <input type="text" value="Welcome@123" readonly style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; background:#F1F5F9; color:var(--hr-text-muted);" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Role Access</label>
+              <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+                <option>Employee</option>
+                <option>Manager</option>
+                <option>Admin</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+        <button id="wizardPrevBtn" onclick="window.UI.wizardPrev()" class="hidden" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.75rem 1.5rem; font-weight:500; cursor:pointer;">Back</button>
+        <button id="wizardNextBtn" onclick="window.UI.wizardNext()" class="primary-btn" style="padding:0.75rem 1.5rem;">Next Step</button>
+        <button id="wizardSubmitBtn" onclick="window.UI.wizardSubmit()" class="primary-btn hidden" style="padding:0.75rem 1.5rem; background:#10B981;">Create Employee</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/modules/hr/core/api.js"></script>
+  <script src="/modules/hr/core/router.js"></script>
+  
+  <script>
+    // Initialize App
+    document.addEventListener('DOMContentLoaded', () => {
+      window.App.init();
+    });
+  </script>
+</body>
+</html>

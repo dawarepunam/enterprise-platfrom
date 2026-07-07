@@ -1,0 +1,88 @@
+<div class="hr-calendar-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Calendar Center</h2>
+    <div style="display:flex; gap:1rem;">
+      <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;">
+        <option>All Events</option>
+        <option>Leaves</option>
+        <option>Birthdays</option>
+        <option>Holidays</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="hr-card" style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; font-size:1.5rem;">May 2026</h3>
+      <div style="display:flex; gap:1rem;">
+        <button class="hr-icon-btn" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 1rem; border-radius:6px;">&lt;</button>
+        <button class="hr-icon-btn" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 1rem; border-radius:6px;">Today</button>
+        <button class="hr-icon-btn" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 1rem; border-radius:6px;">&gt;</button>
+      </div>
+    </div>
+    
+    <!-- Unified Calendar Grid -->
+    <div style="display:grid; grid-template-columns:repeat(7, 1fr); background:var(--hr-border); gap:1px; flex:1; overflow-y:auto;">
+      <!-- Headers -->
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Sun</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Mon</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Tue</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Wed</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Thu</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Fri</div>
+      <div style="background:#F8FAFC; padding:1rem; text-align:center; font-weight:500;">Sat</div>
+      
+      <!-- Week 1 -->
+      <div style="background:white; padding:0.5rem; min-height:120px; color:var(--hr-text-muted);">26</div>
+      <div style="background:white; padding:0.5rem; min-height:120px; color:var(--hr-text-muted);">27</div>
+      <div style="background:white; padding:0.5rem; min-height:120px; color:var(--hr-text-muted);">28</div>
+      <div style="background:white; padding:0.5rem; min-height:120px; color:var(--hr-text-muted);">29</div>
+      <div style="background:white; padding:0.5rem; min-height:120px; color:var(--hr-text-muted);">30</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">1
+        <div class="hoverable" onclick="window.UI.toast('Maharashtra Day', 'info')" style="background:#D1FAE5; color:#065F46; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #10B981;">Holiday: Maharashtra Day</div>
+      </div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">2</div>
+
+      <!-- Week 2 -->
+      <div style="background:white; padding:0.5rem; min-height:120px;">3</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">4</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">5</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">6</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">7</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">8</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">9
+        <div class="hoverable" onclick="window.UI.toast('Rahul Sharma Birthday', 'info')" style="background:#FCE7F3; color:#BE185D; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #DB2777;">🎂 Rahul's Birthday</div>
+      </div>
+
+      <!-- Week 3 -->
+      <div style="background:white; padding:0.5rem; min-height:120px;">10
+        <div class="hoverable" onclick="window.UI.toast('Priya Patel (Sick Leave)', 'info')" style="background:#FEE2E2; color:#B91C1C; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #EF4444;">Leave: Priya Patel</div>
+      </div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">11</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">12</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">13</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">14</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">15</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">16
+        <div class="hoverable" onclick="window.UI.toast('Rahul Sharma (Casual Leave)', 'info')" style="background:#FEF3C7; color:#B45309; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #F59E0B;">Leave: Rahul Sharma</div>
+      </div>
+
+      <!-- Week 4 -->
+      <div style="background:white; padding:0.5rem; min-height:120px;">17
+        <div class="hoverable" onclick="window.UI.toast('Rahul Sharma (Casual Leave)', 'info')" style="background:#FEF3C7; color:#B45309; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #F59E0B;">Leave: Rahul Sharma</div>
+      </div>
+      <div style="background:#EFF6FF; padding:0.5rem; min-height:120px; border:2px solid var(--hr-primary);">18</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">19</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">20</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">21</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">22</div>
+      <div style="background:white; padding:0.5rem; min-height:120px;">23
+        <div class="hoverable" onclick="window.UI.toast('Buddha Purnima', 'info')" style="background:#FEF3C7; color:#B45309; padding:0.25rem 0.5rem; border-radius:4px; font-size:0.75rem; margin-top:0.5rem; cursor:pointer; border-left:3px solid #F59E0B;">Holiday: Buddha Purnima</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script src="/modules/hr/calendar/script.js"></script>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Manager – Risks</title>
+  <link rel="stylesheet" href="/modules/project-manager/risks/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1><i class="fa-solid fa-triangle-exclamation"></i> Risk Register</h1>
+    <button id="addRiskBtn" class="btn-primary"><i class="fa-solid fa-plus"></i> New Risk</button>
+  </header>
+
+  <main class="container">
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Probability</th>
+          <th>Impact</th>
+          <th>Status</th>
+          <th>Owner</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="riskBody"></tbody>
+    </table>
+      <!-- PM Standard Footer -->
+      
+  </main>
+
+  <!-- Risk Modal -->
+  <div id="riskModal" class="modal hidden">
+    <div class="modal-content glass">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Add Risk</h2>
+      <form id="riskForm">
+        <label>Title<input type="text" name="title" required /></label>
+        <label>Description<textarea name="description" rows="2"></textarea></label>
+        <label>Probability
+          <select name="probability">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM" selected>Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+        </label>
+        <label>Impact
+          <select name="impact">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM" selected>Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+        </label>
+        <label>Mitigation Plan<textarea name="mitigation" rows="2"></textarea></label>
+        <label>Project ID<input type="text" name="projectId" required /></label>
+        <button type="submit" class="btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function apiFetch(url, opts = {}) {
+      const token = localStorage.getItem('jwt');
+      const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      const res = await fetch(url, { ...opts, headers });
+      return res.json();
+    }
+
+    async function loadRisks() {
+      const { data: risks } = await apiFetch('/api/risks');
+      const tbody = document.getElementById('riskBody');
+      tbody.innerHTML = '';
+      (risks || []).forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.title}</td>
+          <td><span class="badge prob-${r.probability.toLowerCase()}">${r.probability}</span></td>
+          <td><span class="badge imp-${r.impact.toLowerCase()}">${r.impact}</span></td>
+          <td><span class="badge st-${r.status.toLowerCase()}">${r.status}</span></td>
+          <td>${r.owner?.name || '—'}</td>
+          <td>
+            <button class="btn-icon" onclick="deleteRisk('${r._id}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function deleteRisk(id) {
+      if (!confirm('Delete this risk?')) return;
+      await apiFetch('/api/risks/' + id, { method: 'DELETE' });
+      loadRisks();
+    }
+
+    // Modal
+    const modal = document.getElementById('riskModal');
+    document.getElementById('addRiskBtn').onclick = () => modal.classList.remove('hidden');
+    document.getElementById('closeModal').onclick = () => modal.classList.add('hidden');
+    window.onclick = e => { if (e.target === modal) modal.classList.add('hidden'); };
+
+    document.getElementById('riskForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = Object.fromEntries(new FormData(e.target));
+      await apiFetch('/api/risks', { method: 'POST', body: JSON.stringify(payload) });
+      modal.classList.add('hidden');
+      e.target.reset();
+      loadRisks();
+    });
+
+    document.addEventListener('DOMContentLoaded', loadRisks);
+  </script>
+</body>
+</html>

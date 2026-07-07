@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Security Settings</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="security">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Security</p>
+                        <h1>Authentication and access control</h1>
+                        <p class="muted">Control password hygiene, 2FA and session protection for the system owner.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <button class="btn btn-primary" data-save="security">Save Security</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input id="newPassword" type="password" placeholder="Minimum 8 characters" />
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input id="confirmPassword" type="password" placeholder="Re-enter new password" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="sessionTimeout">Session Timeout</label>
+                        <select id="sessionTimeout">
+                            <option>15 Minutes</option>
+                            <option>30 Minutes</option>
+                            <option>1 Hour</option>
+                            <option>4 Hours</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="toggle-grid">
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>Enable 2FA</h3>
+                            <p>Require OTP verification on admin login for stronger account protection.</p>
+                        </div>
+                        <input id="twoFactorEnabled" type="checkbox" />
+                    </label>
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>Login Alerts</h3>
+                            <p>Send alerts when a new device or unusual session accesses the account.</p>
+                        </div>
+                        <input id="loginAlerts" type="checkbox" />
+                    </label>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

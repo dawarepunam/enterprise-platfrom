@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>User Profile — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/users/user-detail.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="breadcrumb mb-8">
+    <a href="/admin/users">Users</a><span>/</span><strong id="breadUser">Profile</strong>
+  </div>
+
+  <!-- Hero -->
+  <div class="profile-hero mb-24" id="userHero">
+    <div class="profile-hero-top">
+      <div class="profile-hero-avatar" id="heroInitials">—</div>
+      <div style="flex:1">
+        <div class="profile-hero-name" id="heroName">Loading...</div>
+        <div class="profile-hero-role" id="heroRole">—</div>
+        <div class="profile-hero-meta">
+          <span>📧 <span id="heroEmail">—</span></span>
+          <span>📱 <span id="heroPhone">—</span></span>
+          <span>🏢 <span id="heroDept">—</span></span>
+          <span>📅 Joined <span id="heroJoined">—</span></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-self:flex-start;">
+        <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.4)" onclick="openEditUser()">✏️ Edit</button>
+        <button class="btn btn-sm" style="background:rgba(239,68,68,0.8);color:#fff;border:none" onclick="deactivateUser()">🚫 Deactivate</button>
+      </div>
+    </div>
+    <div class="profile-hero-stats">
+      <div class="profile-hero-stat"><div class="profile-hero-stat-val" id="heroAtt">—</div><div class="profile-hero-stat-label">Attendance %</div></div>
+      <div class="profile-hero-stat"><div class="profile-hero-stat-val" id="heroProj">—</div><div class="profile-hero-stat-label">Projects</div></div>
+      <div class="profile-hero-stat"><div class="profile-hero-stat-val" id="heroTasks">—</div><div class="profile-hero-stat-label">Tasks</div></div>
+      <div class="profile-hero-stat"><div class="profile-hero-stat-val" id="heroScore">—</div><div class="profile-hero-stat-label">Performance</div></div>
+      <div class="profile-hero-stat"><div class="profile-hero-stat-val" id="heroLeaves">—</div><div class="profile-hero-stat-label">Leaves Taken</div></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-bar">
+    <button class="tab-item active" data-tab="overview">Overview</button>
+    <button class="tab-item" data-tab="projects">Projects</button>
+    <button class="tab-item" data-tab="attendance">Attendance</button>
+    <button class="tab-item" data-tab="leaves">Leaves</button>
+    <button class="tab-item" data-tab="meetings">Meetings</button>
+    <button class="tab-item" data-tab="documents">Documents</button>
+    <button class="tab-item" data-tab="performance">Performance</button>
+    <button class="tab-item" data-tab="timeline">Activity Timeline</button>
+    <button class="tab-item" data-tab="audit">Audit Logs</button>
+  </div>
+
+  <!-- Tab: Overview -->
+  <div id="tab-overview" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">👤 Personal Info</div></div>
+        <div class="card-body" id="personalInfo"><div class="skeleton sk-text mb-8"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📊 Work Stats</div></div>
+        <div class="card-body" id="workStats"><div class="skeleton sk-text mb-8"></div></div>
+      </div>
+    </div>
+    <div class="chart-box mt-16">
+      <div class="chart-header"><div class="chart-title">📈 Attendance Trend (Last 30 Days)</div></div>
+      <canvas id="attTrendChart" height="120"></canvas>
+    </div>
+  </div>
+
+  <!-- Tab: Projects -->
+  <div id="tab-projects" class="tab-content hidden">
+    <div class="table-wrap">
+      <div class="table-topbar"><span class="table-topbar-title">Assigned Projects</span></div>
+      <table class="data-table"><thead><tr><th>Project</th><th>Status</th><th>Progress</th><th>Role</th><th>Deadline</th></tr></thead>
+      <tbody id="userProjectsTable"><tr><td colspan="5" style="text-align:center;padding:30px">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- Tab: Attendance -->
+  <div id="tab-attendance" class="tab-content hidden">
+    <div class="filter-bar card mb-16" style="border-radius:var(--r-lg);">
+      <label style="font-size:12px;font-weight:600">Period:</label>
+      <select class="filter-select" id="attPeriod" onchange="loadUserAttendance()">
+        <option value="7">Last 7 Days</option><option value="15">Last 15 Days</option>
+        <option value="30" selected>Last 30 Days</option><option value="90">Last 90 Days</option>
+        <option value="180">Last 6 Months</option><option value="365">Last Year</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table"><thead><tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th></tr></thead>
+      <tbody id="userAttTable"><tr><td colspan="5" style="text-align:center;padding:30px">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- Tab: Leaves -->
+  <div id="tab-leaves" class="tab-content hidden">
+    <div class="table-wrap">
+      <table class="data-table"><thead><tr><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Status</th><th>Reason</th></tr></thead>
+      <tbody id="userLeavesTable"><tr><td colspan="6" style="text-align:center;padding:30px">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- Tab: Meetings -->
+  <div id="tab-meetings" class="tab-content hidden">
+    <div id="userMeetingsList" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+
+  <!-- Tab: Documents -->
+  <div id="tab-documents" class="tab-content hidden">
+    <div id="userDocsList" class="grid-auto"></div>
+  </div>
+
+  <!-- Tab: Performance -->
+  <div id="tab-performance" class="tab-content hidden">
+    <div class="grid-2">
+      <div class="chart-box"><div class="chart-header"><div class="chart-title">🎯 Performance Score</div></div><canvas id="perfChart" height="200"></canvas></div>
+      <div class="chart-box"><div class="chart-header"><div class="chart-title">✅ Task Completion Rate</div></div><canvas id="taskChart" height="200"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Tab: Timeline -->
+  <div id="tab-timeline" class="tab-content hidden">
+    <div class="card"><div class="card-body"><div class="timeline" id="userTimeline"></div></div></div>
+  </div>
+
+  <!-- Tab: Audit -->
+  <div id="tab-audit" class="tab-content hidden">
+    <div class="table-wrap">
+      <table class="data-table"><thead><tr><th>Action</th><th>Module</th><th>IP</th><th>Device</th><th>Date/Time</th></tr></thead>
+      <tbody id="userAuditTable"><tr><td colspan="5" style="text-align:center;padding:30px">Loading...</td></tr></tbody></table>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/users/user-detail.js"></script>
+</body>
+</html>

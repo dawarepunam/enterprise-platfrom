@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meetings – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .meet-tabs{display:flex;gap:4px;background:var(--pm-bg);border:1px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:4px;margin-bottom:20px;}
+    .meet-tab{padding:7px 18px;border-radius:6px;font-size:12.5px;font-weight:600;color:var(--pm-text-muted);cursor:pointer;transition:var(--pm-transition);}
+    .meet-tab.active{background:var(--pm-accent);color:#fff;}
+    .meet-tab:hover:not(.active){background:var(--pm-card);color:var(--pm-text);}
+
+    .meeting-card{background:var(--pm-card);border:1px solid var(--pm-border);border-radius:var(--pm-radius);padding:20px;box-shadow:var(--pm-shadow-sm);transition:var(--pm-transition);position:relative;overflow:hidden;}
+    .meeting-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+    .meeting-card.TEAMS::before{background:#5b5ea6;}
+    .meeting-card.MEET::before{background:#22c55e;}
+    .meeting-card.ZOOM::before{background:#2563eb;}
+    .meeting-card.OFFLINE::before{background:var(--orange);}
+    .meeting-card:hover{box-shadow:var(--pm-shadow);transform:translateY(-2px);}
+    .meet-time-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;border-radius:var(--pm-radius-sm);min-width:64px;text-align:center;}
+    .meet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+    .meet-platform-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb"><i class="fa fa-home"></i><a href="/project-manager/dashboard">Dashboard</a><i class="fa fa-chevron-right"></i><span>Meetings</span></div>
+          <h1 class="pm-page-title" style="margin-top:4px">Meetings</h1>
+          <div class="pm-page-subtitle" id="meetSubtitle">Loading...</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="pm-btn pm-btn-outline pm-btn-sm" onclick="window.open('https://teams.microsoft.com','_blank')"><i class="fa fa-video" style="color:#5b5ea6"></i> Open Teams</button>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="openModal('modal-schedule')"><i class="fa fa-plus"></i> Schedule Meeting</button>
+        </div>
+      </div>
+
+      <!-- KPI Strip -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
+        <div class="pm-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:8px;background:var(--pm-accent-light);color:var(--pm-accent);display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa fa-calendar-day"></i></div>
+          <div><div style="font-size:22px;font-weight:800" id="kpi-today">0</div><div style="font-size:11px;color:var(--pm-text-muted)">Today</div></div>
+        </div>
+        <div class="pm-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:8px;background:#f3e8ff;color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa fa-clock"></i></div>
+          <div><div style="font-size:22px;font-weight:800" id="kpi-upcoming">0</div><div style="font-size:11px;color:var(--pm-text-muted)">Upcoming</div></div>
+        </div>
+        <div class="pm-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:8px;background:#dcfce7;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa fa-check-circle"></i></div>
+          <div><div style="font-size:22px;font-weight:800" id="kpi-done">0</div><div style="font-size:11px;color:var(--pm-text-muted)">Completed</div></div>
+        </div>
+        <div class="pm-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:8px;background:#fee2e2;color:var(--red);display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa fa-times-circle"></i></div>
+          <div><div style="font-size:22px;font-weight:800" id="kpi-cancelled">0</div><div style="font-size:11px;color:var(--pm-text-muted)">Cancelled</div></div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="meet-tabs">
+        <div class="meet-tab active" id="mtab-upcoming" onclick="switchMeetTab('upcoming')"><i class="fa fa-clock"></i> Upcoming</div>
+        <div class="meet-tab" id="mtab-today"    onclick="switchMeetTab('today')"><i class="fa fa-calendar-day"></i> Today</div>
+        <div class="meet-tab" id="mtab-completed" onclick="switchMeetTab('completed')"><i class="fa fa-check"></i> Completed</div>
+        <div class="meet-tab" id="mtab-all"       onclick="switchMeetTab('all')"><i class="fa fa-list"></i> All</div>
+      </div>
+
+      <!-- Grid -->
+      <div class="meet-grid" id="meetingsGrid">
+        <div class="skeleton" style="height:160px;border-radius:12px"></div>
+        <div class="skeleton" style="height:160px;border-radius:12px"></div>
+        <div class="skeleton" style="height:160px;border-radius:12px"></div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+
+<!-- Schedule Meeting Modal -->
+<div class="pm-modal-overlay" id="modal-schedule">
+  <div class="pm-modal" style="max-width:520px">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-calendar-plus" style="color:var(--purple)"></i> Schedule Meeting</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-schedule')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formSchedule" onsubmit="submitMeeting(event)">
+      <div class="pm-form-group"><label class="pm-form-label">Meeting Title *</label><input type="text" class="pm-form-input" name="title" placeholder="e.g. Sprint Review Meeting" required /></div>
+      <div class="pm-form-group"><label class="pm-form-label">Agenda / Description</label><textarea class="pm-form-input" name="description" rows="2" placeholder="Meeting agenda..."></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pm-form-group"><label class="pm-form-label">Date *</label><input type="date" class="pm-form-input" name="date" required /></div>
+        <div class="pm-form-group"><label class="pm-form-label">Time *</label><input type="time" class="pm-form-input" name="time" required /></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pm-form-group"><label class="pm-form-label">Duration (mins)</label><input type="number" class="pm-form-input" name="duration" placeholder="60" value="60" /></div>
+        <div class="pm-form-group"><label class="pm-form-label">Platform</label>
+          <select class="pm-form-input" name="platform">
+            <option value="TEAMS">Microsoft Teams</option>
+            <option value="MEET">Google Meet</option>
+            <option value="ZOOM">Zoom</option>
+            <option value="OFFLINE">In-person / Offline</option>
+          </select>
+        </div>
+      </div>
+      <div class="pm-form-group"><label class="pm-form-label">Meeting Link</label><input type="url" class="pm-form-input" name="meetingLink" placeholder="https://teams.microsoft.com/..." /></div>
+      <div class="pm-form-group"><label class="pm-form-label">Project</label><select class="pm-form-input" name="projectId" id="meetProjectSel"><option value="">General / All Teams</option></select></div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-schedule')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary"><i class="fa fa-video"></i> Schedule & Notify Team</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="pm-modal-overlay" id="modal-logout">
+  <div class="pm-modal" style="max-width:360px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-weight:700;margin-bottom:8px">Confirm Logout?</h3>
+    <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-logout')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="performLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+</div>
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let allMeetings=[], currentTab='upcoming';
+const platColors={TEAMS:{bg:'#ede9fe',color:'#5b5ea6',icon:'fa-video'},MEET:{bg:'#dcfce7',color:'#16a34a',icon:'fa-video'},ZOOM:{bg:'#dbeafe',color:'#2563eb',icon:'fa-video'},OFFLINE:{bg:'#ffedd5',color:'#c2410c',icon:'fa-building'}};
+
+function switchMeetTab(t){
+  currentTab=t;
+  ['upcoming','today','completed','all'].forEach(x=>{document.getElementById(`mtab-${x}`)?.classList.toggle('active',x===t);});
+  renderMeetings(filterMeetings());
+}
+window.switchMeetTab=switchMeetTab;
+
+function filterMeetings(){
+  const now=new Date(); const todayStr=now.toDateString();
+  if(currentTab==='today') return allMeetings.filter(m=>new Date(m.date||m.scheduledAt).toDateString()===todayStr);
+  if(currentTab==='upcoming') return allMeetings.filter(m=>new Date(m.date||m.scheduledAt)>=now&&m.status!=='CANCELLED'&&m.status!=='COMPLETED');
+  if(currentTab==='completed') return allMeetings.filter(m=>m.status==='COMPLETED'||new Date(m.date||m.scheduledAt)<now);
+  return allMeetings;
+}
+
+function renderMeetings(meetings){
+  const g=document.getElementById('meetingsGrid'); if(!g) return;
+  if(!meetings.length){g.innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-calendar-times"></i><p>No meetings found for this filter.</p><button class="pm-btn pm-btn-primary" style="margin-top:12px" onclick="openModal(\'modal-schedule\')"><i class="fa fa-plus"></i> Schedule Meeting</button></div></div>';return;}
+  g.innerHTML=meetings.map(m=>{
+    const d=new Date(m.date||m.scheduledAt);
+    const hour=d.getHours()%12||12, min=String(d.getMinutes()).padStart(2,'0'), ampm=d.getHours()>=12?'PM':'AM';
+    const dateStr=d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});
+    const plat=m.platform||'TEAMS'; const ps=platColors[plat]||platColors.TEAMS;
+    const isPast=d<new Date(); const isToday=d.toDateString()===new Date().toDateString();
+    const statusBadge=m.status==='CANCELLED'?'<span class="pm-badge danger">Cancelled</span>':isToday?'<span class="pm-badge info" style="animation:pulse-dot 2s infinite">● Today</span>':isPast?'<span class="pm-badge neutral">Past</span>':'<span class="pm-badge success">Scheduled</span>';
+    const parts=m.participants||[];
+    return `<div class="meeting-card ${plat}">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div class="meet-time-badge" style="background:${ps.bg};color:${ps.color}">
+          <div style="font-size:18px;font-weight:800">${hour}:${min}</div>
+          <div style="font-size:10px;font-weight:700">${ampm}</div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+            <div style="font-size:14px;font-weight:700;line-height:1.3">${m.title||'Meeting'}</div>
+            ${statusBadge}
+          </div>
+          <div style="font-size:11.5px;color:var(--pm-text-muted);margin-top:4px"><i class="fa fa-calendar-alt" style="margin-right:4px"></i>${dateStr} • ${m.duration||60} mins</div>
+          ${m.description?`<div style="font-size:12px;color:var(--pm-text-muted);margin-top:6px;line-height:1.4">${m.description}</div>`:''}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="meet-platform-icon" style="background:${ps.bg};color:${ps.color}"><i class="fa ${ps.icon}"></i></div>
+              <span style="font-size:11.5px;font-weight:600;color:${ps.color}">${plat}</span>
+              ${parts.length?`<span style="font-size:11px;color:var(--pm-text-muted)">• ${parts.length} participants</span>`:''}
+            </div>
+            ${!isPast&&m.status!=='CANCELLED'?`<button class="pm-join-btn" onclick="joinMeeting('${m.meetingLink||''}','${plat}')"><i class="fa fa-video"></i> Join</button>`:`<button class="pm-btn pm-btn-outline pm-btn-sm" onclick="cancelMeeting('${m._id}')"><i class="fa fa-times"></i> Cancel</button>`}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function joinMeeting(link,plat){
+  if(link) window.open(link,'_blank');
+  else{
+    const urls={TEAMS:'https://teams.microsoft.com',MEET:'https://meet.google.com',ZOOM:'https://zoom.us'};
+    window.open(urls[plat]||'https://teams.microsoft.com','_blank');
+  }
+  pmToast('Joining meeting...','info');
+}
+window.joinMeeting=joinMeeting;
+
+async function cancelMeeting(id){
+  if(!confirm('Cancel this meeting?')) return;
+  try{
+    await apiFetch(`/api/meetings/${id}`,{method:'PATCH',body:JSON.stringify({status:'CANCELLED'})});
+    pmToast('Meeting cancelled','warning'); loadMeetings();
+  }catch(e){pmToast(e.message||'Failed','error');}
+}
+window.cancelMeeting=cancelMeeting;
+
+async function submitMeeting(e){
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target));
+  const scheduledAt=new Date(`${data.date}T${data.time}`);
+  data.scheduledAt=scheduledAt; data.date=scheduledAt;
+  try{
+    await apiFetch('/api/meetings',{method:'POST',body:JSON.stringify(data)});
+    closeModal('modal-schedule'); e.target.reset(); pmToast('Meeting scheduled & team notified! 📅','success'); loadMeetings();
+  }catch(err){pmToast(err.message||'Failed','error');}
+}
+window.submitMeeting=submitMeeting;
+
+async function loadMeetings(){
+  try{
+    const res=await apiFetch('/api/meetings?size=100');
+    allMeetings=res.data||[];
+    const now=new Date(); const todayStr=now.toDateString();
+    const today=allMeetings.filter(m=>new Date(m.date||m.scheduledAt).toDateString()===todayStr).length;
+    const upcoming=allMeetings.filter(m=>new Date(m.date||m.scheduledAt)>=now&&m.status!=='CANCELLED').length;
+    const done=allMeetings.filter(m=>m.status==='COMPLETED'||new Date(m.date||m.scheduledAt)<now).length;
+    const cancelled=allMeetings.filter(m=>m.status==='CANCELLED').length;
+    document.getElementById('kpi-today').textContent=today;
+    document.getElementById('kpi-upcoming').textContent=upcoming;
+    document.getElementById('kpi-done').textContent=done;
+    document.getElementById('kpi-cancelled').textContent=cancelled;
+    document.getElementById('meetSubtitle').textContent=`${allMeetings.length} total meetings • ${today} today`;
+
+    // Projects dropdown
+    const pRes=await apiFetch('/api/projects?size=50').catch(()=>({data:[]}));
+    const ps=document.getElementById('meetProjectSel');
+    if(ps) ps.innerHTML='<option value="">General / All Teams</option>'+(pRes.data||[]).map(p=>`<option value="${p._id}">${p.projectName||p.name}</option>`).join('');
+
+    renderMeetings(filterMeetings());
+  }catch(e){
+    document.getElementById('meetingsGrid').innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-exclamation-circle"></i><p>Failed to load meetings.</p></div></div>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadMeetings);
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Lead Dashboard</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero teamlead-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Team Lead Control Center</p>
+          <h1>Receive projects, break work down, assign members and close reviews fast</h1>
+          <p class="hero-text">Every action in this workspace feeds the actual working flow: project intake, member assignment, chat-room launch, review status, delay escalation and manager updates.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="../team-tasks/team-tasks.html">Create Tasks</a>
+            <a class="btn ghost-btn" href="../approvals/approvals.html">Open Review Queue</a>
+          </div>
+        </div>
+        <div class="hero-side stat-stack">
+          <article class="signal-card"><span>Assigned Projects</span><strong id="projectCount">0</strong></article>
+          <article class="signal-card"><span>Active Tasks</span><strong id="taskCount">0</strong></article>
+          <article class="signal-card accent-card"><span>Pending Reviews</span><strong id="reviewCount">0</strong><small>Submissions waiting for decision</small></article>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        <article class="metric-card"><span>Delayed Tasks</span><strong id="delayCount">0</strong><small>Need follow-up or escalation</small></article>
+        <article class="metric-card"><span>Open Chats</span><strong id="roomCount">0</strong><small>Task-specific rooms available</small></article>
+        <article class="metric-card"><span>Today's Meetings</span><strong id="meetingCount">0</strong><small>Syncs and standups scheduled/live</small></article>
+        <article class="metric-card"><span>Online Team Coverage</span><strong id="coverageCount">0</strong><small>Members connected through room access</small></article>
+      </section>
+
+      <section class="content-grid dashboard-grid">
+        <article class="workspace-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Project Intake</p>
+              <h2>Assigned projects</h2>
+            </div>
+          </div>
+          <div id="projectBoard" class="stack-list"></div>
+        </article>
+
+        <article class="workspace-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Lead Flow</p>
+              <h2>Working sequence</h2>
+            </div>
+          </div>
+          <div id="flowBoard" class="flow-stack"></div>
+        </article>
+      </section>
+
+      <section class="content-grid dashboard-grid">
+        <article class="workspace-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Breakdown Queue</p>
+              <h2>Main tasks and visible subtasks</h2>
+            </div>
+          </div>
+          <div id="breakdownBoard" class="stack-list"></div>
+        </article>
+
+        <article class="workspace-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Attention Needed</p>
+              <h2>Reviews, delays and actions</h2>
+            </div>
+          </div>
+          <div id="attentionBoard" class="stack-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/socket.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

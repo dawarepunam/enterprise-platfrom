@@ -1,0 +1,175 @@
+<div class="hr-leaves-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Leave Management</h2>
+    <div style="display:flex; gap:1rem;">
+      <div style="background:#F1F5F9; border-radius:8px; padding:4px; display:flex;">
+        <button id="lvToggleTable" class="hr-tab active" onclick="window.UI.toggleLeaveView('table')" style="padding:0.5rem 1rem; border:none; background:white; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.1); cursor:pointer;">Table View</button>
+        <button id="lvToggleCalendar" class="hr-tab" onclick="window.UI.toggleLeaveView('calendar')" style="padding:0.5rem 1rem; border:none; background:transparent; border-radius:6px; cursor:pointer;">Calendar View</button>
+      </div>
+      <button class="primary-btn" onclick="window.UI.toast('ESS Feature: Apply Leave', 'info')">+ Apply Leave</button>
+    </div>
+  </div>
+
+  <!-- KPI Cards Grid -->
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1.5rem;">
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #F59E0B;" onclick="window.App.navigate('/hr/leaves?status=pending')">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Pending</div>
+      <div style="font-size:1.5rem; font-weight:700;">5</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #10B981;" onclick="window.App.navigate('/hr/leaves?status=approved')">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Approved</div>
+      <div style="font-size:1.5rem; font-weight:700; color:#10B981;">35</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #EF4444;" onclick="window.App.navigate('/hr/leaves?status=rejected')">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Rejected</div>
+      <div style="font-size:1.5rem; font-weight:700; color:#EF4444;">2</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #64748B;" onclick="window.App.navigate('/hr/leaves?status=cancelled')">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Cancelled</div>
+      <div style="font-size:1.5rem; font-weight:700; color:#64748B;">0</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; margin-top:0.5rem;">View Details →</div>
+    </div>
+  </div>
+
+  <!-- Table View Container -->
+  <div id="lvTableViewContainer" style="display:flex; flex-direction:column; gap:1.5rem; flex:1; overflow:hidden;">
+    <div class="hr-card" style="display:flex; justify-content:space-between; align-items:center; padding:1rem;">
+      <input type="text" placeholder="Search employee..." style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; width:250px;" />
+      <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;">
+        <option value="">Leave Type</option>
+        <option>Casual Leave</option>
+        <option>Sick Leave</option>
+        <option>Earned Leave</option>
+      </select>
+    </div>
+
+    <div class="hr-card" style="flex:1; overflow-y:auto;">
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--hr-border);">
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Leave Type</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">From</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">To</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Days</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500; text-align:right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="hrLeavesTableBody">
+          <!-- Injected via script -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Calendar View Container -->
+  <div id="lvCalendarViewContainer" class="hidden hr-card" style="flex:1; overflow:hidden; display:flex; flex-direction:column;">
+    <div style="padding:1rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">May 2026</h3>
+      <div style="display:flex; gap:1rem;">
+        <button style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px;">&lt;</button>
+        <button style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px;">Today</button>
+        <button style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px;">&gt;</button>
+      </div>
+    </div>
+    <div style="flex:1; display:flex; justify-content:center; align-items:center; background:#F8FAFC; color:var(--hr-text-muted);">
+      <div style="text-align:center;">
+        <div style="font-size:3rem; margin-bottom:1rem;">📅</div>
+        <div>Full Calendar Integration Mocked</div>
+        <div style="font-size:0.875rem; margin-top:0.5rem;">(Shows Leaves, Holidays, Birthdays)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Leave Details Drawer -->
+<div id="hrLeaveDrawer" class="hr-drawer hidden" style="width:500px; display:flex; flex-direction:column;">
+  <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center; background:#F8FAFC;">
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <div style="width:40px; height:40px; border-radius:50%; background:#E2E8F0; display:flex; justify-content:center; align-items:center;">👤</div>
+      <div>
+        <h3 id="lvDrawerName" style="margin:0;">Rahul Sharma</h3>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Casual Leave (2 Days)</div>
+      </div>
+    </div>
+    <button onclick="window.UI.closeLeaveDrawer()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+  </div>
+  
+  <div style="display:flex; border-bottom:1px solid var(--hr-border);">
+    <div class="hr-tab active" onclick="window.UI.switchLeaveTab('overview')" style="padding:1rem; flex:1; text-align:center; cursor:pointer; color:var(--hr-primary); border-bottom:2px solid var(--hr-primary); font-weight:500;">Overview</div>
+    <div class="hr-tab" onclick="window.UI.switchLeaveTab('timeline')" style="padding:1rem; flex:1; text-align:center; cursor:pointer; color:var(--hr-text-muted);">Timeline</div>
+  </div>
+
+  <div style="flex:1; overflow-y:auto; padding:1.5rem; background:#FFF;">
+    
+    <div id="lv-tab-overview" class="lv-pane">
+      <div style="margin-bottom:1.5rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Duration</div>
+        <div style="font-weight:500;">16 May 2026 - 17 May 2026</div>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Reason</div>
+        <div style="font-weight:500; background:#F1F5F9; padding:1rem; border-radius:8px; margin-top:0.5rem;">
+          Family function out of town.
+        </div>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Leave Balance (Casual Leave)</div>
+        <div style="font-weight:500;">Remaining: 8 Days</div>
+      </div>
+    </div>
+
+    <div id="lv-tab-timeline" class="lv-pane hidden">
+      <div style="position:relative; border-left:2px solid var(--hr-border); padding-left:1.5rem; margin-left:0.5rem;">
+        <div style="position:relative; margin-bottom:2rem;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#10B981; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">10 May 2026</div>
+          <div style="font-weight:500;">Submitted</div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">By Rahul Sharma</div>
+        </div>
+        <div style="position:relative; margin-bottom:2rem;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#F59E0B; border:3px solid white;"></div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">Pending</div>
+          <div style="font-weight:500;">Manager Approval</div>
+          <div style="font-size:0.875rem; color:var(--hr-text-muted);">Pending with Amit Verma</div>
+        </div>
+        <div style="position:relative;">
+          <div style="position:absolute; left:-30px; top:0; width:12px; height:12px; border-radius:50%; background:#E2E8F0; border:3px solid white;"></div>
+          <div style="font-weight:500; color:var(--hr-text-muted);">HR Approval</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approve/Reject Modal -->
+<div id="hrLeaveActionModal" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="hr-card" style="width:400px; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 id="lvActionTitle" style="margin:0;">Approve Leave</h3>
+      <button onclick="window.UI.closeLeaveActionModal()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+    <div style="padding:1.5rem;">
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Comments (Optional)</label>
+      <textarea rows="3" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; resize:none;"></textarea>
+      
+      <label style="display:flex; align-items:center; gap:0.5rem; margin-top:1rem; cursor:pointer;">
+        <input type="checkbox" checked />
+        <span style="font-size:0.875rem;">Notify Employee via Email & App</span>
+      </label>
+    </div>
+    <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+      <button onclick="window.UI.closeLeaveActionModal()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; cursor:pointer;">Cancel</button>
+      <button id="lvActionConfirmBtn" onclick="window.UI.submitLeaveAction()" class="primary-btn" style="padding:0.5rem 1rem;">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/hr/leaves/script.js"></script>

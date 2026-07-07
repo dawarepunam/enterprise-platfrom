@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Update Detail | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    .pg-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+
+    .detail-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+    @media (max-width: 900px) { .detail-layout { grid-template-columns: 1fr; } }
+
+    .card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); margin-bottom: 24px; }
+    .card-title { font-size: 16px; font-weight: 800; color: #2b3674; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+    .detail-section { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f4ff; }
+    .detail-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .detail-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #a3aed1; margin-bottom: 8px; }
+    .detail-text { font-size: 14px; color: #2b3674; line-height: 1.7; white-space: pre-wrap; background: #f8fafc; padding: 14px; border-radius: 12px; }
+
+    .meta-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #5d6d8a; margin-bottom: 10px; }
+    .meta-label { font-weight: 500; }
+    .meta-val { font-weight: 700; color: #2b3674; }
+
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .badge-submitted { background: rgba(5,205,153,0.12); color: #05CD99; }
+    .badge-draft { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .badge-viewed { background: rgba(57,101,255,0.12); color: #3965FF; }
+    .badge-pending { background: rgba(163,174,209,0.12); color: #a3aed1; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi-sm { background: #f8fafc; border-radius: 12px; padding: 14px; text-align: center; }
+    .kpi-sm-val { font-size: 22px; font-weight: 800; color: #2b3674; }
+    .kpi-sm-lbl { font-size: 11px; color: #a3aed1; font-weight: 600; margin-top: 4px; }
+
+    .action-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; margin-bottom: 10px; transition: .2s; }
+    .btn-edit { background: #3965FF; color: #fff; }
+    .btn-edit:hover { background: #274ccf; }
+    .btn-back { background: #f4f7fe; color: #2b3674; }
+    .btn-back:hover { background: #e2e8f0; }
+
+    .spinner { display: flex; align-items: center; justify-content: center; padding: 60px; font-size: 24px; color: #3965FF; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-calendar-check" style="color:#3965FF;margin-right:8px;"></i>Update Detail</h1>
+          <p id="detailSubtitle">Daily progress update</p>
+        </div>
+        <button class="action-btn btn-back" style="width:auto;padding:10px 20px;" onclick="history.back()">
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </div>
+
+      <div id="loadingSpinner" class="spinner"><i class="fa fa-spinner fa-spin"></i></div>
+
+      <div id="detailContent" style="display:none;">
+        <div class="detail-layout">
+          <!-- Left: Main content -->
+          <div>
+            <div class="card">
+              <div class="card-title"><i class="fa fa-check-circle" style="color:#05CD99;"></i> Today's Work</div>
+              <div class="detail-section">
+                <div class="detail-text" id="duWorkText">—</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><i class="fa fa-exclamation-triangle" style="color:#FFB547;"></i> Issues / Blockers</div>
+              <div class="detail-section">
+                <div class="detail-text" id="duBlockersText">None reported</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><i class="fa fa-arrow-right" style="color:#3965FF;"></i> Tomorrow's Plan</div>
+              <div class="detail-section">
+                <div class="detail-text" id="duTomorrowText">—</div>
+              </div>
+            </div>
+
+            <div class="card" id="attachCard" style="display:none;">
+              <div class="card-title"><i class="fa fa-paperclip" style="color:#a3aed1;"></i> Attachments</div>
+              <div id="attachList"></div>
+            </div>
+          </div>
+
+          <!-- Right: Sidebar -->
+          <div>
+            <div class="card">
+              <div class="stat-grid">
+                <div class="kpi-sm"><div class="kpi-sm-val" id="siHours">—</div><div class="kpi-sm-lbl">Hours</div></div>
+                <div class="kpi-sm"><div class="kpi-sm-val" id="siMood">—</div><div class="kpi-sm-lbl">Mood</div></div>
+                <div class="kpi-sm"><div class="kpi-sm-val" id="siStatus">—</div><div class="kpi-sm-lbl">Status</div></div>
+              </div>
+
+              <div class="detail-section">
+                <div class="meta-row"><span class="meta-label">Submitted</span><span class="meta-val" id="siDate">—</span></div>
+                <div class="meta-row"><span class="meta-label">PM Review</span><span class="meta-val" id="siViewed">—</span></div>
+                <div class="meta-row"><span class="meta-label">Date</span><span class="meta-val" id="siDay">—</span></div>
+              </div>
+
+              <button class="action-btn btn-edit" id="btnEditDetail">
+                <i class="fa fa-pen"></i> Edit This Update
+              </button>
+              <button class="action-btn btn-back" onclick="window.location.href='/employee/daily-updates'">
+                <i class="fa fa-list"></i> All Updates
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script>
+(function() {
+  const token = localStorage.getItem('token');
+  if (!token) { location.href = '/login'; return; }
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  if (!id) { location.href = '/employee/daily-updates'; return; }
+
+  const moods = ['', '😞', '😔', '😐', '😊', '🚀'];
+
+  function fmt(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function fmtTime(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function $ (s) { return document.getElementById(s); }
+
+  async function load() {
+    try {
+      const res = await fetch(`/api/daily-updates/${id}`, {
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message || 'Not found');
+      const u = json.data || json;
+
+      document.title = `Daily Update — ${fmt(u.createdAt)} | JMKC CRM`;
+      $('detailSubtitle').textContent = `${fmt(u.date || u.createdAt)} — ${u.author || u.employee || 'You'}`;
+
+      $('duWorkText').textContent     = u.todayWork || u.work || '—';
+      $('duBlockersText').textContent = u.blockers || u.issues || 'None reported';
+      $('duTomorrowText').textContent = u.tomorrowPlan || u.tomorrow || '—';
+
+      // KPIs
+      $('siHours').textContent = (u.hoursLogged || u.hours || 8) + 'h';
+      $('siMood').textContent  = moods[u.mood || 3];
+      $('siDay').textContent   = fmt(u.date || u.createdAt);
+      $('siDate').textContent  = fmtTime(u.createdAt);
+
+      const status = (u.status || 'submitted').toLowerCase();
+      $('siStatus').innerHTML = status === 'draft'
+        ? '<span class="badge badge-draft">Draft</span>'
+        : '<span class="badge badge-submitted">Submitted</span>';
+
+      $('siViewed').innerHTML = (u.viewedByPM || u.pmViewed)
+        ? '<span class="badge badge-viewed">👁 Seen by PM</span>'
+        : '<span class="badge badge-pending">Pending</span>';
+
+      // Attachments
+      if (u.attachments && u.attachments.length) {
+        $('attachCard').style.display = '';
+        $('attachList').innerHTML = u.attachments.map(a =>
+          `<a href="${a}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#f4f7fe;border-radius:8px;margin:4px;font-size:13px;color:#3965FF;text-decoration:none;font-weight:600;"><i class="fa fa-file"></i> View File</a>`
+        ).join('');
+      }
+
+      // Edit button
+      $('btnEditDetail').onclick = () => {
+        sessionStorage.setItem('editUpdate', JSON.stringify(u));
+        window.location.href = '/employee/daily-updates';
+      };
+
+      $('loadingSpinner').style.display = 'none';
+      $('detailContent').style.display = '';
+    } catch (err) {
+      $('loadingSpinner').innerHTML = `<div style="text-align:center;color:#EE5D50;"><div style="font-size:40px;margin-bottom:16px;">⚠️</div><div style="font-size:16px;font-weight:700;">${err.message}</div><a href="/employee/daily-updates" style="display:inline-block;margin-top:16px;padding:10px 20px;background:#3965FF;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">← Back to Updates</a></div>`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', load);
+})();
+</script>
+</body>
+</html>

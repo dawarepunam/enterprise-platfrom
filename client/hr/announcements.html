@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .feed-layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+        
+        .post-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-gray); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+        .post-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .post-author { font-weight: 600; color: var(--dark-navy); }
+        .post-time { font-size: .8rem; color: var(--text-gray); }
+        .post-content { font-size: .95rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 16px; }
+        .post-img { width: 100%; border-radius: var(--radius-md); margin-bottom: 16px; max-height: 300px; object-fit: cover; }
+        .post-actions { display: flex; gap: 16px; border-top: 1px solid var(--border-gray); padding-top: 12px; }
+        .post-action-btn { background: none; border: none; color: var(--text-gray); font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: color .2s; }
+        .post-action-btn:hover { color: var(--primary-blue); }
+
+        .sidebar-widget { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-gray); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+        .widget-title { font-size: 1rem; font-weight: 600; color: var(--dark-navy); margin-bottom: 16px; border-bottom: 1px solid var(--border-gray); padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .event-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .event-item img { width: 40px; height: 40px; border-radius: 50%; }
+        .event-info h5 { font-size: .9rem; color: var(--text-dark); }
+        .event-info p { font-size: .8rem; color: var(--text-gray); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder (will update globally later) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back to Home</span></a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>Engagement</span> > Announcements</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Company Feed</h1>
+                <button class="btn btn-primary" onclick="showToast('Create post modal opening...','info')"><i class="fa-solid fa-pen-to-square"></i> New Post</button>
+            </div>
+
+            <div class="feed-layout">
+                <!-- Main Feed -->
+                <div>
+                    <!-- Post 1 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <img src="https://ui-avatars.com/api/?name=CEO" style="width:40px;height:40px;border-radius:50%;">
+                            <div>
+                                <div class="post-author">Vikram Desai (CEO)</div>
+                                <div class="post-time">2 hours ago · <i class="fa-solid fa-earth-americas"></i> Company Wide</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            Excited to announce that we have successfully launched the V2 of our enterprise software platform! Massive congratulations to the entire Engineering and Product teams. Let's celebrate this milestone at the Townhall this Friday! 🎉
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80" class="post-img" alt="Team Celebration">
+                        <div class="post-actions">
+                            <button class="post-action-btn"><i class="fa-regular fa-thumbs-up"></i> Like (24)</button>
+                            <button class="post-action-btn"><i class="fa-regular fa-comment"></i> Comment (5)</button>
+                        </div>
+                    </div>
+
+                    <!-- Post 2: Poll -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <img src="https://ui-avatars.com/api/?name=HR+Team" style="width:40px;height:40px;border-radius:50%;">
+                            <div>
+                                <div class="post-author">HR Department</div>
+                                <div class="post-time">Yesterday · <i class="fa-solid fa-earth-americas"></i> Company Wide</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <strong>📊 Quick Poll: Annual Offsite Destination</strong><br>
+                            Where should we go for our company offsite this year?
+                        </div>
+                        <div style="background:var(--bg-color); border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:16px; margin-bottom:16px;">
+                            <label style="display:flex; align-items:center; gap:8px; margin-bottom:10px;"><input type="radio" name="poll"> Goa (Beach Retreat)</label>
+                            <label style="display:flex; align-items:center; gap:8px; margin-bottom:10px;"><input type="radio" name="poll"> Lonavala (Nature Resort)</label>
+                            <label style="display:flex; align-items:center; gap:8px;"><input type="radio" name="poll"> Udaipur (Heritage Stay)</label>
+                            <button class="btn btn-primary btn-sm" style="margin-top:12px;">Vote</button>
+                        </div>
+                        <div class="post-actions">
+                            <button class="post-action-btn"><i class="fa-regular fa-thumbs-up"></i> Like (12)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Widgets -->
+                <div>
+                    <div class="sidebar-widget">
+                        <div class="widget-title"><i class="fa-solid fa-cake-candles" style="color:#f43f5e;"></i> Birthdays This Week</div>
+                        <div class="event-item">
+                            <img src="https://ui-avatars.com/api/?name=Rahul+Sharma">
+                            <div class="event-info"><h5>Rahul Sharma</h5><p>Tomorrow (Jul 7)</p></div>
+                        </div>
+                        <div class="event-item">
+                            <img src="https://ui-avatars.com/api/?name=Priya+Patel">
+                            <div class="event-info"><h5>Priya Patel</h5><p>Friday (Jul 10)</p></div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" style="width:100%;"><i class="fa-solid fa-gift"></i> Send Wishes</button>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <div class="widget-title"><i class="fa-solid fa-award" style="color:#eab308;"></i> Work Anniversaries</div>
+                        <div class="event-item">
+                            <img src="https://ui-avatars.com/api/?name=Amit+Verma">
+                            <div class="event-info"><h5>Amit Verma</h5><p>3 Years (Today)</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

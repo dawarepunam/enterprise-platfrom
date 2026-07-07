@@ -1,0 +1,53 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="920" rx="30" fill="#050816"/>
+  <text x="40" y="60" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="34" font-weight="700">Meetings + Calendar Flow</text>
+  <text x="40" y="92" fill="#93A9CD" font-family="Arial, sans-serif" font-size="18">From schedule popup to meeting cards to calendar view.</text>
+
+  <rect x="36" y="128" width="468" height="350" rx="26" fill="#081225" stroke="#6D4AFF" stroke-opacity="0.55"/>
+  <text x="64" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Schedule Meeting Popup</text>
+  <g font-family="Arial, sans-serif" font-size="18">
+    <rect x="64" y="196" width="412" height="40" rx="14" fill="#0D1B33"/><text x="82" y="221" fill="#D8E6FF">Meeting Title</text>
+    <rect x="64" y="248" width="198" height="40" rx="14" fill="#0D1B33"/><text x="82" y="273" fill="#D8E6FF">Date &amp; Time</text>
+    <rect x="278" y="248" width="198" height="40" rx="14" fill="#0D1B33"/><text x="296" y="273" fill="#D8E6FF">Attendees</text>
+    <rect x="64" y="300" width="412" height="40" rx="14" fill="#0D1B33"/><text x="82" y="325" fill="#D8E6FF">Platform: Teams | Google Meet | Zoom | Offline</text>
+    <rect x="64" y="352" width="412" height="72" rx="14" fill="#0D1B33"/><text x="82" y="392" fill="#D8E6FF">Notes / agenda / discussion points</text>
+    <rect x="322" y="434" width="154" height="28" rx="12" fill="#6D4AFF"/><text x="356" y="453" fill="#FFFFFF">Create Meeting</text>
+  </g>
+
+  <rect x="528" y="128" width="1038" height="350" rx="26" fill="#081225" stroke="#183259"/>
+  <text x="556" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Meetings Page</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="556" y="196" width="982" height="62" rx="18" fill="#0D1B33"/>
+    <text x="580" y="234" fill="#FFFFFF" font-size="22">Client Review Meeting</text>
+    <text x="908" y="234" fill="#8EA6CD" font-size="18">20 May 2026 | 11:00 AM</text>
+    <text x="1220" y="234" fill="#55C6FF" font-size="18">Microsoft Teams</text>
+    <text x="1440" y="234" fill="#36E0A1" font-size="18">Upcoming</text>
+    <rect x="556" y="274" width="982" height="62" rx="18" fill="#0B1730"/>
+    <text x="580" y="312" fill="#FFFFFF" font-size="22">Sprint Planning</text>
+    <text x="908" y="312" fill="#8EA6CD" font-size="18">20 May 2026 | 02:00 PM</text>
+    <text x="1220" y="312" fill="#55C6FF" font-size="18">Google Meet</text>
+    <text x="1440" y="312" fill="#36E0A1" font-size="18">Upcoming</text>
+    <rect x="556" y="352" width="982" height="62" rx="18" fill="#0B1730"/>
+    <text x="580" y="390" fill="#FFFFFF" font-size="22">Design Discussion</text>
+    <text x="908" y="390" fill="#8EA6CD" font-size="18">21 May 2026 | 04:30 PM</text>
+    <text x="1220" y="390" fill="#55C6FF" font-size="18">Zoom</text>
+    <text x="1440" y="390" fill="#36E0A1" font-size="18">Upcoming</text>
+    <text x="580" y="448" fill="#9FB4D8" font-size="18">Meeting card click -> open details, notes, participants, and join link</text>
+  </g>
+
+  <rect x="36" y="512" width="1530" height="372" rx="26" fill="#081225" stroke="#183259"/>
+  <text x="64" y="554" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Calendar View</text>
+  <rect x="64" y="580" width="1474" height="270" rx="22" fill="#0B1730"/>
+  <g font-family="Arial, sans-serif">
+    <text x="96" y="616" fill="#FFFFFF" font-size="22">May 2026</text>
+    <text x="250" y="616" fill="#8EA6CD" font-size="16">Daily / Weekly / Monthly</text>
+    <rect x="92" y="650" width="182" height="42" rx="14" fill="#3B82F6"/><text x="106" y="676" fill="#FFFFFF" font-size="16">Client Review - 10:30 AM</text>
+    <rect x="304" y="708" width="182" height="42" rx="14" fill="#8B5CF6"/><text x="318" y="734" fill="#FFFFFF" font-size="16">Design Discussion</text>
+    <rect x="520" y="650" width="182" height="42" rx="14" fill="#22C55E"/><text x="534" y="676" fill="#FFFFFF" font-size="16">Completed Tasks Sync</text>
+    <rect x="736" y="708" width="182" height="42" rx="14" fill="#EF4444"/><text x="750" y="734" fill="#FFFFFF" font-size="16">Delayed Module Review</text>
+    <rect x="952" y="650" width="182" height="42" rx="14" fill="#3B82F6"/><text x="966" y="676" fill="#FFFFFF" font-size="16">Teams Demo</text>
+    <rect x="1168" y="708" width="182" height="42" rx="14" fill="#8B5CF6"/><text x="1182" y="734" fill="#FFFFFF" font-size="16">Client Call</text>
+    <text x="96" y="796" fill="#9FB4D8" font-size="18">Blue = Meetings | Green = Completed Tasks | Red = Delayed | Purple = Client Calls</text>
+    <text x="96" y="828" fill="#9FB4D8" font-size="18">Teams selection -> Graph API link + calendar event + notifications</text>
+  </g>
+</svg>

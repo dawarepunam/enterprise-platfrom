@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding & Documents | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards" style="margin-bottom: 25px;">
+          <div class="glass-card kpi-card">
+            <div class="card-icon blue"><i class="fas fa-user-clock"></i></div>
+            <div class="card-info"><h3>Joining Today</h3><h2>3</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon orange"><i class="fas fa-file-signature"></i></div>
+            <div class="card-info"><h3>Pending Docs</h3><h2>12</h2></div>
+          </div>
+        </div>
+
+        <div class="table-container glass-card mt-4">
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>New Hire</th>
+                  <th>Role</th>
+                  <th>Joining Date</th>
+                  <th>Docs Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="onboardingTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/onboarding.js"></script>
+</body>
+</html>

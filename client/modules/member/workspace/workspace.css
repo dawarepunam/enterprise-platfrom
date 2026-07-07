@@ -1,0 +1,101 @@
+@import url("../member-experience.css");
+
+.tool-btn[data-tool="attach"]::before,
+.tool-btn[data-tool="screenshot"]::before,
+.tool-btn[data-tool="zip"]::before,
+.tool-btn[data-tool="code"]::before,
+.tool-btn[data-tool="location"]::before,
+.tool-btn[data-tool="voice"]::before {
+  content: attr(aria-label);
+  display: none;
+}
+
+.activity-feed:empty {
+  display: none;
+}
+
+.workspace-update-form textarea,
+.workspace-composer textarea {
+  resize: vertical;
+}
+
+.workspace-call-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  background: rgba(14, 116, 144, 0.08);
+  border: 1px solid rgba(14, 116, 144, 0.18);
+}
+
+.workspace-call-card p,
+.workspace-call-card small,
+.workspace-call-card strong {
+  margin: 0;
+}
+
+.workspace-call-card audio,
+.call-card audio {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.workspace-code-block {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  overflow-x: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.voice-call-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1200;
+}
+
+.voice-call-modal {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: min(360px, calc(100vw - 2rem));
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  background: rgba(15, 23, 42, 0.96);
+  color: #fff;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  pointer-events: auto;
+}
+
+.voice-call-modal[hidden] {
+  display: none;
+}
+
+.voice-call-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.voice-call-modal h3,
+.voice-call-modal p,
+.voice-call-modal strong {
+  margin: 0;
+}
+
+.voice-call-live strong {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 1.8rem;
+}
+
+.voice-call-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}

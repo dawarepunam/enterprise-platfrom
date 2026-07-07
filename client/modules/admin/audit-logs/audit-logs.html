@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Audit Logs — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">🔍 System Audit Logs</div><div class="page-subtitle">Track all administrative actions and security events</div></div>
+    <div class="page-top-actions"><button class="btn btn-outline">📤 Export Logs</button></div>
+  </div>
+
+  <div class="filter-bar card mb-16" style="border-radius:var(--r-lg);">
+    <select class="filter-select"><option>All Modules</option><option>Users</option><option>Projects</option><option>Security</option></select>
+    <select class="filter-select"><option>All Actions</option><option>Create</option><option>Update</option><option>Delete</option><option>Login</option></select>
+    <input type="date" class="form-control" style="height:34px;width:150px;"/>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Date & Time</th><th>User</th><th>Module</th><th>Action</th><th>Description</th><th>IP Address</th></tr></thead>
+      <tbody id="logsBody">
+        <tr><td colspan="6" style="text-align:center;padding:40px"><div class="loader-spinner" style="margin:0 auto"></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+
+<script src="/modules/admin/audit-logs/audit-logs.js"></script>
+</body>
+</html>

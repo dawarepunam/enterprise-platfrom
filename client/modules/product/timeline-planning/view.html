@@ -1,0 +1,35 @@
+<div class="pm-timeline-planning" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  <div class="pm-toolbar" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <span class="pm-eyebrow" id="tpContext" style="cursor:pointer;" onclick="window.App.navigate('/product-manager/workspace')">← Back to Workspace</span>
+      <h2>Timeline Planning</h2>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn primary" data-action="addTask" style="background:#4F46E5; color:white; border:none;">+ Add Task</button>
+    </div>
+  </div>
+
+  <div class="pm-grid" style="flex:1;">
+    <div class="pm-col-12 pm-card" style="display:flex; flex-direction:column;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="font-size:1.125rem;">Project Schedule</h3>
+      </div>
+      
+      <div class="pm-table-wrapper" style="border:none; flex:1; overflow-y:auto;">
+        <table class="pm-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Task</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Start Date</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">End Date</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Status</th>
+            </tr>
+          </thead>
+          <tbody id="timelineListContainer">
+            <tr><td colspan="4" style="text-align: center; color:var(--pm-text-muted); padding:2rem;">Loading timeline...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

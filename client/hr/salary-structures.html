@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Structures - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .structure-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            position: relative;
+        }
+        .structure-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+        .structure-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .structure-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-navy);
+            margin-bottom: 4px;
+        }
+        .structure-meta {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+        .ctc-range {
+            background: var(--bg-color);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+        }
+        .ctc-range span { font-weight: 600; color: var(--text-dark); }
+        
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-gray);
+            font-size: 0.9rem;
+        }
+        .breakdown-row:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="run-payroll.html" class="submenu-item">Run Payroll</a>
+                            <a href="salary-structures.html" class="submenu-item active">Salary Structures</a>
+                            <a href="payslips.html" class="submenu-item">Payslips</a>
+                            <a href="claims.html" class="submenu-item">Claims / Expenses</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Payroll</span> > Salary Structures</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Salary Structure Templates</h1>
+                <button class="btn btn-primary" onclick="openModal('addStructureModal')"><i class="fa-solid fa-plus"></i> New Template</button>
+            </div>
+
+            <!-- Grids -->
+            <div class="structure-grid">
+                <div class="structure-card">
+                    <div class="structure-header">
+                        <div>
+                            <div class="structure-title">Standard IT Profile</div>
+                            <div class="structure-meta">Used by: Development, Support</div>
+                        </div>
+                        <div class="row-actions">
+                            <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                    </div>
+                    <div class="ctc-range">
+                        CTC Range: <span>₹4 LPA - ₹12 LPA</span>
+                    </div>
+                    <div>
+                        <div class="breakdown-row"><span>Basic Pay</span> <span>50% of CTC</span></div>
+                        <div class="breakdown-row"><span>HRA</span> <span>40% of Basic</span></div>
+                        <div class="breakdown-row"><span>Special Allowance</span> <span>Balance</span></div>
+                        <div class="breakdown-row"><span>PF (Employer)</span> <span>12% of Basic</span></div>
+                    </div>
+                </div>
+                
+                <div class="structure-card">
+                    <div class="structure-header">
+                        <div>
+                            <div class="structure-title">Sales / Target Based</div>
+                            <div class="structure-meta">Used by: Sales, Marketing</div>
+                        </div>
+                        <div class="row-actions">
+                            <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                    </div>
+                    <div class="ctc-range">
+                        CTC Range: <span>₹3 LPA - ₹8 LPA</span>
+                    </div>
+                    <div>
+                        <div class="breakdown-row"><span>Basic Pay</span> <span>40% of CTC</span></div>
+                        <div class="breakdown-row"><span>HRA</span> <span>40% of Basic</span></div>
+                        <div class="breakdown-row"><span>Variable/Incentive</span> <span>20% of CTC</span></div>
+                        <div class="breakdown-row"><span>Special Allowance</span> <span>Balance</span></div>
+                    </div>
+                </div>
+
+                <div class="structure-card">
+                    <div class="structure-header">
+                        <div>
+                            <div class="structure-title">Internship Stipend</div>
+                            <div class="structure-meta">Used by: Interns</div>
+                        </div>
+                        <div class="row-actions">
+                            <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                        </div>
+                    </div>
+                    <div class="ctc-range">
+                        Stipend: <span>₹10,000 - ₹20,000 / month</span>
+                    </div>
+                    <div>
+                        <div class="breakdown-row"><span>Consolidated Pay</span> <span>100%</span></div>
+                        <div class="breakdown-row"><span>PF/ESI</span> <span>Not Applicable</span></div>
+                        <div class="breakdown-row"><span>PT</span> <span>Subject to State</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="addStructureModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Salary Template Editor</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Template Name</label>
+                    <input type="text" class="form-control" placeholder="E.g. Standard IT Profile">
+                </div>
+                
+                <h4 style="margin-top:20px; margin-bottom:12px; border-bottom:1px solid var(--border-gray); padding-bottom:8px;">Earnings Components</h4>
+                <div class="form-group" style="display:flex; align-items:center; gap:16px;">
+                    <label class="form-label" style="width:120px; margin:0;">Basic Pay</label>
+                    <input type="number" class="form-control" value="50" style="width:100px;"> <span class="text-gray">% of CTC</span>
+                </div>
+                <div class="form-group" style="display:flex; align-items:center; gap:16px;">
+                    <label class="form-label" style="width:120px; margin:0;">HRA</label>
+                    <input type="number" class="form-control" value="40" style="width:100px;"> <span class="text-gray">% of Basic</span>
+                </div>
+                <div class="form-group" style="display:flex; align-items:center; gap:16px;">
+                    <label class="form-label" style="width:120px; margin:0;">Special Allow.</label>
+                    <div style="flex:1; padding:8px 12px; background:var(--bg-color); border-radius:var(--radius-md);">Balance amount remaining</div>
+                </div>
+
+                <h4 style="margin-top:20px; margin-bottom:12px; border-bottom:1px solid var(--border-gray); padding-bottom:8px;">Statutory & Deductions</h4>
+                <div class="form-group" style="display:flex; align-items:center; gap:16px;">
+                    <input type="checkbox" id="pfCheck" checked>
+                    <label for="pfCheck" style="margin:0;">Enable PF (12% of Basic)</label>
+                </div>
+                <div class="form-group" style="display:flex; align-items:center; gap:16px;">
+                    <input type="checkbox" id="ptCheck" checked>
+                    <label for="ptCheck" style="margin:0;">Enable Professional Tax (State Wise)</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('addStructureModal'); showToast('Template Saved', 'success')">Save Template</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

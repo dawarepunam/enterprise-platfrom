@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Edit Department — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .edit-form{display:grid;grid-template-columns:1fr;gap:14px;padding:20px;}
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div style="margin-bottom:20px;display:flex;gap:8px;">
+    <button class="btn btn-outline btn-sm" onclick="window.location.href='/admin/departments'">← Back to Departments</button>
+    <button class="btn btn-outline btn-sm" onclick="window.location.href=window.location.pathname.replace('/edit','')">← Back to Detail</button>
+  </div>
+  <h2>Edit Department</h2>
+  <div class="edit-form">
+    <div class="form-group"><label class="form-label">Department Name *</label><input class="form-control" id="eName" placeholder="e.g. Engineering"/></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="eDesc" rows="3" placeholder="Department description..."></textarea></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="eStatus"><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select></div>
+  </div>
+  <div style="margin-top:20px;">
+    <button class="btn btn-outline" onclick="window.location.href=window.location.pathname.replace('/edit','')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveDept()">💾 Save Changes</button>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script>
+  const deptId = location.pathname.split('/').filter(Boolean).slice(-2, -1)[0]; // expects /admin/departments/:id/edit
+  async function loadDept(){
+    try{ const res = await AdminAPI.get(`/departments/${deptId}`);
+      const d = res.data || res.department || {};
+      document.getElementById('eName').value = d.name||'';
+      document.getElementById('eDesc').value = d.description||'';
+      document.getElementById('eStatus').value = d.status||'ACTIVE';
+    }catch(err){window.showToast('Error', err.message,'error');}
+  }
+  async function saveDept(){
+    const name=document.getElementById('eName').value.trim();
+    if(!name){window.showToast('Error','Name required','error');return;}
+    try{ await AdminAPI.put(`/departments/${deptId}`,{name, description:document.getElementById('eDesc').value, status:document.getElementById('eStatus').value});
+      window.showToast('Saved','Department updated','success');
+      setTimeout(()=>window.location.href=`/admin/departments/${deptId}`,1200);
+    }catch(err){window.showToast('Error',err.message,'error');}
+  }
+  window.saveDept=saveDept;
+  document.addEventListener('DOMContentLoaded',loadDept);
+</script>
+</body>
+</html>

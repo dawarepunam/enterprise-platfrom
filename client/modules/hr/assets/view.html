@@ -1,0 +1,83 @@
+<div class="hr-assets-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Assets Inventory</h2>
+    <div style="display:flex; gap:1rem;">
+      <button class="primary-btn" onclick="window.UI.openAssetAssignModal()">+ Assign Asset</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="hr-card" style="display:flex; gap:1rem; padding:1rem;">
+    <input type="text" placeholder="Search Assets..." style="flex:1; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; min-width:150px;">
+      <option value="">Asset Type</option>
+      <option value="laptop">Laptop</option>
+      <option value="mouse">Mouse</option>
+      <option value="keyboard">Keyboard</option>
+      <option value="monitor">Monitor</option>
+      <option value="idcard">ID Card</option>
+    </select>
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; min-width:150px;">
+      <option value="">Status</option>
+      <option value="available">Available</option>
+      <option value="assigned">Assigned</option>
+      <option value="damaged">Damaged</option>
+    </select>
+  </div>
+
+  <!-- Grid Cards -->
+  <div id="hrAssetsGrid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1.5rem; flex:1; overflow-y:auto; padding-bottom:1rem;">
+    <!-- Loading skeleton -->
+    <div class="hr-skeleton" style="height:180px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:180px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:180px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:180px; border-radius:var(--hr-radius);"></div>
+  </div>
+
+</div>
+
+<!-- Asset Assignment Modal -->
+<div id="hrAssetAssignModal" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="hr-card" style="width:500px; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Assign Asset</h3>
+      <button onclick="window.UI.closeAssetAssignModal()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+
+    <div style="padding:2rem;">
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Asset Type</label>
+        <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+          <option>Laptop</option>
+          <option>Monitor</option>
+          <option>Mouse</option>
+          <option>Keyboard</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Assign To (Employee)</label>
+        <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+          <option>Rahul Sharma (EMP001)</option>
+          <option>Priya Mehta (EMP002)</option>
+          <option>Amit Verma (EMP003)</option>
+        </select>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Assigned Date</label>
+        <input type="date" value="2026-05-20" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Note</label>
+        <input type="text" placeholder="e.g. Dell Laptop i7 16GB RAM" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+      </div>
+    </div>
+
+    <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+      <button onclick="window.UI.closeAssetAssignModal()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.75rem 1.5rem; font-weight:500; cursor:pointer;">Cancel</button>
+      <button onclick="window.UI.submitAssetAssign()" class="primary-btn" style="padding:0.75rem 1.5rem;">Assign</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/hr/assets/script.js"></script>

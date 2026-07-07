@@ -1,0 +1,5 @@
+.exec-hero { background:#1E293B; color:#fff; border-radius:var(--r-xl); padding:30px; margin-bottom:24px; position:relative; overflow:hidden; }
+    .exec-hero::after { content:''; position:absolute; top:0; right:0; bottom:0; width:40%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05)); pointer-events:none; }
+    .exec-score { position:absolute; top:30px; right:40px; text-align:right; }
+    .exec-score-val { font-size:48px; font-weight:800; color:#10B981; line-height:1; }
+    .exec-score-label { font-size:12px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }

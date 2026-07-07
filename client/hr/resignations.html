@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resignations - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu"><li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back</span></a></li></ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>Exit Management</span> > Resignations</div>
+                </div>
+                <div class="header-right"><div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff"></div></div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Resignation Pipeline</h1>
+                <button class="btn btn-primary" onclick="openModal('resignModal')"><i class="fa-solid fa-user-minus"></i> Submit Resignation (ESS Mode)</button>
+            </div>
+
+            <!-- Kanban style or Table for Resignations -->
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Submitted On</th>
+                            <th>Last Working Day</th>
+                            <th>Notice Period</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <img src="https://ui-avatars.com/api/?name=Arjun+Mehta" style="width:32px;height:32px;border-radius:50%;">
+                                    <div><div style="font-weight:600; color:var(--dark-navy);">Arjun Mehta</div><div style="font-size:.8rem; color:var(--text-gray);">Marketing</div></div>
+                                </div>
+                            </td>
+                            <td>01 Jul 2026</td>
+                            <td style="font-weight:600; color:var(--danger-red);">31 Jul 2026</td>
+                            <td>30 Days</td>
+                            <td><span class="badge badge-warning">Pending Manager Approval</span></td>
+                            <td><button class="btn btn-outline btn-sm">Process</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <img src="https://ui-avatars.com/api/?name=Sneha+Joshi" style="width:32px;height:32px;border-radius:50%;">
+                                    <div><div style="font-weight:600; color:var(--dark-navy);">Sneha Joshi</div><div style="font-size:.8rem; color:var(--text-gray);">Sales</div></div>
+                                </div>
+                            </td>
+                            <td>15 Jun 2026</td>
+                            <td>15 Jul 2026</td>
+                            <td>30 Days</td>
+                            <td><span class="badge badge-primary">Serving Notice</span></td>
+                            <td><button class="btn btn-outline btn-sm">F&F Init</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Resign Modal (ESS Mock) -->
+    <div class="modal-overlay" id="resignModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header"><h3>Submit Resignation</h3><button class="modal-close"><i class="fa-solid fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Reason for leaving</label>
+                    <select class="form-control"><option>Better Opportunity</option><option>Higher Education</option><option>Relocation</option><option>Personal Reasons</option></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Requested Last Working Day</label>
+                    <input type="date" class="form-control">
+                    <p style="font-size:.8rem; color:var(--text-gray); margin-top:4px;"><i class="fa-solid fa-info-circle"></i> Standard notice period is 30 days.</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Detailed Reason (Optional)</label>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" style="background:var(--danger-red); border-color:var(--danger-red);" onclick="closeModal('resignModal');showToast('Resignation submitted for approval.','info')">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

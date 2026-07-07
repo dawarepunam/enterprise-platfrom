@@ -1,0 +1,22 @@
+<div class="hr-departments-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Top Header -->
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Departments</h2>
+    <div style="display:flex; gap:1rem;">
+      <button class="hr-icon-btn" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; font-size:0.875rem;">📤 Export</button>
+      <button class="primary-btn">+ Add Department</button>
+    </div>
+  </div>
+
+  <!-- Grid of Departments -->
+  <div id="hrDepartmentsGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1.5rem; flex:1; overflow-y:auto; padding-bottom:1rem;">
+    <!-- Loading skeleton or content injected by script -->
+    <div class="hr-skeleton" style="height:150px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:150px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:150px; border-radius:var(--hr-radius);"></div>
+  </div>
+
+</div>
+
+<script src="/modules/hr/departments/script.js"></script>

@@ -1,0 +1,106 @@
+<div class="pm-workspace" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  <div class="pm-toolbar" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:flex-start;">
+    <div>
+      <span class="pm-eyebrow" id="wsReqId" style="cursor:pointer;" onclick="window.App.navigate('/product-manager/queue')">← Back to Queue</span>
+      <h2 id="wsTitle">REQ-XXXX - Loading...</h2>
+    </div>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <span class="pm-status analysis" id="wsStatusBadge">Under Analysis</span>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div style="display:flex; gap:0.5rem; background:var(--pm-bg-card); padding:1rem; border-radius:var(--pm-radius-md); border:1px solid var(--pm-border); box-shadow:var(--pm-shadow-sm);">
+    <button class="pm-btn primary" data-action="saveCoreReq" style="background:#4F46E5; color:white; border:none;">💾 Save</button>
+    <button class="pm-btn primary" data-action="assignPM" style="background:#8B5CF6; color:white; border:none;">👤 Assign</button>
+    <button class="pm-btn primary" data-action="approveReq" style="background:#10B981; color:white; border:none;">✅ Approve</button>
+    <button class="pm-btn primary" data-action="rejectReq" style="background:#EF4444; color:white; border:none;">❌ Reject</button>
+    <button class="pm-btn primary" id="btnFreezeReq" data-action="freezeReq" style="background:#F59E0B; color:white; border:none;">❄️ Freeze</button>
+    <button class="pm-btn primary hidden" id="btnGenProject" data-action="generateProject" style="background:#2563EB; color:white; border:none;">🚀 Generate Project</button>
+    <button class="pm-btn" data-action="clarification">💬 Clarification</button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="pm-tabs" style="display:flex; gap:2rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem; overflow-x:auto;">
+    <a href="#" class="pm-tab active" data-tab="overview" style="text-decoration:none; color:var(--pm-primary); font-weight:600; border-bottom:2px solid var(--pm-primary); padding-bottom:0.5rem;">Overview</a>
+    <a href="#" class="pm-tab" data-tab="details" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Details</a>
+    <a href="#" class="pm-tab" data-tab="features" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Features</a>
+    <a href="#" class="pm-tab" data-tab="budget" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Budget</a>
+    <a href="#" class="pm-tab" data-tab="timeline" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Timeline</a>
+    <a href="#" class="pm-tab" data-tab="resources" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Resources</a>
+    <a href="#" class="pm-tab" data-tab="risks" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Risks</a>
+    <a href="#" class="pm-tab" data-tab="documents" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Documents</a>
+    <a href="#" class="pm-tab" data-tab="stakeholders" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Stakeholders</a>
+    <a href="#" class="pm-tab" data-tab="meetings" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Meetings</a>
+    <a href="#" class="pm-tab" data-tab="comments" style="text-decoration:none; color:var(--pm-text-muted); font-weight:500;">Comments</a>
+  </div>
+
+  <!-- Content Area -->
+  <div class="pm-grid" id="tabContent_overview">
+    
+    <!-- Left Pane: Requirement Details -->
+    <div class="pm-col-3 pm-card" style="display:flex; flex-direction:column; gap:1rem;">
+      <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Requirement Details</h3>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Client</span>
+        <strong id="wsClient">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Department</span>
+        <strong id="wsDept">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Priority</span>
+        <strong id="wsPriorityStr" style="color:var(--pm-danger);">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Budget (Approx.)</span>
+        <strong id="wsBudgetStr">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Timeline (Expected)</span>
+        <strong id="wsTimelineStr">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Owner</span>
+        <strong id="wsOwnerStr">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem; border-bottom:1px solid var(--pm-border); padding-bottom:0.5rem;">
+        <span style="color:var(--pm-text-muted);">Status</span>
+        <strong id="wsStatusStr">-</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem;">
+        <span style="color:var(--pm-text-muted);">Created On</span>
+        <strong id="wsCreatedOn">-</strong>
+      </div>
+    </div>
+
+    <!-- Middle Pane: Descriptions -->
+    <div class="pm-col-6 pm-card" style="display:flex; flex-direction:column; gap:1.5rem;">
+      <div>
+        <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Description</h3>
+        <textarea id="wsBusinessReq" class="pm-form-control" style="min-height:80px; font-size:0.875rem; color:var(--pm-text-main); border:1px solid transparent; background:var(--pm-bg-hover); padding:1rem;"></textarea>
+      </div>
+      <div>
+        <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Business Need</h3>
+        <textarea id="wsFunctionalReq" class="pm-form-control" style="min-height:80px; font-size:0.875rem; color:var(--pm-text-main); border:1px solid transparent; background:var(--pm-bg-hover); padding:1rem;"></textarea>
+      </div>
+      <div>
+        <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Acceptance Criteria</h3>
+        <textarea id="wsAcceptanceCriteria" class="pm-form-control" style="min-height:120px; font-size:0.875rem; color:var(--pm-text-main); border:1px solid transparent; background:var(--pm-bg-hover); padding:1rem;"></textarea>
+      </div>
+    </div>
+
+    <!-- Right Pane: Activity Feed -->
+    <div class="pm-col-3 pm-card" style="display:flex; flex-direction:column; gap:1rem;">
+      <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Activity Feed</h3>
+      <div id="wsActivityFeed" style="display:flex; flex-direction:column; gap:1rem; overflow-y:auto; max-height:400px; padding-right:0.5rem;">
+        <div style="text-align:center; color:var(--pm-text-muted);">Loading...</div>
+      </div>
+      <div style="text-align:center; margin-top:auto;">
+        <a href="#" style="font-size:0.75rem; color:var(--pm-primary); font-weight:600; text-decoration:none;">View all</a>
+      </div>
+    </div>
+
+  </div>
+</div>

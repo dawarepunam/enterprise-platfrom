@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome To Smart Enterprise</title>
+</head>
+<body style="margin:0;background:#f4f7fb;font-family:Arial,sans-serif;color:#0f172a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border-radius:20px;overflow:hidden;">
+          <tr>
+            <td style="padding:32px;background:linear-gradient(135deg,#0f766e,#2563eb);color:#ffffff;">
+              <p style="margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;">Smart Enterprise</p>
+              <h1 style="margin:0;font-size:30px;">Welcome onboard</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:32px;">
+              <p style="margin:0 0 16px;">Hello {{name}},</p>
+              <p style="margin:0 0 16px;">Your enterprise workspace is ready. You can now access projects, team rooms, approvals, and live collaboration flows based on your role.</p>
+              <p style="margin:0 0 24px;">Role: <strong>{{role}}</strong><br />Team: <strong>{{teamName}}</strong></p>
+              <a href="{{loginUrl}}" style="display:inline-block;padding:14px 22px;border-radius:999px;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:700;">Open Workspace</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

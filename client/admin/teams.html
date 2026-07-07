@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microsoft Teams Integration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/admin-shell.css" />
+    <link rel="stylesheet" href="../modules/admin/admin-command-center.css" />
+    <link rel="stylesheet" href="../modules/admin/teams/teams.css" />
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <div class="dashboard-shell">
+        <div id="sidebar"></div>
+
+        <main class="dashboard-page teams-page">
+            <section class="teams-hero-card">
+                <div class="teams-hero-copy">
+                    <span class="teams-kicker">Collaboration Hub</span>
+                    <h1>Microsoft Teams Integration</h1>
+                    <p>
+                        Open the real Microsoft Teams web app directly from your CRM and give admins a polished, user-friendly collaboration entry point for chat, meetings, channels, file sharing, and OneDrive-backed teamwork.
+                    </p>
+
+                    <div class="teams-action-row">
+                        <button id="openTeamsBtn" class="btn btn-primary teams-primary-btn" type="button">
+                            <i class="fa-brands fa-microsoft"></i>
+                            <span>Open Microsoft Teams</span>
+                        </button>
+                        <button id="openOneDriveBtn" class="btn btn-secondary teams-secondary-btn" type="button">
+                            <i class="fa-solid fa-cloud"></i>
+                            <span>Open OneDrive</span>
+                        </button>
+                    </div>
+
+                    <div class="teams-quick-pills">
+                        <span><i class="fa-solid fa-users"></i> Create Teams</span>
+                        <span><i class="fa-solid fa-comments"></i> Group Chat</span>
+                        <span><i class="fa-solid fa-video"></i> Meetings</span>
+                        <span><i class="fa-solid fa-folder-open"></i> File Sharing</span>
+                    </div>
+                </div>
+
+                <aside class="teams-hero-panel">
+                    <div class="teams-logo-lockup">
+                        <div class="teams-logo-badge">
+                            <i class="fa-brands fa-microsoft"></i>
+                        </div>
+                        <div>
+                            <span class="eyebrow">Native Microsoft Workspace</span>
+                            <strong>Teams + OneDrive + Calendar</strong>
+                        </div>
+                    </div>
+
+                    <div class="teams-stat-grid">
+                        <article>
+                            <strong>100%</strong>
+                            <span>Native Teams experience</span>
+                        </article>
+                        <article>
+                            <strong>0</strong>
+                            <span>Custom chat code required</span>
+                        </article>
+                        <article>
+                            <strong>24/7</strong>
+                            <span>Cloud collaboration access</span>
+                        </article>
+                        <article>
+                            <strong>1 click</strong>
+                            <span>Launch from CRM sidebar</span>
+                        </article>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="teams-layout-grid">
+                <article class="teams-glass-card teams-description-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="admin-eyebrow">Overview</p>
+                            <h2>Professional collaboration dashboard</h2>
+                        </div>
+                    </div>
+                    <p>
+                        This CRM module does not rebuild chat from scratch. Instead, it gives your admin panel a beautiful launch surface that opens the actual Microsoft Teams web app, where admins can create teams, add channels, manage members, schedule meetings, share files, and use OneDrive storage.
+                    </p>
+                </article>
+
+                <article class="teams-glass-card teams-tips-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="admin-eyebrow">Quick Tips</p>
+                            <h2>Best demo flow</h2>
+                        </div>
+                    </div>
+                    <ul class="teams-tips-list">
+                        <li>Sign in with your Microsoft 365 account before launching Teams.</li>
+                        <li>Use Teams for channels, meetings, calls, and enterprise chat.</li>
+                        <li>Use OneDrive for document uploads, share links, and storage access.</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="teams-feature-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="admin-eyebrow">Feature Access</p>
+                        <h2>Everything admins can use after launch</h2>
+                    </div>
+                </div>
+
+                <div class="teams-feature-grid">
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-comments"></i>
+                        <h3>Chat</h3>
+                        <p>Start direct chats, team chat, and group conversations inside the real Microsoft Teams workspace.</p>
+                    </article>
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-video"></i>
+                        <h3>Video Meetings</h3>
+                        <p>Run audio calls, video calls, screen sharing, and scheduled meetings with native Teams controls.</p>
+                    </article>
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                        <h3>File Sharing</h3>
+                        <p>Upload DOC, PDF, PPT, ZIP, and other files securely while collaborating with departments and clients.</p>
+                    </article>
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-cloud"></i>
+                        <h3>OneDrive Storage</h3>
+                        <p>Open OneDrive to access cloud-backed storage, share folders, and keep project documents organized.</p>
+                    </article>
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <h3>Calendar</h3>
+                        <p>Schedule meetings, track collaboration events, and align admin workflows with Microsoft calendar tools.</p>
+                    </article>
+                    <article class="teams-feature-card">
+                        <i class="fa-solid fa-bell"></i>
+                        <h3>Notifications</h3>
+                        <p>Receive real-time alerts for chats, mentions, calls, files, and upcoming meeting activity.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="teams-workflow-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="admin-eyebrow">Workflow</p>
+                        <h2>How the CRM Teams entry works</h2>
+                    </div>
+                </div>
+
+                <div class="teams-workflow-steps">
+                    <article><span>1</span><p>Admin logs into the CRM.</p></article>
+                    <article><span>2</span><p>Admin clicks <strong>Teams</strong> from the sidebar.</p></article>
+                    <article><span>3</span><p>The Teams integration page opens inside the CRM.</p></article>
+                    <article><span>4</span><p>Admin clicks <strong>Open Microsoft Teams</strong>.</p></article>
+                    <article><span>5</span><p>The real Teams web app opens in a new browser tab.</p></article>
+                    <article><span>6</span><p>Admin uses Teams channels, meetings, chat, files, and OneDrive natively.</p></article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/notifications.js"></script>
+    <script src="../assets/js/admin-shell.js"></script>
+    <script src="../assets/js/role-workspace.js"></script>
+    <script src="../modules/admin/teams/teams.js"></script>
+</body>
+
+</html>

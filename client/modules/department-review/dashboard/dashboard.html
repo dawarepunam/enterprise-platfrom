@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Department Review Module - Enterprise CRM Internal Decision Hub for lead validation, feasibility checks, and approval workflows" />
+  <title>Department Review – Enterprise CRM</title>
+  <link rel="stylesheet" href="/modules/department-review/dashboard/dashboard.css" />
+</head>
+<body>
+<div class="dept-review-app">
+
+  <!-- ===================== TOPBAR ===================== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand-logo">
+        <div class="brand-mark">JM</div>
+        <h1>Enterprise CRM</h1>
+      </div>
+
+      <button class="menu-toggle" id="sidebarToggle" title="Toggle Sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="module-chip">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Department Review
+      </div>
+
+      <div class="header-search">
+        <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input id="globalSearch" type="search" placeholder="Search leads, clients, requirements..." />
+        <span class="search-shortcut">Ctrl+K</span>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="btn-create" id="quickCreateBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Create
+      </button>
+
+      <button class="icon-btn" id="notificationBtn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="badge" id="notifBadge">12</span>
+      </button>
+
+      <button class="icon-btn" id="tasksBtn" title="Tasks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span class="badge">5</span>
+      </button>
+
+      <button class="icon-btn" title="Messages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+
+      <button class="profile-btn" id="profileBtn">
+        <div class="avatar-circle">RP</div>
+        <div class="profile-info">
+          <span class="profile-name">Rahul Patil</span>
+          <span class="profile-role">Department Head</span>
+        </div>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-body">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="user-card">
+        <div class="avatar-circle avatar-lg">RP</div>
+        <div class="user-meta">
+          <strong>Rahul Patil</strong>
+          <small>Department Head</small>
+          <div class="online-dot">Online</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <span class="nav-group-title">Main Menu</span>
+
+        <!-- 1. Dashboard -->
+        <button class="nav-item active" data-section="dashboard">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+
+        <!-- 2. Review Queue -->
+        <button class="nav-item" data-section="review-queue">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span>
+          <span class="nav-label">Review Queue</span>
+          <span class="nav-badge">23</span>
+        </button>
+
+        <!-- 3. Kanban Board -->
+        <button class="nav-item" data-section="kanban">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="6" height="16" rx="1"/><rect x="14" y="4" width="6" height="10" rx="1"/></svg></span>
+          <span class="nav-label">Kanban Board</span>
+        </button>
+
+        <!-- 4. Timeline View -->
+        <button class="nav-item" data-section="timeline">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg></span>
+          <span class="nav-label">Timeline View</span>
+        </button>
+
+        <!-- 5. Calendar View -->
+        <button class="nav-item" data-section="calendar">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span class="nav-label">Calendar View</span>
+        </button>
+
+        <span class="nav-group-title">Analysis</span>
+
+        <!-- 6. Feasibility Center -->
+        <button class="nav-item" data-section="feasibility">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3h6l2 7H7L9 3z"/><path d="M7 10v8a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4v-8"/></svg></span>
+          <span class="nav-label">Feasibility Center</span>
+        </button>
+
+        <!-- 7. Risk Assessment -->
+        <button class="nav-item" data-section="risk">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <span class="nav-label">Risk Assessment</span>
+        </button>
+
+        <!-- 8. Resource Planning -->
+        <button class="nav-item" data-section="resource">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="nav-label">Resource Planning</span>
+        </button>
+
+        <span class="nav-group-title">Collaboration</span>
+
+        <!-- 9. Clarification Hub -->
+        <button class="nav-item" data-section="clarification">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+          <span class="nav-label">Clarification Hub</span>
+          <span class="nav-badge orange">8</span>
+        </button>
+
+        <!-- 10. Approval Center -->
+        <button class="nav-item" data-section="approval">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+          <span class="nav-label">Approval Center</span>
+        </button>
+
+        <span class="nav-group-title">Insights</span>
+
+        <!-- 11. Analytics -->
+        <button class="nav-item" data-section="analytics">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+          <span class="nav-label">Analytics & Reports</span>
+        </button>
+
+        <!-- 12. Settings -->
+        <button class="nav-item" data-section="settings">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <!-- Department Section -->
+      <div class="dept-section">
+        <span class="nav-group-title">My Departments</span>
+        <div class="dept-list">
+          <button class="dept-item"><span class="dept-dot" style="background:#2563eb"></span> Development</button>
+          <button class="dept-item"><span class="dept-dot" style="background:#8b5cf6"></span> Design</button>
+          <button class="dept-item"><span class="dept-dot" style="background:#10b981"></span> Finance</button>
+          <button class="dept-item"><span class="dept-dot" style="background:#f59e0b"></span> HR</button>
+          <button class="dept-item"><span class="dept-dot" style="background:#14b8a6"></span> Support</button>
+          <button class="dept-item"><span class="dept-dot" style="background:#ef4444"></span> QA</button>
+        </div>
+      </div>
+
+      <button class="sidebar-collapse-btn" id="collapseBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+        <span>Collapse</span>
+      </button>
+    </aside>
+
+    <!-- ===================== WORKSPACE ===================== -->
+    <div class="workspace">
+      <div class="workspace-scroll" id="workspaceScroll">
+
+        <!-- ========== PAGE 1: DASHBOARD ========== -->
+        <section class="ws-section active" data-panel="dashboard">
+          <div class="page-header">
+            <div class="page-header-left">
+              <h2>Department Dashboard</h2>
+              <p>Overview of all department review activities</p>
+            </div>
+            <div class="page-header-actions">
+              <select class="filter-select" id="dashTimeRange">
+                <option>This Week</option>
+                <option>This Month</option>
+                <option>This Quarter</option>
+              </select>
+              <button class="btn-secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                Filters
+              </button>
+              <button class="btn-icon" title="More options">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpi-grid kpi-grid-8">
+            <article class="kpi-card blue" id="kpiPending">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Pending Reviews</div>
+                <div class="kpi-value">46</div>
+                <div class="kpi-trend up">↑ 18% vs last week</div>
+                <div class="kpi-hover-detail">
+                  <div class="kpi-hover-row"><span>Weekly Trend</span><strong>+8</strong></div>
+                  <div class="kpi-hover-row"><span>Top Owner</span><strong>Amit S.</strong></div>
+                  <div class="kpi-hover-row"><span>High Priority</span><strong>12</strong></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="kpi-card purple" id="kpiUnderReview">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Under Review</div>
+                <div class="kpi-value">28</div>
+                <div class="kpi-trend up">↑ 12% vs last week</div>
+                <div class="kpi-hover-detail">
+                  <div class="kpi-hover-row"><span>Weekly Trend</span><strong>+3</strong></div>
+                  <div class="kpi-hover-row"><span>Top Owner</span><strong>Neha D.</strong></div>
+                  <div class="kpi-hover-row"><span>Avg Duration</span><strong>2.3 days</strong></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="kpi-card orange" id="kpiClarifications">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Clarifications</div>
+                <div class="kpi-value">12</div>
+                <div class="kpi-trend down">↓ 8% vs last week</div>
+                <div class="kpi-hover-detail">
+                  <div class="kpi-hover-row"><span>Open</span><strong>8</strong></div>
+                  <div class="kpi-hover-row"><span>Waiting</span><strong>4</strong></div>
+                  <div class="kpi-hover-row"><span>Avg Response</span><strong>4.5 hrs</strong></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="kpi-card green" id="kpiApproved">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Approved</div>
+                <div class="kpi-value">32</div>
+                <div class="kpi-trend up">↑ 25% vs last week</div>
+                <div class="kpi-hover-detail">
+                  <div class="kpi-hover-row"><span>This Week</span><strong>9</strong></div>
+                  <div class="kpi-hover-row"><span>Avg Time</span><strong>3.2 days</strong></div>
+                  <div class="kpi-hover-row"><span>Success Rate</span><strong>76%</strong></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="kpi-card red" id="kpiRejected">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Rejected</div>
+                <div class="kpi-value">6</div>
+                <div class="kpi-trend up">↑ 5% vs last week</div>
+                <div class="kpi-hover-detail">
+                  <div class="kpi-hover-row"><span>Budget Issue</span><strong>3</strong></div>
+                  <div class="kpi-hover-row"><span>Timeline Issue</span><strong>2</strong></div>
+                  <div class="kpi-hover-row"><span>Other</span><strong>1</strong></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="kpi-card pink" id="kpiCriticalRisks">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Critical Risks</div>
+                <div class="kpi-value">4</div>
+                <div class="kpi-trend down">↓ 2 vs last week</div>
+              </div>
+            </article>
+
+            <article class="kpi-card indigo" id="kpiSLA">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">SLA Breached</div>
+                <div class="kpi-value">3</div>
+                <div class="kpi-trend down">↓ 1 vs last week</div>
+              </div>
+            </article>
+
+            <article class="kpi-card teal" id="kpiResourceConflicts">
+              <div class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="11" x2="23" y2="11"/></svg></div>
+              <div class="kpi-data">
+                <div class="kpi-label">Resource Conflicts</div>
+                <div class="kpi-value">5</div>
+                <div class="kpi-trend up">↑ 2 new</div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="quick-stats">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:var(--primary-light);color:var(--primary)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="stat-content"><div class="stat-val">2.8 days</div><div class="stat-lbl">Avg Review Time</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:var(--success-light);color:var(--success)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div class="stat-content"><div class="stat-val">76%</div><div class="stat-lbl">Approval Rate</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:var(--purple-light);color:var(--purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+              <div class="stat-content"><div class="stat-val">82%</div><div class="stat-lbl">Dept Utilization</div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:var(--orange-light);color:var(--orange)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/></svg></div>
+              <div class="stat-content"><div class="stat-val">14</div><div class="stat-lbl">Review Backlog</div></div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-row">
+            <div class="panel">
+              <div class="panel-head"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg> Review Pipeline</h3></div>
+              <div class="chart-area"><canvas id="pipelineChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Department Workload</h3>
+                <select class="filter-select" style="min-width:auto;padding:4px 8px;font-size:11px"><option>This Week</option><option>This Month</option></select>
+              </div>
+              <div class="chart-area"><canvas id="workloadChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Approval Rate</h3></div>
+              <div class="chart-area"><canvas id="approvalTrendChart"></canvas></div>
+            </div>
+          </div>
+
+          <!-- Dashboard Split -->
+          <div class="dash-split">
+            <!-- Recent Reviews Table -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Recent Reviews</h3>
+                <button class="btn-text">View All Reviews</button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table" id="recentReviewsTable">
+                  <thead>
+                    <tr>
+                      <th>Lead ID</th>
+                      <th>Company</th>
+                      <th>Requirement</th>
+                      <th>Department</th>
+                      <th>Priority</th>
+                      <th>Risk</th>
+                      <th>Status</th>
+                      <th>Owner</th>
+                      <th>Due Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentReviewsBody"></tbody>
+                </table>
+              </div>
+              <!-- Quick Actions -->
+              <div class="panel-body">
+                <p style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px">Quick Actions</p>
+                <div class="quick-actions-grid">
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><small>Assign Review</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><small>Request Clarification</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><small>Approve Lead</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><small>Reject Lead</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg><small>Upload Document</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><small>Create Task</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><small>Schedule Meeting</small></button>
+                  <button class="qa-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><small>Add Note</small></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <!-- Upcoming Deadlines -->
+              <div class="panel">
+                <div class="panel-head">
+                  <h3>Upcoming Deadlines</h3>
+                  <button class="btn-text">View All</button>
+                </div>
+                <div class="panel-body">
+                  <div class="deadline-list" id="deadlineList">
+                    <!-- Dynamic Deadlines -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Activities -->
+              <div class="panel">
+                <div class="panel-head">
+                  <h3>Recent Activities</h3>
+                  <button class="btn-text">View All</button>
+                </div>
+                <div class="panel-body">
+                  <div class="activity-list" id="activityList">
+                    <!-- Dynamic Activities -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Department Performance -->
+              <div class="panel">
+                <div class="panel-head">
+                  <h3>Department Performance</h3>
+                  <button class="btn-text">View Report</button>
+                </div>
+                <div class="panel-body">
+                  <div class="perf-list" id="perfList">
+                    <!-- Dynamic Performance -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 2: REVIEW QUEUE ========== -->
+        <section class="ws-section" data-panel="review-queue">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Review Queue</h2><p>Main working screen – manage all department reviews</p></div>
+            <div class="page-header-actions">
+              <button class="btn-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Review</button>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar">
+            <select class="filter-select" id="filterDept"><option value="">All Departments</option><option>Development</option><option>Design</option><option>Finance</option><option>HR</option><option>Support</option><option>QA</option></select>
+            <select class="filter-select" id="filterStatus"><option value="">All Status</option><option>Pending</option><option>Under Review</option><option>Clarification</option><option>Approved</option><option>Rejected</option></select>
+            <select class="filter-select" id="filterPriority"><option value="">All Priority</option><option>High</option><option>Medium</option><option>Low</option></select>
+            <select class="filter-select" id="filterRisk"><option value="">All Risk</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+            <select class="filter-select" id="filterOwner"><option value="">All Owners</option><option>Amit S.</option><option>Neha D.</option><option>Rahul P.</option><option>Sneha J.</option></select>
+            <input type="date" class="filter-input" id="filterDate" style="min-width:130px" />
+            <button class="btn-primary" id="applyFilters"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search</button>
+          </div>
+
+          <!-- Table -->
+          <div class="panel">
+            <div class="table-wrap" style="max-height:calc(100vh - 300px)">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="selectAll" /></th>
+                    <th>Lead ID</th>
+                    <th>Company</th>
+                    <th>Client Name</th>
+                    <th>Requirement</th>
+                    <th>Budget</th>
+                    <th>Timeline</th>
+                    <th>Priority</th>
+                    <th>Risk</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reviewQueueBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 3: REVIEW WORKSPACE ========== -->
+        <section class="ws-section" data-panel="review-workspace">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Review Workspace</h2><p>Lead: <strong id="rwLeadName">ABC Pvt Ltd</strong> – <span id="rwLeadId">LR-2024-1256</span></p></div>
+            <div class="page-header-actions">
+              <button class="btn-secondary" id="rwBackBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Back</button>
+            </div>
+          </div>
+
+          <div class="review-workspace">
+            <!-- Left Panel: Client Details -->
+            <div class="review-panel">
+              <div class="review-panel-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Client Details</div>
+              <div class="review-panel-body" id="clientDetailsContainer">
+                <!-- Dynamic Client Details -->
+              </div>
+            </div>
+
+            <!-- Center Panel: Review -->
+            <div class="review-panel">
+              <div class="review-panel-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Review Checklist</div>
+              <div class="review-panel-body">
+                <div id="reviewChecklist">
+                  <!-- Dynamic Checklist -->
+                </div>
+
+                <h4 style="margin-top:20px;font-size:13px;font-weight:600;margin-bottom:10px">Department Notes</h4>
+                <textarea class="form-input" id="deptNotes" rows="4" placeholder="Add department review notes..."></textarea>
+
+                <h4 style="margin-top:20px;font-size:13px;font-weight:600;margin-bottom:10px">Comments</h4>
+                <div id="commentsSection">
+                  <!-- Dynamic Comments -->
+                </div>
+                <div style="display:flex;gap:8px;margin-top:12px">
+                  <input class="form-input" id="clarificationInput" placeholder="Add a comment..." style="margin-bottom:0" />
+                  <button class="btn-primary" onclick="sendClarification()">Send</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Panel: Activity -->
+            <div class="review-panel">
+              <div class="review-panel-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Activity Timeline</div>
+              <div class="review-panel-body">
+                <div class="activity-list" id="workspaceActivityList">
+                  <!-- Dynamic Activity -->
+                </div>
+
+                <h4 style="margin-top:20px;font-size:13px;font-weight:600;margin-bottom:10px">Attachments</h4>
+                <div id="workspaceAttachments" style="display:flex;flex-direction:column;gap:6px">
+                  <!-- Dynamic Attachments -->
+                </div>
+
+                <h4 style="margin-top:20px;font-size:13px;font-weight:600;margin-bottom:10px">Approval History</h4>
+                <div id="workspaceApprovals" style="font-size:12px;color:var(--text-muted);text-align:center;padding:16px">No approvals yet</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div class="bottom-action-bar">
+            <button class="btn-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Save Draft</button>
+            <button class="btn-warning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/></svg> Request Clarification</button>
+            <button class="btn-danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Reject</button>
+            <button class="btn-success"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Approve</button>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 4: KANBAN BOARD ========== -->
+        <section class="ws-section" data-panel="kanban">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Kanban Board</h2><p>Drag and drop to update review status</p></div>
+            <div class="page-header-actions">
+              <button class="btn-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
+            </div>
+          </div>
+          <div class="kanban-board" id="kanbanBoard"></div>
+        </section>
+
+        <!-- ========== PAGE 5: TIMELINE VIEW ========== -->
+        <section class="ws-section" data-panel="timeline">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Timeline View</h2><p>Gantt-style view of all review activities</p></div>
+          </div>
+          <div class="timeline-controls">
+            <div class="timeline-zoom-btns">
+              <button class="zoom-btn active">Day</button>
+              <button class="zoom-btn">Week</button>
+              <button class="zoom-btn">Month</button>
+            </div>
+            <button class="btn-secondary" style="margin-left:auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Add Item</button>
+          </div>
+          <div class="timeline-container" id="timelineContainer"></div>
+        </section>
+
+        <!-- ========== PAGE 6: CALENDAR VIEW ========== -->
+        <section class="ws-section" data-panel="calendar">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Calendar View</h2><p>Review schedule and deadlines</p></div>
+          </div>
+          <div class="calendar-controls">
+            <div class="calendar-nav">
+              <button class="btn-icon" id="calPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <h3 id="calMonthYear">June 2026</h3>
+              <button class="btn-icon" id="calNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+            <div class="timeline-zoom-btns">
+              <button class="zoom-btn active">Month</button>
+              <button class="zoom-btn">Week</button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
+
+        <!-- ========== PAGE 7: FEASIBILITY CENTER ========== -->
+        <section class="ws-section" data-panel="feasibility">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Feasibility Center</h2><p>Comprehensive feasibility assessment for lead: <strong>ABC Pvt Ltd</strong></p></div>
+          </div>
+
+          <div class="feasibility-grid">
+            <!-- Technical Feasibility -->
+            <div class="feasibility-section">
+              <div class="feasibility-header">
+                <div class="feasibility-icon" style="background:var(--primary-light);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                <h4>Technical Feasibility</h4>
+              </div>
+              <div class="feasibility-body">
+                <div class="feas-item"><span class="feas-label">Technology Available</span><span class="feas-status good">✓ Available</span></div>
+                <div class="feas-item"><span class="feas-label">Complexity Level</span><span class="feas-status warn">Medium</span></div>
+                <div class="feas-item"><span class="feas-label">Integrations</span><span class="feas-status good">✓ Possible</span></div>
+                <div class="feas-item"><span class="feas-label">Security Compliance</span><span class="feas-status good">✓ Compliant</span></div>
+              </div>
+            </div>
+
+            <!-- Resource Feasibility -->
+            <div class="feasibility-section">
+              <div class="feasibility-header">
+                <div class="feasibility-icon" style="background:var(--success-light);color:var(--success)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <h4>Resource Feasibility</h4>
+              </div>
+              <div class="feasibility-body">
+                <div class="feas-item"><span class="feas-label">Developers</span><div class="capacity-bar"><div class="capacity-fill" style="width:75%;background:var(--success)"></div></div><span class="feas-status good">75%</span></div>
+                <div class="feas-item"><span class="feas-label">Designers</span><div class="capacity-bar"><div class="capacity-fill" style="width:40%;background:var(--success)"></div></div><span class="feas-status good">40%</span></div>
+                <div class="feas-item"><span class="feas-label">QA Engineers</span><div class="capacity-bar"><div class="capacity-fill" style="width:85%;background:var(--orange)"></div></div><span class="feas-status warn">85%</span></div>
+              </div>
+            </div>
+
+            <!-- Financial Feasibility -->
+            <div class="feasibility-section">
+              <div class="feasibility-header">
+                <div class="feasibility-icon" style="background:var(--warning-light);color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+                <h4>Financial Feasibility</h4>
+              </div>
+              <div class="feasibility-body">
+                <div class="feas-item"><span class="feas-label">Client Budget</span><span class="feas-status good">₹18,00,000</span></div>
+                <div class="feas-item"><span class="feas-label">Expected Cost</span><span class="feas-status warn">₹14,50,000</span></div>
+                <div class="feas-item"><span class="feas-label">Profit Margin</span><span class="feas-status good">19.4%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Overall Result -->
+          <div class="feasibility-result feasible">
+            <div class="feas-result-label">✓ FEASIBLE</div>
+            <div class="feas-score">Overall Score: 82/100 – Project is technically and financially viable with adequate resources</div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 8: RISK ASSESSMENT ========== -->
+        <section class="ws-section" data-panel="risk">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Risk Assessment</h2><p>Identify and evaluate project risks</p></div>
+          </div>
+
+          <div class="risk-grid" id="riskCards">
+            <div class="risk-card">
+              <div class="risk-category-icon" style="background:var(--success-light);color:var(--success)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <div class="risk-category-name">Budget Risk</div>
+              <span class="risk-level-text" style="background:var(--success-light);color:var(--success)">Low</span>
+            </div>
+            <div class="risk-card">
+              <div class="risk-category-icon" style="background:var(--warning-light);color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="risk-category-name">Timeline Risk</div>
+              <span class="risk-level-text" style="background:var(--warning-light);color:#b45309">Medium</span>
+            </div>
+            <div class="risk-card">
+              <div class="risk-category-icon" style="background:var(--success-light);color:var(--success)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+              <div class="risk-category-name">Technology Risk</div>
+              <span class="risk-level-text" style="background:var(--success-light);color:var(--success)">Low</span>
+            </div>
+            <div class="risk-card">
+              <div class="risk-category-icon" style="background:var(--orange-light);color:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div class="risk-category-name">Resource Risk</div>
+              <span class="risk-level-text" style="background:var(--orange-light);color:var(--orange)">High</span>
+            </div>
+            <div class="risk-card">
+              <div class="risk-category-icon" style="background:var(--warning-light);color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div class="risk-category-name">Client Risk</div>
+              <span class="risk-level-text" style="background:var(--warning-light);color:#b45309">Medium</span>
+            </div>
+          </div>
+
+          <!-- Risk Matrix -->
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-head"><h3>Risk Matrix</h3></div>
+            <div class="panel-body">
+              <div class="risk-matrix" id="riskMatrix">
+                <div class="risk-matrix-header"></div>
+                <div class="risk-matrix-header">Low</div>
+                <div class="risk-matrix-header">Medium</div>
+                <div class="risk-matrix-header">High</div>
+                <div class="risk-matrix-header">Critical</div>
+
+                <div class="risk-matrix-header" style="writing-mode:vertical-rl;transform:rotate(180deg)">High</div>
+                <div class="risk-matrix-cell medium">2</div>
+                <div class="risk-matrix-cell high">1</div>
+                <div class="risk-matrix-cell critical">0</div>
+                <div class="risk-matrix-cell critical">0</div>
+
+                <div class="risk-matrix-header" style="writing-mode:vertical-rl;transform:rotate(180deg)">Medium</div>
+                <div class="risk-matrix-cell low">3</div>
+                <div class="risk-matrix-cell medium">2</div>
+                <div class="risk-matrix-cell high">1</div>
+                <div class="risk-matrix-cell critical">0</div>
+
+                <div class="risk-matrix-header" style="writing-mode:vertical-rl;transform:rotate(180deg)">Low</div>
+                <div class="risk-matrix-cell low">5</div>
+                <div class="risk-matrix-cell low">3</div>
+                <div class="risk-matrix-cell medium">1</div>
+                <div class="risk-matrix-cell high">0</div>
+
+                <div class="risk-matrix-header" style="writing-mode:vertical-rl;transform:rotate(180deg)">Very Low</div>
+                <div class="risk-matrix-cell low">4</div>
+                <div class="risk-matrix-cell low">2</div>
+                <div class="risk-matrix-cell low">1</div>
+                <div class="risk-matrix-cell medium">0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mitigation -->
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-head"><h3>Mitigation Actions</h3></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Risk</th><th>Level</th><th>Mitigation</th><th>Owner</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Resource shortage for QA</td><td><span class="risk-badge high-risk">High</span></td><td>Hire contract QA for 2 months</td><td>Neha D.</td><td><span class="status-badge under-review">In Progress</span></td></tr>
+                  <tr><td>Tight timeline</td><td><span class="risk-badge medium-risk">Medium</span></td><td>Propose phased delivery approach</td><td>Amit S.</td><td><span class="status-badge pending">Pending</span></td></tr>
+                  <tr><td>Tally API changes</td><td><span class="risk-badge low-risk">Low</span></td><td>Build adapter layer for integration</td><td>Rahul S.</td><td><span class="status-badge approved">Done</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 9: RESOURCE PLANNING ========== -->
+        <section class="ws-section" data-panel="resource">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Resource Planning</h2><p>Team workload and capacity management</p></div>
+          </div>
+
+          <div class="resource-cards" id="resourceCards">
+            <div class="resource-card">
+              <div class="resource-card-head"><h4>Developers</h4><span class="resource-total">8</span></div>
+              <div class="resource-people">
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#2563eb,#60a5fa)">RS</div><span class="resource-name">Rahul S.</span><div class="resource-bar-track"><div class="resource-bar-fill orange" style="width:80%"></div></div><span class="resource-pct orange">80%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">AP</div><span class="resource-name">Amit P.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:50%"></div></div><span class="resource-pct green">50%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#10b981,#6ee7b7)">NK</div><span class="resource-name">Neha K.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:30%"></div></div><span class="resource-pct green">30%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#f97316,#fdba74)">VJ</div><span class="resource-name">Vikas J.</span><div class="resource-bar-track"><div class="resource-bar-fill red" style="width:95%"></div></div><span class="resource-pct red">95%</span></div>
+              </div>
+            </div>
+            <div class="resource-card">
+              <div class="resource-card-head"><h4>Designers</h4><span class="resource-total">4</span></div>
+              <div class="resource-people">
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#ec4899,#f472b6)">SJ</div><span class="resource-name">Sneha J.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:60%"></div></div><span class="resource-pct green">60%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#6366f1,#818cf8)">PD</div><span class="resource-name">Priya D.</span><div class="resource-bar-track"><div class="resource-bar-fill orange" style="width:75%"></div></div><span class="resource-pct orange">75%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#14b8a6,#5eead4)">RM</div><span class="resource-name">Ravi M.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:45%"></div></div><span class="resource-pct green">45%</span></div>
+              </div>
+            </div>
+            <div class="resource-card">
+              <div class="resource-card-head"><h4>QA Engineers</h4><span class="resource-total">3</span></div>
+              <div class="resource-people">
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#ef4444,#f87171)">MK</div><span class="resource-name">Manoj K.</span><div class="resource-bar-track"><div class="resource-bar-fill red" style="width:90%"></div></div><span class="resource-pct red">90%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">DT</div><span class="resource-name">Deepa T.</span><div class="resource-bar-track"><div class="resource-bar-fill orange" style="width:85%"></div></div><span class="resource-pct orange">85%</span></div>
+              </div>
+            </div>
+            <div class="resource-card">
+              <div class="resource-card-head"><h4>Support</h4><span class="resource-total">3</span></div>
+              <div class="resource-people">
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#0891b2,#67e8f9)">KP</div><span class="resource-name">Kiran P.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:40%"></div></div><span class="resource-pct green">40%</span></div>
+                <div class="resource-person"><div class="avatar-circle avatar-xs" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">SS</div><span class="resource-name">Sunil S.</span><div class="resource-bar-track"><div class="resource-bar-fill green" style="width:55%"></div></div><span class="resource-pct green">55%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="warning-cards">
+            <div class="warning-card danger">
+              <div class="warning-icon" style="background:var(--danger-light);color:var(--danger)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="warning-content"><h5>Overloaded Resources</h5><p>Vikas J. (95%) and Manoj K. (90%) are near capacity</p></div>
+            </div>
+            <div class="warning-card warn">
+              <div class="warning-icon" style="background:var(--warning-light);color:#b45309"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+              <div class="warning-content"><h5>Skill Gaps</h5><p>No Tally integration specialist available in-house</p></div>
+            </div>
+            <div class="warning-card info">
+              <div class="warning-icon" style="background:var(--primary-light);color:var(--primary)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+              <div class="warning-content"><h5>Upcoming Availability</h5><p>2 developers free from CloudTech project next week</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 10: CLARIFICATION HUB ========== -->
+        <section class="ws-section" data-panel="clarification">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Clarification Hub</h2><p>Internal collaboration and client communication</p></div>
+          </div>
+
+          <div class="clarification-layout">
+            <!-- Thread List -->
+            <div class="thread-list">
+              <div class="thread-list-header"><h4>Threads</h4><span class="nav-badge">8</span></div>
+              <div class="thread-items" id="threadItems">
+                <div class="thread-item active">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#2563eb,#60a5fa)">AB</div>
+                  <div class="thread-content"><strong>ABC Pvt Ltd – ERP Scope</strong><p>Need clarity on Tally integration requirements...</p></div>
+                  <div class="thread-meta"><span class="thread-time">10:30 AM</span><span class="thread-unread"></span></div>
+                </div>
+                <div class="thread-item">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">TN</div>
+                  <div class="thread-content"><strong>TechNova – Mobile App</strong><p>Client wants React Native, we suggested Flutter...</p></div>
+                  <div class="thread-meta"><span class="thread-time">9:15 AM</span><span class="thread-unread"></span></div>
+                </div>
+                <div class="thread-item">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#10b981,#6ee7b7)">SL</div>
+                  <div class="thread-content"><strong>SoftLabs – CRM Budget</strong><p>Budget revised, need re-evaluation of scope</p></div>
+                  <div class="thread-meta"><span class="thread-time">Yesterday</span></div>
+                </div>
+                <div class="thread-item">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#f97316,#fdba74)">CT</div>
+                  <div class="thread-content"><strong>CloudTech – Timeline</strong><p>Requesting 2-week extension for migration phase</p></div>
+                  <div class="thread-meta"><span class="thread-time">Yesterday</span></div>
+                </div>
+                <div class="thread-item">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#ef4444,#f87171)">DS</div>
+                  <div class="thread-content"><strong>DataSoft – Analytics Module</strong><p>Dashboard requirements updated by client</p></div>
+                  <div class="thread-meta"><span class="thread-time">2 days ago</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+              <div class="chat-header">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#2563eb,#60a5fa)">AB</div>
+                  <div><strong style="font-size:14px">ABC Pvt Ltd – ERP Scope</strong><br><small style="color:var(--text-muted)">Department ↔ Calling Team ↔ Client</small></div>
+                </div>
+                <div style="display:flex;gap:4px">
+                  <button class="btn-icon" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+                  <button class="btn-icon" title="More"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+                </div>
+              </div>
+              <div class="chat-messages" id="chatMessages">
+                <div class="chat-message received">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#f97316,#fdba74)">CT</div>
+                  <div>
+                    <div class="chat-sender">Calling Team – Ravi Patel</div>
+                    <div class="chat-bubble">Client wants Tally ERP 9 integration with the new system. They use it for all accounting operations. Can the development team handle this?</div>
+                    <div class="chat-time-stamp">10:15 AM</div>
+                  </div>
+                </div>
+                <div class="chat-message sent">
+                  <div class="avatar-circle avatar-sm">RP</div>
+                  <div>
+                    <div class="chat-sender">Department – Rahul Patil</div>
+                    <div class="chat-bubble">We can do Tally integration via their REST API. @NehaD has experience with this. But we need the exact version — is it Tally ERP 9 or TallyPrime?</div>
+                    <div class="chat-time-stamp">10:22 AM</div>
+                  </div>
+                </div>
+                <div class="chat-message received">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#f97316,#fdba74)">CT</div>
+                  <div>
+                    <div class="chat-sender">Calling Team – Ravi Patel</div>
+                    <div class="chat-bubble">Let me check with the client and get back to you. They mentioned upgrading to TallyPrime soon.</div>
+                    <div class="chat-time-stamp">10:28 AM</div>
+                  </div>
+                </div>
+                <div class="chat-message received">
+                  <div class="avatar-circle avatar-sm" style="background:linear-gradient(135deg,#10b981,#6ee7b7)">CL</div>
+                  <div>
+                    <div class="chat-sender">Client – Rajesh Kumar</div>
+                    <div class="chat-bubble">We are currently on Tally ERP 9 but plan to migrate to TallyPrime by August. Can you support both?</div>
+                    <div class="chat-time-stamp">11:45 AM</div>
+                  </div>
+                </div>
+                <div class="chat-message sent">
+                  <div class="avatar-circle avatar-sm">RP</div>
+                  <div>
+                    <div class="chat-sender">Department – Rahul Patil</div>
+                    <div class="chat-bubble">Yes, we can build an adapter layer that supports both versions. This will add about 1 week to the timeline but gives you future flexibility. I'll update the feasibility assessment.</div>
+                    <div class="chat-time-stamp">12:10 PM</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input-area">
+                <button class="btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+                <input type="text" placeholder="Type a message... Use @ to mention" />
+                <button class="btn-primary">Send</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 11: APPROVAL CENTER ========== -->
+        <section class="ws-section" data-panel="approval">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Approval Center</h2><p>Enterprise workflow for lead approvals</p></div>
+          </div>
+
+          <!-- Approval Pipeline -->
+          <div class="panel">
+            <div class="panel-head"><h3>Approval Pipeline – ABC Pvt Ltd (LR-2024-1256)</h3></div>
+            <div class="panel-body" style="overflow-x:auto">
+              <div class="approval-pipeline">
+                <div class="approval-step completed">
+                  <div class="approval-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="approval-label">Executive Review</div>
+                  <div class="approval-sublabel">Amit Sharma · May 12</div>
+                </div>
+                <div class="approval-step completed">
+                  <div class="approval-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="approval-label">Manager Approval</div>
+                  <div class="approval-sublabel">Neha Deshmukh · May 13</div>
+                </div>
+                <div class="approval-step current">
+                  <div class="approval-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <div class="approval-label">Department Head</div>
+                  <div class="approval-sublabel">Waiting · Rahul Patil</div>
+                </div>
+                <div class="approval-step pending">
+                  <div class="approval-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/></svg></div>
+                  <div class="approval-label">Final Approval</div>
+                  <div class="approval-sublabel">CEO · Pending</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Approvals -->
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-head"><h3>Pending Approvals</h3><span class="nav-badge">4</span></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Lead</th><th>Company</th><th>Level</th><th>Risk</th><th>Submitted</th><th>Actions</th></tr></thead>
+                <tbody id="pendingApprovalsBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Approval History -->
+          <div class="approval-cards" style="margin-top:16px">
+            <div class="approval-card">
+              <div class="approval-card-head"><strong style="font-size:13px">SoftLabs – CRM System</strong><span class="status-badge approved">Approved</span></div>
+              <div class="approval-card-body">
+                <div class="approval-detail-row"><span class="label">Approved By</span><span class="value">Rahul Patil</span></div>
+                <div class="approval-detail-row"><span class="label">Date</span><span class="value">May 10, 2024</span></div>
+                <div class="approval-detail-row"><span class="label">Risk Level</span><span class="value" style="color:var(--success)">Low</span></div>
+                <div class="approval-detail-row"><span class="label">Notes</span><span class="value">Standard project, well within capacity</span></div>
+              </div>
+            </div>
+            <div class="approval-card">
+              <div class="approval-card-head"><strong style="font-size:13px">TechNova – Mobile App</strong><span class="status-badge rejected">Rejected</span></div>
+              <div class="approval-card-body">
+                <div class="approval-detail-row"><span class="label">Rejected By</span><span class="value">Neha Deshmukh</span></div>
+                <div class="approval-detail-row"><span class="label">Date</span><span class="value">May 8, 2024</span></div>
+                <div class="approval-detail-row"><span class="label">Risk Level</span><span class="value" style="color:var(--danger)">Critical</span></div>
+                <div class="approval-detail-row"><span class="label">Notes</span><span class="value">Budget insufficient for scope</span></div>
+              </div>
+            </div>
+            <div class="approval-card">
+              <div class="approval-card-head"><strong style="font-size:13px">DataSoft – Analytics</strong><span class="status-badge approved">Approved</span></div>
+              <div class="approval-card-body">
+                <div class="approval-detail-row"><span class="label">Approved By</span><span class="value">Amit Sharma</span></div>
+                <div class="approval-detail-row"><span class="label">Date</span><span class="value">May 5, 2024</span></div>
+                <div class="approval-detail-row"><span class="label">Risk Level</span><span class="value" style="color:var(--warning)">Medium</span></div>
+                <div class="approval-detail-row"><span class="label">Notes</span><span class="value">Approved with phased delivery condition</span></div>
+              </div>
+            </div>
+            <div class="approval-card">
+              <div class="approval-card-head"><strong style="font-size:13px">CloudTech – Migration</strong><span class="status-badge approved">Approved</span></div>
+              <div class="approval-card-body">
+                <div class="approval-detail-row"><span class="label">Approved By</span><span class="value">Rahul Patil</span></div>
+                <div class="approval-detail-row"><span class="label">Date</span><span class="value">May 3, 2024</span></div>
+                <div class="approval-detail-row"><span class="label">Risk Level</span><span class="value" style="color:var(--success)">Low</span></div>
+                <div class="approval-detail-row"><span class="label">Notes</span><span class="value">Existing client, straightforward migration</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 12: ANALYTICS ========== -->
+        <section class="ws-section" data-panel="analytics">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Analytics & Reports</h2><p>Department performance insights and reports</p></div>
+            <div class="page-header-actions">
+              <select class="filter-select"><option>This Month</option><option>This Quarter</option><option>This Year</option></select>
+              <button class="btn-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+            </div>
+          </div>
+
+          <div class="report-tabs">
+            <button class="report-tab active" data-report="approval">Approval Report</button>
+            <button class="report-tab" data-report="risk">Risk Report</button>
+            <button class="report-tab" data-report="workload">Workload Report</button>
+            <button class="report-tab" data-report="performance">Department Performance</button>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="panel">
+              <div class="panel-head"><h3>Approval Trend</h3></div>
+              <div class="chart-area"><canvas id="analyticsApprovalChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Department Efficiency</h3></div>
+              <div class="chart-area"><canvas id="analyticsDeptChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Risk Heatmap</h3></div>
+              <div class="chart-area"><canvas id="analyticsRiskChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>SLA Compliance</h3></div>
+              <div class="chart-area"><canvas id="analyticsSlaChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:16px">
+            <div class="panel-head"><h3>Summary Report</h3></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Department</th><th>Total Reviews</th><th>Approved</th><th>Rejected</th><th>Avg Time</th><th>SLA %</th><th>Efficiency</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Development</strong></td><td>45</td><td>38</td><td>7</td><td>2.1 days</td><td>92%</td><td><span style="color:var(--success);font-weight:700">85%</span></td></tr>
+                  <tr><td><strong>Design</strong></td><td>28</td><td>22</td><td>6</td><td>3.4 days</td><td>78%</td><td><span style="color:var(--warning);font-weight:700">72%</span></td></tr>
+                  <tr><td><strong>Finance</strong></td><td>32</td><td>30</td><td>2</td><td>1.8 days</td><td>95%</td><td><span style="color:var(--success);font-weight:700">90%</span></td></tr>
+                  <tr><td><strong>HR</strong></td><td>18</td><td>14</td><td>4</td><td>4.2 days</td><td>68%</td><td><span style="color:var(--danger);font-weight:700">68%</span></td></tr>
+                  <tr><td><strong>Support</strong></td><td>22</td><td>18</td><td>4</td><td>2.9 days</td><td>82%</td><td><span style="color:var(--warning);font-weight:700">74%</span></td></tr>
+                  <tr><td><strong>QA</strong></td><td>15</td><td>13</td><td>2</td><td>2.5 days</td><td>87%</td><td><span style="color:var(--success);font-weight:700">80%</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAGE 13: SETTINGS ========== -->
+        <section class="ws-section" data-panel="settings">
+          <div class="page-header">
+            <div class="page-header-left"><h2>Settings</h2><p>Configure department review module</p></div>
+          </div>
+
+          <div class="settings-layout">
+            <div class="settings-nav">
+              <button class="settings-nav-item active">General</button>
+              <button class="settings-nav-item">Notifications</button>
+              <button class="settings-nav-item">Workflow</button>
+              <button class="settings-nav-item">SLA Rules</button>
+              <button class="settings-nav-item">Integrations</button>
+              <button class="settings-nav-item">Permissions</button>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <h4>General Settings</h4>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Auto-assign reviews</div><div class="setting-desc">Automatically assign new reviews to available department members</div></div>
+                  <button class="toggle-switch active" id="toggleAutoAssign"></button>
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Email notifications</div><div class="setting-desc">Send email alerts for new assignments and deadlines</div></div>
+                  <button class="toggle-switch active" id="toggleEmail"></button>
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Auto-escalation</div><div class="setting-desc">Escalate to manager if no action within 48 hours</div></div>
+                  <button class="toggle-switch active" id="toggleEscalation"></button>
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Auto-transfer to PM</div><div class="setting-desc">Auto-transfer approved leads to Product Manager queue</div></div>
+                  <button class="toggle-switch" id="toggleAutoTransfer"></button>
+                </div>
+              </div>
+              <div class="settings-group">
+                <h4>SLA Configuration</h4>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Review SLA (hours)</div><div class="setting-desc">Maximum time allowed for completing a review</div></div>
+                  <input class="form-input" type="number" value="48" style="width:100px;margin-bottom:0" />
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Clarification SLA (hours)</div><div class="setting-desc">Maximum response time for clarifications</div></div>
+                  <input class="form-input" type="number" value="24" style="width:100px;margin-bottom:0" />
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info"><div class="setting-label">Approval SLA (hours)</div><div class="setting-desc">Maximum time for approval decisions</div></div>
+                  <input class="form-input" type="number" value="72" style="width:100px;margin-bottom:0" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <span>© 2024 Enterprise CRM. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="#">Help</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </footer>
+    </div>
+
+  </div>
+</div>
+
+<!-- Create Review Modal -->
+<div class="modal-backdrop" id="createModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center;">
+  <div class="modal-content" style="background:var(--bg); border-radius:8px; width:500px; padding:24px; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+    <h3 style="margin-top:0">Create Department Review</h3>
+    <form id="createReviewForm">
+      <div style="margin-bottom:12px">
+        <label>Company</label>
+        <input type="text" class="form-input" id="crCompany" required />
+      </div>
+      <div style="margin-bottom:12px">
+        <label>Requirement</label>
+        <textarea class="form-input" id="crRequirement" required rows="3"></textarea>
+      </div>
+      <div style="margin-bottom:12px; display:flex; gap:12px">
+        <div style="flex:1">
+          <label>Department</label>
+          <select class="form-input" id="crDepartment" required>
+            <option value="Development">Development</option>
+            <option value="Design">Design</option>
+            <option value="Finance">Finance</option>
+          </select>
+        </div>
+        <div style="flex:1">
+          <label>Priority</label>
+          <select class="form-input" id="crPriority" required>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('createModal').style.display='none'">Cancel</button>
+        <button type="submit" class="btn-primary">Create Review</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Stack -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- Scripts -->
+<script src="/assets/vendors/chart.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script src="/modules/department-review/dashboard/dashboard.js"></script>
+</body>
+</html>

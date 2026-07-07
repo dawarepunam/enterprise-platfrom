@@ -1,0 +1,140 @@
+<div class="hr-directory" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Top Header & Actions -->
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Employee Directory</h2>
+    <div style="display:flex; gap:1rem;">
+      <button class="hr-icon-btn" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; font-size:0.875rem;">📥 Import</button>
+      <button class="hr-icon-btn" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; font-size:0.875rem;">📤 Export Excel</button>
+      <button class="primary-btn" onclick="window.UI.openAddEmployeeWizard()">+ Add Employee</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="hr-card" style="display:flex; gap:1rem; padding:1rem;">
+    <input type="text" placeholder="Search by name, ID, email..." style="flex:1; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; min-width:150px;">
+      <option value="">Department</option>
+      <option value="hr">HR</option>
+      <option value="sales">Sales</option>
+    </select>
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; min-width:150px;">
+      <option value="">Designation</option>
+      <option value="manager">Manager</option>
+      <option value="executive">Executive</option>
+    </select>
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; min-width:150px;">
+      <option value="">Status</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </div>
+
+  <!-- Data Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Emp ID</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Name</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Department</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Designation</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Manager</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Joining Date</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="hrEmployeeTableBody">
+        <!-- Rows will be injected by script.js -->
+        <tr><td colspan="9" style="text-align:center; padding:2rem; color:var(--hr-text-muted);">Loading employees...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Right Drawer for Employee Detail -->
+<div id="hrEmployeeDrawer" class="hr-drawer right-drawer hidden" style="width: 500px;">
+  <div class="hr-drawer-header">
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <img id="drawerEmpPhoto" src="https://ui-avatars.com/api/?name=User" style="width:48px; height:48px; border-radius:50%;" />
+      <div>
+        <h3 id="drawerEmpName" style="margin:0;">Loading...</h3>
+        <span id="drawerEmpMeta" style="color:var(--hr-text-muted); font-size:0.875rem;">EMP000 - Role</span>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <span id="drawerEmpStatus" style="background:#D1FAE5; color:#065F46; padding:4px 8px; border-radius:12px; font-size:0.75rem;">Active</span>
+      <button onclick="window.UI.closeEmployeeDrawer()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+  </div>
+
+  <div class="hr-drawer-content" style="padding:0;">
+    <!-- Tabs -->
+    <div style="display:flex; border-bottom:1px solid var(--hr-border); padding:0 1rem;">
+      <div class="hr-tab active" onclick="window.UI.switchDrawerTab('overview')" style="padding:1rem; cursor:pointer; color:var(--hr-primary); border-bottom:2px solid var(--hr-primary); font-weight:500;">Overview</div>
+      <div class="hr-tab" onclick="window.UI.switchDrawerTab('employment')" style="padding:1rem; cursor:pointer; color:var(--hr-text-muted);">Employment</div>
+      <div class="hr-tab" onclick="window.UI.switchDrawerTab('documents')" style="padding:1rem; cursor:pointer; color:var(--hr-text-muted);">Documents</div>
+      <div class="hr-tab" onclick="window.UI.switchDrawerTab('assets')" style="padding:1rem; cursor:pointer; color:var(--hr-text-muted);">Assets</div>
+      <div class="hr-tab" onclick="window.UI.switchDrawerTab('timeline')" style="padding:1rem; cursor:pointer; color:var(--hr-text-muted);">Timeline</div>
+    </div>
+
+    <!-- Tab Contents -->
+    <div id="tab-overview" class="hr-tab-pane" style="padding:1.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Email</div>
+          <div id="drawerEmpEmail" style="font-weight:500;">-</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Phone</div>
+          <div id="drawerEmpPhone" style="font-weight:500;">-</div>
+        </div>
+      </div>
+      <div class="hr-card" style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:1.5rem; font-weight:700; color:#10B981;">92%</div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Attendance this month</div>
+        </div>
+      </div>
+      <div class="hr-card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:1.5rem; font-weight:700; color:#F59E0B;">2 / 24</div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Leaves available</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-employment" class="hr-tab-pane hidden" style="padding:1.5rem;">
+      <p>Employment details...</p>
+    </div>
+    
+    <div id="tab-documents" class="hr-tab-pane hidden" style="padding:1.5rem;">
+      <div class="hr-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <div>
+          <strong>Aadhar.pdf</strong>
+          <div style="color:var(--hr-text-muted); font-size:0.75rem;">Verified</div>
+        </div>
+        <div>
+          <button style="background:transparent; border:none; cursor:pointer;">👁️</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="tab-assets" class="hr-tab-pane hidden" style="padding:1.5rem;">
+      <p>Assets details...</p>
+    </div>
+    
+    <div id="tab-timeline" class="hr-tab-pane hidden" style="padding:1.5rem;">
+      <p>Timeline details...</p>
+    </div>
+
+  </div>
+  
+  <div style="padding:1rem; border-top:1px solid var(--hr-border); text-align:right; background:#F8FAFC;">
+    <button class="primary-btn" onclick="window.App.navigate('/hr/profile?id=EMP001')">View Full Profile</button>
+  </div>
+</div>
+
+<script src="/modules/hr/directory/script.js"></script>

@@ -1,0 +1,23 @@
+<div class="pm-risk-register" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  <div class="pm-toolbar" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <span class="pm-eyebrow" id="rrContext" style="cursor:pointer;" onclick="window.App.navigate('/product-manager/workspace')">← Back to Workspace</span>
+      <h2>Risk Register</h2>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn primary" data-action="addRisk" style="background:#DC2626; color:white; border:none;">+ Add Risk</button>
+    </div>
+  </div>
+
+  <div class="pm-grid" style="flex:1;">
+    <div class="pm-col-12 pm-card" style="display:flex; flex-direction:column;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="font-size:1.125rem;">Identified Risks</h3>
+      </div>
+      
+      <div id="risksListContainer" style="display:flex; flex-direction:column; gap:1rem; overflow-y:auto; flex:1; padding-right:0.5rem;">
+        <div style="text-align:center; color:var(--pm-text-muted); padding:2rem;">Loading risks...</div>
+      </div>
+    </div>
+  </div>
+</div>

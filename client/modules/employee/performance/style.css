@@ -1,0 +1,56 @@
+/* =====================================================================
+   Phase 15 — Performance — style.css
+   ===================================================================== */
+
+.perf-page-header { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; }
+.perf-header-right { display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; }
+.filter-select { background:var(--clr-surface); border:1px solid var(--clr-border); border-radius:10px; padding:0.6rem 1rem; font-size:0.85rem; color:var(--clr-text); cursor:pointer; outline:none; }
+.btn-download { padding:0.6rem 1.25rem; background:linear-gradient(135deg,#6366f1,#22d3ee); color:#fff; border-radius:10px; font-size:0.825rem; font-weight:700; transition:all 0.18s; }
+.btn-download:hover { opacity:0.88; transform:translateY(-1px); }
+
+/* Top Stats */
+.perf-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+@media(max-width:900px) { .perf-stats-grid { grid-template-columns:repeat(2,1fr); } }
+.perf-stat-card { background:var(--clr-surface); border:1px solid var(--clr-border); border-radius:16px; padding:1.25rem; display:flex; align-items:center; gap:1rem; transition:transform 0.15s; }
+.perf-stat-card:hover { transform:translateY(-3px); border-color:var(--clr-primary); }
+.psc-icon { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+.psc-blue { background:rgba(34,211,238,0.1); color:#22d3ee; }
+.psc-green { background:rgba(16,185,129,0.1); color:#10b981; }
+.psc-orange { background:rgba(245,158,11,0.1); color:#f59e0b; }
+.psc-purple { background:rgba(139,92,246,0.1); color:#8b5cf6; }
+.psc-info { flex:1; }
+.psc-val { font-size:1.6rem; font-weight:800; color:var(--clr-text); font-variant-numeric:tabular-nums; line-height:1.1; }
+.psc-label { font-size:0.75rem; color:var(--clr-text-muted); margin-top:0.2rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; }
+
+/* Cards & Layout */
+.perf-charts-row { display:grid; grid-template-columns:2fr 1fr; gap:1.25rem; margin-bottom:1.25rem; }
+.perf-bottom-row { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.25rem; }
+@media(max-width:900px) { .perf-charts-row, .perf-bottom-row { grid-template-columns:1fr; } }
+
+.perf-card { background:var(--clr-surface); border:1px solid var(--clr-border); border-radius:16px; display:flex; flex-direction:column; overflow:hidden; }
+.pc-header { padding:1.1rem 1.25rem; border-bottom:1px solid var(--clr-border); }
+.pc-title { font-size:0.9rem; font-weight:700; color:var(--clr-text); }
+.pc-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+.pb-center { align-items:center; justify-content:center; }
+
+/* KPIs List */
+.kpi-list { display:flex; flex-direction:column; gap:0.875rem; }
+.kpi-item { display:flex; flex-direction:column; gap:0.4rem; }
+.kpi-header { display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; font-weight:600; }
+.kpi-name { color:var(--clr-text); }
+.kpi-val { color:var(--clr-primary); font-weight:800; }
+.kpi-progress-bg { height:8px; background:rgba(255,255,255,0.06); border-radius:4px; overflow:hidden; }
+.kpi-progress-fill { height:100%; border-radius:4px; transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Badges Grid */
+.badges-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:1rem; }
+.badge-card { background:rgba(255,255,255,0.03); border:1px solid var(--clr-border); border-radius:12px; padding:1rem 0.5rem; text-align:center; transition:all 0.18s; }
+.badge-card:hover { background:rgba(99,102,241,0.08); border-color:var(--clr-primary); transform:scale(1.05); }
+.badge-icon { font-size:2.5rem; margin-bottom:0.5rem; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+.badge-name { font-size:0.75rem; font-weight:700; color:var(--clr-text); margin-bottom:0.2rem; }
+.badge-date { font-size:0.6rem; color:var(--clr-text-muted); text-transform:uppercase; }
+.badges-empty { text-align:center; padding:2rem 1rem; color:var(--clr-text-muted); }
+.be-icon { font-size:2.5rem; margin-bottom:0.5rem; }
+
+/* Skeletons */
+.perf-skeleton { height:40px; margin-bottom:1rem; border-radius:8px; background:linear-gradient(90deg,rgba(255,255,255,0.03) 25%,rgba(255,255,255,0.06) 50%,rgba(255,255,255,0.03) 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page member-shell">
+      <section class="workspace-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">Reports</p>
+          <h1>Your delivery performance in one place</h1>
+          <p class="hero-text">Track task completion, review load, project spread and update cadence from live member data.</p>
+          <div id="reportHeroChips" class="hero-badges"></div>
+        </div>
+      </section>
+      <section class="workspace-panel">
+        <div class="section-heading"><div><p class="eyebrow">Productivity</p><h2>Current metrics</h2></div></div>
+        <div id="reportTiles" class="workspace-tile-grid"></div>
+      </section>
+      <section class="workspace-panel">
+        <div class="section-heading"><div><p class="eyebrow">Projects</p><h2>Project-wise status</h2></div></div>
+        <div id="reportProjects" class="project-grid"></div>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script><script src="../../../assets/js/auth.js"></script><script src="../../../assets/js/theme.js"></script><script src="../../../assets/js/notifications.js"></script><script src="../../../assets/js/enterprise-data.js"></script><script src="../../../assets/js/role-workspace.js"></script><script src="../member-workflow.js"></script>
+  <script src="reports.js"></script>
+</body>
+</html>

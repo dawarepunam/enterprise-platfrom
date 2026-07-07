@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Dashboard - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .attendance-banner {
+            background: linear-gradient(135deg, #eef2ff 0%, #c7d2fe 100%);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        .banner-content h1 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--dark-navy);
+        }
+        .live-pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--success-green);
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+            animation: pulse 2s infinite;
+            margin-right: 8px;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .summary-stats {
+            display: flex;
+            gap: 32px;
+        }
+        .summary-stat {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .summary-stat span.value {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-left: 8px;
+        }
+        
+        .kpi-grid-2x2 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        /* Timeline in drawer */
+        .log-timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+        .log-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-gray);
+        }
+        .log-event {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .log-event::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            border: 2px solid var(--white);
+        }
+        
+        /* Map Preview Placeholder */
+        .map-preview {
+            width: 100%;
+            height: 150px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Google_Maps_Logo_2020.svg/1024px-Google_Maps_Logo_2020.svg.png') center/cover no-repeat;
+            background-color: #eee;
+            background-size: 40px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .map-preview:hover::after {
+            content: 'View Map';
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-calendar-check"></i><span>Workforce</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="attendance.html" class="submenu-item active">Attendance</a>
+                            <a href="leaves.html" class="submenu-item">Leaves</a>
+                            <a href="shifts.html" class="submenu-item">Shift Management</a>
+                            <a href="holidays.html" class="submenu-item">Holiday Calendar</a>
+                            <a href="ess.html" class="submenu-item">ESS Requests</a>
+                            <a href="overtime-compoff.html" class="submenu-item">Overtime & Comp-Off</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Workforce</span> > Attendance</div>
+                </div>
+                <div class="header-right">
+                    <div class="header-icon" title="Notifications">
+                        <i class="fa-solid fa-bell"></i><span class="badge">3</span>
+                    </div>
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <!-- BANNER -->
+            <div class="attendance-banner">
+                <div class="banner-content">
+                    <h1>Good Morning HR 👋</h1>
+                    <div style="margin-bottom: 16px; color: var(--text-dark);">
+                        <span class="live-pulse"></span> <span style="font-weight: 500;">Live Updates</span>
+                    </div>
+                    <div class="summary-stats">
+                        <div class="summary-stat">Present: <span class="value" id="valPresent" style="color:var(--success-green)">125</span></div>
+                        <div class="summary-stat">Absent: <span class="value" id="valAbsent" style="color:var(--danger-red)">12</span></div>
+                        <div class="summary-stat">Late: <span class="value" id="valLate" style="color:var(--warning-orange)">7</span></div>
+                        <div class="summary-stat">WFH: <span class="value" id="valWfh" style="color:var(--primary-blue)">18</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid-2x2">
+                <div class="kpi-card" style="border-left: 4px solid var(--success-green)">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--success-green); background:rgba(34,197,94,0.1)"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                    <div class="kpi-title">Present Employees</div>
+                    <div class="kpi-value" id="cardPresent">125</div>
+                    <div class="kpi-bottom"><span>View Details</span><i class="fa-solid fa-arrow-right"></i></div>
+                </div>
+                
+                <div class="kpi-card" style="border-left: 4px solid var(--danger-red)">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--danger-red); background:rgba(239,68,68,0.1)"><i class="fa-solid fa-user-xmark"></i></div>
+                    </div>
+                    <div class="kpi-title">Absent</div>
+                    <div class="kpi-value" id="cardAbsent">12</div>
+                    <div class="kpi-bottom"><span>View Details</span><i class="fa-solid fa-arrow-right"></i></div>
+                </div>
+                
+                <div class="kpi-card" style="border-left: 4px solid var(--warning-orange)">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--warning-orange); background:rgba(245,158,11,0.1)"><i class="fa-solid fa-user-clock"></i></div>
+                    </div>
+                    <div class="kpi-title">Late Check-ins</div>
+                    <div class="kpi-value" id="cardLate">7</div>
+                    <div class="kpi-bottom"><span>View Details</span><i class="fa-solid fa-arrow-right"></i></div>
+                </div>
+                
+                <div class="kpi-card" style="border-left: 4px solid var(--primary-blue)">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--primary-blue); background:rgba(37,99,235,0.1)"><i class="fa-solid fa-house-laptop"></i></div>
+                    </div>
+                    <div class="kpi-title">Working From Home</div>
+                    <div class="kpi-value" id="cardWfh">18</div>
+                    <div class="kpi-bottom"><span>View Details</span><i class="fa-solid fa-arrow-right"></i></div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Today's Attendance</h3>
+                    <div class="table-actions">
+                        <select class="form-control" style="width: auto; padding: 6px 12px;">
+                            <option>All Status</option>
+                            <option>Present</option>
+                            <option>Absent</option>
+                            <option>Late</option>
+                        </select>
+                        <button class="btn btn-outline"><i class="fa-solid fa-download"></i> Export</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Department</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Hours</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Rahul+Sharma&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500;">Rahul Sharma</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Development</td>
+                            <td>09:05 AM</td>
+                            <td>-</td>
+                            <td>03:45</td>
+                            <td><span class="badge badge-success">Present</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('logsDrawer')">Logs</button>
+                                    <button class="btn btn-outline btn-sm" onclick="openModal('regularizeModal')">Reg</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Priya+Patel&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500;">Priya Patel</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>HR</td>
+                            <td>10:15 AM</td>
+                            <td>-</td>
+                            <td>02:30</td>
+                            <td><span class="badge badge-warning">Late</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('logsDrawer')">Logs</button>
+                                    <button class="btn btn-outline btn-sm" onclick="openModal('regularizeModal')">Reg</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Amit+Verma&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500;">Amit Verma</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Sales</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><span class="badge badge-danger">Absent</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="btn btn-outline btn-sm" onclick="openDrawer('logsDrawer')">Logs</button>
+                                    <button class="btn btn-outline btn-sm" onclick="openModal('regularizeModal')">Reg</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Logs Drawer -->
+    <div class="drawer-overlay" id="logsDrawer">
+        <div class="drawer" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3>Attendance Logs - Rahul Sharma</h3>
+                <button class="drawer-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div style="display:flex; gap:16px; margin-bottom: 24px; border-bottom:1px solid var(--border-gray);">
+                    <div style="padding:8px 0; color:var(--primary-blue); border-bottom:2px solid var(--primary-blue); font-weight:500; cursor:pointer;">Today's Logs</div>
+                    <div style="padding:8px 0; color:var(--text-gray); font-weight:500; cursor:pointer;">Location</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Location (Check-In)</label>
+                    <div class="map-preview" onclick="showToast('Opening Full Map', 'info')"></div>
+                    <div style="font-size:0.85rem; color:var(--text-gray)"><i class="fa-solid fa-location-dot"></i> Office IP: 192.168.1.45 (Mumbai H.O.)</div>
+                </div>
+
+                <h4>Timeline</h4>
+                <div class="log-timeline">
+                    <div class="log-event">
+                        <div class="timeline-date">09:05 AM</div>
+                        <div class="timeline-title">Checked In</div>
+                        <div style="font-size: 0.85rem; color: var(--text-gray)">Via Web Portal</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" style="width:100%; margin-top: 20px;" onclick="window.location.href='employee-profile.html'">View Full Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regularize Modal -->
+    <div class="modal-overlay" id="regularizeModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Regularize Attendance</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control" value="2026-06-25" readonly>
+                </div>
+                <div class="form-group" style="display:flex; gap:16px;">
+                    <div style="flex:1">
+                        <label class="form-label">Check In</label>
+                        <input type="time" class="form-control" value="09:00">
+                    </div>
+                    <div style="flex:1">
+                        <label class="form-label">Check Out</label>
+                        <input type="time" class="form-control" value="18:00">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Reason</label>
+                    <select class="form-control">
+                        <option>Forgot to Check In/Out</option>
+                        <option>System Error</option>
+                        <option>On Duty/Client Visit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Remarks</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="submitRegularization()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        function submitRegularization() {
+            closeModal('regularizeModal');
+            showToast('Attendance Updated Successfully', 'success');
+        }
+
+        // Simulate Realtime Dashboard Updates
+        setInterval(() => {
+            const vals = ['valPresent', 'valAbsent', 'valLate', 'valWfh'];
+            const cards = ['cardPresent', 'cardAbsent', 'cardLate', 'cardWfh'];
+            
+            const idx = Math.floor(Math.random() * vals.length);
+            const el = document.getElementById(vals[idx]);
+            const cardEl = document.getElementById(cards[idx]);
+            
+            if(el && cardEl) {
+                let current = parseInt(el.innerText);
+                let change = Math.random() > 0.5 ? 1 : -1;
+                
+                // Keep values positive and realistic
+                if(current + change >= 0) {
+                    let newVal = current + change;
+                    el.innerText = newVal;
+                    cardEl.innerText = newVal;
+                    
+                    // Flash effect
+                    el.style.opacity = '0.5';
+                    setTimeout(() => el.style.opacity = '1', 200);
+                }
+            }
+        }, 5000); // Update randomly every 5 seconds
+    </script>
+</body>
+</html>

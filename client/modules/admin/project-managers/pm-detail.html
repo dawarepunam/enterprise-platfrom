@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Project Manager — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .pm-hero{background:linear-gradient(135deg,#0f172a,#1e3a8a,#6d28d9);border-radius:16px;padding:32px;color:#fff;margin-bottom:24px;}
+    .pm-avatar-lg{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.2);border:3px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;flex-shrink:0;}
+    .pm-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+    .pm-tab-btn{padding:10px 20px;font-size:13px;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--text-3);transition:all 0.2s;}
+    .pm-tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);}
+    .tab-panel{display:none;}.tab-panel.active{display:block;}
+    .proj-row{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:background 0.15s;}
+    .proj-row:hover{background:var(--bg-hover);}
+    .proj-row:last-child{border-bottom:none;}
+    .stat-pill{background:var(--bg-hover);border-radius:10px;padding:10px 16px;text-align:center;}
+    .stat-pill-val{font-size:22px;font-weight:800;color:var(--primary);}
+    .stat-pill-lbl{font-size:11px;color:var(--text-4);font-weight:600;margin-top:2px;}
+    .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-light);}
+    .info-row:last-child{border-bottom:none;}
+    .info-lbl{font-size:12px;color:var(--text-4);font-weight:600;}
+    .info-val{font-size:13px;font-weight:600;color:var(--text-1);}
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div style="margin-bottom:20px;">
+    <button class="btn btn-outline btn-sm" onclick="window.location.href='/admin/project-managers'">← Back to Project Managers</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="pm-hero">
+    <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+      <div class="pm-avatar-lg" id="pmAvatar">?</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <h1 style="font-size:26px;font-weight:800;margin:0;" id="pmName">Loading...</h1>
+          <span id="pmStatus" class="badge badge-success" style="font-size:13px;padding:5px 12px;">Active</span>
+        </div>
+        <div style="font-size:14px;opacity:0.8;margin-top:4px;" id="pmRole">Project Manager</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:13px;opacity:0.85;">
+          <span>📧 <span id="pmEmail">—</span></span>
+          <span>📱 <span id="pmPhone">—</span></span>
+          <span>🏢 <span id="pmDept">—</span></span>
+          <span>🆔 <span id="pmEmpId">—</span></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;">
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="openEditModal()">✏️ Edit</button>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="window.location.href=`mailto:${document.getElementById('pmEmail').textContent}`">📧 Email</button>
+      </div>
+    </div>
+
+    <!-- Performance Bar -->
+    <div style="margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="stat-pill" style="background:rgba(255,255,255,0.12);">
+        <div class="stat-pill-val" style="color:#fff;" id="statActive">—</div>
+        <div class="stat-pill-lbl" style="color:rgba(255,255,255,0.7);">Active Projects</div>
+      </div>
+      <div class="stat-pill" style="background:rgba(255,255,255,0.12);">
+        <div class="stat-pill-val" style="color:#4ade80;" id="statCompleted">—</div>
+        <div class="stat-pill-lbl" style="color:rgba(255,255,255,0.7);">Completed</div>
+      </div>
+      <div class="stat-pill" style="background:rgba(255,255,255,0.12);">
+        <div class="stat-pill-val" style="color:#fbbf24;" id="statTeam">—</div>
+        <div class="stat-pill-lbl" style="color:rgba(255,255,255,0.7);">Team Members</div>
+      </div>
+      <div class="stat-pill" style="background:rgba(255,255,255,0.12);">
+        <div class="stat-pill-val" style="color:#a78bfa;" id="statPerf">—</div>
+        <div class="stat-pill-lbl" style="color:rgba(255,255,255,0.7);">Performance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="pm-tabs">
+    <button class="pm-tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+    <button class="pm-tab-btn" onclick="switchTab('projects',this)">📁 Projects</button>
+    <button class="pm-tab-btn" onclick="switchTab('completed',this)">✅ Completed</button>
+    <button class="pm-tab-btn" onclick="switchTab('tasks',this)">📋 Tasks</button>
+    <button class="pm-tab-btn" onclick="switchTab('attendance',this)">📅 Attendance</button>
+    <button class="pm-tab-btn" onclick="switchTab('leaves',this)">🌿 Leaves</button>
+  </div>
+
+  <!-- Overview -->
+  <div class="tab-panel active" id="tab-overview">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="card">
+        <div class="card-header"><div class="card-title">👤 Personal Info</div></div>
+        <div class="card-body" id="personalInfo">Loading...</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📊 Performance Metrics</div></div>
+        <div class="card-body" id="perfMetrics">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Projects -->
+  <div class="tab-panel" id="tab-projects">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📁 Active Projects</div>
+        <button class="btn btn-primary btn-sm" onclick="window.location.href='/admin/projects?create=1'">+ Assign Project</button>
+      </div>
+      <div class="card-body" style="padding:0" id="activeProjects">
+        <div style="padding:40px;text-align:center;"><div class="loader-spinner" style="margin:0 auto;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completed Projects -->
+  <div class="tab-panel" id="tab-completed">
+    <div class="card">
+      <div class="card-header"><div class="card-title">✅ Completed Projects</div></div>
+      <div class="card-body" style="padding:0" id="completedProjects">
+        <div style="padding:40px;text-align:center;"><div class="loader-spinner" style="margin:0 auto;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tasks -->
+  <div class="tab-panel" id="tab-tasks">
+    <div class="card">
+      <div class="card-header"><div class="card-title">📋 Assigned Tasks</div></div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table">
+          <thead><tr><th>Task</th><th>Project</th><th>Priority</th><th>Due</th><th>Status</th></tr></thead>
+          <tbody id="tasksBody"><tr><td colspan="5" style="text-align:center;padding:30px;">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attendance -->
+  <div class="tab-panel" id="tab-attendance">
+    <div class="card">
+      <div class="card-header"><div class="card-title">📅 Attendance Records</div></div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th></tr></thead>
+          <tbody id="attendanceBody"><tr><td colspan="5" style="text-align:center;padding:30px;">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaves -->
+  <div class="tab-panel" id="tab-leaves">
+    <div class="card">
+      <div class="card-header"><div class="card-title">🌿 Leave History</div></div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table">
+          <thead><tr><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Status</th></tr></thead>
+          <tbody id="leavesBody"><tr><td colspan="5" style="text-align:center;padding:30px;">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script>
+const pmId = location.pathname.split('/').filter(Boolean).pop();
+let pmData = {}, allProjects = [];
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pm-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+window.switchTab = switchTab;
+
+async function loadPM() {
+  try {
+    // Load user profile
+    const userRes = await AdminAPI.getUserById(pmId);
+    pmData = userRes.data || userRes.user || {};
+
+    const initials = window.fmt.initials(pmData.name || '?');
+    document.getElementById('pmAvatar').textContent    = initials;
+    document.getElementById('pmName').textContent      = pmData.name || '—';
+    document.getElementById('pmRole').textContent      = pmData.designation || 'Project Manager';
+    document.getElementById('pmEmail').textContent     = pmData.email || '—';
+    document.getElementById('pmPhone').textContent     = pmData.phone || '—';
+    document.getElementById('pmDept').textContent      = pmData.department?.name || pmData.department || '—';
+    document.getElementById('pmEmpId').textContent     = pmData.employeeId || '—';
+    document.title = `${pmData.name||'PM'} — JMKC CRM`;
+
+    const statusEl = document.getElementById('pmStatus');
+    statusEl.className = `badge badge-${(pmData.status||'ACTIVE')==='ACTIVE'?'success':'danger'}`;
+    statusEl.textContent = pmData.status || 'ACTIVE';
+
+    const wl = pmData.workload || {};
+    document.getElementById('statPerf').textContent = (wl.performanceScore || 85) + '%';
+
+    // Load projects assigned to this PM
+    const projRes = await AdminAPI.getProjects(`?limit=200`);
+    allProjects = (projRes.data || projRes.projects || []).filter(p =>
+      String(p.managerId) === pmId ||
+      String(p.assignedManager) === pmId ||
+      (p.manager || '').toLowerCase() === (pmData.name || '').toLowerCase()
+    );
+
+    const active    = allProjects.filter(p => !['Completed','Cancelled'].includes(p.status));
+    const completed = allProjects.filter(p => p.status === 'Completed');
+    const teamSet   = new Set();
+    allProjects.forEach(p => (p.teamMemberIds||[]).forEach(id => teamSet.add(String(id))));
+
+    document.getElementById('statActive').textContent    = active.length;
+    document.getElementById('statCompleted').textContent = completed.length;
+    document.getElementById('statTeam').textContent      = teamSet.size;
+
+    renderPersonalInfo();
+    renderPerfMetrics(active, completed);
+    renderProjectList('activeProjects', active);
+    renderProjectList('completedProjects', completed);
+    await loadTasks();
+    await loadAttendance();
+    await loadLeaves();
+
+  } catch (err) {
+    document.querySelector('.admin-content').innerHTML = `
+      <div style="padding:60px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+        <h2>Could not load manager profile</h2>
+        <p style="color:var(--text-4)">${err.message}</p>
+        <button class="btn btn-primary" onclick="window.location.href='/admin/project-managers'">← Back</button>
+      </div>`;
+  }
+}
+
+function renderPersonalInfo() {
+  document.getElementById('personalInfo').innerHTML = [
+    { label:'Full Name',    value: pmData.name || '—' },
+    { label:'Email',        value: pmData.email || '—' },
+    { label:'Phone',        value: pmData.phone || '—' },
+    { label:'Department',   value: pmData.department?.name || pmData.department || '—' },
+    { label:'Designation',  value: pmData.designation || '—' },
+    { label:'Employee ID',  value: pmData.employeeId || '—' },
+    { label:'Joined',       value: window.fmt.date(pmData.joiningDate || pmData.createdAt) },
+    { label:'Status',       value: pmData.status || 'ACTIVE' },
+  ].map(i=>`<div class="info-row"><span class="info-lbl">${i.label}</span><span class="info-val">${i.value}</span></div>`).join('');
+}
+
+function renderPerfMetrics(active, completed) {
+  const wl = pmData.workload || {};
+  document.getElementById('perfMetrics').innerHTML = [
+    { label:'Performance Score', value: (wl.performanceScore || 85) + '%', color:'var(--primary)' },
+    { label:'Attendance Rate',   value: (wl.attendanceRate || 0) + '%',    color:'var(--success)' },
+    { label:'Active Projects',   value: active.length,                     color:'var(--info)' },
+    { label:'Completed Projects',value: completed.length,                  color:'var(--success)' },
+    { label:'Total Tasks',       value: wl.tasksCount || 0,                color:'var(--text-1)' },
+    { label:'Tasks Completed',   value: wl.completedTasksCount || 0,       color:'var(--success)' },
+    { label:'Leave Days',        value: wl.approvedLeavesCount || 0,       color:'var(--warning)' },
+    { label:'Skills',            value: (pmData.skills||[]).join(', ') || '—', color:'var(--text-1)' },
+  ].map(i=>`<div class="info-row"><span class="info-lbl">${i.label}</span><span class="info-val" style="color:${i.color}">${i.value}</span></div>`).join('');
+}
+
+function renderProjectList(elId, projects) {
+  const el = document.getElementById(elId);
+  if (!projects.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">No projects found</div></div>';
+    return;
+  }
+  el.innerHTML = projects.map(p => {
+    const prog = p.progress || 0;
+    const statusColors = {Active:'info',Completed:'success',Delayed:'danger',Draft:'gray','On Hold':'warning',Assigned:'purple'};
+    return `<div class="proj-row" onclick="window.open('/admin/projects/${p._id}', '_blank')">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${p.projectName || p.name || 'Untitled'}</div>
+        <div style="font-size:11px;color:var(--text-4);margin-top:3px">
+          Client: ${p.clientName||'—'} · Budget: ${window.fmt.currency(p.budget||0)} · Deadline: ${window.fmt.date(p.deadline||p.dueDate)}
+        </div>
+        <div style="margin-top:8px;display:flex;align-items:center;gap:8px;">
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+            <div style="width:${prog}%;height:100%;background:${prog>=80?'var(--success)':prog>=50?'var(--warning)':'var(--danger)'};border-radius:2px;"></div>
+          </div>
+          <span style="font-size:11px;color:var(--text-4);font-weight:600;">${prog}%</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-left:16px;">
+        ${window.statusBadge(p.status||'Draft')}
+        <span style="font-size:11px;color:var(--text-4);">${(p.teamMemberIds||[]).length} members</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadTasks() {
+  try {
+    const res = await AdminAPI.getTasks(`?limit=100&assigneeId=${pmId}`);
+    const tasks = res.data || res.tasks || [];
+    const tbody = document.getElementById('tasksBody');
+    if (!tasks.length) {
+      tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-title">No tasks assigned</div></div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = tasks.map(t=>`
+      <tr style="cursor:pointer" onclick="window.location.href='/admin/projects/${t.projectId}'">
+        <td><strong>${t.title||'—'}</strong></td>
+        <td>${t.projectName||'—'}</td>
+        <td><span style="font-weight:700;color:${t.priority==='HIGH'?'var(--danger)':t.priority==='MEDIUM'?'var(--warning)':'var(--text-4)'}">${t.priority||'—'}</span></td>
+        <td>${window.fmt.date(t.dueDate||t.deadline)}</td>
+        <td>${window.statusBadge(t.status)}</td>
+      </tr>`).join('');
+  } catch {
+    document.getElementById('tasksBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-4)">No task data available</td></tr>';
+  }
+}
+
+async function loadAttendance() {
+  try {
+    const res = await AdminAPI.getAttByUser(pmId, '?limit=30&sort=-date');
+    const records = res.data || res.attendance || [];
+    const tbody = document.getElementById('attendanceBody');
+    if (!records.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-4)">No attendance records</td></tr>';
+      return;
+    }
+    tbody.innerHTML = records.map(a=>`
+      <tr>
+        <td>${window.fmt.date(a.date||a.createdAt)}</td>
+        <td>${a.checkIn ? window.fmt.time(a.checkIn) : '—'}</td>
+        <td>${a.checkOut ? window.fmt.time(a.checkOut) : '—'}</td>
+        <td>${a.hoursWorked || '—'}</td>
+        <td>${window.statusBadge(a.status||'PRESENT')}</td>
+      </tr>`).join('');
+  } catch {
+    document.getElementById('attendanceBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-4)">No attendance data</td></tr>';
+  }
+}
+
+async function loadLeaves() {
+  try {
+    const res = await AdminAPI.getLeaves(`?userId=${pmId}&limit=20`);
+    const leaves = res.data || res.leaves || [];
+    const tbody = document.getElementById('leavesBody');
+    if (!leaves.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-4)">No leave records</td></tr>';
+      return;
+    }
+    tbody.innerHTML = leaves.map(l=>`
+      <tr>
+        <td>${l.type || l.leaveType || 'Leave'}</td>
+        <td>${window.fmt.date(l.startDate)}</td>
+        <td>${window.fmt.date(l.endDate)}</td>
+        <td>${l.days || l.totalDays || '—'}</td>
+        <td>${window.statusBadge(l.status)}</td>
+      </tr>`).join('');
+  } catch {
+    document.getElementById('leavesBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-4)">No leave data</td></tr>';
+  }
+}
+
+function openEditModal() { window.location.href = `/admin/users/${pmId}`; }
+
+document.addEventListener('DOMContentLoaded', loadPM);
+</script>
+</body>
+</html>

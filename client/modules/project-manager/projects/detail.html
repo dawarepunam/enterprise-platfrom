@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail – Project Manager</title>
+  <link rel="stylesheet" href="detail.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- Header & Sidebar are imported from common layout -->
+  <div class="pm-container">
+    <header class="pm-header">
+      <h1>Project Detail</h1>
+      <div class="pm-header-actions">
+        <button class="pm-btn" id="editProject"><i class="fas fa-edit"></i> Edit</button>
+        <button class="pm-btn danger" id="deleteProject"><i class="fas fa-trash"></i> Delete</button>
+      </div>
+    </header>
+
+    <section class="pm-tabs">
+      <button class="pm-tab active" data-tab="overview">Overview</button>
+      <button class="pm-tab" data-tab="team">Team</button>
+      <button class="pm-tab" data-tab="tasks">Tasks</button>
+      <button class="pm-tab" data-tab="timeline">Timeline</button>
+      <button class="pm-tab" data-tab="analytics">Analytics</button>
+    </section>
+
+    <div class="pm-tab-content" id="overview">
+      <h2 class="section-title">Overview</h2>
+      <div class="card glass">
+        <h3 id="projectName">Loading…</h3>
+        <p id="projectDesc"></p>
+        <p><strong>Status:</strong> <span id="projectStatus"></span></p>
+        <p><strong>Start:</strong> <span id="projectStart"></span> | <strong>End:</strong> <span id="projectEnd"></span></p>
+      </div>
+    </div>
+
+    <div class="pm-tab-content hidden" id="team">
+      <h2 class="section-title">Team</h2>
+      <div id="teamContainer" class="grid"></div>
+    </div>
+
+    <div class="pm-tab-content hidden" id="tasks">
+      <h2 class="section-title">Tasks</h2>
+      <div id="taskContainer" class="grid"></div>
+    </div>
+
+    <div class="pm-tab-content hidden" id="timeline">
+      <h2 class="section-title">Timeline</h2>
+      <canvas id="timelineChart"></canvas>
+    </div>
+
+    <div class="pm-tab-content hidden" id="analytics">
+      <h2 class="section-title">Analytics</h2>
+      <canvas id="analyticsChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="detail.js"></script>
+</body>
+</html>

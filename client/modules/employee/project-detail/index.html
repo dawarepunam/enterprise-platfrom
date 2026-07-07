@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Details - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Back Button ── */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; color: #3965FF;
+      background: rgba(57,101,255,0.08); padding: 8px 16px;
+      border-radius: 10px; cursor: pointer; border: none;
+      margin-bottom: 20px; text-decoration: none; transition: background .2s;
+    }
+    .back-btn:hover { background: rgba(57,101,255,0.15); }
+
+    /* ── Project Banner ── */
+    .proj-banner {
+      background: linear-gradient(135deg, #2b3674 0%, #3965FF 100%);
+      border-radius: 20px; padding: 28px 32px;
+      color: white; margin-bottom: 24px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .pb-name  { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+    .pb-client { font-size: 14px; opacity: 0.8; margin-bottom: 12px; }
+    .pb-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pb-badge {
+      padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);
+    }
+    .pb-right { text-align: right; }
+    .pb-prog-lbl { font-size: 13px; opacity: 0.8; margin-bottom: 8px; }
+    .pb-prog-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: conic-gradient(rgba(255,255,255,0.9) calc(var(--p)*1%), rgba(255,255,255,0.2) 0);
+      display: flex; align-items: center; justify-content: center; position: relative; margin-left: auto;
+    }
+    .pb-prog-ring::before {
+      content: ""; position: absolute; width: 64px; height: 64px;
+      background: #3965FF; border-radius: 50%;
+    }
+    .pb-prog-val { position: relative; font-size: 16px; font-weight: 800; }
+
+    /* ── KPI Strip ── */
+    .kpi-strip {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 14px; margin-bottom: 24px;
+    }
+    .kpi-c {
+      background: #fff; border-radius: 14px; padding: 16px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .kpi-ico {
+      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .kpi-ico.b { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .kpi-ico.g { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .kpi-ico.o { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .kpi-ico.r { background: rgba(238,93,80,0.1); color: #EE5D50; }
+    .kpi-ico.p { background: rgba(67,24,255,0.1); color: #4318FF; }
+    .kpi-v { font-size: 20px; font-weight: 800; color: #2b3674; }
+    .kpi-l { font-size: 11px; color: #a3aed1; font-weight: 500; }
+
+    /* ── Detail Grid ── */
+    .detail-grid {
+      display: grid; grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    .det-card {
+      background: #fff; border-radius: 18px; padding: 24px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      margin-bottom: 24px;
+    }
+    .det-title { font-size: 16px; font-weight: 700; color: #2b3674; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .det-title i { color: #3965FF; }
+    .det-desc { font-size: 13px; color: #5d6d8a; line-height: 1.7; }
+
+    /* Info List */
+    .info-list { display: flex; flex-direction: column; gap: 12px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; border-bottom: 1px solid #f0f4ff; padding-bottom: 10px; }
+    .info-row:last-child { border: none; padding: 0; }
+    .info-lbl { color: #a3aed1; font-weight: 500; }
+    .info-val { color: #2b3674; font-weight: 600; }
+
+    /* Badge */
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .badge.active    { background: rgba(5,205,153,0.12); color: #05CD99; }
+    .badge.completed { background: rgba(57,101,255,0.12); color: #3965FF; }
+    .badge.hold      { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .badge.high      { background: rgba(238,93,80,0.12); color: #EE5D50; }
+    .badge.medium    { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .badge.low       { background: rgba(5,205,153,0.12); color: #05CD99; }
+
+    /* Progress bar */
+    .prog-bar { height: 10px; background: #f0f4ff; border-radius: 6px; overflow: hidden; margin-top: 8px; }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, #3965FF, #05CD99); border-radius: 6px; transition: width .8s; }
+
+    /* Quick Actions */
+    .qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .qa-btn {
+      padding: 12px; border-radius: 12px; font-size: 12px; font-weight: 600;
+      text-align: center; cursor: pointer; text-decoration: none; border: none;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      transition: .2s;
+    }
+    .qa-btn i { font-size: 18px; }
+    .qa-btn.blue   { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .qa-btn.green  { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .qa-btn.orange { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .qa-btn.purple { background: rgba(67,24,255,0.1); color: #4318FF; }
+    .qa-btn:hover  { filter: brightness(0.9); transform: scale(1.03); }
+
+    /* Skeleton */
+    .skel { background: linear-gradient(90deg,#f0f4ff 25%,#e8edf8 50%,#f0f4ff 75%); background-size: 200% 100%; animation: shim 1.4s infinite; border-radius: 12px; }
+    @keyframes shim { 0%{background-position:200% 0}100%{background-position:-200% 0} }
+
+    /* Error */
+    .err-box { text-align: center; padding: 60px 20px; }
+    .err-box i { font-size: 48px; color: #EE5D50; margin-bottom: 16px; display: block; }
+    .err-box h3 { color: #2b3674; }
+
+    /* Responsive */
+    @media (max-width: 900px)  { .detail-grid { grid-template-columns: 1fr; } .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px)  { .kpi-strip { grid-template-columns: repeat(2, 1fr); } .qa-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <!-- Loading State -->
+      <div id="loadingState">
+        <div class="skel" style="height:160px;margin-bottom:24px;"></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;">
+          <div class="skel" style="height:80px;"></div>
+          <div class="skel" style="height:80px;"></div>
+          <div class="skel" style="height:80px;"></div>
+          <div class="skel" style="height:80px;"></div>
+          <div class="skel" style="height:80px;"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;">
+          <div class="skel" style="height:400px;"></div>
+          <div class="skel" style="height:400px;"></div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" style="display:none;">
+        <div class="err-box">
+          <i class="fa fa-exclamation-circle"></i>
+          <h3 id="errorMsg">Could not load project</h3>
+          <p style="color:#a3aed1;margin-top:8px;">Please check the URL or go back to projects.</p>
+          <a class="back-btn" href="/employee/projects" style="display:inline-flex;margin-top:16px;">
+            <i class="fa fa-arrow-left"></i> Back to Projects
+          </a>
+        </div>
+      </div>
+
+      <!-- Project Content -->
+      <div id="projContent" style="display:none;">
+
+        <!-- Banner -->
+        <div class="proj-banner" id="projBanner">
+          <div>
+            <div class="pb-name" id="projName">—</div>
+            <div class="pb-client" id="projClient">—</div>
+            <div class="pb-badges" id="projBadges"></div>
+          </div>
+          <div class="pb-right">
+            <div class="pb-prog-lbl">Progress</div>
+            <div class="pb-prog-ring" id="progRing">
+              <span class="pb-prog-val" id="progVal">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="kpi-strip" id="kpiStrip">
+          <div class="kpi-c" style="cursor:pointer;" onclick="window.location.href='/employee/tasks?project='+new URLSearchParams(window.location.search).get('id')"><div class="kpi-ico b"><i class="fa fa-tasks"></i></div><div><div class="kpi-v" id="kpTasks">—</div><div class="kpi-l">Open Tasks</div></div></div>
+          <div class="kpi-c" style="cursor:pointer;" onclick="window.location.href='/employee/tasks?project='+new URLSearchParams(window.location.search).get('id')"><div class="kpi-ico g"><i class="fa fa-check-circle"></i></div><div><div class="kpi-v" id="kpDone">—</div><div class="kpi-l">Completed Tasks</div></div></div>
+          <div class="kpi-c"><div class="kpi-ico o"><i class="fa fa-calendar"></i></div><div><div class="kpi-v" id="kpDeadline">—</div><div class="kpi-l">Deadline</div></div></div>
+          <div class="kpi-c"><div class="kpi-ico r"><i class="fa fa-rupee-sign"></i></div><div><div class="kpi-v" id="kpBudget">—</div><div class="kpi-l">Budget</div></div></div>
+          <div class="kpi-c" style="cursor:pointer;" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"><div class="kpi-ico p"><i class="fa fa-users"></i></div><div><div class="kpi-v" id="kpTeam">—</div><div class="kpi-l">Team Size</div></div></div>
+        </div>
+
+        <!-- Detail Grid -->
+        <div class="detail-grid">
+          <!-- Left column -->
+          <div>
+            <!-- Description -->
+            <div class="det-card">
+              <div class="det-title"><i class="fa fa-file-alt"></i> Project Description</div>
+              <div class="det-desc" id="projDesc">—</div>
+            </div>
+
+            <!-- Progress -->
+            <div class="det-card">
+              <div class="det-title"><i class="fa fa-chart-line"></i> Project Progress</div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:#a3aed1;margin-bottom:6px;">
+                <span>Overall Completion</span><span id="progPct">0%</span>
+              </div>
+              <div class="prog-bar"><div class="prog-fill" id="progBar" style="width:0%"></div></div>
+            </div>
+
+            <!-- Project Info -->
+            <div class="det-card">
+              <div class="det-title"><i class="fa fa-info-circle"></i> Project Information</div>
+              <div class="info-list" id="projInfoList">—</div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div>
+            <!-- Quick Actions -->
+            <div class="det-card">
+              <div class="det-title"><i class="fa fa-bolt"></i> Quick Actions</div>
+              <div class="qa-grid" id="quickActions">
+                <!-- filled by JS -->
+              </div>
+            </div>
+
+            <!-- Team -->
+            <div class="det-card">
+              <div class="det-title"><i class="fa fa-users"></i> Project Team</div>
+              <div class="info-list">
+                <div class="info-row">
+                  <span class="info-lbl">Project Manager</span>
+                  <span class="info-val" id="teamPM">—</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-lbl">Department</span>
+                  <span class="info-val" id="teamDept">—</span>
+                </div>
+              </div>
+              <div style="margin-top:20px;">
+                <div class="det-title" style="font-size:14px;margin-bottom:12px;"><i class="fa fa-user-friends"></i> Team Members</div>
+                <div id="teamMembersList" style="display:flex; flex-direction:column; gap:8px;">
+                  <div style="font-size:13px;color:#a3aed1;">Loading team members...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return showError('No project ID in URL.');
+    await loadProject(id);
+  });
+
+  async function loadProject(id) {
+    try {
+      const res  = await apiRequest(`/projects/${id}`);
+      const proj = res?.data || res;
+      if (!proj || (!proj._id && !proj.id)) return showError('Project not found.');
+      renderProject(proj);
+    } catch (e) {
+      showError(e.message || 'Failed to load project.');
+    }
+  }
+
+  function renderProject(p) {
+    document.title = `${p.projectName || p.name} – Project Details | JMKC CRM`;
+
+    // Banner
+    document.getElementById('projName').textContent   = p.projectName || p.name || 'Untitled';
+    document.getElementById('projClient').textContent = 'Client: ' + (p.clientName || p.client || '—');
+    const progress = Math.min(p.progress || 0, 100);
+    document.getElementById('progRing').style.setProperty('--p', progress);
+    document.getElementById('progVal').textContent = progress + '%';
+
+    // Badges
+    const badges = [
+      p.status || 'Active',
+      p.priority || 'Medium',
+      p.workflowStage || '',
+    ].filter(Boolean);
+    document.getElementById('projBadges').innerHTML = badges.map(b => `<span class="pb-badge">${b}</span>`).join('');
+
+    // KPI Strip
+    const deadline = p.deadline || p.dueDate || p.endDate;
+    document.getElementById('kpTasks').textContent    = p.openTasks || p.taskStats?.open || '—';
+    document.getElementById('kpDone').textContent     = p.completedTasks || p.taskStats?.completed || '—';
+    document.getElementById('kpDeadline').textContent = deadline ? new Date(deadline).toLocaleDateString('en-GB') : '—';
+    document.getElementById('kpBudget').textContent   = p.budget ? '₹' + Number(p.budget).toLocaleString() : '—';
+    let tCount = 0;
+    if (p.teamSize) tCount = p.teamSize;
+    else if (Array.isArray(p.teamMemberIds)) tCount = p.teamMemberIds.length;
+    else if (typeof p.teamMemberIds === 'string') tCount = p.teamMemberIds.split(',').filter(Boolean).length;
+    else if (Array.isArray(p.members)) tCount = p.members.length;
+    document.getElementById('kpTeam').textContent     = tCount || '—';
+
+    // Description
+    document.getElementById('projDesc').textContent = p.description || 'No description provided.';
+
+    // Progress
+    document.getElementById('progPct').textContent = progress + '%';
+    document.getElementById('progBar').style.width = progress + '%';
+
+    // Info List
+    document.getElementById('projInfoList').innerHTML = [
+      { lbl: 'Project Name', val: p.projectName || p.name },
+      { lbl: 'Client',       val: p.clientName || p.client },
+      { lbl: 'Status',       val: `<span class="badge ${(p.status||'').toLowerCase()}">${p.status || 'Active'}</span>` },
+      { lbl: 'Priority',     val: `<span class="badge ${(p.priority||'').toLowerCase()}">${p.priority || 'Medium'}</span>` },
+      { lbl: 'Start Date',   val: p.startDate ? new Date(p.startDate).toLocaleDateString('en-GB') : '—' },
+      { lbl: 'Deadline',     val: deadline ? new Date(deadline).toLocaleDateString('en-GB') : '—' },
+      { lbl: 'Budget',       val: p.budget ? '₹' + Number(p.budget).toLocaleString() : '—' },
+      { lbl: 'Workflow Stage', val: p.workflowStage || '—' },
+      { lbl: 'Created',      val: p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-GB') : '—' },
+    ].map(r => `<div class="info-row"><span class="info-lbl">${r.lbl}</span><span class="info-val">${r.val}</span></div>`).join('');
+
+    // Team
+    document.getElementById('teamPM').textContent   = p.projectManager?.name || p.manager || p.pmName || '—';
+    document.getElementById('teamDept').textContent = p.department?.name || p.departmentName || '—';
+
+    const teamList = document.getElementById('teamMembersList');
+    let members = [];
+    if (Array.isArray(p.allocatedTeam)) members = p.allocatedTeam;
+    else if (Array.isArray(p.members)) members = p.members;
+    else if (Array.isArray(p.teamMembers)) members = p.teamMembers.map(m => typeof m === 'string' ? {name: m} : m);
+    else if (Array.isArray(p.teamMemberIds)) members = p.teamMemberIds;
+    
+    if (members.length > 0) {
+      teamList.innerHTML = members.map(m => {
+        const name = m.name || m.userName || (typeof m === 'string' ? m : 'Unknown Member');
+        return `<div style="display:flex;align-items:center;gap:10px;padding:8px;background:#f8f9ff;border-radius:8px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#3965FF;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;">
+            ${name.substring(0,2).toUpperCase()}
+          </div>
+          <div style="font-size:13px;font-weight:600;color:#2b3674;">${name}</div>
+        </div>`;
+      }).join('');
+    } else {
+      teamList.innerHTML = '<div style="font-size:13px;color:#a3aed1;">No team members assigned.</div>';
+    }
+
+    // Quick Actions
+    const pid = p._id || p.id;
+    document.getElementById('quickActions').innerHTML = [
+      { label:'My Tasks',  icon:'fa-tasks',      color:'blue',   href:`/employee/tasks?project=${pid}` },
+      { label:'Files',     icon:'fa-file',       color:'green',  href:`/employee/files?project=${pid}` },
+      { label:'Meetings',  icon:'fa-video',      color:'orange', href:`/employee/meetings?project=${pid}` },
+      { label:'Chat',      icon:'fa-comments',   color:'purple', href:`/employee/chat?project=${pid}` },
+    ].map(a => `<a href="${a.href}" class="qa-btn ${a.color}"><i class="fa ${a.icon}"></i>${a.label}</a>`).join('');
+
+    // Show content
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('projContent').style.display  = 'block';
+  }
+
+  function showError(msg) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorMsg').textContent       = msg;
+    document.getElementById('errorState').style.display  = 'block';
+  }
+</script>
+</body>
+</html>

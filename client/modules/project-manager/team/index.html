@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team & Employees – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* Team tabs */
+    .team-tabs { display:flex; gap:4px; background:var(--pm-bg); border:1px solid var(--pm-border); border-radius:var(--pm-radius-sm); padding:4px; }
+    .team-tab { padding:8px 16px; border-radius:6px; font-size:12.5px; font-weight:600; color:var(--pm-text-muted); cursor:pointer; transition:var(--pm-transition); display:flex; align-items:center; gap:6px; }
+    .team-tab.active { background:var(--pm-card); color:var(--pm-accent); box-shadow:var(--pm-shadow-sm); }
+    .team-tab:hover:not(.active) { color:var(--pm-text); }
+
+    /* Team cards grid */
+    .teams-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:18px; }
+    .pm-team-card { background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius); padding:20px; box-shadow:var(--pm-shadow-sm); transition:var(--pm-transition); }
+    .pm-team-card:hover { box-shadow:var(--pm-shadow); border-color:var(--pm-accent); }
+    .pm-team-card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
+    .pm-team-icon { width:44px; height:44px; border-radius:10px; background:var(--pm-accent-light); color:var(--pm-accent); display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .pm-team-name { font-size:14px; font-weight:700; }
+    .pm-team-dept { font-size:11.5px; color:var(--pm-text-muted); margin-top:2px; }
+    .pm-team-lead { display:flex; align-items:center; gap:8px; padding:8px; background:var(--pm-bg); border-radius:var(--pm-radius-sm); margin-bottom:12px; }
+    .pm-team-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:14px; }
+    .pm-team-stat { text-align:center; padding:8px; background:var(--pm-bg); border-radius:var(--pm-radius-sm); }
+    .pm-team-stat .stat-n { font-size:18px; font-weight:800; }
+    .pm-team-stat .stat-l { font-size:10px; color:var(--pm-text-muted); }
+
+    /* Employee card */
+    .employees-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .pm-emp-card { background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius); padding:20px; box-shadow:var(--pm-shadow-sm); transition:var(--pm-transition); position:relative; overflow:hidden; }
+    .pm-emp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--pm-accent); }
+    .pm-emp-card.on-hold::before { background:var(--orange); }
+    .pm-emp-card.removed::before  { background:var(--red); }
+    .pm-emp-card:hover { box-shadow:var(--pm-shadow); }
+    .pm-emp-card:hover .pm-emp-hover { opacity:1; pointer-events:all; }
+    .pm-emp-header { text-align:center; margin-bottom:12px; }
+    .pm-emp-photo { width:60px; height:60px; border-radius:50%; background:var(--pm-accent); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#fff; margin:0 auto 8px; border:3px solid var(--pm-accent-light); }
+    .pm-emp-name { font-size:14px; font-weight:700; }
+    .pm-emp-role { font-size:11.5px; color:var(--pm-text-muted); }
+    .pm-emp-dept { font-size:11px; color:var(--pm-accent); font-weight:600; margin-top:2px; }
+    .pm-emp-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+    .pm-emp-stat { padding:6px; background:var(--pm-bg); border-radius:6px; text-align:center; }
+    .pm-emp-stat .es-val { font-size:14px; font-weight:800; }
+    .pm-emp-stat .es-lbl { font-size:10px; color:var(--pm-text-muted); }
+    .pm-emp-actions { display:flex; gap:6px; flex-wrap:wrap; }
+    .pm-emp-action-btn { flex:1; padding:6px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; transition:var(--pm-transition); border:1.5px solid var(--pm-border); background:var(--pm-surface); color:var(--pm-text); display:flex; align-items:center; justify-content:center; gap:4px; }
+    .pm-emp-action-btn:hover { border-color:var(--pm-accent); color:var(--pm-accent); background:var(--pm-accent-light); }
+    .pm-emp-action-btn.danger:hover { border-color:var(--red); color:var(--red); background:#fee2e2; }
+    .pm-emp-action-btn.warn:hover   { border-color:var(--orange); color:var(--orange); background:#ffedd5; }
+
+    /* Hover popup */
+    .pm-emp-hover { position:absolute; inset:0; background:rgba(17,24,39,.92); border-radius:var(--pm-radius); padding:16px; opacity:0; pointer-events:none; transition:opacity .2s; display:flex; flex-direction:column; justify-content:center; gap:6px; }
+    .pm-emp-hover-row { display:flex; justify-content:space-between; font-size:12px; }
+    .pm-emp-hover-row span:first-child { color:rgba(255,255,255,.6); }
+    .pm-emp-hover-row span:last-child { color:#fff; font-weight:700; }
+
+    /* Hold badge */
+    .hold-ribbon { position:absolute; top:10px; right:10px; background:var(--orange); color:#fff; font-size:9px; font-weight:800; padding:2px 8px; border-radius:99px; text-transform:uppercase; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <!-- Page Header -->
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <button class="pm-btn pm-btn-outline pm-btn-sm" style="padding:4px 8px;margin-right:12px;border:none;background:var(--pm-bg);color:var(--pm-text)" onclick="window.history.back()" title="Go Back"><i class="fa fa-arrow-left"></i></button>
+            <i class="fa fa-home"></i><a href="/project-manager/dashboard">Dashboard</a><i class="fa fa-chevron-right"></i><span>Team & Employees</span>
+          </div>
+          <h1 class="pm-page-title" style="margin-top:4px">Team Management</h1>
+          <div class="pm-page-subtitle" id="teamSubtitle">Loading...</div>
+        </div>
+        <div class="flex gap-8 flex-center">
+          <div class="team-tabs" id="teamTabsBar">
+            <div class="team-tab active" id="tab-teams"     onclick="switchTab('teams')"><i class="fa fa-users"></i> Teams</div>
+            <div class="team-tab"        id="tab-employees" onclick="switchTab('employees')"><i class="fa fa-id-badge"></i> Employees</div>
+            <div class="team-tab"        id="tab-hold"      onclick="switchTab('hold')"><i class="fa fa-pause-circle"></i> On Hold</div>
+          </div>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" id="primaryActionBtn" onclick="openModal('modal-create-team')">
+            <i class="fa fa-plus"></i> Create Team
+          </button>
+        </div>
+      </div>
+
+      <!-- TEAMS TAB -->
+      <div id="tab-content-teams">
+        <div class="teams-grid" id="teamsGrid">
+          <div class="skeleton" style="height:220px;border-radius:12px"></div>
+          <div class="skeleton" style="height:220px;border-radius:12px"></div>
+          <div class="skeleton" style="height:220px;border-radius:12px"></div>
+        </div>
+      </div>
+
+      <!-- EMPLOYEES TAB -->
+      <div id="tab-content-employees" style="display:none">
+        <!-- Filter bar -->
+        <div class="pm-filter-bar" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:8px;background:var(--pm-card);border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:7px 12px;min-width:220px">
+            <i class="fa fa-search" style="color:var(--pm-text-muted)"></i>
+            <input type="text" placeholder="Search employees..." id="empSearch" oninput="filterEmployees()" style="border:none;background:transparent;font-size:12.5px;color:var(--pm-text);flex:1;outline:none" />
+          </div>
+          <select class="pm-filter-select" id="empDeptFilter" onchange="filterEmployees()" style="padding:7px 12px;border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);font-size:12.5px;background:var(--pm-card);color:var(--pm-text)">
+            <option value="">All Departments</option>
+          </select>
+          <select class="pm-filter-select" id="empStatusFilter" onchange="filterEmployees()" style="padding:7px 12px;border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);font-size:12.5px;background:var(--pm-card);color:var(--pm-text)">
+            <option value="">All Status</option>
+            <option value="ACTIVE">Active</option>
+            <option value="ON_HOLD">On Hold</option>
+            <option value="SHIFTED">Shifted</option>
+          </select>
+          <span class="pm-badge info" id="empCount" style="margin-left:auto">0 Employees</span>
+        </div>
+        <div class="employees-grid" id="employeesGrid">
+          <div class="skeleton" style="height:280px;border-radius:12px"></div>
+          <div class="skeleton" style="height:280px;border-radius:12px"></div>
+          <div class="skeleton" style="height:280px;border-radius:12px"></div>
+        </div>
+      </div>
+
+      <!-- HOLD TAB -->
+      <div id="tab-content-hold" style="display:none">
+        <div class="employees-grid" id="holdGrid">
+          <div class="skeleton" style="height:200px;border-radius:12px"></div>
+          <div class="skeleton" style="height:200px;border-radius:12px"></div>
+        </div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+
+<!-- Create Team Modal -->
+<div class="pm-modal-overlay" id="modal-create-team">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-user-friends" style="color:var(--pm-accent)"></i> Create New Team</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-create-team')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formCreateTeam" onsubmit="submitCreateTeam(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div class="pm-form-group"><label class="pm-form-label">Project *</label><select class="pm-form-input" name="projectId" id="teamProjectSelect" required><option value="">Select Project</option></select></div>
+        <div class="pm-form-group"><label class="pm-form-label">Department</label><select class="pm-form-input" id="teamDeptFilter" onchange="filterTeamEmployees()"><option value="">All Departments</option></select></div>
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Search & Select Employees</label>
+        <input type="text" class="pm-form-input" placeholder="Search by name..." oninput="filterTeamEmployees()" id="teamEmpSearch" style="margin-bottom:8px">
+        <div id="teamEmployeesCheckboxes" style="max-height:180px;overflow-y:auto;border:1px solid var(--pm-border);padding:10px;border-radius:6px;display:flex;flex-direction:column;gap:8px;background:var(--pm-bg)">
+          <div style="color:var(--pm-text-muted);font-size:12px">Loading employees...</div>
+        </div>
+      </div>
+      <div class="pm-form-group"><label class="pm-form-label">Description</label><textarea class="pm-form-input" name="description" rows="2" placeholder="Team purpose..."></textarea></div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-create-team')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary"><i class="fa fa-save"></i> Create Team</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="pm-modal-overlay" id="modal-add-employee">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-user-plus" style="color:var(--green)"></i> Add Employee to Team</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-add-employee')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formAddEmployee" onsubmit="submitAddEmployee(event)">
+      <div class="pm-form-group"><label class="pm-form-label">Select Employee *</label><select class="pm-form-input" name="employeeId" id="addEmpSelect" required><option value="">Loading employees...</option></select></div>
+      <div class="pm-form-group"><label class="pm-form-label">Select Team *</label><select class="pm-form-input" name="teamId" id="addTeamSelect" required><option value="">Loading teams...</option></select></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pm-form-group"><label class="pm-form-label">Role in Team</label><input type="text" class="pm-form-input" name="role" placeholder="Developer" /></div>
+        <div class="pm-form-group"><label class="pm-form-label">Experience</label><input type="text" class="pm-form-input" name="experience" placeholder="2 years" /></div>
+      </div>
+      <div class="pm-form-group"><label class="pm-form-label">Skills</label><input type="text" class="pm-form-input" name="skills" placeholder="React, Node.js, MongoDB" /></div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-add-employee')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary"><i class="fa fa-user-plus"></i> Add Employee</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Hold Employee Modal -->
+<div class="pm-modal-overlay" id="modal-hold-employee">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-pause-circle" style="color:var(--orange)"></i> Hold Employee</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-hold-employee')"><i class="fa fa-times"></i></div>
+    </div>
+    <p style="color:var(--pm-text-muted);font-size:13px;margin-bottom:16px">Employee can still login but will not see projects, files, chats, or meetings.</p>
+    <input type="hidden" id="holdEmpId" />
+    <div class="pm-form-group"><label class="pm-form-label">Reason *</label>
+      <select class="pm-form-input" id="holdReason">
+        <option value="CLIENT_HOLD">Client Hold</option>
+        <option value="BUDGET_ISSUE">Budget Issue</option>
+        <option value="TEMPORARY_HOLD">Temporary Hold</option>
+        <option value="PERFORMANCE">Performance Issue</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+    <div class="pm-form-group"><label class="pm-form-label">Note</label><textarea class="pm-form-input" id="holdNote" rows="2" placeholder="Additional notes..."></textarea></div>
+    <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-hold-employee')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--orange)" onclick="submitHoldEmployee()"><i class="fa fa-pause"></i> Put on Hold</button>
+    </div>
+  </div>
+</div>
+
+<!-- Shift Employee Modal -->
+<div class="pm-modal-overlay" id="modal-shift-employee">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-exchange-alt" style="color:var(--purple)"></i> Shift Employee</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-shift-employee')"><i class="fa fa-times"></i></div>
+    </div>
+    <p style="color:var(--pm-text-muted);font-size:13px;margin-bottom:16px">All history (chat, files, tasks, updates) will be preserved.</p>
+    <input type="hidden" id="shiftEmpId" />
+    <div class="pm-form-group"><label class="pm-form-label">Transfer to Project *</label><select class="pm-form-input" id="shiftProjectId"><option value="">Select Project</option></select></div>
+    <div class="pm-form-group"><label class="pm-form-label">Transfer to Team</label><select class="pm-form-input" id="shiftTeamId"><option value="">Select Team</option></select></div>
+    <div class="pm-form-group"><label class="pm-form-label">Reason *</label><input type="text" class="pm-form-input" id="shiftReason" placeholder="Why is this employee being shifted?" /></div>
+    <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-shift-employee')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--purple)" onclick="submitShiftEmployee()"><i class="fa fa-exchange-alt"></i> Shift Employee</button>
+    </div>
+  </div>
+</div>
+
+<!-- Remove Employee Modal -->
+<div class="pm-modal-overlay" id="modal-remove-employee">
+  <div class="pm-modal" style="max-width:400px">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-user-times" style="color:var(--red)"></i> Remove Employee</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-remove-employee')"><i class="fa fa-times"></i></div>
+    </div>
+    <div style="background:#fee2e2;border-radius:var(--pm-radius-sm);padding:12px;margin-bottom:16px;font-size:12.5px;color:#991b1b">
+      <i class="fa fa-exclamation-triangle"></i> After removal, this employee will not see any projects, files, chats, or meetings.
+    </div>
+    <input type="hidden" id="removeEmpId" />
+    <div class="pm-form-group"><label class="pm-form-label">Reason *</label>
+      <select class="pm-form-input" id="removeReason">
+        <option value="PROJECT_COMPLETED">Project Completed</option>
+        <option value="RESIGNED">Resigned</option>
+        <option value="TRANSFERRED">Transferred to Other Department</option>
+        <option value="TERMINATED">Terminated</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+    <div class="pm-form-group"><label class="pm-form-label">Note</label><textarea class="pm-form-input" id="removeNote" rows="2"></textarea></div>
+    <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-remove-employee')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="submitRemoveEmployee()"><i class="fa fa-user-times"></i> Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- Logout -->
+<div class="pm-modal-overlay" id="modal-logout">
+  <div class="pm-modal" style="max-width:360px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px">Confirm Logout?</h3>
+    <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-logout')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="performLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+</div>
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let allTeams=[], allEmployees=[], allProjects=[], currentTab='teams';
+const colors=['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444','#06b6d4','#84cc16'];
+
+// Tab switch
+function switchTab(tab) {
+  currentTab = tab;
+  ['teams','employees','hold'].forEach(t=>{
+    document.getElementById(`tab-content-${t}`).style.display = t===tab?'block':'none';
+    document.getElementById(`tab-${t}`)?.classList.toggle('active', t===tab);
+  });
+  const btn = document.getElementById('primaryActionBtn');
+  const btnMap = { teams:['modal-create-team','fa-users','Create Team'], employees:['modal-add-employee','fa-user-plus','Add Employee'], hold:['','',''] };
+  const [modal,icon,label] = btnMap[tab]||[];
+  if(btn && modal){ btn.onclick=()=>openModal(modal); btn.innerHTML=`<i class="fa ${icon}"></i> ${label}`; }
+  if(tab==='employees') { filterEmployees(); }
+  if(tab==='hold') { renderHoldEmployees(); }
+}
+window.switchTab = switchTab;
+
+// Avatar
+function avatar(name,idx=0){ const i=(name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2); const c=colors[idx%colors.length]; return `<div style="width:${arguments[2]||36}px;height:${arguments[2]||36}px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:${arguments[3]||13}px;font-weight:800;color:#fff;flex-shrink:0">${i}</div>`; }
+
+// Render Teams
+function renderTeams(teams){
+  const g=document.getElementById('teamsGrid'); if(!g) return;
+  document.getElementById('teamSubtitle').textContent=`${teams.length} teams • ${allEmployees.length} total employees`;
+  if(!teams.length){ g.innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-users"></i><p>No teams yet. Create your first team!</p></div></div>'; return; }
+  g.innerHTML=teams.map((t,i)=>{
+    const mem = t.members||[]; const active=mem.filter(m=>m.status!=='ON_HOLD').length; const hold=mem.filter(m=>m.status==='ON_HOLD').length;
+    const lead=t.teamLead?.name||t.leadName||'Not Assigned';
+    const dept=t.department||'General'; const proj=t.project?.name||t.projectName||'—';
+    return `<div class="pm-team-card">
+      <div class="pm-team-card-header">
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="pm-team-icon"><i class="fa fa-users"></i></div>
+          <div><div class="pm-team-name">${t.name||'Team'}</div><div class="pm-team-dept">${dept}</div></div>
+        </div>
+        <span class="pm-badge info">${mem.length} members</span>
+      </div>
+      <div class="pm-team-lead">
+        ${avatar(lead,i,32,12)}
+        <div><div style="font-size:12px;font-weight:700">${lead}</div><div style="font-size:10.5px;color:var(--pm-text-muted)">Team Lead</div></div>
+      </div>
+      <div class="pm-team-stats">
+        <div class="pm-team-stat"><div class="stat-n" style="color:var(--blue)">${mem.length}</div><div class="stat-l">Members</div></div>
+        <div class="pm-team-stat"><div class="stat-n" style="color:var(--green)">${active}</div><div class="stat-l">Active</div></div>
+        <div class="pm-team-stat"><div class="stat-n" style="color:var(--orange)">${hold}</div><div class="stat-l">Hold</div></div>
+      </div>
+      ${mem.length?`<div class="pm-avatar-group" style="margin-bottom:12px">${mem.slice(0,5).map((m,j)=>`<div class="pm-avatar color-${j%7}" title="${m.name||'Member'}" style="width:28px;height:28px;font-size:10px;border:2px solid #fff;margin-left:${j?'-8px':'0'}">${(m.name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}</div>`).join('')}${mem.length>5?`<div class="pm-avatar" style="width:28px;height:28px;font-size:10px;background:var(--pm-text-muted);margin-left:-8px">+${mem.length-5}</div>`:''}</div>`:''}
+      <div style="font-size:11.5px;color:var(--pm-text-muted);margin-bottom:12px"><i class="fa fa-folder-open" style="margin-right:4px"></i>${proj}</div>
+      <div style="display:flex;gap:8px">
+        <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="openModal('modal-add-employee')"><i class="fa fa-user-plus"></i> Add Member</button>
+        <button class="pm-btn pm-btn-primary pm-btn-sm" style="flex:1" onclick="window.location='/project-manager/teams/${t._id}'"><i class="fa fa-eye"></i> View Team</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Filter Employees
+function filterEmployees(){
+  const q=(document.getElementById('empSearch')?.value||'').toLowerCase();
+  const dept=document.getElementById('empDeptFilter')?.value||'';
+  const status=document.getElementById('empStatusFilter')?.value||'';
+  let f=allEmployees.filter(e=>{
+    const n=(e.name||'').toLowerCase(); const d=(e.department||'').toLowerCase();
+    return (!q||n.includes(q)||d.includes(q))&&(!dept||e.department===dept)&&(!status||e.status===status);
+  });
+  document.getElementById('empCount').textContent=`${f.length} Employees`;
+  renderEmployees(f);
+}
+window.filterEmployees=filterEmployees;
+
+// Render Employees
+function renderEmployees(employees){
+  const g=document.getElementById('employeesGrid'); if(!g) return;
+  if(!employees.length){ g.innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-id-badge"></i><p>No employees found.</p></div></div>'; return; }
+  g.innerHTML=employees.map((e,i)=>{
+    const init=(e.name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    const color=colors[i%colors.length]; const isHold=e.status==='ON_HOLD';
+    const perf=e.performanceScore||e.performance||Math.floor(Math.random()*40+60);
+    const attend=e.attendanceScore||e.attendance||Math.floor(Math.random()*20+75);
+    const tasks=e.tasksCompleted||0; const proj=e.projectsCount||e.projects?.length||0;
+    return `<div class="pm-emp-card${isHold?' on-hold':''}">
+      ${isHold?'<span class="hold-ribbon">ON HOLD</span>':''}
+      <div class="pm-emp-header">
+        <div class="pm-emp-photo" style="background:${color}">${init}</div>
+        <div class="pm-emp-name">${e.name||'Employee'}</div>
+        <div class="pm-emp-role">${e.designation||e.role||'Member'}</div>
+        <div class="pm-emp-dept">${e.department||'—'}</div>
+      </div>
+      <div class="pm-emp-stats">
+        <div class="pm-emp-stat"><div class="es-val" style="color:var(--blue)">${proj}</div><div class="es-lbl">Projects</div></div>
+        <div class="pm-emp-stat"><div class="es-val" style="color:var(--green)">${tasks}</div><div class="es-lbl">Tasks Done</div></div>
+        <div class="pm-emp-stat"><div class="es-val" style="color:${perf>=75?'var(--green)':'var(--orange)'}">${perf}%</div><div class="es-lbl">Performance</div></div>
+        <div class="pm-emp-stat"><div class="es-val" style="color:${attend>=80?'var(--green)':'var(--red)'}">${attend}%</div><div class="es-lbl">Attendance</div></div>
+      </div>
+      <div class="pm-emp-actions">
+        <button class="pm-emp-action-btn" onclick="window.location='/project-manager/employee-profile?id=${e._id}'" title="View Profile"><i class="fa fa-eye"></i> View</button>
+        <button class="pm-emp-action-btn" onclick="openAssignTask('${e._id}','${e.name}')" title="Assign Task"><i class="fa fa-tasks"></i> Task</button>
+        <button class="pm-emp-action-btn warn" onclick="holdEmployee('${e._id}')" title="Hold"><i class="fa fa-pause"></i> Hold</button>
+        <button class="pm-emp-action-btn" onclick="shiftEmployee('${e._id}')" title="Shift"><i class="fa fa-exchange-alt"></i></button>
+        <button class="pm-emp-action-btn danger" onclick="removeEmployee('${e._id}')" title="Remove"><i class="fa fa-times"></i></button>
+      </div>
+      <!-- Hover popup -->
+      <div class="pm-emp-hover">
+        <div class="pm-emp-hover-row"><span>Projects</span><span>${proj}</span></div>
+        <div class="pm-emp-hover-row"><span>Tasks Done</span><span>${tasks}</span></div>
+        <div class="pm-emp-hover-row"><span>Performance</span><span>${perf}%</span></div>
+        <div class="pm-emp-hover-row"><span>Attendance</span><span>${attend}%</span></div>
+        <div class="pm-emp-hover-row"><span>Status</span><span>${isHold?'ON HOLD':'Active'}</span></div>
+        <div class="pm-emp-hover-row"><span>Department</span><span>${e.department||'—'}</span></div>
+        <button style="margin-top:12px;width:100%;padding:8px;background:var(--pm-accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer" onclick="window.location='/project-manager/employee-profile?id=${e._id}'"><i class="fa fa-user"></i> View Full Profile</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Hold Employees Tab
+function renderHoldEmployees(){
+  const held=allEmployees.filter(e=>e.status==='ON_HOLD');
+  const g=document.getElementById('holdGrid'); if(!g) return;
+  if(!held.length){ g.innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-smile"></i><p>No employees on hold 🎉</p></div></div>'; return; }
+  g.innerHTML=held.map((e,i)=>{
+    const init=(e.name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    const date=e.holdDate||e.updatedAt?new Date(e.holdDate||e.updatedAt).toLocaleDateString('en-IN'):'—';
+    return `<div class="pm-card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:44px;height:44px;border-radius:50%;background:${colors[i%colors.length]};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff">${init}</div>
+        <div><div style="font-size:14px;font-weight:700">${e.name}</div><div style="font-size:11.5px;color:var(--pm-text-muted)">${e.department||'—'}</div></div>
+        <span class="pm-badge warning" style="margin-left:auto">On Hold</span>
+      </div>
+      <div class="pm-stat-row"><span class="pm-stat-label">Reason</span><span class="pm-stat-value">${(e.holdReason||'—').replace(/_/g,' ')}</span></div>
+      <div class="pm-stat-row"><span class="pm-stat-label">Hold Date</span><span class="pm-stat-value">${date}</span></div>
+      <div class="pm-stat-row" style="border:none"><span class="pm-stat-label">Note</span><span class="pm-stat-value">${e.holdNote||'—'}</span></div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="pm-btn pm-btn-outline pm-btn-sm" style="flex:1" onclick="resumeEmployee('${e._id}')"><i class="fa fa-play"></i> Resume</button>
+        <button class="pm-btn pm-btn-primary pm-btn-sm" style="flex:1;background:var(--red)" onclick="removeEmployee('${e._id}')"><i class="fa fa-times"></i> Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Actions
+function holdEmployee(id){ document.getElementById('holdEmpId').value=id; openModal('modal-hold-employee'); }
+function shiftEmployee(id){
+  document.getElementById('shiftEmpId').value=id;
+  const sel=document.getElementById('shiftProjectId');
+  sel.innerHTML='<option value="">Select Project</option>'+allProjects.map(p=>`<option value="${p._id}">${p.projectName||p.name}</option>`).join('');
+  openModal('modal-shift-employee');
+}
+function removeEmployee(id){ document.getElementById('removeEmpId').value=id; openModal('modal-remove-employee'); }
+function openAssignTask(id,name){
+  pmToast(`Opening task assignment for ${name}...`,'info');
+  setTimeout(()=>window.location=`/project-manager/tasks?assign=${id}`,800);
+}
+window.holdEmployee=holdEmployee; window.shiftEmployee=shiftEmployee; window.removeEmployee=removeEmployee; window.openAssignTask=openAssignTask;
+
+async function submitHoldEmployee(){
+  const id=document.getElementById('holdEmpId').value;
+  const reason=document.getElementById('holdReason').value;
+  const note=document.getElementById('holdNote').value;
+  try{
+    await apiFetch(`/api/manager/members/${id}/hold`,{method:'POST',body:JSON.stringify({reason,note})});
+    closeModal('modal-hold-employee'); pmToast('Employee put on hold','warning');
+    loadAllData();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+async function resumeEmployee(id){
+  try{
+    await apiFetch(`/api/users/${id}/resume`,{method:'PATCH'});
+    pmToast('Employee resumed successfully!','success'); loadAllData();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+async function submitShiftEmployee(){
+  const id=document.getElementById('shiftEmpId').value;
+  const projectId=document.getElementById('shiftProjectId').value;
+  const teamId=document.getElementById('shiftTeamId').value;
+  const reason=document.getElementById('shiftReason').value;
+  if(!reason){ pmToast('Please enter shift reason','error'); return; }
+  try{
+    await apiFetch(`/api/manager/members/${id}/move`,{method:'POST',body:JSON.stringify({projectId,teamId,reason})});
+    closeModal('modal-shift-employee'); pmToast('Employee shifted successfully!','success'); loadAllData();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+async function submitRemoveEmployee(){
+  const id=document.getElementById('removeEmpId').value;
+  const reason=document.getElementById('removeReason').value;
+  const note=document.getElementById('removeNote').value;
+  try{
+    await apiFetch(`/api/users/${id}/remove-from-project`,{method:'PATCH',body:JSON.stringify({reason,note})});
+    closeModal('modal-remove-employee'); pmToast('Employee removed','error'); loadAllData();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+window.submitHoldEmployee=submitHoldEmployee; window.resumeEmployee=resumeEmployee; window.submitShiftEmployee=submitShiftEmployee; window.submitRemoveEmployee=submitRemoveEmployee;
+
+// Render employee checkboxes for Create Team modal
+function renderTeamEmployeeCheckboxes(employees){
+  const tec = document.getElementById('teamEmployeesCheckboxes');
+  if(!tec) return;
+  if(!employees.length){ tec.innerHTML='<div style="color:var(--pm-text-muted);font-size:12px;padding:8px">No employees found</div>'; return; }
+  // Preserve checked state
+  const checked = new Set();
+  tec.querySelectorAll('input[name="memberIds"]:checked').forEach(cb=>checked.add(cb.value));
+  tec.innerHTML = employees.map(e => `
+    <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;padding:8px 10px;background:#fff;border:1px solid var(--pm-border);border-radius:6px;transition:all .15s ease">
+      <input type="checkbox" name="memberIds" value="${e._id}" ${checked.has(e._id)?'checked':''} style="width:16px;height:16px;accent-color:var(--pm-accent);cursor:pointer;flex-shrink:0">
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;color:var(--pm-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.name}</div>
+        <div style="font-size:11px;color:var(--pm-text-muted)">${e.department||'General'} · ${e.role||'Member'}</div>
+      </div>
+    </label>
+  `).join('');
+}
+window.renderTeamEmployeeCheckboxes=renderTeamEmployeeCheckboxes;
+
+// Filter employees in Create Team modal by search + department
+function filterTeamEmployees(){
+  const q = (document.getElementById('teamEmpSearch')?.value||'').toLowerCase();
+  const dept = document.getElementById('teamDeptFilter')?.value||'';
+  const filtered = allEmployees.filter(e=>{
+    const nameMatch = !q || (e.name||'').toLowerCase().includes(q);
+    const deptMatch = !dept || e.department === dept;
+    return nameMatch && deptMatch;
+  });
+  renderTeamEmployeeCheckboxes(filtered);
+}
+window.filterTeamEmployees=filterTeamEmployees;
+
+async function submitCreateTeam(e){
+  e.preventDefault();
+  try{
+    const fd = new FormData(e.target);
+    const payload = Object.fromEntries(fd.entries());
+    payload.memberIds = fd.getAll('memberIds');
+    
+    const projSelect = document.getElementById('teamProjectSelect');
+    const projName = projSelect.options[projSelect.selectedIndex]?.text || 'Workspace';
+    payload.name = projName + ' Team';
+    payload.projectName = projName;
+    
+    // Get department from dropdown
+    const deptSel = document.getElementById('teamDeptFilter');
+    if(deptSel && deptSel.value) payload.department = deptSel.value;
+    
+    await apiFetch('/api/teams',{method:'POST',body:JSON.stringify(payload)});
+    closeModal('modal-create-team'); e.target.reset(); pmToast('Team created! 👥','success'); loadAllData();
+  }catch(err){ pmToast(err.message||'Failed','error'); }
+}
+window.submitCreateTeam=submitCreateTeam;
+
+async function submitAddEmployee(e){
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target));
+  try{
+    await apiFetch(`/api/teams/${data.teamId}/members`,{method:'POST',body:JSON.stringify({employeeId:data.employeeId,role:data.role,skills:data.skills,experience:data.experience})});
+    closeModal('modal-add-employee'); e.target.reset(); pmToast('Employee added to team!','success'); loadAllData();
+  }catch(err){ pmToast(err.message||'Failed','error'); }
+}
+window.submitAddEmployee=submitAddEmployee;
+
+// Populate dropdowns
+function populateDropdowns(){
+  // Team project select
+  const tps=document.getElementById('teamProjectSelect');
+  if(tps) tps.innerHTML='<option value="">Select Project</option>'+allProjects.map(p=>`<option value="${p._id}">${p.projectName||p.name}</option>`).join('');
+
+  // Add employee - employees
+  const ae=document.getElementById('addEmpSelect');
+  if(ae) ae.innerHTML='<option value="">Select Employee</option>'+allEmployees.map(e=>`<option value="${e._id}">${e.name} (${e.department||'—'})</option>`).join('');
+
+  // Add employee - teams
+  const at=document.getElementById('addTeamSelect');
+  if(at) at.innerHTML='<option value="">Select Team</option>'+allTeams.map(t=>`<option value="${t._id}">${t.name}</option>`).join('');
+
+  // Team employees checkboxes
+  const tec = document.getElementById('teamEmployeesCheckboxes');
+  if(tec) renderTeamEmployeeCheckboxes(allEmployees);
+
+  // Dept filter dropdown in Create Team modal
+  const tdf = document.getElementById('teamDeptFilter');
+  if(tdf) {
+    const depts = [...new Set(allEmployees.map(e=>e.department).filter(Boolean))].sort();
+    tdf.innerHTML = '<option value="">All Departments</option>' + depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+  }
+
+  // Dept filter
+  const df=document.getElementById('empDeptFilter');
+  const depts=[...new Set(allEmployees.map(e=>e.department).filter(Boolean))];
+  if(df) df.innerHTML='<option value="">All Departments</option>'+depts.map(d=>`<option value="${d}">${d}</option>`).join('');
+}
+
+async function loadAllData(){
+  try{
+    const [teamsRes, empRes, projRes] = await Promise.allSettled([
+      apiFetch('/api/teams?size=500'),
+      apiFetch('/api/users?limit=500').catch(() => apiFetch('/api/manager/members?size=500')),
+      apiFetch('/api/projects?size=500'),
+    ]);
+    if(teamsRes.status==='fulfilled') allTeams=teamsRes.value?.data||[];
+    if(empRes.status==='fulfilled')   allEmployees=empRes.value?.data||[];
+    if(projRes.status==='fulfilled')  allProjects=projRes.value?.data||[];
+    renderTeams(allTeams);
+    filterEmployees();
+    populateDropdowns();
+  }catch(e){
+    console.warn('Load error:',e);
+    // Show placeholders
+    document.getElementById('teamsGrid').innerHTML='<div class="pm-empty-state"><i class="fa fa-exclamation-circle"></i><p>Failed to load teams.</p></div>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadAllData);
+</script>
+</body>
+</html>

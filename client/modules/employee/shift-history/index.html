@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shift History - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: flex !important; flex-direction: column !important; min-height: calc(100vh - 64px); padding-bottom: 60px; }
+
+    /* ── Page Header ── */
+    .pg-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+
+    .filter-select {
+      padding: 10px 16px; border-radius: 12px; border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; outline: none;
+      background: #fff; color: #2b3674; cursor: pointer; transition: .2s;
+    }
+    .filter-select:focus { border-color: #3965FF; }
+
+    /* ── Summary Cards ── */
+    .summary-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+      background: #fff; border-radius: 16px; padding: 20px 22px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      display: flex; align-items: center; gap: 16px;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .sum-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(112,144,176,0.15); }
+    .sum-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+    }
+    .sum-icon.blue   { background: rgba(57,101,255,0.1);  color: #3965FF; }
+    .sum-icon.green  { background: rgba(5,205,153,0.1);   color: #05CD99; }
+    .sum-icon.orange { background: rgba(255,181,71,0.1);  color: #FFB547; }
+    .sum-icon.purple { background: rgba(67,24,255,0.1);   color: #4318FF; }
+    .sum-val { font-size: 24px; font-weight: 800; color: #2b3674; line-height: 1; }
+    .sum-lbl { font-size: 11px; color: #a3aed1; font-weight: 600; margin-top: 4px; text-transform: uppercase; }
+
+    /* ── Timeline / Cards ── */
+    .shift-container { display: flex; flex-direction: column; gap: 16px; }
+
+    .shift-card {
+      background: #fff; border-radius: 16px; padding: 20px 24px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      border-left: 4px solid #3965FF;
+      display: flex; align-items: center; gap: 20px;
+      cursor: pointer; transition: .2s;
+    }
+    .shift-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(57,101,255,0.12); }
+    .shift-card.active-proj { border-left-color: #05CD99; }
+    .shift-card.completed   { border-left-color: #a3aed1; }
+
+    .sc-icon {
+      width: 48px; height: 48px; border-radius: 14px; background: #f4f7fe;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800; color: #3965FF; flex-shrink: 0;
+    }
+
+    .sc-body { flex: 1; min-width: 0; }
+    .sc-project { font-size: 16px; font-weight: 800; color: #2b3674; margin-bottom: 4px; }
+    .sc-role    { font-size: 12px; color: #a3aed1; font-weight: 600; margin-bottom: 8px; }
+    .sc-meta    { display: flex; gap: 16px; flex-wrap: wrap; }
+    .sc-chip {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: #5d6d8a; font-weight: 600;
+      background: #f4f7fe; padding: 4px 10px; border-radius: 20px;
+    }
+    .sc-chip i { font-size: 10px; color: #a3aed1; }
+
+    .sc-right { text-align: right; flex-shrink: 0; }
+    .sc-badge {
+      display: inline-block; padding: 5px 14px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; margin-bottom: 8px;
+    }
+    .sc-badge.active    { background: rgba(5,205,153,0.12);  color: #05CD99; }
+    .sc-badge.completed { background: rgba(163,174,209,0.12); color: #a3aed1; }
+    .sc-badge.in-progress { background: rgba(57,101,255,0.12); color: #3965FF; }
+    .sc-date { font-size: 11px; color: #a3aed1; font-weight: 600; }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center; padding: 64px 24px;
+      background: #fff; border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+    }
+    .empty-icon { font-size: 48px; color: #a3aed1; margin-bottom: 16px; }
+    .empty-title { font-size: 18px; font-weight: 700; color: #2b3674; margin-bottom: 8px; }
+    .empty-sub { font-size: 13px; color: #a3aed1; }
+
+    @media (max-width: 900px) { .summary-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .summary-row { grid-template-columns: 1fr; } .sc-meta { flex-direction: column; gap: 8px; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <!-- Page Header -->
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-exchange-alt" style="color:#3965FF;margin-right:8px;"></i>Project Shift History</h1>
+          <p>Your complete history of project assignments and transitions.</p>
+        </div>
+        <div class="header-actions">
+          <select class="filter-select" id="statusFilter">
+            <option value="all">All Projects</option>
+            <option value="active">Currently Active</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Summary Row -->
+      <div class="summary-row" id="summaryRow">
+        <div class="sum-card" onclick="setQuickFilter('all')">
+          <div class="sum-icon blue"><i class="fa fa-folder-open"></i></div>
+          <div>
+            <div class="sum-val" id="sumTotal">—</div>
+            <div class="sum-lbl">Total Projects</div>
+          </div>
+        </div>
+        <div class="sum-card" onclick="setQuickFilter('active')">
+          <div class="sum-icon green"><i class="fa fa-circle" style="font-size:14px;"></i></div>
+          <div>
+            <div class="sum-val" id="sumActive">—</div>
+            <div class="sum-lbl">Currently Active</div>
+          </div>
+        </div>
+        <div class="sum-card" onclick="setQuickFilter('completed')">
+          <div class="sum-icon purple"><i class="fa fa-check-circle"></i></div>
+          <div>
+            <div class="sum-val" id="sumCompleted">—</div>
+            <div class="sum-lbl">Completed</div>
+          </div>
+        </div>
+        <div class="sum-card">
+          <div class="sum-icon orange"><i class="fa fa-tasks"></i></div>
+          <div>
+            <div class="sum-val" id="sumTasks">—</div>
+            <div class="sum-lbl">Tasks Assigned</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shift Cards List -->
+      <div id="shiftList">
+        <div class="empty-state">
+          <div class="empty-icon"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/shift-history/app.js"></script>
+</body>
+</html>

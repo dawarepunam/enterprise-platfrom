@@ -1,0 +1,40 @@
+.mt-4 {
+  margin-top: 22px;
+}
+
+.report-metric-grid,
+.report-filter-card {
+  margin-bottom: 22px;
+}
+
+.report-filter-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+#reportEmployeeSearch {
+  min-width: min(360px, 100%);
+}
+
+#reportEmployeeDepartmentFilter,
+#reportEmployeeStatusFilter {
+  max-width: 220px;
+}
+
+.report-live-table .hr-table tbody tr td:first-child strong {
+  display: block;
+}
+
+.report-pagination-bar {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .report-filter-topline {
+    flex-direction: column;
+  }
+}

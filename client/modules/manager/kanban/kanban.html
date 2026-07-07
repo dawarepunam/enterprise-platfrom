@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Kanban</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Kanban Board</p>
+                            <h1>Move tasks across To Do, In Progress, Review, and Completed</h1>
+                            <p class="hero-text">This board simulates drag-and-drop workflow with status updates, toast notifications, and audit logging whenever a task changes lane.</p>
+                        </div>
+                        <div id="kanbanMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+                <section id="kanbanBoard" class="manager-grid-4"></section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="kanban.js"></script>
+</body>
+</html>

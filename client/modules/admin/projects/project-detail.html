@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Project Detail — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .proj-hero { background:linear-gradient(135deg,#1e40af,#6d28d9); border-radius:16px; padding:28px 32px; color:#fff; margin-bottom:24px; }
+    .proj-hero h1 { font-size:26px; font-weight:800; margin:0 0 6px; }
+    .proj-hero-meta { font-size:13px; opacity:0.85; display:flex; gap:20px; flex-wrap:wrap; margin-top:8px; }
+    .proj-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:24px; }
+    .proj-tab-btn { padding:10px 20px; font-size:13px; font-weight:600; background:none; border:none; border-bottom:2px solid transparent; cursor:pointer; color:var(--text-3); transition:all 0.2s; }
+    .proj-tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .team-card { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all 0.2s; }
+    .team-card:hover { border-color:var(--primary); transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .team-av { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; color:#fff; flex-shrink:0; }
+    .task-row { display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--border-light); }
+    .task-row:last-child { border-bottom:none; }
+    .task-row:hover { background:var(--bg-hover); }
+    .milestone-item { display:flex; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid var(--border-light); }
+    .progress-ring { position:relative; display:inline-flex; align-items:center; justify-content:center; }
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .info-item { background:var(--bg-hover); border-radius:10px; padding:14px 16px; }
+    .info-label { font-size:11px; color:var(--text-4); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+    .info-value { font-size:14px; font-weight:600; color:var(--text-1); }
+    .timeline-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-light); }
+    .timeline-dot { width:8px; height:8px; border-radius:50%; background:var(--primary); flex-shrink:0; margin-top:5px; }
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+    <button class="btn btn-outline btn-sm" onclick="window.location.href='/admin/projects'">← Back to Projects</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="proj-hero" id="projHero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+      <div>
+        <h1 id="heroName">Loading project...</h1>
+        <p id="heroDesc" style="margin:4px 0 0;opacity:0.8;font-size:13px;"></p>
+        <div class="proj-hero-meta">
+          <span>🏢 <span id="heroDept">—</span></span>
+          <span>👤 Manager: <strong id="heroManager">—</strong></span>
+          <span>🤝 Client: <span id="heroClient">—</span></span>
+          <span>⏰ Deadline: <span id="heroDeadline">—</span></span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;">
+        <span id="heroStatus" class="badge badge-info" style="font-size:14px;padding:6px 14px;">—</span>
+        <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="openEditModal()">✏️ Edit</button>
+      </div>
+    </div>
+    <!-- Progress Bar -->
+    <div style="margin-top:20px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+        <span>Project Progress</span><strong id="heroProgress">0%</strong>
+      </div>
+      <div style="height:8px;background:rgba(255,255,255,0.2);border-radius:4px;">
+        <div id="heroProgressBar" style="height:8px;background:#fff;border-radius:4px;transition:width 1s ease;width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px;">
+    <div class="kpi-card kpi-card-blue"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">✅</div></div><div class="kpi-value" id="statTasks">—</div><div class="kpi-label">Total Tasks</div></div>
+    <div class="kpi-card kpi-card-green"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">✓</div></div><div class="kpi-value" id="statDone">—</div><div class="kpi-label">Completed</div></div>
+    <div class="kpi-card kpi-card-orange"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">👥</div></div><div class="kpi-value" id="statTeam">—</div><div class="kpi-label">Team Members</div></div>
+    <div class="kpi-card kpi-card-red"><div class="kpi-top"><div class="kpi-icon kpi-icon-red">📅</div></div><div class="kpi-value" id="statFiles">—</div><div class="kpi-label">Files</div></div>
+    <div class="kpi-card" style="background:var(--bg-card);border:1px solid var(--border);"><div class="kpi-top"><div class="kpi-icon" style="background:#f0fdf4;font-size:20px;">💰</div></div><div class="kpi-value" id="statBudget">—</div><div class="kpi-label">Budget</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="proj-tabs">
+    <button class="proj-tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+    <button class="proj-tab-btn" onclick="switchTab('team',this)">👥 Team</button>
+    <button class="proj-tab-btn" onclick="switchTab('tasks',this)">✅ Tasks</button>
+    <button class="proj-tab-btn" onclick="switchTab('files',this)">📁 Files</button>
+    <button class="proj-tab-btn" onclick="switchTab('meetings',this)">📹 Meetings</button>
+    <button class="proj-tab-btn" onclick="switchTab('timeline',this)">📋 Activity</button>
+  </div>
+
+  <!-- Overview -->
+  <div class="tab-panel active" id="tab-overview">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📌 Project Details</div></div>
+        <div class="card-body"><div class="info-grid" id="infoGrid">Loading...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🎯 Milestones</div></div>
+        <div class="card-body" style="padding:0" id="milestoneList"><div style="padding:20px;color:var(--text-4)">No milestones set.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="tab-panel" id="tab-team">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;" id="teamGrid">
+      <div style="padding:40px;text-align:center;"><div class="loader-spinner" style="margin:0 auto;"></div></div>
+    </div>
+  </div>
+
+  <!-- Tasks -->
+  <div class="tab-panel" id="tab-tasks">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">✅ All Tasks</div>
+        <button class="btn btn-primary btn-sm" onclick="openModal('addTaskModal')">+ Add Task</button>
+      </div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table">
+          <thead><tr><th>Task</th><th>Assignee</th><th>Priority</th><th>Due Date</th><th>Status</th></tr></thead>
+          <tbody id="tasksBody"><tr><td colspan="5" style="text-align:center;padding:30px;">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Files -->
+  <div class="tab-panel" id="tab-files">
+    <div class="card">
+      <div class="card-header"><div class="card-title">📁 Project Files</div></div>
+      <div class="card-body" style="padding:0"><div id="filesList" style="padding:20px;color:var(--text-4)">Loading files...</div></div>
+    </div>
+  </div>
+
+  <!-- Meetings -->
+  <div class="tab-panel" id="tab-meetings">
+    <div class="card">
+      <div class="card-header"><div class="card-title">📹 Meetings</div></div>
+      <div class="card-body" style="padding:0"><div id="meetingsList" style="padding:20px;color:var(--text-4)">Loading meetings...</div></div>
+    </div>
+  </div>
+
+  <!-- Activity -->
+  <div class="tab-panel" id="tab-timeline">
+    <div class="card">
+      <div class="card-header"><div class="card-title">📋 Activity Timeline</div></div>
+      <div class="card-body" style="padding:0"><div id="timelineList" style="padding:16px;"></div></div>
+    </div>
+  </div>
+</main>
+
+<!-- Add Task Modal -->
+<div class="modal-overlay hidden" id="addTaskModal">
+  <div class="modal-box modal-lg">
+    <div class="modal-header"><div class="modal-title">+ Add Task</div><button class="modal-close" onclick="closeModal('addTaskModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group span-2"><label class="form-label">Task Title *</label><input class="form-control" id="tTitle" placeholder="Task description..."/></div>
+        <div class="form-group"><label class="form-label">Assignee</label><select class="form-control" id="tAssignee"><option value="">Unassigned</option></select></div>
+        <div class="form-group"><label class="form-label">Priority</label>
+          <select class="form-control" id="tPriority">
+            <option value="LOW">Low</option><option value="MEDIUM" selected>Medium</option><option value="HIGH">High</option><option value="CRITICAL">Critical</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Due Date</label><input class="form-control" id="tDue" type="date"/></div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="tStatus">
+            <option value="To Do">To Do</option><option value="In Progress">In Progress</option><option value="Review">Review</option><option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addTaskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addTask()">✅ Create Task</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script>
+const projId = location.pathname.split('/').filter(Boolean).pop();
+let projData = {};
+
+function openModal(id){document.getElementById(id)?.classList.remove('hidden');}
+function closeModal(id){document.getElementById(id)?.classList.add('hidden');}
+window.openModal=openModal; window.closeModal=closeModal;
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))e.target.classList.add('hidden');});
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.proj-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+window.switchTab=switchTab;
+
+async function loadProject() {
+  try {
+    const res = await AdminAPI.getProjectById(projId);
+    projData = res.data || res.project || {};
+
+    const prog = projData.progress || 0;
+    document.getElementById('heroName').textContent    = projData.projectName || projData.name || 'Untitled';
+    document.getElementById('heroDesc').textContent    = projData.description || '';
+    document.getElementById('heroDept').textContent    = projData.department || '—';
+    document.getElementById('heroManager').textContent = projData.manager || '—';
+    document.getElementById('heroClient').textContent  = projData.clientName || '—';
+    document.getElementById('heroDeadline').textContent= window.fmt.date(projData.deadline || projData.dueDate);
+    document.getElementById('heroProgress').textContent= prog + '%';
+    document.getElementById('heroProgressBar').style.width = prog + '%';
+    document.title = `${projData.projectName||'Project'} — JMKC CRM`;
+
+    const statusEl = document.getElementById('heroStatus');
+    const statMap = {Active:'info',Completed:'success',Delayed:'danger',Draft:'gray','On Hold':'warning',Assigned:'purple'};
+    statusEl.className = `badge badge-${statMap[projData.status]||'gray'}`;
+    statusEl.textContent = projData.status || 'Draft';
+
+    const tasks     = projData.tasks     || [];
+    const members   = projData.teamMembers || projData.teamMembersDetailed || [];
+    const files     = projData.files     || [];
+    const meetings  = projData.meetings  || [];
+    const timeline  = projData.timeline  || projData.workHistory || [];
+
+    document.getElementById('statTasks').textContent  = tasks.length;
+    document.getElementById('statDone').textContent   = tasks.filter(t=>['Completed','Approved'].includes(t.status)).length;
+    document.getElementById('statTeam').textContent   = members.length;
+    document.getElementById('statFiles').textContent  = files.length;
+    document.getElementById('statBudget').textContent = window.fmt.currency(projData.budget||0);
+
+    renderOverview();
+    renderTeam(members);
+    renderTasks(tasks, members);
+    renderFiles(files);
+    renderMeetings(meetings);
+    renderTimeline(timeline);
+
+    // Populate task assignee select
+    const asSel = document.getElementById('tAssignee');
+    if (asSel) asSel.innerHTML = '<option value="">Unassigned</option>' +
+      members.map(m=>`<option value="${m._id}">${m.name||m}</option>`).join('');
+  } catch (err) {
+    document.getElementById('projHero').innerHTML = `<div style="color:#fff;text-align:center;padding:20px;">
+      <p>⚠️ Could not load project: ${err.message}</p>
+      <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);margin-top:8px;" onclick="window.location.href='/admin/projects'">← Back</button>
+    </div>`;
+  }
+}
+
+function renderOverview() {
+  document.getElementById('infoGrid').innerHTML = [
+    { label:'Project Name', value: projData.projectName||projData.name||'—' },
+    { label:'Client', value: projData.clientName||'—' },
+    { label:'Department', value: projData.department||'—' },
+    { label:'Priority', value: projData.priority||'—' },
+    { label:'Budget', value: window.fmt.currency(projData.budget||0) },
+    { label:'Start Date', value: window.fmt.date(projData.startDate) },
+    { label:'Deadline', value: window.fmt.date(projData.deadline||projData.dueDate) },
+    { label:'Progress', value: (projData.progress||0)+'%' },
+    { label:'Team Lead', value: projData.teamLead||'—' },
+    { label:'Status', value: projData.status||'Draft' },
+  ].map(i=>`<div class="info-item"><div class="info-label">${i.label}</div><div class="info-value">${i.value}</div></div>`).join('');
+
+  const ms = projData.milestones || [];
+  document.getElementById('milestoneList').innerHTML = ms.length ?
+    ms.map(m=>`<div class="milestone-item">
+      <span style="font-size:18px">${m.status==='Completed'?'✅':'⏳'}</span>
+      <div style="flex:1"><div style="font-weight:600;font-size:13px">${m.name}</div><div style="font-size:11px;color:var(--text-4)">${window.fmt.date(m.deadline)}</div></div>
+      ${window.statusBadge(m.status||'Pending')}
+    </div>`).join('') :
+    '<div style="padding:20px;color:var(--text-4)">No milestones set.</div>';
+}
+
+function renderTeam(members) {
+  const el = document.getElementById('teamGrid');
+  const avColors = ['#2563EB','#7C3AED','#059669','#DC2626','#D97706'];
+  if (!members.length) {
+    el.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><div class="empty-title">No team members assigned</div></div>';
+    return;
+  }
+  el.innerHTML = members.map((m,i)=>{
+    const name = m.name || m;
+    const color = avColors[i%avColors.length];
+    const initials = window.fmt.initials(name);
+    const perf = m.performanceScore || 0;
+    return `<div class="team-card" onclick="window.location.href='/admin/users/${m._id||''}'">
+      <div class="team-av" style="background:${color}">${initials}</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${name}</div>
+        <div style="font-size:11px;color:var(--text-4)">${m.role||'Member'} · ${m.department||''}</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:6px;">
+          <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+            <div style="width:${perf}%;height:100%;background:${perf>=80?'var(--success)':'var(--warning)'};border-radius:2px;"></div>
+          </div>
+          <span style="font-size:10px;color:var(--text-4);font-weight:600">${perf}%</span>
+        </div>
+      </div>
+      ${window.statusBadge(m.onlineStatus||m.status||'ACTIVE')}
+    </div>`;
+  }).join('');
+}
+
+function renderTasks(tasks, members) {
+  const tbody = document.getElementById('tasksBody');
+  if (!tasks.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">No tasks yet</div></div></td></tr>';
+    return;
+  }
+  const prioColors = {LOW:'var(--text-4)',MEDIUM:'var(--warning)',HIGH:'var(--danger)',CRITICAL:'#7C3AED'};
+  tbody.innerHTML = tasks.map(t=>`
+    <tr style="cursor:pointer" onclick="window.location.href='/admin/tasks/${t._id}'">
+      <td><strong>${t.title||'—'}</strong><br/><span style="font-size:11px;color:var(--text-4)">${t.description?.slice(0,50)||''}</span></td>
+      <td>${t.assignee||t.assigneeName||'—'}</td>
+      <td><span style="font-weight:700;color:${prioColors[t.priority]||'var(--text-3)'}">${t.priority||'—'}</span></td>
+      <td>${window.fmt.date(t.dueDate||t.deadline)}</td>
+      <td>${window.statusBadge(t.status)}</td>
+    </tr>`).join('');
+}
+
+function renderFiles(files) {
+  const el = document.getElementById('filesList');
+  if (!files.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">No files uploaded</div></div>';
+    return;
+  }
+  el.innerHTML = files.map(f=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border-light);">
+      <span style="font-size:24px">📄</span>
+      <div style="flex:1"><div style="font-weight:600;font-size:13px">${f.name||'File'}</div><div style="font-size:11px;color:var(--text-4)">${f.size||''} · ${window.fmt.date(f.createdAt)}</div></div>
+      ${f.url||f.webUrl?`<a href="${f.url||f.webUrl}" target="_blank" class="btn btn-outline btn-sm">Open</a>`:''}
+    </div>`).join('');
+}
+
+function renderMeetings(meetings) {
+  const el = document.getElementById('meetingsList');
+  if (!meetings.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📹</div><div class="empty-title">No meetings scheduled</div></div>';
+    return;
+  }
+  el.innerHTML = meetings.map(m=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border-light);">
+      <span style="font-size:24px">📹</span>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${m.title||'Meeting'}</div>
+        <div style="font-size:11px;color:var(--text-4)">${window.fmt.dateTime(m.scheduledFor||m.startTime||m.date)} · ${m.attendees?.length||0} attendees</div>
+      </div>
+      ${m.joinUrl||m.microsoft?.joinUrl?`<a href="${m.joinUrl||m.microsoft?.joinUrl}" target="_blank" class="btn btn-primary btn-sm">Join</a>`:''}
+    </div>`).join('');
+}
+
+function renderTimeline(timeline) {
+  const el = document.getElementById('timelineList');
+  if (!timeline.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No activity yet</div></div>';
+    return;
+  }
+  el.innerHTML = timeline.slice(0,20).map(t=>`
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--text-2)">${t.type||'Activity'}</div>
+        <div style="font-size:13px;color:var(--text-1)">${t.title||''}</div>
+        <div style="font-size:11px;color:var(--text-4)">${window.fmt.dateTime(t.createdAt)} ${t.meta?'· '+t.meta:''}</div>
+      </div>
+    </div>`).join('');
+}
+
+function openEditModal() {
+  window.location.href = `/admin/projects?edit=${projId}`;
+}
+
+async function addTask() {
+  const title = document.getElementById('tTitle').value.trim();
+  if (!title) { window.showToast('Error','Title required','error'); return; }
+  try {
+    await AdminAPI.createTask({
+      title, projectId: projId, projectName: projData.projectName||projData.name,
+      assigneeId: document.getElementById('tAssignee').value,
+      priority: document.getElementById('tPriority').value,
+      dueDate: document.getElementById('tDue').value,
+      status: document.getElementById('tStatus').value,
+    });
+    closeModal('addTaskModal');
+    window.showToast('Task Created!', title, 'success');
+    loadProject();
+  } catch (err) { window.showToast('Error', err.message, 'error'); }
+}
+window.addTask = addTask;
+
+document.addEventListener('DOMContentLoaded', loadProject);
+</script>
+</body>
+</html>

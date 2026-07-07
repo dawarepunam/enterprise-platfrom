@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Projects – Project Manager</title>
+  <link rel="stylesheet" href="/modules/project-manager/projects/style.css" />
+  <script defer src="/modules/project-manager/projects/list.js"></script>
+</head>
+<body>
+  <!-- Header & Sidebar are loaded globally via common layout -->
+  <section class="content-wrapper">
+    <h1 class="page-title">All Projects</h1>
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="Search projects..." />
+      <button id="addProjectBtn" class="primary-btn"><i class="fa fa-plus"></i> New Project</button>
+    </div>
+    <table class="project-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody id="projectTableBody">
+        <!-- Rows injected by JS -->
+      </tbody>
+    </table>
+    <div class="pagination" id="paginationControls"></div>
+  </section>
+</body>
+</html>

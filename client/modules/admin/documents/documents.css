@@ -1,0 +1,5 @@
+.doc-card { background:#fff; border:1px solid var(--border); border-radius:var(--r-lg); padding:20px; text-align:center; cursor:pointer; transition:all var(--ease-med); }
+    .doc-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); border-color:var(--primary); }
+    .doc-icon { font-size:48px; margin-bottom:12px; }
+    .doc-name { font-size:14px; font-weight:600; color:var(--text); margin-bottom:4px; word-break:break-word; }
+    .doc-meta { font-size:11px; color:var(--text-4); }

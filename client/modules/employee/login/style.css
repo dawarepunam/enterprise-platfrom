@@ -1,0 +1,119 @@
+/* Login page specific styles */
+
+@import url("../shared/common.css");
+
+/* Override primary color for login if needed */
+
+:root {
+  --login-primary: var(--color-primary);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background: var(--clr-bg);
+}
+
+/* Ensure the login container adapts to screen size and can scroll if needed */
+
+.login-container {
+  width: min(1100px, 100%);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2rem;
+  align-items: center;
+  min-height: 100%;
+  padding: 1rem;
+}
+
+.login-illustration {
+  background: var(--login-primary);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+}
+
+.login-illustration img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form styling */
+
+.login-form {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 520px;
+}
+
+body.dark .login-form {
+  background: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}
+
+/* Button primary */
+
+.btn.primary {
+  background: var(--login-primary);
+}
+
+/* Make form and illustration stack cleanly on smaller screens */
+
+@media (max-width: 920px) {
+  .login-container {
+    grid-template-columns: 1fr;
+  }
+  .login-illustration,
+  .login-form {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-page {
+    padding: 1rem;
+  }
+  .login-form {
+    padding: 1.75rem;
+  }
+}
+
+/* OTP modal styling */
+
+.otp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.otp-modal .modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+body.dark .otp-modal .modal-content {
+  background: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}

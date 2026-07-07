@@ -1,0 +1,29 @@
+<div id="notificationPanel" class="modal">
+    <div class="modal-content" style="max-width: 450px;">
+        <h3>Notifications</h3>
+        <hr style="margin: 12px 0;" />
+
+        <div id="notificationList">
+            <p style="color:#64748b;">No notifications available.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById("notificationBtn");
+        const panel = document.getElementById("notificationPanel");
+
+        if (btn && panel) {
+            btn.addEventListener("click", () => {
+                panel.classList.add("active");
+            });
+
+            panel.addEventListener("click", (e) => {
+                if (e.target === panel) {
+                    panel.classList.remove("active");
+                }
+            });
+        }
+    });
+</script>

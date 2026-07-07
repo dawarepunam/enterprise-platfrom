@@ -1,0 +1,8 @@
+#leaveTypeList,
+#leaveQueueList {
+  min-height: 240px;
+}
+
+#leaveSummaryCards {
+  margin-bottom: 18px;
+}

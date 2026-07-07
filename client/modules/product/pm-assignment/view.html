@@ -1,0 +1,34 @@
+<div class="pm-assignment">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Handoff</span>
+      <h2>Project Manager Assignment</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Assign a Project Manager to take over the generated project.</p>
+    </div>
+  </div>
+
+  <div class="pm-grid">
+    <div class="pm-col-6 pm-card" style="margin: 0 auto; padding: 2rem;">
+      <form id="pmAssignmentForm" onsubmit="event.preventDefault(); window.submitPMAssignment();">
+        <div class="pm-form-group">
+          <label>Requirement Title</label>
+          <input type="text" id="assignReqTitle" class="pm-form-control" disabled />
+        </div>
+        <div class="pm-form-group">
+          <label>Generated Project ID</label>
+          <input type="text" id="assignProjectId" class="pm-form-control" disabled />
+        </div>
+        <div class="pm-form-group">
+          <label>Assign Project Manager</label>
+          <select id="assignPMSelect" class="pm-form-control" required>
+            <option value="" disabled selected>Select a Manager</option>
+            <!-- Populated via script -->
+          </select>
+        </div>
+        <div style="margin-top: 2rem;">
+          <button type="submit" class="pm-btn primary" style="width: 100%;">Assign & Send Notification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

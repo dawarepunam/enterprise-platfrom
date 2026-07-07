@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 24px;
+        }
+
+        @media (max-width: 1200px) {
+            .profile-layout {
+                grid-template-columns: 300px 1fr;
+            }
+            .right-sidebar {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        .profile-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+        }
+        
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--border-gray);
+            margin-bottom: 16px;
+        }
+        
+        .profile-name {
+            font-size: 1.4rem;
+            font-family: var(--font-heading);
+            margin-bottom: 4px;
+        }
+        
+        .profile-designation {
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+
+        .info-list {
+            text-align: left;
+            margin-top: 24px;
+            border-top: 1px solid var(--border-gray);
+            padding-top: 16px;
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .info-item label {
+            display: block;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+
+        .center-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .tab {
+            padding: 16px 24px;
+            font-weight: 500;
+            color: var(--text-gray);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition-fast);
+        }
+
+        .tab.active, .tab:hover {
+            color: var(--primary-blue);
+            border-bottom-color: var(--primary-blue);
+            background: var(--white);
+        }
+
+        .tab-content {
+            padding: 24px;
+            flex: 1;
+        }
+        
+        .right-sidebar .kpi-card {
+            margin-bottom: 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-gray);
+        }
+        .timeline-event {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            border: 2px solid var(--white);
+        }
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard.html" class="menu-item">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i>
+                            <span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item active">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Workforce</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <div class="breadcrumb">
+                        <span>People</span> > <span onclick="window.location.href='employees.html'" style="cursor:pointer">Employee Directory</span> > Rahul Sharma
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <div class="profile-layout">
+                <!-- Left Sidebar -->
+                <div class="left-sidebar">
+                    <div class="profile-card">
+                        <img src="https://ui-avatars.com/api/?name=Rahul+Sharma&background=random" alt="Rahul Sharma">
+                        <h2 class="profile-name">Rahul Sharma</h2>
+                        <div class="profile-designation">Frontend Developer</div>
+                        <span class="badge badge-success">Active</span>
+
+                        <div class="info-list">
+                            <div class="info-item">
+                                <label>Employee ID</label>
+                                <div>EMP001</div>
+                            </div>
+                            <div class="info-item">
+                                <label>Department</label>
+                                <div>Development</div>
+                            </div>
+                            <div class="info-item">
+                                <label>Manager</label>
+                                <div>Amit Verma</div>
+                            </div>
+                            <div class="info-item">
+                                <label>Email</label>
+                                <div>rahul.sharma@jmkc.com</div>
+                            </div>
+                            <div class="info-item">
+                                <label>Phone</label>
+                                <div>+91 9876543210</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Content -->
+                <div class="center-content">
+                    <div class="tabs">
+                        <div class="tab active">Overview</div>
+                        <div class="tab">Employment</div>
+                        <div class="tab">Documents</div>
+                        <div class="tab">Assets</div>
+                        <div class="tab">Timeline</div>
+                    </div>
+                    <div class="tab-content">
+                        <h3>Timeline</h3>
+                        <br>
+                        <div class="timeline">
+                            <div class="timeline-event">
+                                <div class="timeline-date">12 June 2026</div>
+                                <div class="timeline-title">Joined Company</div>
+                                <div class="text-gray" style="font-size:0.9rem">Joined as Junior Developer in Development Dept.</div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="timeline-date">15 Dec 2026</div>
+                                <div class="timeline-title">Promotion</div>
+                                <div class="text-gray" style="font-size:0.9rem">Promoted to Frontend Developer</div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="timeline-date">20 Jan 2027</div>
+                                <div class="timeline-title">Award</div>
+                                <div class="text-gray" style="font-size:0.9rem">Employee of the Month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Stats -->
+                <div class="right-sidebar">
+                    <div class="kpi-card" style="padding: 16px;">
+                        <div class="kpi-title">Attendance %</div>
+                        <div class="kpi-value" style="font-size:1.5rem">98%</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 16px;">
+                        <div class="kpi-title">Leave Balance</div>
+                        <div class="kpi-value" style="font-size:1.5rem">12 Days</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 16px;">
+                        <div class="kpi-title">Performance Score</div>
+                        <div class="kpi-value" style="font-size:1.5rem">4.8 / 5</div>
+                    </div>
+                    <div class="kpi-card" style="padding: 16px;">
+                        <div class="kpi-title">Assigned Assets</div>
+                        <div class="kpi-value" style="font-size:1.5rem">3 Items</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status">
+                    <i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0 | Last Backup: 02:00 AM
+                </div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

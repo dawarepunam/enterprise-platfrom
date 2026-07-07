@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assets - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .asset-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            transition: var(--transition-normal);
+            position: relative;
+        }
+        .asset-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+        .asset-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .asset-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+        .asset-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .asset-info p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+        .asset-actions {
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid var(--border-gray);
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+        .asset-actions button {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item active">Assets</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>People</span> > Assets</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Assets</h1>
+                <div style="display: flex; gap: 12px;">
+                    <select class="form-control" style="width:auto">
+                        <option>All Status</option>
+                        <option>Available</option>
+                        <option>Assigned</option>
+                        <option>Damaged</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="asset-grid">
+                <div class="asset-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-success">Available</span>
+                    </div>
+                    <div class="asset-header">
+                        <div class="asset-icon"><i class="fa-solid fa-laptop"></i></div>
+                        <div class="asset-info">
+                            <h3>MacBook Pro</h3>
+                            <p>AST-001</p>
+                        </div>
+                    </div>
+                    <div class="asset-actions">
+                        <button class="btn btn-primary btn-sm" onclick="showToast('Assign Asset Dialog', 'info')">Assign</button>
+                    </div>
+                </div>
+                
+                <div class="asset-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-warning" style="background:rgba(37, 99, 235, 0.1); color:var(--primary-blue)">Assigned</span>
+                    </div>
+                    <div class="asset-header">
+                        <div class="asset-icon"><i class="fa-solid fa-desktop"></i></div>
+                        <div class="asset-info">
+                            <h3>Dell Monitor</h3>
+                            <p>Assigned to Rahul Sharma</p>
+                        </div>
+                    </div>
+                    <div class="asset-actions">
+                        <button class="btn btn-outline btn-sm">Return</button>
+                        <button class="btn btn-outline btn-sm">Replace</button>
+                    </div>
+                </div>
+                
+                <div class="asset-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-danger">Damaged</span>
+                    </div>
+                    <div class="asset-header">
+                        <div class="asset-icon"><i class="fa-solid fa-keyboard"></i></div>
+                        <div class="asset-info">
+                            <h3>Logitech Keyboard</h3>
+                            <p>AST-034</p>
+                        </div>
+                    </div>
+                    <div class="asset-actions">
+                        <button class="btn btn-outline btn-sm">Repair</button>
+                        <button class="btn btn-outline btn-sm">Discard</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0</div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

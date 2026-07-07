@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Clients — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .client-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:0;cursor:pointer;transition:all var(--ease-med);overflow:hidden;}
+    .client-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:rgba(37,99,235,0.2);}
+    .client-card-top{padding:20px;background:linear-gradient(135deg,#F8FAFC,#EFF6FF);border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:14px;}
+    .client-avatar{width:52px;height:52px;border-radius:var(--r-md);background:linear-gradient(135deg,#2563EB,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0;}
+    .client-name{font-size:15px;font-weight:700;color:var(--text);}
+    .client-company{font-size:12px;color:var(--text-3);}
+    .client-body{padding:14px 16px;}
+    .client-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+    .client-stat{text-align:center;background:var(--bg);border-radius:var(--r-sm);padding:8px;}
+    .client-stat-val{font-size:16px;font-weight:700;color:var(--text);}
+    .client-stat-label{font-size:10px;color:var(--text-4);}
+    .client-footer{padding:10px 16px;border-top:1px solid var(--border-light);background:var(--bg);display:flex;justify-content:space-between;align-items:center;}
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">🤝 Clients</div>
+      <div class="page-subtitle">Manage client relationships, projects and communications</div>
+    </div>
+    <div class="page-top-actions">
+      <div class="view-toggle"><button class="view-btn active" onclick="setView('card',this)">⊞ Cards</button><button class="view-btn" onclick="setView('list',this)">☰ List</button></div>
+      <button class="btn btn-primary" onclick="openModal('addClientModal')">+ Add Client</button>
+    </div>
+  </div>
+
+  <div class="kpi-grid mb-24" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card kpi-card-blue" onclick="filterByCard('total')" style="cursor:pointer"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">🤝</div></div><div class="kpi-value" id="stTotal">—</div><div class="kpi-label">Total Clients</div></div>
+    <div class="kpi-card kpi-card-green" onclick="filterByCard('active')" style="cursor:pointer"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">✅</div></div><div class="kpi-value" id="stActive">—</div><div class="kpi-label">Active</div></div>
+    <div class="kpi-card kpi-card-orange"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">📁</div></div><div class="kpi-value" id="stProjects">—</div><div class="kpi-label">Total Projects</div></div>
+    <div class="kpi-card kpi-card-purple"><div class="kpi-top"><div class="kpi-icon kpi-icon-purple">💰</div></div><div class="kpi-value" id="stRevenue">—</div><div class="kpi-label">Total Revenue</div></div>
+  </div>
+
+  <div class="filter-bar card mb-16" style="border-radius:var(--r-lg);">
+    <select class="filter-select" id="clientTypeFilter" onchange="filterClients()">
+      <option value="">All Types</option>
+      <option value="SYSTEM_USER">System User</option>
+      <option value="CRM_RECORD">CRM User</option>
+    </select>
+    <select class="filter-select" id="clientStatusFilter" onchange="filterClients()"><option value="">All Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option><option value="PROSPECT">Prospect</option></select>
+    <input type="search" class="form-control" id="clientSearch" placeholder="Search clients..." style="height:34px;width:220px" oninput="filterClients()"/>
+  </div>
+
+  <div class="grid-auto" id="clientsGrid"></div>
+  <div class="table-wrap hidden" id="clientsList"><table class="data-table"><thead><tr><th>Client</th><th>Company</th><th>Projects</th><th>Budget</th><th>Status</th><th>Contact</th></tr></thead><tbody id="clientsListBody"></tbody></table></div>
+</main>
+
+<!-- Add Client Modal -->
+<div class="modal-overlay hidden" id="addClientModal">
+  <div class="modal-box modal-lg">
+    <div class="modal-header"><div class="modal-title">🤝 Add New Client</div><button class="modal-close" onclick="closeModal('addClientModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Company Name <span class="required">*</span></label><input class="form-control" id="cCompany" placeholder="e.g. TechSoft Solutions" required/></div>
+        <div class="form-group"><label class="form-label">Contact Person <span class="required">*</span></label><input class="form-control" id="cContact" placeholder="Full name" required/></div>
+        <div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input class="form-control" id="cEmail" type="email" placeholder="contact@company.com" required/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="cPhone" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label class="form-label">Website</label><input class="form-control" id="cWebsite" placeholder="https://company.com"/></div>
+        <div class="form-group"><label class="form-label">Industry</label><input class="form-control" id="cIndustry" placeholder="e.g. IT, Healthcare"/></div>
+        <div class="form-group span-2"><label class="form-label">Address</label><input class="form-control" id="cAddress" placeholder="Full address"/></div>
+        <div class="form-group"><label class="form-label">Budget</label><input class="form-control" id="cBudget" type="number" placeholder="0"/></div>
+        <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="cStatus"><option value="ACTIVE">Active</option><option value="PROSPECT">Prospect</option><option value="INACTIVE">Inactive</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addClientModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitClient()">✅ Add Client</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/crm/crm.js"></script>
+</body>
+</html>

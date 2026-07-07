@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goals & KPI - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+    .btn-primary {
+      background: #3965FF; color: #fff; padding: 10px 20px; border-radius: 12px;
+      font-size: 14px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: .2s;
+    }
+    .btn-primary:hover { background: #274ccf; }
+
+    /* ── KPI Cards ── */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .kpi-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); display: flex; align-items: center; gap: 16px; }
+    .kpi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .kpi-icon.blue { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .kpi-icon.green { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .kpi-icon.orange { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .kpi-icon.red { background: rgba(238,93,80,0.1); color: #EE5D50; }
+    .kpi-val { font-size: 24px; font-weight: 800; color: #2b3674; margin-bottom: 2px; }
+    .kpi-label { font-size: 12px; color: #a3aed1; font-weight: 600; }
+
+    /* ── Main Layout ── */
+    .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+    .card-box { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); margin-bottom: 24px; }
+    .card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f0f4ff; padding-bottom: 16px; }
+    .card-title { font-size: 16px; font-weight: 700; color: #2b3674; display: flex; align-items: center; gap: 8px; }
+
+    /* ── Performance Chart Area ── */
+    .perf-score { text-align: center; margin: 30px 0; }
+    .ps-ring { width: 180px; height: 180px; margin: 0 auto 16px; position: relative; border-radius: 50%; background: conic-gradient(#3965FF 85%, #f0f4ff 0); display: flex; align-items: center; justify-content: center; }
+    .ps-ring::after { content: ""; position: absolute; width: 150px; height: 150px; background: #fff; border-radius: 50%; }
+    .ps-inner { position: relative; z-index: 2; }
+    .ps-val { font-size: 42px; font-weight: 800; color: #2b3674; line-height: 1; }
+    .ps-lbl { font-size: 14px; color: #a3aed1; font-weight: 600; }
+    .ps-text { font-size: 14px; color: #5d6d8a; line-height: 1.6; }
+
+    /* ── Goals List ── */
+    #goalsList { display: flex; flex-direction: column; gap: 16px; }
+    .goal-card { border: 1.5px solid #f0f4ff; border-radius: 16px; padding: 20px; transition: .2s; cursor: pointer; }
+    .goal-card:hover { border-color: #3965FF; box-shadow: 0 4px 20px rgba(57,101,255,0.08); transform: translateY(-2px); }
+    .gc-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .gc-title { font-size: 15px; font-weight: 700; color: #2b3674; }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .bg-g { background: rgba(5,205,153,0.12); color: #05CD99; }
+    .bg-o { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .bg-r { background: rgba(238,93,80,0.12); color: #EE5D50; }
+    
+    .gc-meta { display: flex; gap: 16px; font-size: 12px; color: #a3aed1; margin-bottom: 16px; font-weight: 500; }
+    .gc-meta i { color: #3965FF; }
+
+    .gc-prog-row { display: flex; justify-content: space-between; font-size: 11px; color: #5d6d8a; font-weight: 600; margin-bottom: 6px; }
+    .gc-bar { height: 6px; background: #f0f4ff; border-radius: 4px; overflow: hidden; }
+    .gc-fill { height: 100%; border-radius: 4px; transition: width .6s; }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(43,54,116,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-box { background: #fff; border-radius: 20px; padding: 28px; width: 500px; max-width: 90%; box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #a3aed1; cursor: pointer; border: none; background: none; }
+    .modal-title { font-size: 20px; font-weight: 800; color: #2b3674; margin-bottom: 20px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: #2b3674; margin-bottom: 6px; }
+    .form-control { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #f4f7fe; transition: .2s; }
+    .form-control:focus { border-color: #3965FF; }
+    
+    .btn-ghost { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; background: #f4f7fe; color: #2b3674; border: none; cursor: pointer; transition: .2s; }
+    .btn-ghost:hover { background: #e2e8f0; }
+
+    @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .kpi-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-bullseye" style="color:#3965FF;margin-right:8px;"></i>Goals & KPI</h1>
+          <p>Track your professional goals and performance metrics.</p>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('newGoalModal').style.display='flex'"><i class="fa fa-plus"></i> New Goal</button>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-icon blue"><i class="fa fa-flag"></i></div><div><div class="kpi-val" id="gkpiTotal">—</div><div class="kpi-label">Total Goals</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon green"><i class="fa fa-trophy"></i></div><div><div class="kpi-val" id="gkpiAchieved">—</div><div class="kpi-label">Achieved</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon orange"><i class="fa fa-spinner"></i></div><div><div class="kpi-val" id="gkpiInProg">—</div><div class="kpi-label">In Progress</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon red"><i class="fa fa-exclamation-triangle"></i></div><div><div class="kpi-val" id="gkpiAtRisk">—</div><div class="kpi-label">At Risk</div></div></div>
+      </div>
+
+      <div class="main-grid">
+        
+        <div>
+          <div class="card-box">
+            <div class="card-hdr">
+              <div class="card-title"><i class="fa fa-tasks"></i> My Goals</div>
+            </div>
+            <div id="goalsList">
+              <div style="text-align:center;padding:40px;color:#a3aed1;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card-box">
+            <div class="card-hdr">
+              <div class="card-title"><i class="fa fa-chart-pie"></i> Performance Score</div>
+            </div>
+            <div class="perf-score">
+              <div class="ps-ring">
+                <div class="ps-inner">
+                  <div class="ps-val">85</div>
+                  <div class="ps-lbl">Very Good</div>
+                </div>
+              </div>
+              <p class="ps-text">Your performance is on track for the current quarter. Keep up the great work and focus on completing your high-priority goals.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="newGoalModal" style="display:none">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('newGoalModal').style.display='none'"><i class="fa fa-times"></i></button>
+    <div class="modal-title">Set New Goal</div>
+    
+    <div class="form-group"><label class="form-label">Goal Title *</label><input type="text" class="form-control" id="ngTitle" placeholder="e.g. Complete React Module by Q2"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="form-group"><label class="form-label">Category</label><select class="form-control" id="ngCat"><option>Professional</option><option>Technical</option><option>Soft Skills</option><option>Leadership</option></select></div>
+      <div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-control" id="ngDue"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="ngDesc" rows="3" placeholder="Details about this goal..."></textarea></div>
+    
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;">
+      <button class="btn-ghost" onclick="document.getElementById('newGoalModal').style.display='none'">Cancel</button>
+      <button class="btn-primary" id="btnSaveGoal">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/goals-kpi/app.js"></script>
+</body>
+</html>

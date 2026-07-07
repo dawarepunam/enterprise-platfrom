@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Department Detail — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <style>
+    .dept-hero { background:linear-gradient(135deg,#2563EB,#7C3AED); border-radius:16px; padding:32px; color:#fff; margin-bottom:24px; display:flex; justify-content:space-between; align-items:flex-start; }
+    .dept-hero-left h1 { font-size:28px; font-weight:800; margin:0 0 6px; }
+    .dept-hero-left p { font-size:14px; opacity:0.85; margin:0; }
+    .dept-kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+    .dept-section { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:24px; }
+    .dept-section-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .dept-section-title { font-size:15px; font-weight:700; color:var(--text-1); }
+    .member-card { display:flex; align-items:center; gap:12px; padding:12px 20px; border-bottom:1px solid var(--border-light); cursor:pointer; transition:background 0.15s; }
+    .member-card:hover { background:var(--bg-hover); }
+    .member-card:last-child { border-bottom:none; }
+    .member-av { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff; flex-shrink:0; }
+    .project-row { display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-bottom:1px solid var(--border-light); cursor:pointer; transition:background 0.15s; }
+    .project-row:hover { background:var(--bg-hover); }
+    .project-row:last-child { border-bottom:none; }
+    .edit-form { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:20px; }
+  </style>
+</head>
+<body class="admin-body">
+<main class="admin-content" id="mainContent">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+    <button class="btn btn-outline btn-sm" onclick="window.location.href='/admin/departments'">← Back to Departments</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="dept-hero" id="deptHero">
+    <div class="dept-hero-left">
+      <h1 id="heroName">Loading...</h1>
+      <p id="heroDesc">Fetching department details...</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="openModal('editDeptModal')">✏️ Edit</button>
+      <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="openModal('addMemberModal')">+ Add Member</button>
+      <button class="btn btn-sm" style="background:rgba(239,68,68,0.25);color:#fff;border:1px solid rgba(239,68,68,0.4);" onclick="deleteDept()">🗑️ Delete</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="dept-kpi-row">
+    <div class="kpi-card kpi-card-blue"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">👥</div></div><div class="kpi-value" id="kpiEmployees">0</div><div class="kpi-label">Total Employees</div></div>
+    <div class="kpi-card kpi-card-green"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">📁</div></div><div class="kpi-value" id="kpiProjects">0</div><div class="kpi-label">Active Projects</div></div>
+    <div class="kpi-card kpi-card-orange"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">✅</div></div><div class="kpi-value" id="kpiActive">0</div><div class="kpi-label">Active Members</div></div>
+    <div class="kpi-card kpi-card-red"><div class="kpi-top"><div class="kpi-icon kpi-icon-red">⚡</div></div><div class="kpi-value" id="kpiCode">—</div><div class="kpi-label">Dept Code</div></div>
+  </div>
+
+  <!-- Members Table -->
+  <div class="dept-section">
+    <div class="dept-section-header">
+      <div class="dept-section-title">👥 Department Members</div>
+      <input class="table-search-input" id="memberSearch" placeholder="Search members..." oninput="filterMembers()" style="width:200px;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:13px;background:var(--bg-input);color:var(--text-1)"/>
+    </div>
+    <div id="membersList"><div style="padding:40px;text-align:center;"><div class="loader-spinner" style="margin:0 auto;"></div></div></div>
+  </div>
+
+  <!-- Projects -->
+  <div class="dept-section">
+    <div class="dept-section-header">
+      <div class="dept-section-title">📁 Department Projects</div>
+      <button class="btn btn-primary btn-sm" onclick="window.location.href='/admin/projects?create=1'">+ New Project</button>
+    </div>
+    <div id="projectsList"><div style="padding:40px;text-align:center;"><div class="loader-spinner" style="margin:0 auto;"></div></div></div>
+  </div>
+</main>
+
+<!-- Edit Dept Modal -->
+<div class="modal-overlay hidden" id="editDeptModal">
+  <div class="modal-box">
+    <div class="modal-header"><div class="modal-title">✏️ Edit Department</div><button class="modal-close" onclick="closeModal('editDeptModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="edit-form" style="display:grid;grid-template-columns:1fr;gap:14px;padding:0;">
+        <div class="form-group"><label class="form-label">Department Name *</label><input class="form-control" id="eName" placeholder="e.g. Engineering"/></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="eDesc" rows="3" placeholder="Department description..."></textarea></div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="eStatus"><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('editDeptModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveDept()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Member Modal -->
+<div class="modal-overlay hidden" id="addMemberModal">
+  <div class="modal-box">
+    <div class="modal-header"><div class="modal-title">+ Assign Member to Department</div><button class="modal-close" onclick="closeModal('addMemberModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Select User</label><select class="form-control" id="memberSelect"><option value="">Loading users...</option></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addMemberModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="assignMember()">✅ Assign</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script>
+  const deptId = location.pathname.split('/').pop();
+  let deptData = {}, allMembers = [];
+  function openModal(id){document.getElementById(id)?.classList.remove('hidden');}
+  function closeModal(id){document.getElementById(id)?.classList.add('hidden');}
+  document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))e.target.classList.add('hidden');});
+  const avatarColors=['#2563EB','#7C3AED','#059669','#DC2626','#D97706','#0891B2','#7C3AED'];
+
+  async function loadDept() {
+    try {
+      const res = await AdminAPI.get(`/departments/${deptId}`);
+      deptData = res.data || res.department || {};
+      const employees = deptData.employees || [];
+      const projects  = deptData.projects  || [];
+      
+      const usersRes = await AdminAPI.getUsers('?limit=500&status=ACTIVE');
+      const allUsers = usersRes.data || usersRes.users || [];
+      
+      const dName = (deptData.name || '').toLowerCase();
+      const matchedUsers = allUsers.filter(u => {
+        const uDept = typeof u.department === 'string' ? u.department.toLowerCase() : (u.department && u.department.name ? u.department.name.toLowerCase() : '');
+        const uRole = (u.role || '').toLowerCase();
+        if (uDept === dName) return true;
+        if (dName === 'hr' && uRole === 'hr') return true;
+        if ((dName === 'project manager' || dName === 'project managers') && uRole.includes('manager')) return true;
+        if (dName === 'marketing' && uRole.includes('marketing')) return true;
+        if (dName === 'development' && (uRole.includes('dev') || (u.designation||'').toLowerCase().includes('dev'))) return true;
+        return false;
+      });
+      
+      const finalMembers = [...employees];
+      matchedUsers.forEach(mu => {
+         if(!finalMembers.find(fm => fm._id === mu._id)) finalMembers.push(mu);
+      });
+      allMembers = finalMembers;
+
+      document.getElementById('heroName').textContent = deptData.name || 'Department';
+      document.getElementById('heroDesc').textContent = deptData.description || 'No description provided.';
+      document.title = `${deptData.name} — JMKC CRM`;
+
+      document.getElementById('kpiEmployees').textContent = allMembers.length;
+      document.getElementById('kpiProjects').textContent  = projects.length;
+      document.getElementById('kpiActive').textContent    = allMembers.filter(e=>(e.status||'ACTIVE')==='ACTIVE').length;
+      document.getElementById('kpiCode').textContent      = deptData.code || '—';
+
+      renderMembers(allMembers);
+      renderProjects(projects);
+
+      document.getElementById('eName').value   = deptData.name || '';
+      document.getElementById('eDesc').value   = deptData.description || '';
+      document.getElementById('eStatus').value = deptData.status || 'ACTIVE';
+
+      const currentIds = new Set(allMembers.map(e=>e._id));
+      const unassigned = allUsers.filter(u=>!currentIds.has(u._id));
+      document.getElementById('memberSelect').innerHTML = '<option value="">Select user to assign</option>' +
+        unassigned.map(u=>`<option value="${u._id}" data-name="${u.name}">${u.name} (${u.role})</option>`).join('');
+    } catch (err) {
+      document.getElementById('mainContent').innerHTML = `<div style="padding:60px;text-align:center;color:var(--danger)">
+        <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+        <h2>Could not load department</h2><p>${err.message}</p>
+        <button class="btn btn-primary" onclick="window.location.href='/admin/departments'">← Back to Departments</button>
+      </div>`;
+    }
+  }
+
+  function renderMembers(employees) {
+    const el = document.getElementById('membersList');
+    if (!employees.length) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-title">No members in this department</div><div class="empty-desc">Click "+ Add Member" to assign users</div></div>';
+      return;
+    }
+    el.innerHTML = employees.map((e,i)=>{
+      const color = avatarColors[i % avatarColors.length];
+      const initials = window.fmt.initials(e.name||'?');
+      return `<div class="member-card" onclick="window.location.href='/admin/users/${e._id||e.id}'">
+        <div class="member-av" style="background:${color}">${initials}</div>
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:13px">${e.name||'—'}</div>
+          <div style="font-size:11px;color:var(--text-4)">${e.email||''} · ${e.designation||e.role||'Member'}</div>
+        </div>
+        ${window.statusBadge(e.status||'ACTIVE')}
+        <div style="display:flex;gap:4px;margin-left:8px;" onclick="event.stopPropagation()">
+          <button class="btn btn-icon btn-sm" onclick="window.location.href='/admin/users/${e._id||e.id}'">👁️</button>
+          <button class="btn btn-icon btn-sm" style="color:var(--danger)" onclick="removeMember('${e._id||e.id}','${(e.name||'').replace(/'/g,"\\'")}')">✖</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function filterMembers() {
+    const q = document.getElementById('memberSearch').value.toLowerCase();
+    const filtered = allMembers.filter(m=>(m.name||'').toLowerCase().includes(q)||(m.email||'').toLowerCase().includes(q));
+    renderMembers(filtered);
+  }
+  window.filterMembers = filterMembers;
+
+  function renderProjects(projects) {
+    const el = document.getElementById('projectsList');
+    if (!projects.length) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-icon">📁</div><div class="empty-title">No projects in this department</div></div>';
+      return;
+    }
+    el.innerHTML = projects.map(p=>{
+      const prog = p.progress || 0;
+      return `<div class="project-row" onclick="window.location.href='/admin/projects/${p._id}'">
+        <div>
+          <div style="font-weight:600;font-size:13px">${p.projectName||p.name||'Untitled'}</div>
+          <div style="font-size:11px;color:var(--text-4)">Manager: ${p.manager||'Unassigned'} · Deadline: ${window.fmt.date(p.deadline||p.dueDate)}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--text-4)">Progress</div>
+            <div style="font-weight:700;font-size:13px;color:${prog>=80?'var(--success)':prog>=50?'var(--warning)':'var(--danger)'}">${prog}%</div>
+          </div>
+          ${window.statusBadge(p.status||'Draft')}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  async function saveDept() {
+    const name = document.getElementById('eName').value.trim();
+    if (!name) { window.showToast('Error','Name is required','error'); return; }
+    try {
+      await AdminAPI.put(`/departments/${deptId}`, {
+        name, description: document.getElementById('eDesc').value, status: document.getElementById('eStatus').value
+      });
+      closeModal('editDeptModal');
+      window.showToast('Updated!', 'Department saved.', 'success');
+      loadDept();
+    } catch (err) { window.showToast('Error', err.message, 'error'); }
+  }
+  window.saveDept = saveDept;
+
+  async function assignMember() {
+    const sel = document.getElementById('memberSelect');
+    const userId = sel.value;
+    const userName = sel.options[sel.selectedIndex]?.dataset.name || '';
+    if (!userId) { window.showToast('Select a user first','','error'); return; }
+    try {
+      await AdminAPI.updateUser(userId, { department: deptData.name });
+      closeModal('addMemberModal');
+      window.showToast('Assigned!', `${userName} added to ${deptData.name}.`, 'success');
+      loadDept();
+    } catch (err) { window.showToast('Error', err.message, 'error'); }
+  }
+  window.assignMember = assignMember;
+
+  async function removeMember(userId, name) {
+    if (!confirm(`Remove ${name} from this department?`)) return;
+    try {
+      await AdminAPI.updateUser(userId, { department: '' });
+      window.showToast('Removed', `${name} removed from department.`, 'success');
+      loadDept();
+    } catch (err) { window.showToast('Error', err.message, 'error'); }
+  }
+  window.removeMember = removeMember;
+
+  async function deleteDept() {
+    if (!confirm(`Delete department "${deptData.name}"? Members will be unassigned.`)) return;
+    try {
+      await AdminAPI.deleteDept(deptId);
+      window.showToast('Deleted', 'Department removed.', 'success');
+      setTimeout(()=>window.location.href='/admin/departments', 1000);
+    } catch (err) { window.showToast('Error', err.message, 'error'); }
+  }
+  window.deleteDept = deleteDept;
+
+  document.addEventListener('DOMContentLoaded', loadDept);
+</script>
+</body>
+</html>

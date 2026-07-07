@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Tasks - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: flex !important; flex-direction: column !important; min-height: calc(100vh - 64px); padding-bottom: 60px; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+
+    /* ── Stats Row ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #fff; border-radius: 16px; padding: 18px 20px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      display: flex; align-items: center; gap: 14px;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(112,144,176,0.15); }
+    .stat-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+    }
+    .stat-icon.blue   { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .stat-icon.orange { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .stat-icon.green  { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .stat-icon.red    { background: rgba(238,93,80,0.1); color: #EE5D50; }
+    .stat-val  { font-size: 24px; font-weight: 800; color: #2b3674; }
+    .stat-lbl  { font-size: 12px; color: #a3aed1; font-weight: 500; }
+
+    /* ── Filter Bar ── */
+    .filter-bar {
+      background: #fff; border-radius: 16px;
+      padding: 16px 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .srch-wrap {
+      flex: 1; min-width: 200px; position: relative; display: flex; align-items: center;
+    }
+    .srch-wrap i { position: absolute; left: 12px; color: #a3aed1; }
+    .srch-wrap input {
+      width: 100%; padding: 9px 12px 9px 36px;
+      border: 1.5px solid #e2e8f0; border-radius: 10px;
+      font-size: 13px; font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s;
+    }
+    .srch-wrap input:focus { border-color: #3965FF; }
+    .filter-sel {
+      padding: 9px 12px; border: 1.5px solid #e2e8f0;
+      border-radius: 10px; font-size: 13px; outline: none; color: #2b3674; cursor: pointer; background: #fff;
+    }
+
+    /* ── Table Layout ── */
+    .table-card {
+      background: #fff; border-radius: 18px; padding: 24px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1); overflow-x: auto;
+    }
+    .data-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .data-table th {
+      padding: 12px 16px; font-size: 11px; font-weight: 600; color: #a3aed1;
+      text-transform: uppercase; border-bottom: 1px solid #e2e8f0;
+    }
+    .data-table td { padding: 16px; border-bottom: 1px solid #f0f4ff; font-size: 13px; color: #2b3674; }
+    .data-table tbody tr { transition: background .2s; cursor: pointer; }
+    .data-table tbody tr:hover { background: #f8fafc; }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    
+    .task-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: #2b3674; }
+    .task-proj  { font-size: 11px; color: #a3aed1; }
+
+    /* Badges */
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .pri-high { background: rgba(238,93,80,0.12); color: #EE5D50; }
+    .pri-med  { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .pri-low  { background: rgba(5,205,153,0.12); color: #05CD99; }
+    
+    .st-todo { background: rgba(163,174,209,0.12); color: #a3aed1; }
+    .st-prog { background: rgba(57,101,255,0.12); color: #3965FF; }
+    .st-rev  { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .st-done { background: rgba(5,205,153,0.12); color: #05CD99; }
+
+    /* Progress bar */
+    .bar-bg { width: 100px; height: 6px; background: #f0f4ff; border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #3965FF, #05CD99); border-radius: 4px; }
+
+    /* Error / Empty */
+    .empty-box { text-align: center; padding: 60px 20px; }
+    .empty-box i { font-size: 48px; color: #a3aed1; margin-bottom: 16px; display: block; }
+    .empty-box h3 { font-size: 18px; color: #2b3674; margin-bottom: 8px; }
+    .empty-box p { color: #a3aed1; font-size: 13px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .stats-row { grid-template-columns: 1fr; } .filter-bar { flex-direction: column; align-items: stretch; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-tasks" style="color:#3965FF;margin-right:8px;"></i>My Tasks</h1>
+          <p>Manage your assignments, track progress, and update status.</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card" onclick="setQuickFilter('')"><div class="stat-icon blue"><i class="fa fa-list"></i></div><div><div class="stat-val" id="stTot">—</div><div class="stat-lbl">Total Tasks</div></div></div>
+        <div class="stat-card" onclick="setQuickFilter('progress')"><div class="stat-icon orange"><i class="fa fa-spinner"></i></div><div><div class="stat-val" id="stProg">—</div><div class="stat-lbl">In Progress</div></div></div>
+        <div class="stat-card" onclick="setQuickFilter('review')"><div class="stat-icon red"><i class="fa fa-clock"></i></div><div><div class="stat-val" id="stPend">—</div><div class="stat-lbl">Pending Review</div></div></div>
+        <div class="stat-card" onclick="setQuickFilter('done')"><div class="stat-icon green"><i class="fa fa-check"></i></div><div><div class="stat-val" id="stDone">—</div><div class="stat-lbl">Completed</div></div></div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="srch-wrap">
+          <i class="fa fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search tasks by title, description..." />
+        </div>
+        <select class="filter-sel" id="statusFilter">
+          <option value="">All Status</option>
+          <option value="todo">To Do</option>
+          <option value="progress">In Progress</option>
+          <option value="review">In Review</option>
+          <option value="done">Completed</option>
+        </select>
+        <select class="filter-sel" id="priorityFilter">
+          <option value="">All Priority</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+
+      <div class="table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Task Details</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Progress</th>
+              <th>Deadline</th>
+              <th>Estimated</th>
+            </tr>
+          </thead>
+          <tbody id="taskBody">
+            <tr><td colspan="6" style="text-align:center;padding:40px;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#3965FF;"></i></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script>
+  let allTasks = [];
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Parse URL params for default filters
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('filter') === 'completed') document.getElementById('statusFilter').value = 'done';
+
+    bindFilters();
+    await loadTasks();
+  });
+
+  async function loadTasks() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get('project') || params.get('projectId') || '';
+      const res = await apiRequest(`/tasks?assignedToMe=true&size=200${projectId ? `&project=${encodeURIComponent(projectId)}` : ''}`);
+      allTasks = Array.isArray(res) ? res : (res?.data || res?.tasks || []);
+      updateStats();
+      applyFilters();
+    } catch (e) {
+      document.getElementById('taskBody').innerHTML = `<tr><td colspan="6"><div class="empty-box"><i class="fa fa-exclamation-triangle"></i><h3>Error loading tasks</h3><p>${e.message}</p></div></td></tr>`;
+    }
+  }
+
+  function normStatus(s) {
+    const sl = (s||'').toLowerCase();
+    if(sl.includes('done') || sl.includes('complet')) return 'done';
+    if(sl.includes('rev')) return 'review';
+    if(sl.includes('prog')) return 'progress';
+    return 'todo';
+  }
+
+  function getStatusClass(s) {
+    const n = normStatus(s);
+    if(n==='done') return 'st-done';
+    if(n==='review') return 'st-rev';
+    if(n==='progress') return 'st-prog';
+    return 'st-todo';
+  }
+  function getStatusLabel(s) {
+    const n = normStatus(s);
+    if(n==='done') return 'Completed';
+    if(n==='review') return 'In Review';
+    if(n==='progress') return 'In Progress';
+    return 'To Do';
+  }
+
+  function getPriorityClass(p) {
+    const pl = (p||'').toLowerCase();
+    if(pl.includes('high') || pl.includes('crit')) return 'pri-high';
+    if(pl.includes('low')) return 'pri-low';
+    return 'pri-med';
+  }
+
+  function updateStats() {
+    document.getElementById('stTot').textContent  = allTasks.length;
+    document.getElementById('stProg').textContent = allTasks.filter(t => normStatus(t.status) === 'progress').length;
+    document.getElementById('stPend').textContent = allTasks.filter(t => normStatus(t.status) === 'review').length;
+    document.getElementById('stDone').textContent = allTasks.filter(t => normStatus(t.status) === 'done').length;
+  }
+
+  function bindFilters() {
+    ['searchInput', 'statusFilter', 'priorityFilter'].forEach(id => {
+      document.getElementById(id).addEventListener('input', applyFilters);
+      document.getElementById(id).addEventListener('change', applyFilters);
+    });
+  }
+
+  function applyFilters() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const st     = document.getElementById('statusFilter').value;
+    const pri    = document.getElementById('priorityFilter').value;
+
+    let list = allTasks.filter(t => {
+      const title = (t.title || t.name || '').toLowerCase();
+      const mSrch = !search || title.includes(search);
+      const mSt   = !st || normStatus(t.status) === st;
+      const mPri  = !pri || (t.priority||'') === pri;
+      return mSrch && mSt && mPri;
+    });
+
+    list.sort((a,b) => new Date(a.deadline||9999) - new Date(b.deadline||9999));
+    renderTable(list);
+  }
+
+  function setQuickFilter(status) {
+    document.getElementById('statusFilter').value = status;
+    applyFilters();
+  }
+
+  function renderTable(list) {
+    const tbody = document.getElementById('taskBody');
+    if (!list.length) {
+      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-box"><i class="fa fa-clipboard-check"></i><h3>No Tasks Found</h3><p>You have no tasks matching the current filters.</p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map(t => {
+      const id = t._id || t.id;
+      const title = t.title || t.name || 'Untitled Task';
+      const proj  = t.projectName || t.project?.name || 'Independent Task';
+      const statL = getStatusLabel(t.status);
+      const statC = getStatusClass(t.status);
+      const pri   = t.priority || 'Medium';
+      const priC  = getPriorityClass(t.priority);
+      const prog  = Math.min(t.progress || 0, 100);
+      const dead  = t.deadline || t.dueDate;
+      const est   = t.estimatedHours ? t.estimatedHours + ' hrs' : '—';
+      const detailUrl = `/employee/task-detail?id=${id}`;
+
+      return `
+        <tr onclick="location='${detailUrl}'">
+          <td>
+            <div class="task-title">${title}</div>
+            <div class="task-proj"><i class="fa fa-briefcase"></i> ${proj}</div>
+          </td>
+          <td><span class="badge ${statC}">${statL}</span></td>
+          <td><span class="badge ${priC}">${pri}</span></td>
+          <td>
+            <div style="font-size:11px;font-weight:600;margin-bottom:4px;color:#2b3674">${prog}%</div>
+            <div class="bar-bg"><div class="bar-fill" style="width:${prog}%"></div></div>
+          </td>
+          <td>
+            <div style="font-size:12px;font-weight:600;color:#2b3674">${dead ? new Date(dead).toLocaleDateString('en-GB') : '—'}</div>
+          </td>
+          <td style="font-weight:600;color:#5d6d8a;">${est}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+</script>
+</body>
+</html>

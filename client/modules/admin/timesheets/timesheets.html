@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Timesheets</title>
+        <link rel="stylesheet" href="/modules/admin/timesheets/timesheets.css">
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <h1>⏱️ Timesheets</h1>
+
+            <!-- Add Timesheet -->
+            <div class="form-box">
+
+                <input id="taskName" placeholder="Task Name">
+                <input id="hours" type="number" placeholder="Hours Worked">
+                <input id="date" type="date">
+
+                <select id="type">
+                    <option value="billable">Billable</option>
+                    <option value="non-billable">Non-Billable</option>
+                </select>
+
+                <button onclick="addTimesheet()">Add Entry</button>
+
+            </div>
+
+            <!-- Summary -->
+            <div class="summary">
+
+                <div class="card">
+                    <h3>Total Hours</h3>
+                    <p id="totalHours">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Billable</h3>
+                    <p id="billableHours">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Non-Billable</h3>
+                    <p id="nonBillableHours">0</p>
+                </div>
+
+            </div>
+
+            <!-- Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Hours</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody id="timesheetTable"></tbody>
+
+            </table>
+
+        </div>
+
+        <script src="/modules/admin/timesheets/timesheets.js"></script>
+
+    </body>
+
+</html>

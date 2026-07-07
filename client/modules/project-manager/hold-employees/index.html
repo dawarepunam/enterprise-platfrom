@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hold Employees – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+
+  <style>
+    /* ── Summary Cards ───────────────────────────────── */
+    .hold-summary-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .hold-stat-card {
+      background: var(--pm-card, #fff);
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .hold-stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .hold-stat-card:nth-child(1)::before { background: #f59e0b; }
+    .hold-stat-card:nth-child(2)::before { background: #3b82f6; }
+    .hold-stat-card:nth-child(3)::before { background: #ef4444; }
+    .hold-stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+    .hold-stat-label {
+      font-size: 11px; text-transform: uppercase; font-weight: 700;
+      color: var(--pm-text-muted, #64748b); letter-spacing: 0.6px; margin-bottom: 8px;
+    }
+    .hold-stat-value { font-size: 26px; font-weight: 800; color: var(--pm-text, #111); line-height: 1; }
+    .hold-stat-sub { font-size: 11.5px; color: var(--pm-text-muted, #64748b); margin-top: 4px; }
+    .hold-stat-icon { font-size: 28px; opacity: 0.75; }
+
+    /* ── Badges ──────────────────────────────────────── */
+    .badge-reason {
+      background: #fef3c7; color: #d97706; font-weight: 700;
+      padding: 4px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .badge-reason.medical { background: #fee2e2; color: #dc2626; }
+    .badge-reason.transition { background: #e0e7ff; color: #4338ca; }
+    .badge-reason.suspension { background: #fce7f3; color: #be185d; }
+
+    /* ── Table Hover ─────────────────────────────────── */
+    .pm-table tbody tr { transition: background 0.15s; }
+    .pm-table tbody tr:hover { background: rgba(245,158,11,0.04) !important; }
+
+    /* ── Modal ───────────────────────────────────────── */
+    .pm-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .pm-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .pm-modal {
+      background: #fff; width: 440px; max-width: 90%; border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      transform: translateY(20px); transition: transform .3s ease; padding: 32px;
+    }
+    .pm-modal-overlay.active .pm-modal { transform: translateY(0); }
+    .pm-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; }
+    .pm-modal-title { font-size: 18px; font-weight: 700; color: #111; display: flex; align-items: center; gap: 8px; }
+    .pm-modal-close {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: #f1f5f9; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #374151; transition: background 0.15s;
+    }
+    .pm-modal-close:hover { background: #e5e7eb; }
+    
+    .pm-form-group { margin-bottom: 16px; }
+    .pm-form-label { display: block; font-size: 12px; font-weight: 600; color: var(--pm-text-muted); margin-bottom: 6px; }
+    .pm-form-input {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--pm-border);
+      border-radius: 8px; font-size: 13px; font-family: inherit; transition: border-color .2s;
+    }
+    .pm-form-input:focus { border-color: var(--pm-accent); outline: none; }
+    
+    .emp-avatar {
+      width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff; margin-right: 12px; flex-shrink: 0;
+    }
+    /* ── Reactivate Modal specific ────────────────────── */
+    .reactivate-emp-card {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1px solid #86efac;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .reactivate-emp-avatar {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+    .reactivate-btn-confirm {
+      width: 100%; padding: 13px;
+      background: #16a34a; color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; margin-top: 12px;
+      transition: background 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .reactivate-btn-confirm:hover { background: #15803d; }
+    .reactivate-btn-cancel {
+      width: 100%; padding: 11px;
+      background: #f1f5f9; color: #374151;
+      border: 1px solid #e2e8f0; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; margin-top: 8px;
+      transition: background 0.15s;
+    }
+    .reactivate-btn-cancel:hover { background: #e2e8f0; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Hold Employees</span>
+          </div>
+          <h2 class="pm-page-title"><i class="fa fa-pause-circle" style="color:#f59e0b;margin-right:8px;"></i> Employees on Hold</h2>
+          <p class="pm-page-subtitle">Manage resources currently on hold, leave, or suspended.</p>
+        </div>
+        <button class="pm-btn pm-btn-primary" style="background:#f59e0b; border-color:#f59e0b;" onclick="openHoldModal()">
+          <i class="fa fa-user-clock"></i> Put Employee on Hold
+        </button>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="hold-summary-bar">
+        <div class="hold-stat-card" onclick="filterByCard('ALL')" style="cursor:pointer;" title="Click to show all">
+          <div>
+            <div class="hold-stat-label">Total on Hold</div>
+            <div class="hold-stat-value" id="statTotalHold">0</div>
+            <div class="hold-stat-sub">Currently inactive</div>
+          </div>
+          <div class="hold-stat-icon" style="color:#f59e0b;"><i class="fa fa-users-slash"></i></div>
+        </div>
+        <div class="hold-stat-card" onclick="filterByCard('Medical Leave')" style="cursor:pointer;" title="Click to filter by Medical Leave">
+          <div>
+            <div class="hold-stat-label">Medical Leave</div>
+            <div class="hold-stat-value" id="statMedical">0</div>
+            <div class="hold-stat-sub">Health reasons</div>
+          </div>
+          <div class="hold-stat-icon" style="color:#3b82f6;"><i class="fa fa-notes-medical"></i></div>
+        </div>
+        <div class="hold-stat-card" onclick="filterByCard('Administrative Suspension')" style="cursor:pointer;" title="Click to filter by Suspensions">
+          <div>
+            <div class="hold-stat-label">Suspensions</div>
+            <div class="hold-stat-value" id="statSuspended">0</div>
+            <div class="hold-stat-sub">Administrative action</div>
+          </div>
+          <div class="hold-stat-icon" style="color:#ef4444;"><i class="fa fa-gavel"></i></div>
+        </div>
+      </div>
+
+      <div class="pm-card" style="padding:0; overflow:hidden;">
+        <table class="pm-table">
+          <thead>
+            <tr>
+              <th>Employee Details</th>
+              <th>Department / Role</th>
+              <th>Reason for Hold</th>
+              <th>Date Placed</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="holdBody">
+            <tr>
+              <td colspan="5" style="text-align:center; padding:48px; color:var(--pm-text-muted)">
+                <i class="fa fa-spinner fa-spin" style="font-size:24px; margin-bottom:12px; display:block;"></i>
+                Fetching hold records...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Put on Hold Modal -->
+<div class="pm-modal-overlay" id="holdModalOverlay">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-pause-circle" style="color:#f59e0b;"></i> Place on Hold</div>
+      <button class="pm-modal-close" onclick="closeHoldModal()"><i class="fa fa-times"></i></button>
+    </div>
+    <form id="holdForm">
+      <div class="pm-form-group">
+        <label class="pm-form-label">Select Employee</label>
+        <select class="pm-form-input" id="holdUser" required>
+          <option value="">Loading active employees...</option>
+        </select>
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Hold Reason</label>
+        <select class="pm-form-input" id="holdReason" required>
+          <option value="Personal Leave">Personal Leave</option>
+          <option value="Medical Leave">Medical Leave</option>
+          <option value="Administrative Suspension">Administrative Suspension</option>
+          <option value="Transitioning Projects">Transitioning Projects</option>
+          <option value="Other">Other / Unspecified</option>
+        </select>
+      </div>
+      <div class="pm-form-group" id="otherReasonGroup" style="display:none">
+        <label class="pm-form-label">Specify Reason</label>
+        <input type="text" class="pm-form-input" id="holdReasonOther" placeholder="Detail reason here...">
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px;">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeHoldModal()">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary" style="background:#f59e0b; border-color:#f59e0b;"><i class="fa fa-check"></i> Place on Hold</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Remove from Hold Confirmation Modal -->
+<div class="pm-modal-overlay" id="reactivateModalOverlay">
+  <div class="pm-modal" style="width:480px;">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title">
+        <i class="fa fa-user-check" style="color:#16a34a;"></i>
+        Remove from Hold
+      </div>
+      <button class="pm-modal-close" onclick="closeReactivateModal()"><i class="fa fa-times"></i></button>
+    </div>
+
+    <!-- Employee Preview Card -->
+    <div class="reactivate-emp-card">
+      <div class="reactivate-emp-avatar" id="rEmpAvatar" style="background:#3b82f6;">JD</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:#111;" id="rEmpName">John Doe</div>
+        <div style="font-size:12px;color:#64748b;margin-top:2px;" id="rEmpRole">Developer • Engineering</div>
+        <div style="margin-top:6px;" id="rEmpReason"></div>
+      </div>
+    </div>
+
+    <!-- Info text -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:20px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <i class="fa fa-info-circle" style="color:#3b82f6;margin-top:2px;flex-shrink:0;"></i>
+        <div style="font-size:13px;color:#374151;line-height:1.6;">
+          This employee will be <strong>moved back to Active status</strong> and will appear in team rosters, task assignments, and reports again.
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="pm-form-group">
+      <label class="pm-form-label"><i class="fa fa-sticky-note" style="margin-right:4px;"></i> Reactivation Note (Optional)</label>
+      <textarea class="pm-form-input" id="reactivateNote" rows="3" placeholder="e.g. Employee has recovered and is ready to resume work..." style="resize:vertical;"></textarea>
+    </div>
+
+    <!-- Actions -->
+    <button class="reactivate-btn-confirm" id="confirmReactivateBtn" onclick="confirmReactivate()">
+      <i class="fa fa-check-circle"></i> Yes, Reactivate Employee
+    </button>
+    <button class="reactivate-btn-cancel" onclick="closeReactivateModal()">
+      Cancel — Keep on Hold
+    </button>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let employees = [];
+  let holdEmployees = [];
+  const AVATAR_COLORS = ['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444','#06b6d4','#ec4899'];
+
+  function getInitials(name) { return (name || 'NA').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2); }
+  function getColor(name) {
+    let h = 0; for (let i = 0; i < (name || '').length; i++) h += name.charCodeAt(i);
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+
+  function getReasonBadge(reason) {
+    reason = reason || 'Unspecified';
+    if(reason.includes('Medical')) return `<span class="badge-reason medical"><i class="fa fa-notes-medical"></i> ${reason}</span>`;
+    if(reason.includes('Suspension')) return `<span class="badge-reason suspension"><i class="fa fa-gavel"></i> ${reason}</span>`;
+    if(reason.includes('Transition')) return `<span class="badge-reason transition"><i class="fa fa-exchange-alt"></i> ${reason}</span>`;
+    return `<span class="badge-reason"><i class="fa fa-pause-circle"></i> ${reason}</span>`;
+  }
+
+  document.getElementById('holdReason').addEventListener('change', function() {
+    document.getElementById('otherReasonGroup').style.display = this.value === 'Other' ? 'block' : 'none';
+  });
+
+  // ── Card click filter ────────────────────────────────
+  let activeFilter = 'ALL';
+  
+  window.filterByCard = function(type) {
+    activeFilter = type;
+    document.querySelectorAll('.hold-stat-card').forEach(c => {
+      c.style.boxShadow = '';
+      c.style.outline = '';
+    });
+    const cardMap = { 'ALL': 0, 'Medical Leave': 1, 'Administrative Suspension': 2 };
+    const idx = cardMap[type];
+    if(idx !== undefined) {
+      const cards = document.querySelectorAll('.hold-stat-card');
+      if(cards[idx]) cards[idx].style.outline = '2px solid #3b82f6';
+    }
+    renderHoldTable();
+  };
+
+  async function doFetch(path, options = {}) {
+    const token = localStorage.getItem('token') || localStorage.getItem('jmkc_token') || '';
+    const res = await fetch(path, {
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      ...options
+    });
+    if(!res.ok) { const e = await res.json().catch(()=>({})); throw new Error(e.message || `HTTP ${res.status}`); }
+    return res.json();
+  }
+
+  async function initPage() {
+    try {
+      const res = await doFetch('/api/users?limit=500');
+      employees = res?.data || res?.users || (Array.isArray(res) ? res : []);
+      
+      console.log(`Loaded ${employees.length} total employees`);
+
+      // Populate dropdown - ALL non-hold employees selectable
+      const activeEmps = employees.filter(u => {
+        const s = (u.status || '').toUpperCase();
+        return s !== 'ON_HOLD' && s !== 'INACTIVE' && s !== 'SUSPENDED';
+      });
+      
+      const uSel = document.getElementById('holdUser');
+      uSel.innerHTML = '<option value="">Select Employee to Hold...</option>';
+      activeEmps.forEach(e => {
+        uSel.innerHTML += `<option value="${e._id}">${e.name} (${e.role || 'Staff'})</option>`;
+      });
+
+      // Filter on-hold employees
+      holdEmployees = employees.filter(u => {
+        const s = (u.status || '').toUpperCase();
+        return s === 'ON_HOLD' || s === 'INACTIVE' || s === 'SUSPENDED';
+      });
+      
+      renderHoldTable();
+    } catch(err) {
+      console.error('API error:', err.message);
+      // Fallback
+      const uSel = document.getElementById('holdUser');
+      uSel.innerHTML = `
+        <option value="">Select Employee to Hold...</option>
+        <option value="101">Prahu Sharma (Developer)</option>
+        <option value="102">Nisha Patil (Designer)</option>
+        <option value="103">Raj Kumar (QA Engineer)</option>
+      `;
+      holdEmployees = [
+        { _id: '1', name: 'John Doe', role: 'Developer', department: 'Engineering', holdReason: 'Personal Leave', email: 'john@jmkc.com', updatedAt: new Date().toISOString() },
+        { _id: '2', name: 'Sarah Connor', role: 'Tester', department: 'QA', holdReason: 'Medical Leave', email: 'sarah@jmkc.com', updatedAt: new Date(Date.now() - 86400000 * 3).toISOString() }
+      ];
+      renderHoldTable();
+    }
+  }
+
+  function renderHoldTable() {
+    const tbody = document.getElementById('holdBody');
+    tbody.innerHTML = '';
+    
+    const total = holdEmployees.length;
+    const medical = holdEmployees.filter(u => (u.holdReason||'').includes('Medical')).length;
+    const suspended = holdEmployees.filter(u => (u.holdReason||'').includes('Suspension')).length;
+    document.getElementById('statTotalHold').textContent = total;
+    document.getElementById('statMedical').textContent = medical;
+    document.getElementById('statSuspended').textContent = suspended;
+
+    let filtered = holdEmployees;
+    if(activeFilter === 'Medical Leave') filtered = holdEmployees.filter(u => (u.holdReason||'').includes('Medical'));
+    if(activeFilter === 'Administrative Suspension') filtered = holdEmployees.filter(u => (u.holdReason||'').includes('Suspension'));
+
+    if(filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:48px; color:var(--pm-text-muted)">
+        <i class="fa fa-check-circle" style="font-size:24px;color:#22c55e;margin-bottom:12px;display:block;"></i>
+        ${activeFilter === 'ALL' ? 'No employees currently on hold.' : `No employees with reason: "${activeFilter}"`}
+      </td></tr>`;
+      return;
+    }
+    
+    filtered.forEach(u => {
+      const color = getColor(u.name);
+      const initials = getInitials(u.name);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div style="display:flex;align-items:center;">
+            <div class="emp-avatar" style="background:${color};">${initials}</div>
+            <div>
+              <div style="font-weight:600;color:#111;">${u.name}</div>
+              <div style="font-size:11.5px;color:var(--pm-text-muted);">${u.email || 'No email provided'}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style="font-weight:500;">${u.department || '—'}</div>
+          <div style="font-size:11.5px;color:var(--pm-text-muted);">${u.role || 'Contributor'}</div>
+        </td>
+        <td>${getReasonBadge(u.holdReason)}</td>
+        <td style="font-weight:500;">${new Date(u.updatedAt || u.createdAt || Date.now()).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})}</td>
+        <td style="text-align:right">
+          <button class="pm-btn pm-btn-outline" style="padding:6px 14px; font-size:11.5px; border-radius:6px; color:#16a34a; border-color:#16a34a;" onclick="openReactivateModal('${u._id}')">
+            <i class="fa fa-play-circle"></i> Remove from Hold
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  let currentReactivateId = null;
+
+  function openReactivateModal(emp) {
+    if(typeof emp === 'string') {
+      // fallback for plain id
+      const found = holdEmployees.find(u => u._id === emp);
+      if(!found) return;
+      emp = found;
+    }
+    currentReactivateId = emp._id;
+    const color = getColor(emp.name);
+    const initials = getInitials(emp.name);
+    document.getElementById('rEmpAvatar').textContent = initials;
+    document.getElementById('rEmpAvatar').style.background = color;
+    document.getElementById('rEmpName').textContent = emp.name;
+    document.getElementById('rEmpRole').textContent = `${emp.role || 'Contributor'} • ${emp.department || 'Team'}`;
+    document.getElementById('rEmpReason').innerHTML = getReasonBadge(emp.holdReason);
+    document.getElementById('reactivateNote').value = '';
+    document.getElementById('reactivateModalOverlay').classList.add('active');
+  }
+
+  function closeReactivateModal() {
+    document.getElementById('reactivateModalOverlay').classList.remove('active');
+    currentReactivateId = null;
+  }
+
+  async function confirmReactivate() {
+    if(!currentReactivateId) return;
+    const btn = document.getElementById('confirmReactivateBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Reactivating...';
+    try {
+      await doFetch(`/api/users/${currentReactivateId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: 'ACTIVE', holdReason: '' })
+      });
+      window.pmToast?.('Employee successfully removed from hold!', 'success');
+    } catch(err) {
+      console.warn('API update failed, removing locally.');
+      window.pmToast?.('Removed locally (API unavailable).', 'info');
+    }
+    holdEmployees = holdEmployees.filter(u => u._id !== currentReactivateId);
+    closeReactivateModal();
+    renderHoldTable();
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa fa-check-circle"></i> Yes, Reactivate Employee';
+  }
+
+  function openHoldModal() { document.getElementById('holdModalOverlay').classList.add('active'); }
+  function closeHoldModal() { document.getElementById('holdModalOverlay').classList.remove('active'); }
+
+  document.getElementById('holdForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const userId = document.getElementById('holdUser').value;
+    if(!userId) { alert('Please select an employee.'); return; }
+    
+    const selectedText = document.getElementById('holdUser').options[document.getElementById('holdUser').selectedIndex].text;
+    const uName = selectedText.split(' (')[0];
+    const uRole = selectedText.split(' (')[1]?.replace(')', '') || 'Contributor';
+    
+    let reason = document.getElementById('holdReason').value;
+    if(reason === 'Other') reason = document.getElementById('holdReasonOther').value || 'Unspecified';
+
+    try {
+      await doFetch(`/api/users/${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: 'ON_HOLD', holdReason: reason })
+      });
+      window.pmToast?.('Employee placed on hold.', 'success');
+    } catch(err) {
+      console.warn('API update failed, adding locally.');
+    }
+
+    holdEmployees.push({ _id: userId, name: uName, role: uRole, holdReason: reason, updatedAt: new Date().toISOString() });
+    renderHoldTable();
+    closeHoldModal();
+    e.target.reset();
+  });
+
+  document.addEventListener('DOMContentLoaded', initPage);
+</script>
+</body>
+</html>

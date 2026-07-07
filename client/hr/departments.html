@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments - JMKC Enterprise HR</title>
+    <meta name="description" content="Manage company departments - view, add, edit and delete departments with live employee counts.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        /* ── Page Header ── */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .page-header h1 {
+            font-size: 1.5rem;
+            color: var(--dark-navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .page-header .header-badge {
+            font-size: 0.8rem;
+            background: rgba(37,99,235,0.1);
+            color: var(--primary-blue);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* ── Search Bar ── */
+        .dept-search {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            padding: 8px 14px;
+            gap: 8px;
+            min-width: 240px;
+        }
+        .dept-search input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 0.88rem;
+            color: var(--dark-navy);
+            width: 100%;
+            font-family: var(--font-body);
+        }
+        .dept-search i { color: var(--text-gray); font-size: 0.85rem; }
+
+        /* ── Stats Row ── */
+        .dept-stats-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .dept-stat-pill {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-lg);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .dept-stat-pill i {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+        }
+        .dept-stat-pill .pill-val { font-size: 1.4rem; font-weight: 700; color: var(--dark-navy); line-height: 1; }
+        .dept-stat-pill .pill-lbl { font-size: 0.78rem; color: var(--text-gray); margin-top: 2px; }
+
+        /* ── Grid ── */
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        /* ── Card ── */
+        .dept-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .dept-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--card-accent1, #2563eb), var(--card-accent2, #7c3aed));
+            opacity: 0;
+            transition: opacity 0.22s;
+        }
+        .dept-card:hover::before { opacity: 1; }
+        .dept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(37,99,235,0.12);
+            border-color: rgba(37,99,235,0.2);
+        }
+
+        .dept-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .dept-icon-wrap {
+            width: 54px; height: 54px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.2s;
+        }
+        .dept-card:hover .dept-icon-wrap { transform: scale(1.08); }
+
+        .dept-card-actions {
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.18s;
+        }
+        .dept-card:hover .dept-card-actions { opacity: 1; }
+        .dept-card-actions button {
+            width: 30px; height: 30px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            background: var(--white);
+            color: var(--text-gray);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.78rem;
+            transition: all 0.15s;
+        }
+        .dept-card-actions button:hover { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
+        .dept-card-actions .btn-del:hover { background: #ef4444; border-color: #ef4444; }
+
+        .dept-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 4px;
+            font-family: var(--font-heading);
+        }
+        .dept-code {
+            font-size: 0.75rem;
+            background: rgba(37,99,235,0.08);
+            color: var(--primary-blue);
+            border-radius: 6px;
+            padding: 2px 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .dept-desc {
+            font-size: 0.82rem;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+            line-height: 1.5;
+            min-height: 36px;
+        }
+        .dept-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-gray);
+        }
+        .dept-emp-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .dept-emp-count i { color: var(--primary-blue); font-size: 0.8rem; }
+        .dept-status-badge {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .dept-status-badge.active { background: rgba(16,185,129,0.1); color: #10b981; }
+        .dept-status-badge.inactive { background: rgba(239,68,68,0.1); color: #ef4444; }
+
+        /* Skeleton */
+        .dept-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: var(--radius-xl);
+            height: 200px;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Empty / Error */
+        .dept-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-gray);
+        }
+        .dept-empty i { font-size: 3rem; margin-bottom: 16px; color: var(--border-gray); }
+        .dept-empty h3 { font-size: 1.1rem; color: var(--dark-navy); margin-bottom: 8px; }
+
+        /* ── Modal ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            width: min(480px, 95vw);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+            animation: slideUp 0.25s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px 0;
+            margin-bottom: 16px;
+        }
+        .modal-header h2 { font-size: 1.1rem; font-family: var(--font-heading); color: var(--dark-navy); }
+        .modal-close {
+            width: 32px; height: 32px;
+            border: none; background: none;
+            border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-gray);
+            font-size: 1rem;
+            transition: background 0.15s;
+        }
+        .modal-close:hover { background: var(--bg-light, #f8fafc); }
+        .modal-body { padding: 0 24px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .form-group label span { color: #ef4444; }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            border: 1.5px solid var(--border-gray);
+            border-radius: var(--radius-md);
+            padding: 9px 12px;
+            font-size: 0.88rem;
+            font-family: var(--font-body);
+            color: var(--dark-navy);
+            background: var(--white);
+            outline: none;
+            transition: border-color 0.15s;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus { border-color: var(--primary-blue); }
+        .form-group textarea { resize: vertical; min-height: 72px; }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 16px 24px 24px;
+        }
+
+        /* Toast */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .toast {
+            background: var(--dark-navy);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: var(--radius-lg);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.25s ease;
+            min-width: 220px;
+        }
+        .toast.success { background: #10b981; }
+        .toast.error   { background: #ef4444; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Confirm Dialog */
+        .confirm-box {
+            padding: 0 24px 24px;
+        }
+        .confirm-box p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size:0.8rem;"></i>
+                        </a>
+                        <div class="submenu" style="display:block;">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item active">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li><a href="attendance.html" class="menu-item"><i class="fa-solid fa-calendar-check"></i><span>Attendance</span></a></li>
+                    <li><a href="leaves.html" class="menu-item"><i class="fa-solid fa-calendar-minus"></i><span>Leaves</span></a></li>
+                    <li><a href="payroll.html" class="menu-item"><i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span></a></li>
+                    <li><a href="reports.html" class="menu-item"><i class="fa-solid fa-chart-bar"></i><span>Reports</span></a></li>
+                    <li><a href="settings.html" class="menu-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb">
+                        <a href="dashboard.html" style="color:var(--primary-blue); text-decoration:none;">Dashboard</a>
+                        &nbsp;›&nbsp; People &nbsp;›&nbsp; Departments
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img id="headerAvatar" src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile">
+                        <span id="headerUserName" style="font-size:0.85rem; font-weight:600; color:var(--dark-navy); margin-left:8px; display:none;"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>
+                    <i class="fa-solid fa-building-columns" style="color:var(--primary-blue);"></i>
+                    Departments
+                    <span class="header-badge" id="deptCountBadge">Loading...</span>
+                </h1>
+                <div class="header-actions">
+                    <div class="dept-search">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="deptSearch" placeholder="Search departments...">
+                    </div>
+                    <button class="btn btn-primary" id="addDeptBtn" onclick="openModal()">
+                        <i class="fa-solid fa-plus"></i> Add Department
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="dept-stats-row" id="deptStatsRow">
+                <div class="dept-stat-pill">
+                    <i class="fa-solid fa-building" style="background:rgba(37,99,235,0.1); color:#2563eb;"></i>
+                    <div>
+                        <div class="pill-val" id="statTotal">—</div>
+                        <div class="pill-lbl">Total Departments</div>
+                    </div>
+                </div>
+                <div class="dept-stat-pill">
+                    <i class="fa-solid fa-circle-check" style="background:rgba(16,185,129,0.1); color:#10b981;"></i>
+                    <div>
+                        <div class="pill-val" id="statActive">—</div>
+                        <div class="pill-lbl">Active</div>
+                    </div>
+                </div>
+                <div class="dept-stat-pill">
+                    <i class="fa-solid fa-users" style="background:rgba(139,92,246,0.1); color:#8b5cf6;"></i>
+                    <div>
+                        <div class="pill-val" id="statTotalEmp">—</div>
+                        <div class="pill-lbl">Total Employees</div>
+                    </div>
+                </div>
+                <div class="dept-stat-pill">
+                    <i class="fa-solid fa-circle-pause" style="background:rgba(239,68,68,0.1); color:#ef4444;"></i>
+                    <div>
+                        <div class="pill-val" id="statInactive">—</div>
+                        <div class="pill-lbl">Inactive</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Grid -->
+            <div class="dept-grid" id="deptGrid">
+                <!-- Skeletons while loading -->
+                <div class="dept-skeleton"></div>
+                <div class="dept-skeleton"></div>
+                <div class="dept-skeleton"></div>
+                <div class="dept-skeleton"></div>
+                <div class="dept-skeleton"></div>
+                <div class="dept-skeleton"></div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer" style="margin-top: 40px;">
+                <div>© 2026 JMKC Group India Pvt. Ltd. All Rights Reserved.</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Connected to JMKC Server</div>
+                <div>Version 2.0 | Powered by ProERP</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ── ADD / EDIT MODAL ── -->
+    <div class="modal-overlay" id="deptModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fa-solid fa-building"></i> Add Department</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>Department Name <span>*</span></label>
+                    <input type="text" id="fName" placeholder="e.g. Human Resources">
+                </div>
+                <div class="form-group">
+                    <label>Department Code <span>*</span></label>
+                    <input type="text" id="fCode" placeholder="e.g. HR" style="text-transform:uppercase;">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="fDesc" placeholder="Brief description of this department..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="fStatus">
+                        <option value="ACTIVE">Active</option>
+                        <option value="INACTIVE">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" id="modalSaveBtn" onclick="saveDepartment()">
+                    <i class="fa-solid fa-check"></i> Save Department
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── DELETE CONFIRM MODAL ── -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 style="color:#ef4444;"><i class="fa-solid fa-triangle-exclamation"></i> Confirm Delete</h2>
+                <button class="modal-close" onclick="closeDeleteModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="confirm-box">
+                <p>Are you sure you want to delete <strong id="deleteDeptName"></strong>? This action cannot be undone and may affect employees assigned to this department.</p>
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                    <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+                    <button class="btn btn-primary" style="background:#ef4444; border-color:#ef4444;" onclick="confirmDelete()">
+                        <i class="fa-solid fa-trash"></i> Yes, Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/hr-api.js"></script>
+    <script>
+    // ── Constants ──────────────────────────────────────────────────────────
+    const DEPT_ICONS  = ['fa-sitemap','fa-bullhorn','fa-chart-line','fa-headset','fa-code','fa-coins','fa-briefcase','fa-users-gear','fa-truck','fa-flask','fa-shield-halved','fa-building','fa-rocket','fa-globe','fa-leaf','fa-pen-ruler'];
+    const DEPT_COLORS = [
+        { bg:'rgba(37,99,235,0.1)',   icon:'#2563eb', a1:'#2563eb', a2:'#7c3aed' },
+        { bg:'rgba(16,185,129,0.1)',  icon:'#10b981', a1:'#10b981', a2:'#059669' },
+        { bg:'rgba(245,158,11,0.1)',  icon:'#f59e0b', a1:'#f59e0b', a2:'#d97706' },
+        { bg:'rgba(139,92,246,0.1)',  icon:'#8b5cf6', a1:'#8b5cf6', a2:'#6d28d9' },
+        { bg:'rgba(239,68,68,0.1)',   icon:'#ef4444', a1:'#ef4444', a2:'#dc2626' },
+        { bg:'rgba(20,184,166,0.1)',  icon:'#14b8a6', a1:'#14b8a6', a2:'#0d9488' },
+        { bg:'rgba(249,115,22,0.1)',  icon:'#f97316', a1:'#f97316', a2:'#ea580c' },
+        { bg:'rgba(99,102,241,0.1)',  icon:'#6366f1', a1:'#6366f1', a2:'#4f46e5' },
+    ];
+
+    let allDepts = [];
+    let deleteTargetId = null;
+
+    // ── Toast ────────────────────────────────────────────────────────────────
+    function toast(msg, type = 'success') {
+        const wrap = document.getElementById('toastWrap');
+        const el = document.createElement('div');
+        el.className = `toast ${type}`;
+        el.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check' : type === 'error' ? 'circle-xmark' : 'circle-info'}"></i> ${msg}`;
+        wrap.appendChild(el);
+        setTimeout(() => el.remove(), 3500);
+    }
+
+    // ── Render Cards ─────────────────────────────────────────────────────────
+    function renderDepts(depts) {
+        const grid = document.getElementById('deptGrid');
+        const badge = document.getElementById('deptCountBadge');
+        const statTotal    = document.getElementById('statTotal');
+        const statActive   = document.getElementById('statActive');
+        const statInactive = document.getElementById('statInactive');
+        const statEmp      = document.getElementById('statTotalEmp');
+
+        // Stats
+        const active   = depts.filter(d => d.status !== 'INACTIVE').length;
+        const inactive = depts.filter(d => d.status === 'INACTIVE').length;
+        const totalEmp = depts.reduce((s, d) => s + (d.employeeCount || 0), 0);
+        if (badge)      badge.textContent      = depts.length + ' Total';
+        if (statTotal)  statTotal.textContent  = depts.length;
+        if (statActive) statActive.textContent = active;
+        if (statInactive) statInactive.textContent = inactive;
+        if (statEmp)    statEmp.textContent    = totalEmp;
+
+        if (depts.length === 0) {
+            grid.innerHTML = `
+                <div class="dept-empty">
+                    <i class="fa-solid fa-building-circle-xmark"></i>
+                    <h3>No Departments Found</h3>
+                    <p>Click "Add Department" to create your first department.</p>
+                    <button class="btn btn-primary" style="margin-top:12px;" onclick="openModal()">
+                        <i class="fa-solid fa-plus"></i> Add Department
+                    </button>
+                </div>`;
+            return;
+        }
+
+        grid.innerHTML = depts.map((d, i) => {
+            const icon   = DEPT_ICONS[i % DEPT_ICONS.length];
+            const color  = DEPT_COLORS[i % DEPT_COLORS.length];
+            const isInactive = d.status === 'INACTIVE';
+            const empCount = d.employeeCount || 0;
+            const desc   = d.description || 'No description provided.';
+
+            return `
+            <div class="dept-card" id="card-${d._id}"
+                style="--card-accent1:${color.a1}; --card-accent2:${color.a2};"
+                onclick="handleCardClick(event,'${d._id}','${encodeURIComponent(d.name || '')}')">
+
+                <div class="dept-card-top">
+                    <div class="dept-icon-wrap" style="background:${color.bg};">
+                        <i class="fa-solid ${icon}" style="color:${color.icon};"></i>
+                    </div>
+                    <div class="dept-card-actions">
+                        <button class="btn-edit" title="Edit" onclick="event.stopPropagation(); editDept('${d._id}')">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="btn-del" title="Delete" onclick="event.stopPropagation(); promptDelete('${d._id}', '${(d.name||'').replace(/'/g,"\\'")}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dept-name">${d.name || '—'}</div>
+                ${d.code ? `<div class="dept-code">${d.code}</div>` : ''}
+                <div class="dept-desc">${desc.length > 80 ? desc.slice(0,80) + '…' : desc}</div>
+
+                <div class="dept-card-footer">
+                    <div class="dept-emp-count">
+                        <i class="fa-solid fa-users"></i>
+                        ${empCount} Employee${empCount !== 1 ? 's' : ''}
+                    </div>
+                    <span class="dept-status-badge ${isInactive ? 'inactive' : 'active'}">
+                        ${isInactive ? 'Inactive' : 'Active'}
+                    </span>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function handleCardClick(event, id, name) {
+        // Only navigate if not clicking action buttons
+        if (event.target.closest('.dept-card-actions')) return;
+        window.location.href = `employees.html?department=${name}`;
+    }
+
+    // ── Load Departments ─────────────────────────────────────────────────────
+    async function loadDepts() {
+        const grid = document.getElementById('deptGrid');
+        grid.innerHTML = Array(6).fill('<div class="dept-skeleton"></div>').join('');
+        document.getElementById('deptCountBadge').textContent = 'Loading...';
+
+        try {
+            const res = await HR_API.getDepartments();
+            allDepts = res.data || res || [];
+            renderDepts(allDepts);
+        } catch (err) {
+            grid.innerHTML = `
+                <div class="dept-empty" style="color:#ef4444;">
+                    <i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i>
+                    <h3>Failed to Load Departments</h3>
+                    <p>${err.message || 'Server error. Check if the backend is running.'}</p>
+                    <button class="btn btn-outline" style="margin-top:12px;" onclick="loadDepts()">
+                        <i class="fa-solid fa-rotate-right"></i> Retry
+                    </button>
+                </div>`;
+            document.getElementById('deptCountBadge').textContent = 'Error';
+        }
+    }
+
+    // ── Search / Filter ──────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchEl = document.getElementById('deptSearch');
+        if (searchEl) {
+            searchEl.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase().trim();
+                const filtered = q
+                    ? allDepts.filter(d =>
+                        (d.name || '').toLowerCase().includes(q) ||
+                        (d.code || '').toLowerCase().includes(q) ||
+                        (d.description || '').toLowerCase().includes(q))
+                    : allDepts;
+                renderDepts(filtered);
+            });
+        }
+
+        // User info
+        const user = HR_API.getUser();
+        if (user) {
+            const avatarEl = document.getElementById('headerAvatar');
+            const nameEl   = document.getElementById('headerUserName');
+            if (avatarEl) avatarEl.src = HR_API.getAvatarUrl(user.name);
+            if (nameEl)   { nameEl.textContent = user.name; nameEl.style.display = 'inline'; }
+        }
+
+        loadDepts();
+    });
+
+    // ── Modal ────────────────────────────────────────────────────────────────
+    function openModal(dept = null) {
+        document.getElementById('editId').value  = '';
+        document.getElementById('fName').value   = '';
+        document.getElementById('fCode').value   = '';
+        document.getElementById('fDesc').value   = '';
+        document.getElementById('fStatus').value = 'ACTIVE';
+        document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-plus"></i> Add Department';
+        document.getElementById('modalSaveBtn').innerHTML = '<i class="fa-solid fa-check"></i> Save Department';
+
+        if (dept) {
+            document.getElementById('editId').value  = dept._id;
+            document.getElementById('fName').value   = dept.name || '';
+            document.getElementById('fCode').value   = dept.code || '';
+            document.getElementById('fDesc').value   = dept.description || '';
+            document.getElementById('fStatus').value = dept.status || 'ACTIVE';
+            document.getElementById('modalTitle').innerHTML = '<i class="fa-solid fa-pen"></i> Edit Department';
+            document.getElementById('modalSaveBtn').innerHTML = '<i class="fa-solid fa-check"></i> Update Department';
+        }
+
+        document.getElementById('deptModal').classList.add('open');
+        document.getElementById('fName').focus();
+    }
+
+    function closeModal() { document.getElementById('deptModal').classList.remove('open'); }
+
+    function editDept(id) {
+        const dept = allDepts.find(d => d._id === id);
+        if (dept) openModal(dept);
+    }
+
+    // ── Save (Create / Update) ───────────────────────────────────────────────
+    async function saveDepartment() {
+        const id     = document.getElementById('editId').value;
+        const name   = document.getElementById('fName').value.trim();
+        const code   = document.getElementById('fCode').value.trim().toUpperCase();
+        const desc   = document.getElementById('fDesc').value.trim();
+        const status = document.getElementById('fStatus').value;
+
+        if (!name) { toast('Department name is required.', 'error'); document.getElementById('fName').focus(); return; }
+        if (!code) { toast('Department code is required.', 'error'); document.getElementById('fCode').focus(); return; }
+
+        const btn = document.getElementById('modalSaveBtn');
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+        btn.disabled  = true;
+
+        try {
+            const payload = { name, code, description: desc, status };
+            if (id) {
+                await HR_API.request('PUT', `/api/departments/${id}`, payload);
+                toast('Department updated successfully!', 'success');
+            } else {
+                await HR_API.request('POST', `/api/departments`, payload);
+                toast('Department created successfully!', 'success');
+            }
+            closeModal();
+            await loadDepts();
+        } catch (err) {
+            toast(err.message || 'Save failed. Please try again.', 'error');
+        } finally {
+            btn.innerHTML = id ? '<i class="fa-solid fa-check"></i> Update Department' : '<i class="fa-solid fa-check"></i> Save Department';
+            btn.disabled = false;
+        }
+    }
+
+    // ── Delete ───────────────────────────────────────────────────────────────
+    function promptDelete(id, name) {
+        deleteTargetId = id;
+        document.getElementById('deleteDeptName').textContent = decodeURIComponent(name);
+        document.getElementById('deleteModal').classList.add('open');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('open');
+        deleteTargetId = null;
+    }
+
+    async function confirmDelete() {
+        if (!deleteTargetId) return;
+        try {
+            await HR_API.request('DELETE', `/api/departments/${deleteTargetId}`);
+            toast('Department deleted.', 'success');
+            closeDeleteModal();
+            await loadDepts();
+        } catch (err) {
+            toast(err.message || 'Delete failed.', 'error');
+        }
+    }
+
+    // Expose request method via HR_API for direct use in departments
+    // (HR_API.request is already exposed since we use the inner function)
+    // Patch HR_API to expose request if needed
+    if (!HR_API.request) {
+        // Fallback: direct fetch wrapper
+        HR_API.request = async function(method, path, body = null) {
+            const token = localStorage.getItem('token') || localStorage.getItem('jmkc_token') || '';
+            const opts = {
+                method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+            };
+            if (body) opts.body = JSON.stringify(body);
+            const res = await fetch(path, opts);
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || `API Error ${res.status}`);
+            return data;
+        };
+    }
+
+    // Close modals on overlay click
+    document.getElementById('deptModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+    document.getElementById('deleteModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeDeleteModal(); });
+
+    // Code auto-uppercase
+    document.getElementById('fCode').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
+
+    // Auto-generate code from name
+    document.getElementById('fName').addEventListener('input', e => {
+        const codeField = document.getElementById('fCode');
+        const editId    = document.getElementById('editId').value;
+        if (!editId && !codeField.dataset.manual) {
+            const words = e.target.value.trim().split(/\s+/);
+            codeField.value = words.map(w => w[0] || '').join('').toUpperCase().slice(0, 6);
+        }
+    });
+    document.getElementById('fCode').addEventListener('keydown', () => {
+        document.getElementById('fCode').dataset.manual = '1';
+    });
+    </script>
+</body>
+</html>

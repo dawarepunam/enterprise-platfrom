@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Tickets</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+  <link rel="stylesheet" href="tickets.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page member-shell">
+      <section class="workspace-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">My Tickets</p>
+          <h1>Raise blockers early and keep project delivery moving</h1>
+          <p class="hero-text">Use tickets for access requests, environment issues, missing approvals, or any blocker that needs manager attention.</p>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Open Tickets</span><strong id="memberTicketOpen">0</strong></article>
+          <article class="signal-card"><span>In Review</span><strong id="memberTicketReview">0</strong></article>
+          <article class="signal-card accent-card"><span>Total Tickets</span><strong id="memberTicketTotal">0</strong><small>Your raised tickets</small></article>
+        </div>
+      </section>
+
+      <section class="content-grid member-grid">
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Raise Ticket</p><h2>Blocker or access request</h2></div></div>
+          <form id="memberTicketForm" class="ticket-form">
+            <input id="ticketTitle" type="text" placeholder="Ticket title" required />
+            <select id="ticketType" required>
+              <option value="Blocker">Blocker</option>
+              <option value="Access Request">Access Request</option>
+              <option value="Clarification">Clarification</option>
+              <option value="Client Dependency">Client Dependency</option>
+            </select>
+            <select id="ticketProject"></select>
+            <select id="ticketPriority" required>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <textarea id="ticketSummary" rows="4" placeholder="Describe the blocker or request" required></textarea>
+            <button class="btn btn-primary" type="submit">Raise Ticket</button>
+          </form>
+        </article>
+
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">My History</p><h2>Raised tickets</h2></div></div>
+          <div id="memberTicketCards" class="stack-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="tickets.js"></script>
+</body>
+</html>

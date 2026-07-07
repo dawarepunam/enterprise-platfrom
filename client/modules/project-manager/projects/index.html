@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .view-tabs { display:flex; gap:4px; background:var(--pm-bg); border:1px solid var(--pm-border); border-radius:var(--pm-radius-sm); padding:4px; }
+    .view-tab { padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; color:var(--pm-text-muted); cursor:pointer; transition:var(--pm-transition); display:flex; align-items:center; gap:5px; }
+    .view-tab.active, .view-tab:hover { background:var(--pm-card); color:var(--pm-accent); box-shadow:var(--pm-shadow-sm); }
+    .pm-filter-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:20px; }
+    .pm-filter-select { padding:7px 12px; border:1.5px solid var(--pm-border); border-radius:var(--pm-radius-sm); font-size:12.5px; background:var(--pm-card); color:var(--pm-text); cursor:pointer; transition:var(--pm-transition); }
+    .pm-filter-select:focus { border-color:var(--pm-accent); box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .pm-projects-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:18px; }
+    .pm-project-card { background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius); padding:20px; box-shadow:var(--pm-shadow-sm); transition:var(--pm-transition); cursor:pointer; position:relative; overflow:hidden; }
+    .pm-project-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+    .pm-project-card.prio-CRITICAL::before { background:#7c3aed; }
+    .pm-project-card.prio-HIGH::before     { background:var(--red); }
+    .pm-project-card.prio-MEDIUM::before   { background:var(--orange); }
+    .pm-project-card.prio-LOW::before      { background:var(--green); }
+    .pm-project-card:hover { transform:translateY(-4px); box-shadow:var(--pm-shadow); border-color:var(--pm-accent); }
+    .pm-card-hover-overlay { position:absolute; inset:0; background:rgba(17,24,39,.9); border-radius:var(--pm-radius); display:flex; flex-direction:column; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .2s ease; }
+    .pm-project-card:hover .pm-card-hover-overlay { opacity:1; pointer-events:all; }
+    .ov-row { display:flex; justify-content:space-between; font-size:12px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,.08); }
+    .ov-row:last-child { border:none; }
+    .ov-label { color:rgba(255,255,255,.6); }
+    .ov-val   { color:#fff; font-weight:700; }
+    .ov-actions { display:flex; gap:8px; margin-top:14px; }
+    .ov-btn { flex:1; padding:8px; background:var(--pm-accent); color:#fff; border-radius:var(--pm-radius-sm); font-size:12px; font-weight:700; cursor:pointer; border:none; display:flex; align-items:center; justify-content:center; gap:5px; transition:var(--pm-transition); }
+    .ov-btn:hover { background:var(--pm-accent-dark); }
+    .ov-btn.outline { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); }
+    .pm-kanban-board { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .pm-kanban-col { background:var(--pm-bg); border-radius:var(--pm-radius); padding:12px; min-height:400px; }
+    .pm-kanban-col-header { font-size:12px; font-weight:700; padding:8px 0 10px; display:flex; align-items:center; gap:6px; }
+    .pm-kanban-item { background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius-sm); padding:12px; margin-bottom:8px; font-size:12.5px; cursor:pointer; transition:var(--pm-transition); }
+    .pm-kanban-item:hover { box-shadow:var(--pm-shadow); border-color:var(--pm-accent); }
+    .stat-chip { display:inline-flex; align-items:center; gap:4px; font-size:11px; color:var(--pm-text-muted); }
+    #listViewContent, #boardViewContent { display:none; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Projects</span>
+          </div>
+          <h1 class="pm-page-title" style="margin-top:4px">My Projects</h1>
+          <div class="pm-page-subtitle" id="projectsSubtitle">Loading...</div>
+        </div>
+        <div class="flex gap-8 flex-center">
+          <button class="pm-btn pm-btn-outline pm-btn-sm" onclick="history.back()">
+            <i class="fa fa-arrow-left"></i> Back
+          </button>
+          <div class="view-tabs">
+            <div class="view-tab active" id="tab-cards" onclick="switchView('cards')"><i class="fa fa-th-large"></i> Cards</div>
+            <div class="view-tab" id="tab-list" onclick="switchView('list')"><i class="fa fa-list"></i> List</div>
+            <div class="view-tab" id="tab-board" onclick="switchView('board')"><i class="fa fa-columns"></i> Board</div>
+          </div>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="openModal('modal-create-project')">
+            <i class="fa fa-plus"></i> New Project
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="pm-filter-bar">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--pm-card);border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:7px 12px;flex:1;min-width:200px;max-width:320px">
+          <i class="fa fa-search" style="color:var(--pm-text-muted)"></i>
+          <input type="text" placeholder="Search projects..." id="projectSearch" oninput="filterProjects()" style="border:none;background:transparent;font-size:12.5px;color:var(--pm-text);flex:1;outline:none" />
+        </div>
+        <select class="pm-filter-select" id="filterStatus" onchange="filterProjects()">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Assigned">Assigned</option>
+          <option value="Planning">Planning</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+        <select class="pm-filter-select" id="filterPriority" onchange="filterProjects()">
+          <option value="">All Priority</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+        <select class="pm-filter-select" id="filterSort" onchange="filterProjects()">
+          <option value="newest">Newest First</option>
+          <option value="deadline">By Deadline</option>
+          <option value="progress">By Progress</option>
+          <option value="priority">By Priority</option>
+        </select>
+        <span class="pm-badge info" id="projectCount" style="margin-left:auto">0 Projects</span>
+      </div>
+
+      <!-- Cards View -->
+      <div id="cardsViewContent">
+        <div class="pm-projects-grid" id="projectsGrid">
+          <div class="skeleton" style="height:200px;border-radius:12px"></div>
+          <div class="skeleton" style="height:200px;border-radius:12px"></div>
+          <div class="skeleton" style="height:200px;border-radius:12px"></div>
+        </div>
+      </div>
+
+      <!-- List View -->
+      <div id="listViewContent">
+        <div class="pm-card" style="padding:0;overflow:hidden">
+          <table class="pm-table" id="projectListTable">
+            <thead><tr><th>Project</th><th>Client</th><th>Priority</th><th>Status</th><th>Progress</th><th>Deadline</th><th>Assigned By</th><th>Actions</th></tr></thead>
+            <tbody id="projectListBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Board View -->
+      <div id="boardViewContent">
+        <div class="pm-kanban-board">
+          <div class="pm-kanban-col">
+            <div class="pm-kanban-col-header"><div style="width:10px;height:10px;border-radius:50%;background:var(--pm-text-muted)"></div> Planning <span class="pm-badge neutral" id="b-pending">0</span></div>
+            <div id="board-Planning"></div>
+          </div>
+          <div class="pm-kanban-col">
+            <div class="pm-kanban-col-header"><div style="width:10px;height:10px;border-radius:50%;background:var(--blue)"></div> Active <span class="pm-badge info" id="b-progress">0</span></div>
+            <div id="board-Active"></div>
+          </div>
+          <div class="pm-kanban-col">
+            <div class="pm-kanban-col-header"><div style="width:10px;height:10px;border-radius:50%;background:var(--orange)"></div> On Hold <span class="pm-badge warning" id="b-hold">0</span></div>
+            <div id="board-On Hold"></div>
+          </div>
+          <div class="pm-kanban-col">
+            <div class="pm-kanban-col-header"><div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div> Completed <span class="pm-badge success" id="b-complete">0</span></div>
+            <div id="board-Completed"></div>
+          </div>
+        </div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+
+<!-- Create Project Modal -->
+<div class="pm-modal-overlay" id="modal-create-project">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-folder-plus" style="color:var(--pm-accent)"></i> Create New Project</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-create-project')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formCreateProject" onsubmit="submitProject(event)">
+      <div class="pm-form-group"><label class="pm-form-label">Project Name *</label><input type="text" class="pm-form-input" name="projectName" required /></div>
+      <div class="pm-form-group"><label class="pm-form-label">Client Name</label><input type="text" class="pm-form-input" name="clientName" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pm-form-group"><label class="pm-form-label">Priority</label><select class="pm-form-input" name="priority"><option value="LOW">Low</option><option value="MEDIUM" selected>Medium</option><option value="HIGH">High</option><option value="CRITICAL">Critical</option></select></div>
+        <div class="pm-form-group"><label class="pm-form-label">Deadline</label><input type="date" class="pm-form-input" name="deadline" /></div>
+      </div>
+      <div class="pm-form-group"><label class="pm-form-label">Budget (₹)</label><input type="number" class="pm-form-input" name="budget" /></div>
+      <div class="pm-form-group"><label class="pm-form-label">Description</label><textarea class="pm-form-input" name="description" rows="3" style="resize:vertical"></textarea></div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-create-project')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary"><i class="fa fa-save"></i> Create Project</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="pm-modal-overlay" id="modal-logout">
+  <div class="pm-modal" style="max-width:360px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px">Confirm Logout?</h3>
+    <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-logout')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="performLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+</div>
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let allProjects = [], currentView = 'cards';
+const statusMap = { 'Completed':'success', 'Active':'info', 'In Progress':'info', 'Assigned':'neutral', 'Planning':'neutral', 'On Hold':'warning', 'Draft':'neutral', 'Cancelled':'danger' };
+const prioColor = { 'CRITICAL':'#7c3aed', 'HIGH':'var(--red)', 'MEDIUM':'var(--orange)', 'LOW':'var(--green)', 'Critical':'#7c3aed', 'High':'var(--red)', 'Medium':'var(--orange)', 'Low':'var(--green)' };
+
+function switchView(v) {
+  currentView = v;
+  ['cards','list','board'].forEach(x => {
+    document.getElementById(`${x}ViewContent`).style.display = x===v?'block':'none';
+    document.getElementById(`tab-${x}`)?.classList.toggle('active', x===v);
+  });
+  renderProjects(allProjects);
+}
+window.switchView = switchView;
+
+function filterProjects() {
+  const q = (document.getElementById('projectSearch')?.value||'').toLowerCase();
+  const status = document.getElementById('filterStatus')?.value||'';
+  const prio   = document.getElementById('filterPriority')?.value||'';
+  const sort   = document.getElementById('filterSort')?.value||'newest';
+  let f = allProjects.filter(p => {
+    const n = (p.projectName||p.name||'').toLowerCase(), c = (p.clientName||p.client||'').toLowerCase();
+    return (!q || n.includes(q) || c.includes(q)) && (!status || p.status===status) && (!prio || p.priority===prio);
+  });
+  if (sort==='deadline') f.sort((a,b)=>new Date(a.deadline||0)-new Date(b.deadline||0));
+  if (sort==='progress') f.sort((a,b)=>(b.progress||0)-(a.progress||0));
+  if (sort==='priority') { const o={CRITICAL:0,HIGH:1,MEDIUM:2,LOW:3}; f.sort((a,b)=>(o[a.priority]||2)-(o[b.priority]||2)); }
+  document.getElementById('projectCount').textContent = `${f.length} Projects`;
+  renderProjects(f);
+}
+window.filterProjects = filterProjects;
+
+function renderProjects(p) {
+  if (currentView==='cards') renderCards(p);
+  else if (currentView==='list') renderList(p);
+  else renderBoard(p);
+}
+
+function renderCards(projects) {
+  const g = document.getElementById('projectsGrid'); if(!g) return;
+  if(!projects.length){ g.innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-folder-open"></i><p>No projects found.</p><button class="pm-btn pm-btn-primary" style="margin-top:12px" onclick="openModal(\'modal-create-project\')"><i class="fa fa-plus"></i> New Project</button></div></div>'; return; }
+  g.innerHTML = projects.map(p=>{
+    const pct=Math.round(p.progress||p.completionRate||0), bc=pct>=70?'var(--green)':pct>=40?'var(--orange)':'var(--red)';
+    const dl=p.deadline?new Date(p.deadline).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'}):'—';
+    const budget=p.budget?`₹${Number(p.budget).toLocaleString('en-IN')}`:'—';
+    const assignerName = p.assignedByName || p.clientName || 'Admin';
+    const assignerRole = p.assignedByRole || 'Administrator';
+    const roleColor = assignerRole.toLowerCase().includes('admin') ? '#ef4444' : assignerRole.toLowerCase().includes('product') ? '#a855f7' : '#3b82f6';
+    const initials = assignerName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    return `<div class="pm-project-card prio-${p.priority||'MEDIUM'}" onclick="window.location='/project-manager/projects/${p._id}'">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
+        <div><div style="font-size:14px;font-weight:700;margin-bottom:3px;line-height:1.3">${p.projectName||p.name||'Untitled'}</div><div style="font-size:11.5px;color:var(--pm-text-muted)"><i class="fa fa-building" style="margin-right:4px"></i>${p.clientName||'—'}</div></div>
+        <span class="pm-badge ${statusMap[p.status]||'neutral'}" style="font-size:10.5px;white-space:nowrap">${(p.status||'Active').replace('_',' ')}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <span class="pm-badge ${p.priority==='CRITICAL'?'purple':p.priority==='HIGH'?'danger':p.priority==='MEDIUM'?'orange':'success'}" style="font-size:10px">${p.priority||'MEDIUM'}</span>
+        <span class="stat-chip"><i class="fa fa-calendar-alt"></i>${dl}</span>
+        <span class="stat-chip"><i class="fa fa-rupee-sign"></i>${budget}</span>
+      </div>
+      <div style="margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;font-weight:600"><span>Progress</span><span style="color:${bc}">${pct}%</span></div>
+        <div class="pm-progress"><div class="pm-progress-bar" style="width:${pct}%;background:${bc}"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;background:var(--pm-bg);padding:8px 10px;border-radius:8px;border:1px solid var(--pm-border);">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:24px;height:24px;border-radius:6px;background:${roleColor};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0;">${initials}</div>
+          <div style="line-height:1.2;">
+            <div style="font-size:11px;color:var(--pm-text-muted);">Assigned By</div>
+            <div style="font-weight:700;font-size:12px;color:var(--pm-text);">${assignerName}</div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-card-hover-overlay">
+        <div class="ov-row"><span class="ov-label">Budget</span><span class="ov-val">${budget}</span></div>
+        <div class="ov-row"><span class="ov-label">Priority</span><span class="ov-val">${p.priority||'MEDIUM'}</span></div>
+        <div class="ov-row"><span class="ov-label">Deadline</span><span class="ov-val">${dl}</span></div>
+        <div class="ov-row"><span class="ov-label">Assigned By</span><span class="ov-val">${assignerName} (${assignerRole})</span></div>
+        <div class="ov-row"><span class="ov-label">Progress</span><span class="ov-val">${pct}%</span></div>
+        <div class="ov-actions">
+          <button class="ov-btn" onclick="event.stopPropagation();window.location='/project-manager/projects/${p._id}'"><i class="fa fa-eye"></i> View</button>
+          <button class="ov-btn outline" onclick="event.stopPropagation();window.location='/project-manager/tasks?project=${p._id}'"  ><i class="fa fa-tasks"></i> Tasks</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderList(projects) {
+  const tb = document.getElementById('projectListBody'); if(!tb) return;
+  if(!projects.length){ tb.innerHTML='<tr><td colspan="8"><div class="pm-empty-state"><i class="fa fa-folder-open"></i><p>No projects found</p></div></td></tr>'; return; }
+  tb.innerHTML = projects.map(p=>{
+    const pct=Math.round(p.progress||0), bc=pct>=70?'var(--green)':pct>=40?'var(--orange)':'var(--red)';
+    const dl=p.deadline?new Date(p.deadline).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'—';
+    const assignerName = p.assignedByName || p.clientName || 'Admin';
+    const assignerRole = p.assignedByRole || 'Administrator';
+    const roleColor = assignerRole.toLowerCase().includes('admin') ? '#ef4444' : assignerRole.toLowerCase().includes('product') ? '#a855f7' : '#3b82f6';
+    const initials = assignerName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    
+    return `<tr onclick="window.location='/project-manager/projects/${p._id}'" style="cursor:pointer">
+      <td><strong>${p.projectName||p.name||'—'}</strong></td>
+      <td>${p.clientName||'—'}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:${prioColor[p.priority]||'var(--orange)'}"></span>${p.priority||'—'}</span></td>
+      <td><span class="pm-badge ${statusMap[p.status]||'neutral'}">${(p.status||'—').replace('_',' ')}</span></td>
+      <td style="min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div class="pm-progress" style="flex:1"><div class="pm-progress-bar" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:11px;font-weight:700">${pct}%</span></div></td>
+      <td>${dl}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:${roleColor};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0;">${initials}</div>
+          <div style="line-height:1.2;">
+            <div style="font-weight:600;font-size:12px;">${assignerName}</div>
+            <div style="font-size:10.5px;color:var(--pm-text-muted);">${assignerRole}</div>
+          </div>
+        </div>
+      </td>
+      <td><button class="pm-btn pm-btn-outline pm-btn-sm" onclick="event.stopPropagation();window.location='/project-manager/projects/${p._id}'"><i class="fa fa-eye"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderBoard(projects) {
+  const cols={'Planning':[],'Active':[],'On Hold':[],'Completed':[]};
+  projects.forEach(p=>{ 
+    let s = p.status || 'Planning'; 
+    if(s==='Draft' || s==='Assigned') s='Planning';
+    if(s==='In Progress' || s==='IN_PROGRESS') s='Active';
+    if(!cols[s]) cols[s]=[]; 
+    cols[s].push(p); 
+  });
+  const bmap={'Planning':'b-pending','Active':'b-progress','On Hold':'b-hold','Completed':'b-complete'};
+  Object.entries(cols).forEach(([s,items])=>{
+    const col=document.getElementById(`board-${s}`); if(!col) return;
+    col.innerHTML=items.map(p=>`<div class="pm-kanban-item" onclick="window.location='/project-manager/projects/${p._id}'">
+      <div style="font-weight:700;margin-bottom:4px">${p.projectName||p.name||'—'}</div>
+      <div style="font-size:11px;color:var(--pm-text-muted);margin-bottom:8px">${p.clientName||'No client'}</div>
+      <div class="pm-progress"><div class="pm-progress-bar" style="width:${p.progress||0}%"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px"><span>${p.priority||'—'}</span><span>${p.progress||0}%</span></div>
+    </div>`).join('')||'<div style="text-align:center;padding:20px;color:var(--pm-text-muted);font-size:12px">No projects</div>';
+    const badge=document.getElementById(bmap[s]); if(badge) badge.textContent=items.length;
+  });
+}
+
+async function loadProjects() {
+  try {
+    const res = await apiFetch('/api/projects?size=100');
+    allProjects = res.data || [];
+    document.getElementById('projectsSubtitle').textContent = `${allProjects.length} projects assigned to you`;
+    document.getElementById('projectCount').textContent = `${allProjects.length} Projects`;
+    
+    // Check URL for status filter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('status')) {
+      const s = urlParams.get('status').toUpperCase();
+      const statusSelect = document.getElementById('filterStatus');
+      if (statusSelect && Array.from(statusSelect.options).some(o => o.value === s)) {
+        statusSelect.value = s;
+      }
+    }
+    
+    filterProjects();
+  } catch(e) {
+    document.getElementById('projectsGrid').innerHTML='<div style="grid-column:1/-1"><div class="pm-empty-state"><i class="fa fa-exclamation-circle"></i><p>Failed to load. '+e.message+'</p></div></div>';
+  }
+}
+
+async function submitProject(e) {
+  e.preventDefault();
+  try {
+    await apiFetch('/api/projects',{method:'POST',body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});
+    closeModal('modal-create-project'); e.target.reset();
+    pmToast('Project created! 🎉','success');
+    loadProjects();
+  } catch(err) { pmToast(err.message||'Failed','error'); }
+}
+window.submitProject = submitProject;
+
+document.addEventListener('DOMContentLoaded', loadProjects);
+</script>
+</body>
+</html>

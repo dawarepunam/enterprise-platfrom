@@ -1,0 +1,5 @@
+@import url("../member-experience.css");
+
+.project-card .panel-actions {
+  justify-content: flex-start;
+}

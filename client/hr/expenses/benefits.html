@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benefits Management | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+  <style>
+    .benefit-card { display:flex; align-items:flex-start; gap:20px; padding:20px; border-bottom:1px solid var(--border-color); transition:var(--transition); cursor:pointer; }
+    .benefit-card:hover { background:var(--gray); }
+    .benefit-icon { font-size:2rem; color:var(--primary-blue); }
+    .benefit-details h4 { margin-bottom:5px; }
+    .benefit-details p { font-size:0.9rem; color:var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="glass-card mt-4" id="benefitsContainer">
+          <h2>Company Benefits</h2>
+          <p>Loading benefits...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/benefits.js"></script>
+</body>
+</html>

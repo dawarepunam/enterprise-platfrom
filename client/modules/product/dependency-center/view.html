@@ -1,0 +1,30 @@
+<div class="pm-dependency-center">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Architecture</span>
+      <h2>Dependency Center</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Map dependencies between features for this requirement.</p>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn primary" data-action="addDependency">+ Add Dependency</button>
+    </div>
+  </div>
+
+  <div class="pm-card">
+    <div class="pm-table-wrapper">
+      <table class="pm-table">
+        <thead>
+          <tr>
+            <th>Source Feature</th>
+            <th>Type</th>
+            <th>Target Feature</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="dependencyTableBody">
+          <tr><td colspan="4" style="text-align: center;">Loading dependencies...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

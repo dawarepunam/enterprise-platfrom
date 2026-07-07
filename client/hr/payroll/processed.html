@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processed Payroll | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+  <style>
+    .filters-bar { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; }
+    .filters-bar select, .filters-bar input { padding: 8px 15px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; }
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+    .popup-overlay.active { display: flex; }
+    .popup-content { background: var(--white); width: 600px; max-width: 95%; border-radius: 12px; box-shadow: var(--glass-shadow); padding: 25px; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+    .popup-header h3 { margin: 0; }
+    .popup-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; }
+    .form-group .checkbox-group { display: flex; align-items: center; gap: 10px; }
+    .form-group .checkbox-group input { width: auto; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: var(--transition); }
+    .btn-primary { background: var(--primary-blue); color: var(--white); }
+    .btn-primary:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards">
+          <div class="glass-card kpi-card">
+            <div class="card-icon blue"><i class="fas fa-file-invoice"></i></div>
+            <div class="card-info"><h3>Total Processed</h3><h2>150</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon green"><i class="fas fa-check"></i></div>
+            <div class="card-info"><h3>Success</h3><h2>148</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon orange"><i class="fas fa-clock"></i></div>
+            <div class="card-info"><h3>Pending</h3><h2>2</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon red"><i class="fas fa-times"></i></div>
+            <div class="card-info"><h3>Failed</h3><h2>0</h2></div>
+          </div>
+        </div>
+
+        <div class="table-container glass-card mt-4">
+          <div class="filters-bar">
+            <input type="text" placeholder="Search employee..." id="searchEmp">
+            <select id="filterDept">
+              <option value="">All Departments</option>
+              <option value="Engineering">Engineering</option>
+              <option value="HR">HR</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+            <select id="filterMonth">
+              <option value="June 2026">June 2026</option>
+              <option value="May 2026">May 2026</option>
+            </select>
+            <select id="filterStatus">
+              <option value="">All Statuses</option>
+              <option value="Processed">Processed</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Salary</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="processedTableBody">
+                <!-- Data populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Popup -->
+      <div class="popup-overlay" id="downloadPopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <h3>Download Payslip</h3>
+            <button class="popup-close" id="closeDownloadBtn">&times;</button>
+          </div>
+          <form id="downloadForm">
+            <div class="form-group">
+              <label>Month</label>
+              <select><option>June 2026</option><option>May 2026</option></select>
+            </div>
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="pwdProtect"> Password Protect PDF
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="checkbox-group">
+                <input type="checkbox" id="sendEmail"> Send Email Automatically
+              </label>
+            </div>
+            <div class="form-group" style="text-align: right;">
+              <button type="submit" class="btn btn-primary">Download</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Timeline Modal -->
+      <div class="popup-overlay" id="historyModal">
+        <div class="popup-content" style="width: 800px;">
+          <div class="popup-header">
+            <h3>Processing History</h3>
+            <button class="popup-close" id="closeHistoryBtn">&times;</button>
+          </div>
+          <div class="timeline">
+            <p>2026-06-23 10:00 AM - Payroll Initiated by Admin</p>
+            <p>2026-06-23 10:05 AM - Validation Successful</p>
+            <p>2026-06-23 10:15 AM - Payslips Generated</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="app-footer">
+        <div class="footer-left">Version 2.0.0 | Server 🟢 Connected</div>
+        <div class="footer-right">&copy; JMKCGRPINDIA | Created By Punam ❤️</div>
+      </footer>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/processed.js"></script>
+</body>
+</html>

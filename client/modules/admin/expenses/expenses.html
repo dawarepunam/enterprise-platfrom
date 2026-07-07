@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Expense Management</title>
+    <link rel="stylesheet" href="/modules/admin/expenses/../expenses/expenses.css" />
+</head>
+
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <div>
+                <h1>Expense Management</h1>
+                <p>Review and manage employee expense claims.</p>
+            </div>
+            <button id="exportBtn" class="btn-primary">Export Report</button>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Claims</h3>
+                <p id="totalClaims">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Approval</h3>
+                <p id="pendingClaims">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Approved Amount</h3>
+                <p id="approvedAmount">₹0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Rejected Claims</h3>
+                <p id="rejectedClaims">0</p>
+            </div>
+        </section>
+
+        <section class="filters-card">
+            <input type="text" id="searchInput" placeholder="Search employee or category..." />
+            <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+            <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option value="Travel">Travel</option>
+        <option value="Food">Food</option>
+        <option value="Accommodation">Accommodation</option>
+        <option value="Office Supplies">Office Supplies</option>
+        <option value="Marketing">Marketing</option>
+      </select>
+        </section>
+
+        <section class="table-card">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Receipt</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="expensesTableBody">
+                        <!-- Data Loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="/modules/admin/expenses/../expenses/expenses.js"></script>
+</body>
+
+</html>

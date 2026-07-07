@@ -1,0 +1,624 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* ── Summary Cards ───────────────────────────────── */
+    .att-summary-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .att-card {
+      background: var(--pm-card, #fff);
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .att-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .att-card-present::before { background: #22c55e; }
+    .att-card-late::before    { background: #f97316; }
+    .att-card-absent::before  { background: #ef4444; }
+    .att-card-total::before   { background: #3b82f6; }
+    .att-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      border-color: rgba(59,130,246,0.25);
+    }
+    .att-card-data { display: flex; flex-direction: column; }
+    .att-card-title {
+      font-size: 11px; text-transform: uppercase;
+      font-weight: 700; color: var(--pm-text-muted, #64748b);
+      letter-spacing: 0.6px; margin-bottom: 8px;
+    }
+    .att-card-value { font-size: 28px; font-weight: 800; color: var(--pm-text, #111); line-height: 1; }
+    .att-card-sub { font-size: 11.5px; color: var(--pm-text-muted, #64748b); margin-top: 4px; }
+    .att-card-icon { font-size: 30px; opacity: 0.75; }
+
+    /* ── Filters ─────────────────────────────────────── */
+    .att-filters {
+      display: flex; gap: 10px; align-items: center;
+      margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .att-filter-tab {
+      padding: 6px 16px; border-radius: 20px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      border: 1px solid #e5e7eb; background: #fff;
+      color: #6b7280; transition: all 0.15s;
+    }
+    .att-filter-tab.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+    .att-filter-tab:hover:not(.active) { background: #f1f5f9; }
+
+    /* ── Table Row hover ─────────────────────────────── */
+    .pm-table tbody tr {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pm-table tbody tr:hover {
+      background: rgba(59,130,246,0.04) !important;
+    }
+    .pm-table tbody tr:hover td:first-child {
+      color: #2563eb;
+    }
+
+    /* ── Status Badges ───────────────────────────────── */
+    .badge-status {
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .status-present { background: #dcfce7; color: #16a34a; }
+    .status-late    { background: #fffbeb; color: #d97706; }
+    .status-absent  { background: #fee2e2; color: #dc2626; }
+
+    /* ── Employee Avatar ─────────────────────────────── */
+    .emp-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff;
+      margin-right: 10px; flex-shrink: 0;
+    }
+
+    /* ── Detail Modal ─────────────────────────────────── */
+    .att-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      z-index: 1000; display: flex;
+      align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .att-modal-overlay.open { opacity: 1; pointer-events: all; }
+    .att-modal {
+      background: #fff; border-radius: 16px;
+      padding: 32px; width: 540px; max-width: 95vw;
+      max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.2s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .att-modal-overlay.open .att-modal { transform: translateY(0); }
+    .att-modal-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .att-modal-title { font-size: 18px; font-weight: 700; color: #111; }
+    .att-modal-close {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: #f1f5f9; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #374151;
+      transition: background 0.15s;
+    }
+    .att-modal-close:hover { background: #e5e7eb; }
+    .att-detail-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .att-detail-item {
+      background: #f8fafc; border-radius: 10px; padding: 14px 16px;
+    }
+    .att-detail-label {
+      font-size: 11px; font-weight: 600; color: #64748b;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .att-detail-value { font-size: 15px; font-weight: 600; color: #111; }
+    .att-detail-full { grid-column: 1 / -1; }
+
+    /* ── Footer ──────────────────────────────────────── */
+    .pm-page-footer {
+      margin-top: 48px;
+      padding: 24px 0 16px;
+      border-top: 1px solid var(--pm-border, #eef0f4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .pm-footer-brand {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pm-footer-logo {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 11px; font-weight: 800;
+    }
+    .pm-footer-text { font-size: 12.5px; color: var(--pm-text-muted, #94a3b8); }
+    .pm-footer-links { display: flex; gap: 16px; }
+    .pm-footer-link { font-size: 12px; color: var(--pm-text-muted, #94a3b8); text-decoration: none; }
+    .pm-footer-link:hover { color: #3b82f6; }
+
+    /* ── Back button ─────────────────────────────────── */
+    .pm-back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 8px;
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      font-size: 13px; font-weight: 500; color: #374151;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.15s; margin-bottom: 12px;
+    }
+    .pm-back-btn:hover { background: #e2e8f0; color: #1e293b; }
+
+    @media (max-width: 900px) {
+      .pm-page-header {
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .pm-page-header > div:last-child,
+      .pm-header-search,
+      #deptFilter {
+        width: 100%;
+        max-width: none !important;
+      }
+
+      .pm-table {
+        min-width: 760px;
+      }
+
+      .pm-card {
+        overflow-x: auto !important;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .att-summary-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .att-modal {
+        padding: 22px;
+      }
+
+      .att-detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <!-- Back Button -->
+      
+
+      <!-- Page Header -->
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Attendance Tracker</span>
+          </div>
+          <h1 class="pm-page-title"><i class="fa fa-user-clock" style="color:#3b82f6;margin-right:8px;"></i> Today's Attendance</h1>
+          <p class="pm-page-subtitle" id="todayDateLabel"></p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <div class="pm-header-search" style="margin:0;box-shadow:none;border:1px solid var(--pm-border);">
+            <i class="fa fa-search"></i>
+            <input type="text" id="attSearch" placeholder="Search employee or department..." oninput="filterAttendance()" />
+          </div>
+          <select id="deptFilter" class="pm-form-select" onchange="filterAttendance()" style="min-width:170px;">
+            <option value="">All Departments</option>
+          </select>
+          <button class="pm-btn pm-btn-secondary" onclick="loadAttendanceData()" style="gap:6px;">
+            <i class="fa fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="att-summary-bar">
+        <div class="att-card att-card-total" onclick="filterByStatus('ALL')" title="Click to show all employees">
+          <div class="att-card-data">
+            <div class="att-card-title">Total Employees</div>
+            <div class="att-card-value" id="statTotal">0</div>
+            <div class="att-card-sub">Tracked today</div>
+          </div>
+          <div class="att-card-icon" style="color:#3b82f6;"><i class="fa fa-users"></i></div>
+        </div>
+        <div class="att-card att-card-present" onclick="filterByStatus('PRESENT')" title="Click to filter present">
+          <div class="att-card-data">
+            <div class="att-card-title">Present Today</div>
+            <div class="att-card-value" id="statPresent">0</div>
+            <div class="att-card-sub">On time check-ins</div>
+          </div>
+          <div class="att-card-icon" style="color:#22c55e;"><i class="fa fa-user-check"></i></div>
+        </div>
+        <div class="att-card att-card-late" onclick="filterByStatus('LATE')" title="Click to filter late">
+          <div class="att-card-data">
+            <div class="att-card-title">Late Check-ins</div>
+            <div class="att-card-value" id="statLate">0</div>
+            <div class="att-card-sub">After 09:30 AM</div>
+          </div>
+          <div class="att-card-icon" style="color:#f97316;"><i class="fa fa-user-clock"></i></div>
+        </div>
+        <div class="att-card att-card-absent" onclick="filterByStatus('ABSENT')" title="Click to filter absent">
+          <div class="att-card-data">
+            <div class="att-card-title">Absent / Not In</div>
+            <div class="att-card-value" id="statAbsent">0</div>
+            <div class="att-card-sub">No record today</div>
+          </div>
+          <div class="att-card-icon" style="color:#ef4444;"><i class="fa fa-user-times"></i></div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="att-filters">
+        <div class="att-filter-tab active" id="tab-ALL" onclick="filterByStatus('ALL', this)">All</div>
+        <div class="att-filter-tab" id="tab-PRESENT" onclick="filterByStatus('PRESENT', this)">Present</div>
+        <div class="att-filter-tab" id="tab-LATE" onclick="filterByStatus('LATE', this)">Late</div>
+        <div class="att-filter-tab" id="tab-ABSENT" onclick="filterByStatus('ABSENT', this)">Absent</div>
+      </div>
+
+      <!-- Table -->
+      <div class="pm-card" style="padding:0; overflow:hidden;">
+        <table class="pm-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Role / Dept</th>
+              <th>Clock In</th>
+              <th>Clock Out</th>
+              <th>Hours</th>
+              <th>Status</th>
+              <th>Remark</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceBody">
+            <tr>
+              <td colspan="7" style="text-align:center;padding:48px;color:var(--pm-text-muted);">
+                <i class="fa fa-spinner fa-spin" style="font-size:24px;margin-bottom:8px;display:block;"></i>
+                Fetching attendance data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      
+    </main>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="att-modal-overlay" id="attModal" onclick="closeModal(event)">
+  <div class="att-modal">
+    <div class="att-modal-header">
+      <div>
+        <div id="modalEmpAvatar" style="display:inline-flex;width:42px;height:42px;border-radius:50%;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;margin-right:12px;vertical-align:middle;"></div>
+        <span class="att-modal-title" id="modalTitle">Employee Attendance Details</span>
+      </div>
+      <button class="att-modal-close" onclick="closeAttModal()"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="att-detail-grid" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let attendanceList = [];
+  let currentStatusFilter = 'ALL';
+  const AVATAR_COLORS = ['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444','#06b6d4','#ec4899'];
+
+  function getToken() {
+    return localStorage.getItem('token') || localStorage.getItem('jmkc_token') || '';
+  }
+
+  function getInitials(name) {
+    return (name || 'NA').split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+  }
+
+  function getColor(name) {
+    let h = 0;
+    for(let i = 0; i < (name||'').length; i++) h += name.charCodeAt(i);
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+
+  function normalizeId(value) {
+    return String(value?._id || value?.id || value || '').trim();
+  }
+
+  function normalizeAttendanceLog(log) {
+    const punchIn = log.punchInAt || log.checkInAt || log.clockIn || log.punchIn || null;
+    const punchOut = log.punchOutAt || log.checkOutAt || log.clockOut || log.punchOut || null;
+    const checkInText = log.checkInFormatted || log.checkIn || (punchIn ? new Date(punchIn).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—');
+    const checkOutText = log.checkOutFormatted || log.checkOut || (punchOut ? new Date(punchOut).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—');
+    const statusText = String(log.status || '').toLowerCase();
+    let status = 'ABSENT';
+    if (punchIn || checkInText !== '—') {
+      if (statusText.includes('late') || log.isLate) status = 'LATE';
+      else {
+        const ci = punchIn ? new Date(punchIn) : null;
+        const threshold = ci ? new Date(ci) : null;
+        if (threshold) threshold.setHours(9, 30, 0, 0);
+        status = ci && ci > threshold ? 'LATE' : 'PRESENT';
+      }
+    }
+    const hoursValue = log.effectiveHours || log.totalHours || log.hours || 0;
+    return {
+      ...log,
+      punchIn,
+      punchOut,
+      clockIn: checkInText,
+      clockOut: checkOutText,
+      hours: hoursValue ? Number(hoursValue).toFixed(1) + ' hrs' : '—',
+      status,
+      remark: log.note || log.remarks || (status === 'LATE' ? 'Checked in late.' : status === 'PRESENT' ? 'Punch-in recorded.' : 'No check-in record for today.')
+    };
+  }
+
+  function refreshDepartmentFilter() {
+    const select = document.getElementById('deptFilter');
+    if (!select) return;
+    const current = select.value;
+    const departments = [...new Set(attendanceList.map(r => r.department).filter(Boolean).filter(d => d !== '—'))].sort();
+    select.innerHTML = '<option value="">All Departments</option>' + departments.map(d => `<option value="${d}">${d}</option>`).join('');
+    select.value = departments.includes(current) ? current : '';
+  }
+
+  // Set today's date label
+  document.getElementById('todayDateLabel').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  async function loadAttendanceData() {
+    document.getElementById('attendanceBody').innerHTML =
+      '<tr><td colspan="7" style="text-align:center;padding:48px;color:var(--pm-text-muted);"><i class="fa fa-spinner fa-spin" style="font-size:22px;display:block;margin-bottom:8px;"></i>Loading...</td></tr>';
+
+    try {
+      const token = getToken();
+      const managerRes = await fetch('/api/manager/attendance', { headers: { Authorization: 'Bearer ' + token } });
+      const managerJson = managerRes.ok ? await managerRes.json() : {};
+      const managerLogs = managerJson.data || [];
+
+      const todayStr = new Date().toDateString();
+      const todayLogs = managerLogs.filter(l => {
+        const d = l.punchInAt || l.checkInAt || l.clockIn || l.date || l.createdAt;
+        return d && new Date(d).toDateString() === todayStr;
+      }).map(normalizeAttendanceLog);
+
+      attendanceList = todayLogs.map(l => ({
+        _id: l.memberId || l.userId || l._id,
+        name: l.userName || l.employee || 'Staff',
+        role: l.designation || l.role || 'Employee',
+        department: l.department || '—',
+        email: l.memberEmail || l.email || '—',
+        phone: l.phone || '—',
+        projectName: l.projectName || 'Assigned project',
+        clockIn: l.clockIn,
+        clockOut: l.clockOut,
+        hours: l.hours,
+        status: l.status,
+        remark: l.remark,
+        logId: l._id
+      }));
+
+      if (!attendanceList.length) {
+        const uRes = await fetch('/api/users?limit=500', { headers: { Authorization: 'Bearer ' + token } });
+        const uJson = uRes.ok ? await uRes.json() : {};
+        const allUsers = uJson.data || [];
+        const employeeRoles = new Set(['EMPLOYEE', 'MEMBER', 'TEAM_MEMBER', 'TEAM_LEAD', 'DEVELOPER', 'DESIGNER', 'QA']);
+        const users = allUsers.filter(u => employeeRoles.has(String(u.role || '').toUpperCase()) || u.department);
+        attendanceList = users.map(u => {
+          return {
+            _id: u._id, name: u.name || u.email || 'Staff',
+            role: u.role || u.designation || '—',
+            department: u.department || '—',
+            email: u.email || '—',
+            phone: u.phone || '—',
+            clockIn: '—',
+            clockOut: '—',
+            hours: '—',
+            status: 'ABSENT',
+            remark: 'No check-in record for today.',
+            logId: ''
+          };
+        });
+      }
+
+      if (!attendanceList.length && managerLogs.length) {
+        attendanceList = managerLogs.slice(0, 100).map(normalizeAttendanceLog).map(l => ({
+          _id: l.memberId || l.userId || l._id,
+          name: l.userName || l.employee || 'Staff',
+          role: l.designation || l.role || 'Employee',
+          department: l.department || '—',
+          email: l.memberEmail || l.email || '—',
+          phone: '—',
+          projectName: l.projectName || 'Assigned project',
+          clockIn: l.clockIn,
+          clockOut: l.clockOut,
+          hours: l.hours,
+          status: l.status,
+          remark: l.remark,
+          logId: l._id
+        }));
+      }
+
+      refreshDepartmentFilter();
+      renderAttendance(attendanceList);
+    } catch(err) {
+      console.error('Attendance load error:', err);
+      document.getElementById('attendanceBody').innerHTML =
+        '<tr><td colspan="7" style="text-align:center;padding:40px;color:#ef4444;"><i class="fa fa-exclamation-triangle"></i> Failed to load attendance. Please refresh.</td></tr>';
+    }
+  }
+
+  function renderAttendance(data) {
+    const tbody = document.getElementById('attendanceBody');
+    let filtered = data;
+    if (currentStatusFilter !== 'ALL') {
+      filtered = data.filter(r => r.status === currentStatusFilter);
+    }
+
+    // Update stats from full data
+    const present = data.filter(r => r.status === 'PRESENT').length;
+    const late    = data.filter(r => r.status === 'LATE').length;
+    const absent  = data.filter(r => r.status === 'ABSENT').length;
+    document.getElementById('statTotal').textContent   = data.length;
+    document.getElementById('statPresent').textContent = present;
+    document.getElementById('statLate').textContent    = late;
+    document.getElementById('statAbsent').textContent  = absent;
+
+    if (!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--pm-text-muted);"><i class="fa fa-search" style="margin-right:8px;"></i>No records found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(item => {
+      const initials = getInitials(item.name);
+      const color    = getColor(item.name);
+      return `
+        <tr onclick="openAttModal(${JSON.stringify(item).replace(/"/g,'&quot;')})">
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="emp-avatar" style="background:${color};">${initials}</div>
+              <span style="font-weight:600;">${item.name}</span>
+            </div>
+          </td>
+          <td style="color:var(--pm-text-muted);font-size:13px;">${item.role}</td>
+          <td><i class="fa fa-sign-in-alt" style="color:#22c55e;margin-right:4px;"></i>${item.clockIn}</td>
+          <td><i class="fa fa-sign-out-alt" style="color:#ef4444;margin-right:4px;"></i>${item.clockOut}</td>
+          <td style="font-weight:600;">${item.hours}</td>
+          <td><span class="badge-status status-${item.status.toLowerCase()}">${item.status}</span></td>
+          <td style="font-size:12.5px;color:var(--pm-text-muted);max-width:180px;">${item.remark}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  function filterByStatus(status, el) {
+    currentStatusFilter = status;
+    document.querySelectorAll('.att-filter-tab').forEach(t => t.classList.remove('active'));
+    // activate card filter tab
+    const tabEl = el || document.getElementById('tab-' + status);
+    if (tabEl) tabEl.classList.add('active');
+    filterAttendance();
+  }
+
+  function filterAttendance() {
+    const q = document.getElementById('attSearch').value.toLowerCase().trim();
+    const dept = document.getElementById('deptFilter')?.value || '';
+    renderAttendance(attendanceList.filter(r => {
+      const haystack = `${r.name || ''} ${r.department || ''} ${r.role || ''}`.toLowerCase();
+      const matchesSearch = !q || haystack.includes(q);
+      const matchesDept = !dept || r.department === dept;
+      return matchesSearch && matchesDept;
+    }));
+  }
+
+  function openAttModal(item) {
+    const color = getColor(item.name);
+    const initials = getInitials(item.name);
+    document.getElementById('modalEmpAvatar').style.background = color;
+    document.getElementById('modalEmpAvatar').textContent = initials;
+    document.getElementById('modalTitle').textContent = item.name;
+
+    const statusColors = { PRESENT: '#16a34a', LATE: '#d97706', ABSENT: '#dc2626' };
+    const statusBg     = { PRESENT: '#dcfce7', LATE: '#fffbeb', ABSENT: '#fee2e2' };
+
+    document.getElementById('modalBody').innerHTML = `
+      <div class="att-detail-item">
+        <div class="att-detail-label">Status</div>
+        <div class="att-detail-value">
+          <span class="badge-status status-${item.status.toLowerCase()}">${item.status}</span>
+        </div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label">Role / Designation</div>
+        <div class="att-detail-value">${item.role}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label"><i class="fa fa-sign-in-alt" style="color:#22c55e;margin-right:4px;"></i> Clock In</div>
+        <div class="att-detail-value">${item.clockIn}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label"><i class="fa fa-sign-out-alt" style="color:#ef4444;margin-right:4px;"></i> Clock Out</div>
+        <div class="att-detail-value">${item.clockOut}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label">Total Hours</div>
+        <div class="att-detail-value">${item.hours}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label">Department</div>
+        <div class="att-detail-value">${item.department || '—'}</div>
+      </div>
+      <div class="att-detail-item att-detail-full">
+        <div class="att-detail-label">Remark / Log</div>
+        <div class="att-detail-value" style="font-size:14px;font-weight:500;color:#374151;">${item.remark}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label">Email</div>
+        <div class="att-detail-value" style="font-size:13.5px;">${item.email}</div>
+      </div>
+      <div class="att-detail-item">
+        <div class="att-detail-label">Date</div>
+        <div class="att-detail-value">${new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' })}</div>
+      </div>
+    `;
+    document.getElementById('attModal').classList.add('open');
+  }
+
+  function closeAttModal() {
+    document.getElementById('attModal').classList.remove('open');
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('attModal')) closeAttModal();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => setTimeout(loadAttendanceData, 400));
+</script>
+</body>
+</html>

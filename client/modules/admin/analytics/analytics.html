@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Analytics — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">📈 Analytics Center</div><div class="page-subtitle">Deep dive into company performance metrics</div></div>
+    <div class="page-top-actions">
+      <select class="filter-select"><option>This Year</option><option>Last Year</option></select>
+    </div>
+  </div>
+
+  <div class="grid-2 mb-24">
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">💰 Revenue Trend</div></div><canvas id="revChart" height="200"></canvas></div>
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">✅ Project Success Rate</div></div><canvas id="projChart" height="200"></canvas></div>
+  </div>
+
+  <div class="grid-2 mb-24">
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">🏢 Department Productivity</div></div><canvas id="deptChart" height="200"></canvas></div>
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">📅 Overall Attendance Trend</div></div><canvas id="attChart" height="200"></canvas></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">🤝 Lead Conversion (Clients)</div></div><canvas id="leadChart" height="200"></canvas></div>
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">👥 Employee Performance Distribution</div></div><canvas id="perfChart" height="200"></canvas></div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+
+<script src="/modules/admin/analytics/analytics.js"></script>
+</body>
+</html>

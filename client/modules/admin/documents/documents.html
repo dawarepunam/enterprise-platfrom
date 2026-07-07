@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Documents — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/documents/documents.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">📄 Document Center</div><div class="page-subtitle">Centralized storage for all company files</div></div>
+    <div class="page-top-actions"><button class="btn btn-primary">📤 Upload File</button></div>
+  </div>
+
+  <div class="filter-bar card mb-24" style="border-radius:var(--r-lg);">
+    <select class="filter-select"><option>All Categories</option><option>Projects</option><option>Clients</option><option>HR</option></select>
+    <input type="search" class="form-control" placeholder="Search documents..." style="height:34px;width:300px;"/>
+  </div>
+
+  <div style="font-size:16px;font-weight:700;margin-bottom:16px;">Recent Files</div>
+  <div class="grid-auto">
+    <div class="doc-card">
+      <div class="doc-icon">📄</div>
+      <div class="doc-name">Project_Requirements_v2.pdf</div>
+      <div class="doc-meta">2.4 MB · Today</div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-icon">📊</div>
+      <div class="doc-name">Q3_Financial_Report.xlsx</div>
+      <div class="doc-meta">1.1 MB · Yesterday</div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-icon">🖼️</div>
+      <div class="doc-name">UI_Mockup_Final.png</div>
+      <div class="doc-meta">4.8 MB · Oct 15</div>
+    </div>
+    <div class="doc-card">
+      <div class="doc-icon">📝</div>
+      <div class="doc-name">Client_Contract_TechSoft.docx</div>
+      <div class="doc-meta">850 KB · Oct 12</div>
+    </div>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<div class="hr-attendance-exceptions-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Attendance Exceptions</h2>
+    <div style="display:flex; gap:1rem;">
+      <button class="primary-btn" onclick="window.UI.toast('Auto Resolving...', 'info')">Auto Resolve All</button>
+    </div>
+  </div>
+
+  <div class="hr-card" style="display:flex; justify-content:space-between; align-items:center; padding:1rem;">
+    <input type="text" placeholder="Search employee..." style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; width:250px;" />
+    <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;">
+      <option value="">Exception Type</option>
+      <option>Missing Punch</option>
+      <option>Short Hours</option>
+      <option>Late In</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Date</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Exception Type</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Details</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="hrAttExceptionsTableBody">
+        <!-- Injected via script -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- Resolve Exception Modal -->
+<div id="hrResolveExceptionModal" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="hr-card" style="width:400px; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Resolve Exception</h3>
+      <button onclick="window.UI.closeResolveExceptionModal()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+    <div style="padding:1.5rem;">
+      <div style="font-weight:500; margin-bottom:1rem;" id="excEmpName">Rahul Sharma</div>
+      
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Action</label>
+      <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; margin-bottom:1rem;">
+        <option>Mark as Half Day</option>
+        <option>Mark as Full Day (Ignore)</option>
+        <option>Deduct Leave Balance</option>
+      </select>
+
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Remarks</label>
+      <textarea rows="2" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px; resize:none;"></textarea>
+    </div>
+    <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+      <button onclick="window.UI.closeResolveExceptionModal()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; cursor:pointer;">Cancel</button>
+      <button onclick="window.UI.submitResolveException()" class="primary-btn" style="padding:0.5rem 1rem;">Resolve</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/hr/attendance/exceptions/script.js"></script>

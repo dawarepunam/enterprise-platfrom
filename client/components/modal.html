@@ -1,0 +1,28 @@
+<div id="appModal" class="modal">
+    <div class="modal-content">
+        <div
+            style="display:flex;justify-content:space-between;align-items:center;">
+            <h3 id="modalTitle">Modal Title</h3>
+            <button class="btn btn-icon"
+                onclick="document.getElementById('appModal').classList.remove('active')">
+                ✕
+            </button>
+        </div>
+
+        <div id="modalBody" class="mt-2">
+            Modal content goes here.
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(title, content) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalBody").innerHTML = content;
+        document.getElementById("appModal").classList.add("active");
+    }
+
+    function closeModal() {
+        document.getElementById("appModal").classList.remove("active");
+    }
+</script>

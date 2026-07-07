@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Communication Console</title>
+    <link rel="stylesheet" href="../../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="chat.css" />
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <div class="chat-shell">
+        <div id="sidebar"></div>
+
+        <main class="chat-page">
+            <section class="chat-hero">
+                <div>
+                    <p class="eyebrow">Manager Team Chat</p>
+                    <h1>Lead project rooms, start voice calls, and keep member history in one live workspace</h1>
+                    <p class="hero-text">This chat box now uses the same realtime room flow as project members, including the phone icon for live audio calls and persistent call cards in chat history.</p>
+                </div>
+                <div class="hero-status">
+                    <span>Socket Status</span>
+                    <strong id="socketStatus">Connecting</strong>
+                    <small id="roomStatus">Loading accessible team rooms</small>
+                </div>
+            </section>
+
+            <section class="workspace-grid">
+                <aside class="rooms-panel">
+                    <div class="panel-head">
+                        <div>
+                            <p class="eyebrow">Team Rooms</p>
+                            <h2>Live conversations</h2>
+                        </div>
+                        <span id="roomCount" class="count-pill">0 rooms</span>
+                    </div>
+
+                    <label class="search-field">
+                        <span class="sr-only">Search rooms</span>
+                        <input id="roomSearchInput" type="search" placeholder="Search by team, project or member" />
+                    </label>
+
+                    <div id="roomList" class="room-list"></div>
+                </aside>
+
+                <section class="chat-panel">
+                    <header class="chat-head">
+                        <div>
+                            <h2 id="activeRoomName">Select a room</h2>
+                            <p id="activeRoomMeta">Project members, history and live updates will appear here.</p>
+                        </div>
+                        <div class="action-row">
+                            <button id="startCallBtn" class="btn ghost-btn" type="button">Start Call</button>
+                            <button id="startMeetingBtn" class="btn btn-primary" type="button">Start Meeting</button>
+                        </div>
+                    </header>
+
+                    <section class="room-overview">
+                        <article class="overview-card">
+                            <span class="overview-label">Project</span>
+                            <strong id="roomProjectName">Not selected</strong>
+                        </article>
+                        <article class="overview-card">
+                            <span class="overview-label">Participants</span>
+                            <strong id="roomParticipantCount">0</strong>
+                        </article>
+                        <article class="overview-card">
+                            <span class="overview-label">Messages</span>
+                            <strong id="roomMessageCount">0</strong>
+                        </article>
+                    </section>
+
+                    <div id="eventFeed" class="event-feed"></div>
+                    <div id="messageList" class="message-list">
+                        <div class="empty-state">
+                            <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <p>Select a team room to start chatting</p>
+                        </div>
+                    </div>
+                    <p id="typingIndicator" class="typing-indicator"></p>
+
+                    <form id="messageForm" class="message-form">
+                        <div class="input-group">
+                            <button id="emojiBtn" class="btn icon-btn" type="button" title="Add emoji" aria-label="Add emoji">
+                                <span aria-hidden="true">😊</span>
+                            </button>
+                            <div class="attachment-menu-wrap">
+                                <button id="attachBtn" class="btn icon-btn" type="button" title="Attach file" aria-haspopup="true" aria-expanded="false">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21.44 11.05 12.25 20.24a6 6 0 0 1-8.49-8.49l9.9-9.9a4 4 0 1 1 5.66 5.66l-10.6 10.61a2 2 0 0 1-2.83-2.83l9.19-9.19"></path>
+                                    </svg>
+                                </button>
+                                <div id="attachmentMenu" class="attachment-menu" hidden>
+                                    <button type="button" class="attachment-option" data-action="image">
+                                        <span>🖼️</span>
+                                        <strong>Image</strong>
+                                        <small>JPG, PNG, WEBP, GIF</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="document">
+                                        <span>📄</span>
+                                        <strong>Document</strong>
+                                        <small>PDF, DOCX, XLSX, PPTX, TXT</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="archive">
+                                        <span>📦</span>
+                                        <strong>ZIP / Archive</strong>
+                                        <small>ZIP, RAR packages</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="camera">
+                                        <span>📷</span>
+                                        <strong>Camera</strong>
+                                        <small>Capture and send photo</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="location">
+                                        <span>📍</span>
+                                        <strong>Live Location</strong>
+                                        <small>Share current coordinates</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="code">
+                                        <span>&lt;/&gt;</span>
+                                        <strong>Code Snippet</strong>
+                                        <small>Paste structured code</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="video">
+                                        <span>🎥</span>
+                                        <strong>Video</strong>
+                                        <small>MP4 and video clips</small>
+                                    </button>
+                                    <button type="button" class="attachment-option" data-action="audio">
+                                        <span>🎵</span>
+                                        <strong>Audio File</strong>
+                                        <small>MP3, WAV and more</small>
+                                    </button>
+                                </div>
+                            </div>
+                            <input id="messageInput" type="text" placeholder="Type a message for the selected team..." autocomplete="off" />
+                            <button id="voiceNoteBtn" class="btn icon-btn" type="button" title="Record voice note" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 1 1-6 0V4a3 3 0 0 1 3-3Z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <path d="M12 19v4"></path>
+                                    <path d="M8 23h8"></path>
+                                </svg>
+                            </button>
+                            <button class="btn btn-primary send-btn" type="submit" aria-label="Send message">Send</button>
+                        </div>
+                    </form>
+
+                    <input id="fileInput" type="file" hidden />
+                    <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+                    <form id="fileForm" class="file-form" hidden></form>
+
+                    <div id="composerModal" class="composer-modal" hidden>
+                        <div class="composer-backdrop" data-close-modal="true"></div>
+                        <section class="composer-dialog">
+                            <header class="composer-header">
+                                <div>
+                                    <p class="eyebrow">Preview Attachment</p>
+                                    <h3 id="composerTitle">Ready to send</h3>
+                                </div>
+                                <button id="closeComposerBtn" class="icon-btn modal-close-btn" type="button" aria-label="Close preview">
+                                    <span aria-hidden="true">✕</span>
+                                </button>
+                            </header>
+                            <div id="composerPreview" class="composer-preview"></div>
+                            <label class="composer-field">
+                                <span>Caption</span>
+                                <input id="fileCaption" type="text" placeholder="Add an optional note" />
+                            </label>
+                            <label id="codeLanguageField" class="composer-field hidden">
+                                <span>Code language</span>
+                                <input id="codeLanguageInput" type="text" placeholder="javascript, html, css..." />
+                            </label>
+                            <label id="codeSnippetField" class="composer-field hidden">
+                                <span>Code snippet</span>
+                                <textarea id="codeSnippetInput" rows="10" placeholder="Paste your code here"></textarea>
+                            </label>
+                            <div class="composer-actions">
+                                <button id="cancelFileBtn" class="btn ghost-btn" type="button">Cancel</button>
+                                <button id="sendAttachmentBtn" class="btn btn-primary" type="button">Send</button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section id="voiceRecorderPanel" class="voice-recorder-panel" hidden>
+                        <div class="voice-recorder-card">
+                            <div class="voice-recorder-copy">
+                                <strong id="recordingStatus">Recording voice note...</strong>
+                                <span id="recordingTime">00:00</span>
+                            </div>
+                            <audio id="recordingPreview" controls></audio>
+                            <div class="voice-recorder-actions">
+                                <button id="cancelRecordingBtn" class="btn ghost-btn" type="button">Discard</button>
+                                <button id="sendRecordingBtn" class="btn btn-primary" type="button" disabled>Send Voice Note</button>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script>window.__projectChatAutoInit = false;</script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../../../assets/js/socket.js"></script>
+    <script src="../../../assets/js/voice-call.js"></script>
+    <script src="../../admin/chat/project-chat.js"></script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

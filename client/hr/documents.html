@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .doc-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        .doc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+        .doc-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .doc-icon {
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+        .doc-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .doc-info p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+        .doc-actions {
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid var(--border-gray);
+            padding-top: 16px;
+        }
+        .doc-actions button {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item active">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>People</span> > Documents</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Documents</h1>
+                <div style="display: flex; gap: 12px;">
+                    <select class="form-control" style="width:auto">
+                        <option>All Status</option>
+                        <option>Pending</option>
+                        <option>Verified</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-success">Verified</span>
+                    </div>
+                    <div class="doc-header">
+                        <div class="doc-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                        <div class="doc-info">
+                            <h3>Aadhar Card</h3>
+                            <p>Rahul Sharma (EMP001)</p>
+                        </div>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn btn-outline btn-sm" onclick="showToast('Preview not available in demo', 'info')"><i class="fa-solid fa-eye"></i> Preview</button>
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> DL</button>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-warning">Pending</span>
+                    </div>
+                    <div class="doc-header">
+                        <div class="doc-icon"><i class="fa-solid fa-file-image"></i></div>
+                        <div class="doc-info">
+                            <h3>PAN Card</h3>
+                            <p>Priya Patel (EMP002)</p>
+                        </div>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn btn-primary btn-sm" onclick="showToast('Document Verified', 'success')"><i class="fa-solid fa-check"></i> Verify</button>
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <div style="position: absolute; top: 16px; right: 16px;">
+                        <span class="badge badge-success">Verified</span>
+                    </div>
+                    <div class="doc-header">
+                        <div class="doc-icon"><i class="fa-solid fa-file-word"></i></div>
+                        <div class="doc-info">
+                            <h3>Offer Letter</h3>
+                            <p>Amit Verma (EMP003)</p>
+                        </div>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-eye"></i> Preview</button>
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> DL</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0</div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

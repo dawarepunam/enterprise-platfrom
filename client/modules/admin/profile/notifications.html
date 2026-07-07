@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Notification Settings</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="notifications">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Notifications</p>
+                        <h1>Admin alert preferences</h1>
+                        <p class="muted">Choose how project, approval, delay and security alerts should reach you.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <button class="btn btn-primary" data-save="notifications">Save Notifications</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="toggle-grid">
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>Email Notifications</h3>
+                            <p>Receive workflow and approval updates directly in inbox.</p>
+                        </div>
+                        <input id="emailNotif" type="checkbox" />
+                    </label>
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>SMS Notifications</h3>
+                            <p>Receive urgent alerts on phone when away from dashboard.</p>
+                        </div>
+                        <input id="smsNotif" type="checkbox" />
+                    </label>
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>In-App Notifications</h3>
+                            <p>Show real-time in-app notifications for live operational events.</p>
+                        </div>
+                        <input id="inAppNotif" type="checkbox" />
+                    </label>
+                    <label class="toggle-item">
+                        <div class="toggle-copy">
+                            <h3>Critical Alerts Only</h3>
+                            <p>Reduce noise and keep only security, delay and approval escalations.</p>
+                        </div>
+                        <input id="criticalOnly" type="checkbox" />
+                    </label>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

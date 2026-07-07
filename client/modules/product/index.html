@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Manager | Enterprise Engine</title>
+  <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+  <link rel="stylesheet" href="/modules/product/core/theme.css" />
+</head>
+<body>
+  <div class="pm-app">
+    <!-- Fixed Sidebar -->
+    <aside class="pm-sidebar" id="pmSidebar">
+      <div class="pm-brand">
+        <img src="/assets/images/logo.png" alt="Logo" />
+        <div><strong>Enterprise</strong><span>Product Manager</span></div>
+      </div>
+      <nav class="pm-nav" id="sidebarNav">
+        <!-- Injected via core/ui.js -->
+      </nav>
+    </aside>
+
+    <main class="pm-main">
+      <!-- Fixed Header -->
+      <header class="pm-header">
+        <div class="pm-header-left">
+          <button class="pm-icon-btn pm-menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+          <div class="pm-breadcrumbs" id="pmBreadcrumbs">Dashboard > Overview</div>
+          <h1 id="pmPageTitle">Product Manager Dashboard</h1>
+        </div>
+        
+        <div class="pm-header-center">
+          <label class="pm-search-box">
+            <input type="search" id="globalSearch" placeholder="Search requirements, projects, risks..." />
+          </label>
+        </div>
+
+        <div class="pm-header-right">
+          <button class="pm-icon-btn" data-action="notifications" title="Notifications">🔔</button>
+          <button class="pm-icon-btn" data-action="settings" title="Settings">⚙️</button>
+          <button class="pm-profile" id="userProfileBtn">
+            <span class="pm-avatar">PM</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Host -->
+      <div id="pmPageHost" class="pm-page-container">
+        <!-- SPA Pages will mount here -->
+        <div class="pm-loader">Loading module...</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modals & Drawers -->
+  <aside class="pm-drawer hidden" id="pmGlobalDrawer">
+    <div class="pm-drawer-header">
+      <div class="pm-drawer-title-group">
+        <span class="pm-eyebrow" id="drawerEyebrow">Context</span>
+        <h2 id="drawerTitle">Drawer Title</h2>
+      </div>
+      <button class="pm-icon-btn" id="drawerCloseBtn">✕</button>
+    </div>
+    <div class="pm-drawer-body" id="drawerBody"></div>
+  </aside>
+
+  <div class="pm-modal-overlay hidden" id="pmGlobalModal">
+    <div class="pm-modal">
+      <div class="pm-modal-header">
+        <h2 id="modalTitle">Modal Title</h2>
+        <button class="pm-icon-btn" id="modalCloseBtn">✕</button>
+      </div>
+      <div class="pm-modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="pm-toast-container" id="toastContainer"></div>
+
+  <!-- Core Scripts -->
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/modules/product/core/api.js"></script>
+  <script src="/modules/product/core/ui.js"></script>
+  <script src="/modules/product/core/app.js"></script>
+</body>
+</html>

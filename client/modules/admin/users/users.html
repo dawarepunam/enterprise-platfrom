@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Users — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/users/users.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">👥 Users</div>
+      <div class="page-subtitle">Manage all team members and their roles</div>
+    </div>
+    <div class="page-top-actions">
+      <button class="btn btn-outline btn-sm" onclick="exportUsers()">📤 Export</button>
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">📥 Import</button>
+      <input type="file" id="importFile" accept=".csv,.xlsx" style="display:none" onchange="importUsers(this)"/>
+      <button class="btn btn-primary" onclick="openModal('addUserModal')">+ Add User</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="kpi-grid mb-24" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card kpi-card-blue" onclick="window.filterByStat('all')" style="cursor:pointer; transition: 0.2s;" id="kpi-all"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">👥</div></div><div class="kpi-value" id="statTotal">—</div><div class="kpi-label">Total Users</div></div>
+    <div class="kpi-card kpi-card-green" onclick="window.filterByStat('active')" style="cursor:pointer; transition: 0.2s;" id="kpi-active"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">✅</div></div><div class="kpi-value" id="statActive">—</div><div class="kpi-label">Active</div></div>
+    <div class="kpi-card kpi-card-orange" onclick="window.filterByStat('managers')" style="cursor:pointer; transition: 0.2s;" id="kpi-managers"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">🎯</div></div><div class="kpi-value" id="statManagers">—</div><div class="kpi-label">Managers</div></div>
+    <div class="kpi-card kpi-card-red" onclick="window.filterByStat('inactive')" style="cursor:pointer; transition: 0.2s;" id="kpi-inactive"><div class="kpi-top"><div class="kpi-icon kpi-icon-red">⚠️</div></div><div class="kpi-value" id="statInactive">—</div><div class="kpi-label">Inactive</div></div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="table-topbar">
+      <div>
+        <span class="table-topbar-title">All Users</span>
+        <span class="table-topbar-count" id="userCount"></span>
+      </div>
+      <div class="filter-bar" style="border:none;padding:0;flex:1;margin-left:16px;">
+        <select class="filter-select" id="filterDept" onchange="filterUsers()"><option value="">All Departments</option></select>
+        <select class="filter-select" id="filterRole" onchange="filterUsers()">
+          <option value="">All Roles</option>
+          <option value="ADMIN">Admin</option>
+          <option value="MANAGER">Project Manager</option>
+          <option value="PRODUCT_MANAGER">Product Manager</option>
+          <option value="HR">HR</option>
+          <option value="MARKETING">Marketing</option>
+          <option value="SALES">Sales</option>
+          <option value="CALLING">Calling</option>
+          <option value="MEMBER">Employee</option>
+          <option value="CLIENT">Client</option>
+        </select>
+        <select class="filter-select" id="filterStatus" onchange="filterUsers()">
+          <option value="">All Status</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+        </select>
+      </div>
+      <div class="table-search">
+        <span class="table-search-icon">🔍</span>
+        <input class="table-search-input" id="searchInput" placeholder="Search users..." oninput="filterUsers()"/>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>User</th><th>Department</th><th>Role</th>
+            <th>Projects</th><th>Attendance</th><th>Status</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+          <tr><td colspan="7" style="text-align:center;padding:40px;">
+            <div class="loader-spinner" style="margin:0 auto;"></div>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-pagination">
+      <span class="pagination-info" id="pageInfo">Showing 0 of 0</span>
+      <div class="pagination-buttons" id="pageBtns"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Add User Modal -->
+<div class="modal-overlay hidden" id="addUserModal">
+  <div class="modal-box modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">➕ Add New User</div>
+      <button class="modal-close" onclick="closeModal('addUserModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Full Name <span class="required">*</span></label><input class="form-control" id="uName" placeholder="Full name" required/></div>
+        <div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input class="form-control" id="uEmail" type="email" placeholder="email@company.com" required/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="uPhone" placeholder="+91 98765 43210"/></div>
+        <div class="form-group"><label class="form-label">Role <span class="required">*</span></label>
+          <select class="form-control" id="uRole" required>
+            <option value="">Select Role</option>
+            <option value="ADMIN">Admin</option><option value="MANAGER">Project Manager</option>
+            <option value="PRODUCT_MANAGER">Product Manager</option><option value="HR">HR</option>
+            <option value="MARKETING">Marketing</option><option value="SALES">Sales</option>
+            <option value="CALLING">Calling Team</option><option value="MEMBER">Employee</option><option value="CLIENT">Client</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Department</label><select class="form-control" id="uDept"><option value="">Select Department</option></select></div>
+        <div class="form-group"><label class="form-label">Password <span class="required">*</span></label><input class="form-control" id="uPass" type="password" placeholder="Create password" required/></div>
+        <div class="form-group span-2"><label class="form-label">Designation</label><input class="form-control" id="uDesig" placeholder="e.g. Senior Developer"/></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addUserModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddUser()">✅ Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal-overlay hidden" id="editUserModal">
+  <div class="modal-box modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit User</div>
+      <button class="modal-close" onclick="closeModal('editUserModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editUserId"/>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" id="euName"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="euEmail" type="email"/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="euPhone"/></div>
+        <div class="form-group"><label class="form-label">Role</label>
+          <select class="form-control" id="euRole">
+            <option value="ADMIN">Admin</option><option value="MANAGER">Project Manager</option>
+            <option value="PRODUCT_MANAGER">Product Manager</option><option value="HR">HR</option>
+            <option value="MARKETING">Marketing</option><option value="SALES">Sales</option>
+            <option value="CALLING">Calling</option><option value="MEMBER">Employee</option><option value="CLIENT">Client</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Department</label><select class="form-control" id="euDept"></select></div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="euStatus"><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('editUserModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditUser()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/users/users.js"></script>
+</body>
+</html>

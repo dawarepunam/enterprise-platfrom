@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Management - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu"><li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back</span></a></li></ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>Travel</span> > Travel Requests</div>
+                </div>
+                <div class="header-right"><div class="user-profile"><img src="https://ui-avatars.com/api/?name=Admin&background=2563EB&color=fff"></div></div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Corporate Travel Planner</h1>
+                <button class="btn btn-primary" onclick="openModal('travelModal')"><i class="fa-solid fa-plane"></i> New Request</button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Active Itineraries</h3>
+                    <div class="table-actions">
+                        <input type="text" class="form-control" placeholder="Search employee..." style="width:200px;padding:6px 12px;">
+                        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter"></i> Filter</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Req ID</th>
+                            <th>Employee</th>
+                            <th>Destination</th>
+                            <th>Dates</th>
+                            <th>Est. Budget</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-family:monospace;font-weight:600;">#TRV-1024</td>
+                            <td>Rahul Sharma</td>
+                            <td><i class="fa-solid fa-plane-departure" style="color:var(--text-gray);"></i> Mumbai → Delhi</td>
+                            <td>12 Aug - 15 Aug</td>
+                            <td>₹ 25,000</td>
+                            <td><span class="badge badge-warning">Pending Approval</span></td>
+                            <td><button class="btn btn-outline btn-sm">Review</button></td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:monospace;font-weight:600;">#TRV-1020</td>
+                            <td>Priya Patel</td>
+                            <td><i class="fa-solid fa-hotel" style="color:var(--text-gray);"></i> Bengaluru (Client Visit)</td>
+                            <td>20 Jul - 23 Jul</td>
+                            <td>₹ 32,500</td>
+                            <td><span class="badge badge-success">Approved</span></td>
+                            <td><button class="btn btn-outline btn-sm">View Tickets</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Travel Modal -->
+    <div class="modal-overlay" id="travelModal">
+        <div class="modal-content" style="width:600px;" onclick="event.stopPropagation()">
+            <div class="modal-header"><h3>Plan Travel</h3><button class="modal-close"><i class="fa-solid fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Purpose of Travel</label>
+                    <input type="text" class="form-control" placeholder="E.g. Client Meeting">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group">
+                        <label class="form-label">From City</label>
+                        <input type="text" class="form-control" placeholder="Origin">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">To City</label>
+                        <input type="text" class="form-control" placeholder="Destination">
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group">
+                        <label class="form-label">Departure Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Return Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Requirements</label>
+                    <div style="display:flex;gap:16px;margin-top:8px;">
+                        <label><input type="checkbox" checked> Flight</label>
+                        <label><input type="checkbox" checked> Hotel</label>
+                        <label><input type="checkbox"> Cab/Taxi</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('travelModal');showToast('Travel request submitted!','success')">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

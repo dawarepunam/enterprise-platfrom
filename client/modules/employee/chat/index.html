@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Chats - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: flex !important; flex-direction: column !important; height: calc(100vh - 80px) !important; padding: 20px !important; }
+
+    /* ── Chat Container ── */
+    .chat-layout {
+      flex: 1; display: flex; background: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      overflow: hidden; min-height: 0;
+    }
+
+    /* ── Left Sidebar (Channels) ── */
+    .chat-sidebar {
+      width: 280px; background: #f8fafc; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0;
+    }
+    .cs-hdr { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+    .cs-title { font-size: 18px; font-weight: 800; color: #2b3674; display: flex; align-items: center; gap: 8px; }
+    .cs-title i { color: #3965FF; }
+    .ch-search-btn { background: transparent; border: none; font-size: 16px; color: #a3aed1; cursor: pointer; transition: .2s; }
+    .ch-search-btn:hover { color: #3965FF; }
+    
+    .ch-search-box { padding: 12px 20px; background: #fff; border-bottom: 1px solid #e2e8f0; }
+    .ch-search-input { width: 100%; padding: 8px 12px; border-radius: 8px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; transition: .2s; }
+    .ch-search-input:focus { border-color: #3965FF; }
+
+    .cs-body { flex: 1; overflow-y: auto; padding: 12px 0; }
+    .cs-body::-webkit-scrollbar { width: 6px; }
+    .cs-body::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    
+    .cs-group { margin-bottom: 20px; }
+    .cs-group-title { font-size: 11px; font-weight: 700; color: #a3aed1; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 20px; margin-bottom: 8px; }
+    
+    .ch-item {
+      padding: 10px 20px; font-size: 14px; color: #5d6d8a; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: .2s;
+    }
+    .ch-item:hover { background: #f0f4ff; color: #3965FF; }
+    .ch-item.active { background: rgba(57,101,255,0.1); color: #3965FF; font-weight: 700; border-right: 3px solid #3965FF; }
+    .ch-icon { opacity: 0.7; }
+    .dm-status { width: 8px; height: 8px; border-radius: 50%; background: #05CD99; }
+    .dm-status.offline { background: #a3aed1; }
+
+    /* ── Main Chat Area ── */
+    .chat-main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; }
+    
+    .cm-header {
+      padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #fff;
+    }
+    .cm-channel-name { font-size: 18px; font-weight: 800; color: #2b3674; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .cm-channel-meta { font-size: 13px; color: #a3aed1; font-weight: 500; }
+    
+    .cm-actions { display: flex; gap: 12px; }
+    .cm-action-btn { background: #f4f7fe; border: none; width: 36px; height: 36px; border-radius: 10px; color: #5d6d8a; cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; }
+    .cm-action-btn:hover { background: #e2e8f0; color: #3965FF; }
+
+    .cm-messages-area { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; background: #fff; }
+    .cm-messages-area::-webkit-scrollbar { width: 8px; }
+    .cm-messages-area::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+    /* Messages */
+    .msg-row { display: flex; gap: 16px; max-width: 800px; }
+    .msg-avatar { width: 36px; height: 36px; border-radius: 50%; background: #3965FF; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .msg-content { flex: 1; }
+    .msg-hdr { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+    .msg-author { font-size: 14px; font-weight: 700; color: #2b3674; }
+    .msg-time { font-size: 11px; color: #a3aed1; }
+    .msg-bubble { background: #f8fafc; padding: 12px 16px; border-radius: 0 16px 16px 16px; font-size: 14px; color: #2b3674; line-height: 1.5; border: 1px solid #f0f4ff; display: inline-block; }
+    
+    .msg-row.mine { flex-direction: row-reverse; align-self: flex-end; }
+    .msg-row.mine .msg-hdr { justify-content: flex-end; }
+    .msg-row.mine .msg-bubble { background: #3965FF; color: #fff; border-radius: 16px 0 16px 16px; border-color: #3965FF; }
+
+    .cm-typing { padding: 10px 24px; font-size: 12px; color: #a3aed1; font-style: italic; border-top: 1px solid #f0f4ff; }
+
+    /* Compose Area */
+    .cm-compose-wrap { padding: 20px 24px; background: #fff; border-top: 1px solid #e2e8f0; }
+    .cm-compose {
+      display: flex; align-items: flex-end; gap: 12px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 8px 16px; transition: .2s;
+    }
+    .cm-compose:focus-within { border-color: #3965FF; background: #fff; box-shadow: 0 4px 16px rgba(57,101,255,0.08); }
+    
+    .cm-input {
+      flex: 1; background: transparent; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 14px; color: #2b3674;
+      resize: none; max-height: 120px; padding: 10px 0; line-height: 1.5;
+    }
+    .cmp-actions { display: flex; gap: 8px; padding-bottom: 8px; }
+    .cmp-btn { background: transparent; border: none; color: #a3aed1; font-size: 18px; cursor: pointer; transition: .2s; }
+    .cmp-btn:hover { color: #3965FF; }
+    
+    .cm-send-btn { background: #3965FF; color: #fff; width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: .2s; margin-bottom: 4px; }
+    .cm-send-btn:hover { background: #274ccf; transform: scale(1.05); }
+
+    .cm-attachments { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+
+    /* ── Members Panel ── */
+    .chat-members-panel {
+      width: 280px; background: #fff; border-left: 1px solid #e2e8f0; display: none; flex-direction: column; flex-shrink: 0;
+    }
+    .chat-members-panel.open { display: flex; }
+    .cmp-hdr { padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 800; color: #2b3674; }
+    .cmp-close { background: transparent; border: none; color: #a3aed1; cursor: pointer; font-size: 18px; }
+    .cmp-list { flex: 1; overflow-y: auto; padding: 12px 0; }
+
+    /* ── Thread Modal ── */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(43,54,116,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-box { background: #fff; border-radius: 20px; width: 600px; max-width: 90%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative; overflow: hidden; }
+    .modal-hdr { padding: 20px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 800; color: #2b3674; background: #f8fafc; }
+    #threadContent { flex: 1; overflow-y: auto; padding: 24px; }
+    .thread-compose { padding: 16px 24px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; gap: 12px; align-items: center; }
+
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      
+      <div class="chat-layout">
+        
+        <!-- Sidebar -->
+        <div class="chat-sidebar">
+          <div class="cs-hdr">
+            <div class="cs-title"><i class="fa fa-comments"></i> Chat</div>
+            <button class="ch-search-btn" id="btnChSearch" title="Search"><i class="fa fa-search"></i></button>
+          </div>
+          
+          <div class="ch-search-box" id="chSearchBox" style="display:none">
+            <input type="text" id="chSearchInput" placeholder="Search channels..." class="ch-search-input"/>
+          </div>
+
+          <div class="cs-body">
+            <div class="cs-group">
+              <div class="cs-group-title">Channels</div>
+              <div class="ch-list" id="channelList">
+                <div style="padding:10px 20px;font-size:12px;color:#a3aed1;"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+              </div>
+            </div>
+
+            <div class="cs-group">
+              <div class="cs-group-title">Direct Messages</div>
+              <div class="ch-list" id="dmList"></div>
+            </div>
+
+            <div class="cs-group">
+              <div class="cs-group-title">People</div>
+              <div class="ch-list" id="peopleList">
+                <div style="padding:10px 20px;font-size:12px;color:#a3aed1;"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Chat -->
+        <div class="chat-main">
+          
+          <!-- Header -->
+          <div class="cm-header" id="cmHeader">
+            <div>
+              <div class="cm-channel-name" id="cmChannelName"><i class="fa fa-hashtag"></i> Select a channel</div>
+              <div class="cm-channel-meta" id="cmChannelMeta">Welcome to Team Chat</div>
+            </div>
+            <div class="cm-actions">
+              <button class="cm-action-btn" id="btnPinned" title="Pinned Messages"><i class="fa fa-thumbtack"></i></button>
+              <button class="cm-action-btn" id="btnMembers" title="Toggle Members Panel"><i class="fa fa-users"></i></button>
+              <button class="cm-action-btn" id="btnSearch" title="Search Messages"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div class="cm-messages-area" id="messagesArea">
+            <div style="text-align:center;margin:auto;color:#a3aed1;">
+              <i class="fa fa-comments fa-3x" style="opacity:0.5;margin-bottom:16px;"></i><br>
+              Select a channel or conversation to start messaging
+            </div>
+          </div>
+
+          <!-- Typing Indicator -->
+          <div class="cm-typing" id="typingIndicator" style="display:none">
+            <span id="typingName">Someone</span> is typing...
+          </div>
+
+          <!-- Compose -->
+          <div class="cm-compose-wrap">
+            <div class="cm-compose" id="composeArea" style="display:none">
+              <div class="cmp-actions">
+                <button class="cmp-btn" id="btnAttach" title="Attach File"><i class="fa fa-paperclip"></i></button>
+                <button class="cmp-btn" id="btnEmoji" title="Emoji"><i class="fa fa-smile"></i></button>
+                <button class="cmp-btn" id="btnMention" title="Mention"><i class="fa fa-at"></i></button>
+              </div>
+              <textarea class="cm-input" id="messageInput" placeholder="Type your message..." rows="1"></textarea>
+              <button class="cm-send-btn" id="btnSend"><i class="fa fa-paper-plane"></i></button>
+            </div>
+            <input type="file" id="chatFileInput" multiple style="display:none"/>
+            <div class="cm-attachments" id="chatAttachments"></div>
+          </div>
+        </div>
+
+        <!-- Members Panel -->
+        <div class="chat-members-panel" id="membersPanel">
+          <div class="cmp-hdr">
+            <span>Members</span>
+            <button class="cmp-close" id="btnCloseMembers"><i class="fa fa-times"></i></button>
+          </div>
+          <div class="cmp-list" id="membersList"></div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Thread Modal -->
+<div class="modal-overlay" id="threadModal" style="display:none">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <span>Thread Reply</span>
+      <button class="cmp-close" onclick="document.getElementById('threadModal').style.display='none'"><i class="fa fa-times"></i></button>
+    </div>
+    <div id="threadContent"></div>
+    <div class="thread-compose">
+      <textarea class="cm-input" id="threadReplyInput" placeholder="Reply in thread..." rows="1" style="background:#fff;border:1.5px solid #e2e8f0;padding:12px;border-radius:12px;"></textarea>
+      <button class="cm-send-btn" id="btnThreadReply"><i class="fa fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/chat/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exit Management | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards" style="margin-bottom: 25px;">
+          <div class="glass-card kpi-card">
+            <div class="card-icon red"><i class="fas fa-door-open"></i></div>
+            <div class="card-info"><h3>Notice Period</h3><h2>5</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon orange"><i class="fas fa-tasks"></i></div>
+            <div class="card-info"><h3>Pending KT</h3><h2>2</h2></div>
+          </div>
+        </div>
+
+        <div class="table-container glass-card mt-4">
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Last Working Day</th>
+                  <th>KT Status</th>
+                  <th>Clearance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="exitTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/exit.js"></script>
+</body>
+</html>

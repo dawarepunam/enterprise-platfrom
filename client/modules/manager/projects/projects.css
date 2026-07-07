@@ -1,0 +1,125 @@
+.project-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project-card {
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.project-card-top,
+.project-card-meta,
+.project-card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.project-card-top strong {
+  font-size: 1.1rem;
+}
+
+.project-card-meta span,
+.project-card p {
+  color: var(--muted);
+}
+
+.project-card-actions {
+  justify-content: flex-start;
+}
+
+.ghost-btn {
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  color: var(--text);
+}
+
+.manager-project-card.is-selected,
+.selected-row {
+  background: rgba(219, 234, 254, 0.24);
+}
+
+.project-name-link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: #2563eb;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.project-detail-panel,
+.project-detail-grid,
+.project-detail-columns,
+.project-detail-actions {
+  display: grid;
+  gap: 16px;
+}
+
+.project-detail-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.project-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.project-detail-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-detail-card,
+.project-detail-block {
+  border-radius: 20px;
+  padding: 18px;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid rgba(191, 219, 254, 0.6);
+}
+
+.project-detail-card span,
+.project-detail-card small,
+.project-detail-block p {
+  color: var(--muted);
+}
+
+.project-detail-card strong {
+  display: block;
+  margin: 8px 0 6px;
+  color: var(--text);
+}
+
+.project-detail-block h3 {
+  margin: 0 0 10px;
+}
+
+.project-detail-block p {
+  margin: 0 0 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .project-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-head,
+  .project-detail-grid,
+  .project-detail-columns {
+    grid-template-columns: 1fr;
+  }
+}

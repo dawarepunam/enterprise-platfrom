@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Notification Center</title>
+
+        <link rel="stylesheet" href="/modules/admin/notifications/../../../assets/css/global.css" />
+        <link rel="stylesheet" href="/modules/admin/notifications/notifications.css" />
+    </head>
+
+    <body>
+        <div class="notifications-page">
+            <!-- Header -->
+            <div class="page-header">
+                <div>
+                    <h1>🔔 Notification Center</h1>
+                    <p>View and manage all system notifications.</p>
+                </div>
+
+                <div class="header-actions">
+                    <button id="markAllReadBtn" class="btn-secondary">
+                        Mark All as Read
+                    </button>
+                    <button id="clearAllBtn" class="btn-danger">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3 id="totalCount">0</h3>
+                    <p>Total Notifications</p>
+                </div>
+
+                <div class="summary-card unread">
+                    <h3 id="unreadCount">0</h3>
+                    <p>Unread</p>
+                </div>
+
+                <div class="summary-card high">
+                    <h3 id="highPriorityCount">0</h3>
+                    <p>High Priority</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <input type="text" id="searchInput"
+                    placeholder="Search notifications..." />
+
+                <select id="typeFilter">
+                    <option value="all">All Types</option>
+                    <option value="Task">Task</option>
+                    <option value="Project">Project</option>
+                    <option value="Lead">Lead</option>
+                    <option value="Approval">Approval</option>
+                    <option value="System">System</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="Unread">Unread</option>
+                    <option value="Read">Read</option>
+                </select>
+            </div>
+
+            <!-- Notification List -->
+            <div class="notification-list" id="notificationList">
+                <!-- Dynamic notifications -->
+            </div>
+        </div>
+
+        <script src="/modules/admin/notifications/../../../assets/js/api.js"></script>
+        <script src="/modules/admin/notifications/notifications.js"></script>
+    </body>
+
+</html>

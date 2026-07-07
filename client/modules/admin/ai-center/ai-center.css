@@ -1,0 +1,7 @@
+.ai-card{background:linear-gradient(135deg,#fff,#FAFAFA);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;position:relative;overflow:hidden;}
+    .ai-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7C3AED,#2563EB,#22C55E);}
+    .ai-icon{font-size:32px;margin-bottom:12px;display:inline-block;animation:float 3s ease-in-out infinite;}
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+    .ai-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;}
+    .ai-text{font-size:13px;color:var(--text-2);line-height:1.6;}
+    .ai-highlight{color:var(--primary);font-weight:600;background:var(--primary-light);padding:0 4px;border-radius:2px;}

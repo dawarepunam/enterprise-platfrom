@@ -1,0 +1,43 @@
+<div class="hr-overtime-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Overtime Management</h2>
+  </div>
+
+  <!-- KPI Cards Grid -->
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5rem;">
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #F59E0B;">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Pending</div>
+      <div style="font-size:2rem; font-weight:700; color:#F59E0B;">16</div>
+    </div>
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #10B981;">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Approved</div>
+      <div style="font-size:2rem; font-weight:700; color:#10B981;">18</div>
+    </div>
+    <div class="hr-card hoverable" style="cursor:pointer; padding:1.5rem; border-bottom:4px solid #3B82F6;">
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Paid</div>
+      <div style="font-size:2rem; font-weight:700; color:#3B82F6;">24</div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Date</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Hours</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Reason</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500; text-align:right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="hrOvertimeTableBody">
+        <!-- Injected via script -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script src="/modules/hr/overtime/script.js"></script>

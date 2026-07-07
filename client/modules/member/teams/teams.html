@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft Teams</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page member-shell">
+      <section class="workspace-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">Microsoft Teams</p>
+          <h1>Your project groups and collaboration rooms</h1>
+          <p class="hero-text">If you have multiple projects, each project appears here. Open the internal chat workspace or redirect to Microsoft Teams for that project.</p>
+          <div id="teamsHeroChips" class="hero-badges"></div>
+        </div>
+      </section>
+      <section class="workspace-panel">
+        <div class="section-heading"><div><p class="eyebrow">Project Groups</p><h2>Available project rooms</h2></div></div>
+        <div id="teamsProjectGrid" class="project-grid"></div>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="teams.js"></script>
+</body>
+</html>

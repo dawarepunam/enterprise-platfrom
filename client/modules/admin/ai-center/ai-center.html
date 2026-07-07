@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>AI Center — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/ai-center/ai-center.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left"><div class="page-title">🤖 AI Insights Center</div><div class="page-subtitle">AI-powered analysis of your company data</div></div>
+    <button class="btn btn-primary" onclick="window.showToast('AI','Refreshing AI models...','info')">🔄 Refresh Insights</button>
+  </div>
+
+  <div class="grid-2 mb-24">
+    <div class="ai-card">
+      <div class="ai-icon">📊</div>
+      <div class="ai-title">AI Weekly Summary</div>
+      <div class="ai-text">This week, overall productivity increased by <span class="ai-highlight">12%</span>. <strong style="color:var(--text)">Engineering</strong> was the top-performing department. 3 projects were completed ahead of schedule, while 1 is currently flagged as <span style="color:var(--danger);font-weight:600">at risk</span> of missing its deadline.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-icon">📅</div>
+      <div class="ai-title">AI Attendance Analysis</div>
+      <div class="ai-text">Detected a pattern of high absenteeism on <span class="ai-highlight">Mondays</span> in the Sales team over the last month. Overall company attendance rate remains healthy at <strong>94.2%</strong>. Recommend organizing Monday morning syncs to boost engagement.</div>
+    </div>
+  </div>
+
+  <div class="grid-2 mb-24">
+    <div class="ai-card">
+      <div class="ai-icon">💰</div>
+      <div class="ai-title">AI Revenue Forecast</div>
+      <div class="ai-text">Based on current project completion rates and client retainment, Q4 revenue is projected to exceed targets by <span class="ai-highlight">15-18%</span>. Client 'TechSoft Solutions' shows a high probability (85%) of project expansion next month.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-icon">⚠️</div>
+      <div class="ai-title">AI Risk Detection</div>
+      <div class="ai-text"><strong>Project 'Website Redesign'</strong> is showing signs of scope creep. The budget utilization is at 82% while progress is only at 60%. Recommended action: Schedule an immediate review with PM Rahul Sharma to reassess timelines.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="ai-card">
+      <div class="ai-icon">🏆</div>
+      <div class="ai-title">AI Employee Ranking</div>
+      <div class="ai-text">Top performers this month based on task completion speed, quality, and attendance:<br/><br/>
+      1. <strong>Amit Kumar</strong> (Eng) - 98% Score<br/>
+      2. <strong>Priya Patil</strong> (Design) - 95% Score<br/>
+      3. <strong>Neha Singh</strong> (HR) - 94% Score</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-icon">⚡</div>
+      <div class="ai-title">AI Productivity Analysis</div>
+      <div class="ai-text">Task completion velocity peaks between <span class="ai-highlight">10:00 AM - 1:00 PM</span>. Post-lunch productivity dips by 25%. Suggest moving internal, non-critical meetings to the 2:00 PM - 4:00 PM slot to maximize deep-work hours in the morning.</div>
+    </div>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+</body>
+</html>

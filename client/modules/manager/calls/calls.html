@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Calls</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Voice Calls</p>
+                            <h1>Prepare manager-led call rooms and keep permanent call logs</h1>
+                            <p class="hero-text">This screen models the production WebRTC + Socket.IO voice flow: create call, notify members, save duration, and retain call history.</p>
+                        </div>
+                        <div id="callMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Start Call</p><h2>Create call room</h2></div></header>
+                        <form id="callForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Team</span><select id="callTeamId"></select></div>
+                                <div class="manager-field"><span>Call Type</span><select id="callType"><option>VOICE</option><option>ESCALATION</option><option>CLIENT</option></select></div>
+                            </div>
+                            <div class="manager-field"><span>Title</span><input id="callTitle" type="text" placeholder="OmniRetail blocker call" required /></div>
+                            <div class="manager-field"><span>Notes</span><textarea id="callNotes" placeholder="Purpose, participants, and expected action"></textarea></div>
+                            <div class="manager-button-row"><button class="btn btn-primary" type="submit">Start / Schedule Call</button></div>
+                        </form>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Flow</p><h2>Production-ready behavior</h2></div></header>
+                        <div class="manager-list">
+                            <article class="manager-list-item"><strong>1. Manager clicks Start Call</strong><p>Socket event will trigger incoming-call prompt to participants.</p></article>
+                            <article class="manager-list-item"><strong>2. Members accept or reject</strong><p>WebRTC peer connection begins on acceptance.</p></article>
+                            <article class="manager-list-item"><strong>3. Duration + log saved</strong><p>Call record remains searchable in manager history.</p></article>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="manager-panel">
+                    <header><div><p class="eyebrow-line">Call Logs</p><h2>Saved room history</h2></div></header>
+                    <div id="callList" class="manager-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="calls.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+/* Project Detail – Dark Premium Theme */
+
+/* Glassmorphism card base */
+.kpi-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: var(--r-lg);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--sh);
+}
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-lg);
+}
+.kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--clr-primary);
+}
+.kpi-label {
+  font-size: 0.875rem;
+  color: var(--clr-text-muted);
+  margin-top: 0.25rem;
+}
+.kpi-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tab {
+  background: rgba(255,255,255,0.06);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--r-md);
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.tab.active, .tab:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--clr-primary);
+}
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
+
+/* Panel layout */
+.tab-panels {
+  background: rgba(255,255,255,0.04);
+  padding: 1rem;
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(8px);
+}
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  color: var(--clr-text-muted);
+}
+.breadcrumb a {
+  color: var(--clr-primary);
+  text-decoration: none;
+}
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--r-md);
+  box-shadow: var(--sh);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1000;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .kpi-section { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+  .tabs { flex-direction: column; }
+}

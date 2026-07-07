@@ -1,0 +1,67 @@
+/* Login page specific styles */
+@import url('../shared/common.css');
+
+/* Override primary color for login if needed */
+:root {
+  --login-primary: var(--color-primary);
+}
+
+.login-page {
+  min-height: 100vh;
+}
+
+/* Ensure the login container takes full height */
+.login-container {
+  height: 100vh;
+}
+
+/* Illustration adjustments */
+.login-illustration {
+  background: var(--login-primary);
+  color: #fff;
+}
+
+/* Form styling */
+.login-form {
+  background: #fff;
+  padding: 3rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+body.dark .login-form {
+  background: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}
+
+/* Button primary */
+.btn.primary {
+  background: var(--login-primary);
+}
+
+/* OTP modal styling */
+.otp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.otp-modal .modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+body.dark .otp-modal .modal-content {
+  background: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}

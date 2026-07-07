@@ -1,0 +1,44 @@
+<div class="pm-settings">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Configuration</span>
+      <h2>Module Settings</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Configure your Product Manager module preferences.</p>
+    </div>
+  </div>
+
+  <div class="pm-card" style="max-width: 600px;">
+    <form id="pm-settings-form" onsubmit="window.action_save_settings(event)">
+      <div class="pm-form-group">
+        <label class="pm-label">Default View</label>
+        <select class="pm-input" id="setting-default-view">
+          <option value="/product-manager/queue">Queue</option>
+          <option value="/product-manager/board">Board</option>
+          <option value="/product-manager/calendar">Calendar</option>
+        </select>
+      </div>
+
+      <div class="pm-form-group">
+        <label class="pm-label">Notifications</label>
+        <div style="display: flex; gap: 15px; margin-top: 10px;">
+          <label><input type="checkbox" id="setting-notify-email" checked> Email</label>
+          <label><input type="checkbox" id="setting-notify-push" checked> Push</label>
+          <label><input type="checkbox" id="setting-notify-slack"> Slack</label>
+        </div>
+      </div>
+
+      <div class="pm-form-group">
+        <label class="pm-label">Theme Preference</label>
+        <select class="pm-input" id="setting-theme">
+          <option value="system">System Default</option>
+          <option value="dark">Dark Mode</option>
+          <option value="light">Light Mode</option>
+        </select>
+      </div>
+
+      <div class="pm-form-group" style="margin-top: 30px; border-top: 1px solid var(--pm-border); padding-top: 20px;">
+        <button type="submit" class="pm-btn pm-btn-primary">Save Preferences</button>
+      </div>
+    </form>
+  </div>
+</div>

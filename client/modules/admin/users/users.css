@@ -1,0 +1,16 @@
+/* Users module styles */
+.role-badge {
+  display:inline-block; padding:3px 8px;
+  border-radius:4px; font-size:11px; font-weight:600;
+}
+.role-ADMIN { background:#EDE9FE;color:#7C3AED; }
+.role-MANAGER,.role-PROJECT_MANAGER { background:#DBEAFE;color:#1D4ED8; }
+.role-PRODUCT_MANAGER { background:#FEF3C7;color:#B45309; }
+.role-HR { background:#FCE7F3;color:#BE185D; }
+.role-MARKETING { background:#DCFCE7;color:#15803D; }
+.role-SALES { background:#FFF7ED;color:#C2410C; }
+.role-MEMBER,.role-EMPLOYEE { background:#F1F5F9;color:#475569; }
+.role-CLIENT { background:#ECFDF5;color:#047857; }
+.role-CALLING { background:#FEF2F2;color:#DC2626; }
+
+.action-cell { display:flex; gap:6px; }

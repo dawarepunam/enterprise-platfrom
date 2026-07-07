@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Portal Dashboard</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <section class="workspace-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Client Portal</p>
+                    <h1>Track project progress and approve quotations</h1>
+                    <p class="hero-text">Clients can review progress, see commercial requests and stay close to the delivery team through a clean portal flow.</p>
+                    <div class="hero-actions"><a class="btn btn-primary" href="../approvals/approvals.html">Open Approvals</a></div>
+                </div>
+                <div class="hero-side">
+                    <article class="signal-card"><span>Projects Visible</span><strong id="clientProjects">0</strong></article>
+                    <article class="signal-card"><span>Pending Approvals</span><strong id="clientApprovals">0</strong></article>
+                    <article class="signal-card accent-card"><span>Approved Requests</span><strong id="clientApproved">0</strong><small>Completed client decisions</small></article>
+                </div>
+            </section>
+            <section class="workspace-panel">
+                <div class="section-heading"><div><p class="eyebrow">Progress</p><h2>Project visibility</h2></div></div>
+                <div class="table-wrap">
+                    <table class="workspace-table">
+                        <thead><tr><th>Project</th><th>Status</th><th>Priority</th><th>Deadline</th></tr></thead>
+                        <tbody id="clientProjectTable"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

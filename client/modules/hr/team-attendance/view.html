@@ -1,0 +1,47 @@
+<div class="hr-team-attendance-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Team Attendance View</h2>
+    <div style="display:flex; gap:1rem;">
+      <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; width:200px;">
+        <option>Amit Verma (Dev Lead)</option>
+        <option>Priya Patel (Mktg Lead)</option>
+      </select>
+      <input type="date" value="2026-05-16" style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+    </div>
+  </div>
+
+  <div class="hr-card" style="display:flex; gap:2rem; padding:1.5rem; background:#F8FAFC;">
+    <div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Team Size</div>
+      <div style="font-size:1.5rem; font-weight:700;">12</div>
+    </div>
+    <div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Present Today</div>
+      <div style="font-size:1.5rem; font-weight:700; color:#10B981;">10</div>
+    </div>
+    <div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">On Leave</div>
+      <div style="font-size:1.5rem; font-weight:700; color:#F59E0B;">2</div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="hr-card" style="flex:1; overflow-y:auto;">
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Check In</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="hrTeamAttTableBody">
+        <!-- Injected via script -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="/modules/hr/team-attendance/script.js"></script>

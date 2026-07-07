@@ -1,0 +1,191 @@
+<div class="hr-performance-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Top Banner -->
+  <div style="background: linear-gradient(135deg, #1E3A8A, #3B82F6); border-radius:16px; padding:2rem; color:white; display:flex; justify-content:space-between; align-items:center; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-50px; right:-50px; width:200px; height:200px; background:rgba(255,255,255,0.1); border-radius:50%; blur:20px;"></div>
+    <div>
+      <h2 style="margin:0 0 0.5rem 0; font-size:1.75rem;">Good Morning HR 👋</h2>
+      <div style="font-size:0.875rem; opacity:0.9;">Here's what's happening today</div>
+    </div>
+    <div style="display:flex; gap:2rem;">
+      <div style="text-align:center;">
+        <div style="font-size:0.875rem; opacity:0.8;">Active Reviews</div>
+        <div style="font-size:1.5rem; font-weight:700;" id="perfActive">0</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.875rem; opacity:0.8;">Pending</div>
+        <div style="font-size:1.5rem; font-weight:700;" id="perfPending">0</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.875rem; opacity:0.8;">Completed</div>
+        <div style="font-size:1.5rem; font-weight:700;" id="perfCompleted">0</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.875rem; opacity:0.8;">Average Rating</div>
+        <div style="font-size:1.5rem; font-weight:700;" id="perfAvg">0.0</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.2); padding:0.25rem 0.75rem; border-radius:20px; font-size:0.75rem; display:flex; align-items:center; gap:0.5rem; position:absolute; top:1rem; right:1rem;">
+      <span style="width:8px; height:8px; background:#10B981; border-radius:50%; display:inline-block; box-shadow:0 0 8px #10B981;"></span> Real-time
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1.5rem;">
+    <div class="hr-card hoverable" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; min-height:120px; border-bottom:4px solid #F59E0B; cursor:pointer;" onclick="window.App.navigate('/hr/performance?status=Pending')">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; font-weight:500;">Pending Reviews</div>
+        <div style="background:#FEF3C7; color:#B45309; padding:0.5rem; border-radius:8px;">⏳</div>
+      </div>
+      <div style="font-size:1.75rem; font-weight:700; color:var(--hr-text);" id="cardPending">0</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; font-weight:500;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; min-height:120px; border-bottom:4px solid #10B981; cursor:pointer;" onclick="window.App.navigate('/hr/performance?status=Completed')">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; font-weight:500;">Completed Reviews</div>
+        <div style="background:#D1FAE5; color:#065F46; padding:0.5rem; border-radius:8px;">✅</div>
+      </div>
+      <div style="font-size:1.75rem; font-weight:700; color:var(--hr-text);" id="cardCompleted">0</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; font-weight:500;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; min-height:120px; border-bottom:4px solid #8B5CF6; cursor:pointer;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; font-weight:500;">Top Performers</div>
+        <div style="background:#EDE9FE; color:#5B21B6; padding:0.5rem; border-radius:8px;">⭐</div>
+      </div>
+      <div style="font-size:1.75rem; font-weight:700; color:var(--hr-text);">12</div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; font-weight:500;">View Details →</div>
+    </div>
+    <div class="hr-card hoverable" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; min-height:120px; border-bottom:4px solid #3B82F6; cursor:pointer;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div style="color:var(--hr-text-muted); font-size:0.875rem; font-weight:500;">Average Rating</div>
+        <div style="background:#DBEAFE; color:#1E40AF; padding:0.5rem; border-radius:8px;">📈</div>
+      </div>
+      <div style="font-size:1.75rem; font-weight:700; color:var(--hr-text);" id="cardAvg">0.0<span style="font-size:1rem; color:var(--hr-text-muted);">/5</span></div>
+      <div style="color:var(--hr-primary); font-size:0.75rem; font-weight:500;">View Details →</div>
+    </div>
+  </div>
+
+  <!-- Review Table -->
+  <div class="hr-card" style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Recent Reviews</h3>
+      <div style="display:flex; gap:1rem;">
+        <input type="text" placeholder="Search employee..." style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+        <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" onchange="window.PerformanceAPI.fetchReviews(this.value)">
+          <option value="">All</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button class="primary-btn" onclick="window.PerformanceAPI.seedData()">Seed Data</button>
+      </div>
+    </div>
+    <div style="flex:1; overflow-y:auto; padding:1.5rem;">
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--hr-border);">
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Employee</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Department</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Manager</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Rating</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="perfTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Review Drawer (Slide Right) -->
+<div id="hrReviewDrawer" class="hr-drawer right-drawer hidden" style="width:600px;">
+  <div class="hr-drawer-header" style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; background:#F8FAFC;">
+    <h3 style="margin:0;" id="drawerRevTitle">Review - Rahul Sharma</h3>
+    <button onclick="window.UI.closeReviewDrawer()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+  </div>
+  
+  <!-- Tabs -->
+  <div style="display:flex; border-bottom:1px solid var(--hr-border); padding:0 1.5rem; gap:1.5rem; background:#FFF;">
+    <div class="hr-tab active" style="padding:1rem 0; cursor:pointer; color:var(--hr-primary); border-bottom:2px solid var(--hr-primary); font-weight:500;">Overview</div>
+    <div class="hr-tab" style="padding:1rem 0; cursor:pointer; color:var(--hr-text-muted); font-weight:500;">Competencies</div>
+    <div class="hr-tab" style="padding:1rem 0; cursor:pointer; color:var(--hr-text-muted); font-weight:500;">Goals</div>
+    <div class="hr-tab" style="padding:1rem 0; cursor:pointer; color:var(--hr-text-muted); font-weight:500;">Comments</div>
+    <div class="hr-tab" style="padding:1rem 0; cursor:pointer; color:var(--hr-text-muted); font-weight:500;">Timeline</div>
+  </div>
+
+  <div class="hr-drawer-content" style="padding:1.5rem; background:#F1F5F9; flex:1;">
+    <div class="hr-card" style="padding:1.5rem; margin-bottom:1.5rem;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div>
+          <div style="font-size:0.75rem; color:var(--hr-text-muted); font-weight:500;">Employee</div>
+          <div style="font-weight:500;" id="drawerEmp">Rahul Sharma</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--hr-text-muted); font-weight:500;">Department</div>
+          <div style="font-weight:500;" id="drawerDept">Sales</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--hr-text-muted); font-weight:500;">Manager</div>
+          <div style="font-weight:500;" id="drawerMgr">Amit Verma</div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--hr-text-muted); font-weight:500;">Review Period</div>
+          <div style="font-weight:500;" id="drawerPeriod">Apr 2026 - Mar 2027</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hr-card" style="padding:1.5rem; text-align:center;">
+      <h4 style="margin:0 0 1rem 0; color:var(--hr-text-muted);">Current Status</h4>
+      <div style="font-size:1.5rem; font-weight:700; color:#F59E0B; margin-bottom:1.5rem;" id="drawerStatus">Pending Review</div>
+      <button class="primary-btn" style="width:100%; padding:0.75rem;" onclick="window.UI.openRatingModal()">Rate Employee</button>
+    </div>
+  </div>
+</div>
+
+<!-- Manager Rating Modal -->
+<div id="hrRatingModal" class="hr-modal-overlay hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15, 23, 42, 0.6); z-index:3000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div class="hr-card" style="width:500px; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+    <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center; background:#F8FAFC;">
+      <h3 style="margin:0;" id="rateTitle">Rate Employee</h3>
+      <button onclick="window.UI.closeRatingModal()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+    </div>
+    <div style="padding:1.5rem; flex:1;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <label style="font-weight:500; font-size:0.875rem;">Technical Skills</label>
+        <input type="number" id="rateTech" min="1" max="5" value="4" style="width:60px; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <label style="font-weight:500; font-size:0.875rem;">Communication</label>
+        <input type="number" id="rateComm" min="1" max="5" value="4" style="width:60px; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <label style="font-weight:500; font-size:0.875rem;">Leadership</label>
+        <input type="number" id="rateLead" min="1" max="5" value="4" style="width:60px; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <label style="font-weight:500; font-size:0.875rem;">Innovation</label>
+        <input type="number" id="rateInno" min="1" max="5" value="4" style="width:60px; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <label style="font-weight:500; font-size:0.875rem;">Team Work</label>
+        <input type="number" id="rateTeam" min="1" max="5" value="4" style="width:60px; padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;" />
+      </div>
+      <div>
+        <label style="display:block; font-weight:500; font-size:0.875rem; margin-bottom:0.5rem;">Remarks</label>
+        <textarea id="rateRemarks" rows="3" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:6px; resize:none;" placeholder="Great performance throughout..."></textarea>
+      </div>
+    </div>
+    <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+      <button onclick="window.UI.closeRatingModal()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; cursor:pointer;">Cancel</button>
+      <button onclick="window.PerformanceAPI.submitRating()" class="primary-btn" style="padding:0.5rem 1rem;">Save Rating</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/hr/performance/script.js"></script>

@@ -1,0 +1,26 @@
+@import url("../member-experience.css");
+
+.member-grid {
+  grid-template-columns: 1.15fr 0.95fr;
+}
+
+.member-hero .signal-card {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #eff6ff;
+}
+
+.member-hero .signal-card span,
+.member-hero .signal-card small {
+  color: rgba(239, 246, 255, 0.8);
+}
+
+.member-hero .accent-card {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 1100px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+}

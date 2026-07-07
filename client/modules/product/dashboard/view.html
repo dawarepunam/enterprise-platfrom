@@ -1,0 +1,93 @@
+<div class="pm-dashboard" style="display:flex; flex-direction:column; gap:1.5rem;">
+  
+  <div class="pm-grid">
+    <!-- Row 1: 4 KPIs -->
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterQueue" data-filter="Pending">
+      <span>Pending Requirements <div class="pm-badge pm-badge-green" id="statPendingBadge">0</div></span>
+      <h3 id="statPending">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterAnalysis">
+      <span>Under Analysis <div class="pm-badge pm-badge-red" id="statAnalysisBadge">0</div></span>
+      <h3 id="statAnalysis">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterApproval">
+      <span>Approval Pending <div class="pm-badge pm-badge-yellow" id="statApprovalBadge">0</div></span>
+      <h3 id="statApprovalPending">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterFrozen">
+      <span>Frozen Requirements <div class="pm-badge pm-badge-green" id="statFrozenBadge">0</div></span>
+      <h3 id="statFrozen">0</h3>
+    </div>
+
+    <!-- Row 2: 4 More KPIs -->
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterProjects">
+      <span>Projects Created <div class="pm-badge pm-badge-gray" id="statProjectsBadge">0</div></span>
+      <h3 id="statProjects">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterRisks">
+      <span>Open Risks <div class="pm-badge pm-badge-red" id="statRisksBadge">0</div></span>
+      <h3 id="statOpenRisks">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterBudget">
+      <span>Budget Pending <div class="pm-badge pm-badge-green" id="statBudgetBadge">0</div></span>
+      <h3 id="statBudgetPending">0</h3>
+    </div>
+    <div class="pm-col-3 pm-kpi-card hoverable" data-action="filterChanges">
+      <span>Change Requests <div class="pm-badge pm-badge-blue" id="statChangesBadge">0</div></span>
+      <h3 id="statPendingCRs">0</h3>
+    </div>
+
+    <!-- Row 3: Performance & Assignment History -->
+    <!-- Performance Summary -->
+    <div class="pm-col-4 pm-card" style="display:flex; flex-direction:column; gap: 1rem;">
+      <div class="pm-toolbar" style="margin-bottom:0;">
+        <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--pm-text-muted);">Performance Summary</h3>
+        <a href="#" style="font-size:0.75rem; color:var(--pm-primary); text-decoration:none; font-weight:600;">View All</a>
+      </div>
+      
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; flex:1;">
+        <div>
+          <span style="font-size:0.875rem; color:var(--pm-text-muted); font-weight:500;">Projects Assigned</span>
+          <div style="display:flex; align-items:baseline; gap:0.5rem;">
+            <h3 style="font-size:2rem; margin:0;" id="perfProjectsAssigned">0</h3>
+            <small style="color:var(--pm-secondary); font-weight:600;" id="perfAssignedWeek">+0 this week</small>
+          </div>
+        </div>
+        <div>
+          <span style="font-size:0.875rem; color:var(--pm-text-muted); font-weight:500;">Active Projects</span>
+          <h3 style="font-size:2rem; margin:0;" id="perfActiveProjects">0</h3>
+        </div>
+        <div>
+          <span style="font-size:0.875rem; color:var(--pm-text-muted); font-weight:500;">Completed Projects</span>
+          <h3 style="font-size:2rem; margin:0;" id="perfCompletedProjects">0</h3>
+        </div>
+        <div>
+          <span style="font-size:0.875rem; color:var(--pm-text-muted); font-weight:500;">Assignment Success Rate</span>
+          <h3 style="font-size:2rem; margin:0;" id="perfSuccessRate">0%</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assignment History -->
+    <div class="pm-col-8 pm-card" style="display:flex; flex-direction:column;">
+      <div class="pm-toolbar" style="margin-bottom:1rem;">
+        <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--pm-text-muted);">Assignment History (Recent)</h3>
+      </div>
+      <div class="pm-table-wrapper" style="flex:1; border:none;">
+        <table class="pm-table">
+          <thead>
+            <tr>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Project</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Assigned To</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Date</th>
+              <th style="background:transparent; border-bottom: 2px solid var(--pm-border);">Status</th>
+            </tr>
+          </thead>
+          <tbody id="dashboardAssignmentHistory">
+            <tr><td colspan="4" style="text-align: center;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

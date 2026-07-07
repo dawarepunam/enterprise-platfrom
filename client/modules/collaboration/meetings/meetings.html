@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meeting Center</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="meetings.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Meeting Center</p>
+          <h1>Live team meetings and room history</h1>
+          <p class="hero-text">Create team-based video syncs, review participation, and keep meeting logs aligned with task delivery.</p>
+          <div class="hero-actions"><button id="startMeetingBtn" class="btn btn-primary" type="button">Start Team Meeting</button></div>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Total Meetings</span><strong id="meetingCount">0</strong></article>
+          <article class="signal-card"><span>Live Rooms</span><strong id="liveCount">0</strong></article>
+          <article class="signal-card accent-card"><span>Accessible Teams</span><strong id="teamCount">0</strong><small>Role-based meeting scope</small></article>
+        </div>
+      </section>
+      <section class="content-grid">
+        <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">My Teams</p><h2>Meeting launch targets</h2></div></div><div id="teamRooms" class="stack-list"></div></article>
+        <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">Meeting Log</p><h2>Recent sessions</h2></div></div><div id="meetingLog" class="stack-list"></div></article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="meetings.js"></script>
+</body>
+</html>

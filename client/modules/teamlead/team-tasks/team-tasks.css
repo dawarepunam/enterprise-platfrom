@@ -1,0 +1,65 @@
+.task-hero {
+  background:
+    radial-gradient(circle at bottom left, rgba(251, 191, 36, 0.2), transparent 30%),
+    linear-gradient(135deg, rgba(12, 74, 110, 0.98), rgba(17, 94, 89, 0.94));
+  color: #ecfeff;
+}
+
+.task-hero .hero-text,
+.task-hero .eyebrow,
+.task-hero h1 {
+  color: inherit;
+}
+
+.planner-grid {
+  grid-template-columns: 1.08fr 0.92fr;
+}
+
+.card-topline,
+.list-card .meta-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.member-card,
+.subtask-card {
+  gap: 10px;
+}
+
+.ghost-btn {
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  color: var(--text);
+}
+
+.btn-secondary,
+.tiny-btn {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0f172a;
+  border: 1px solid rgba(14, 165, 233, 0.18);
+}
+
+.tiny-btn {
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+@media (max-width: 1100px) {
+  .planner-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-topline,
+  .list-card .meta-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

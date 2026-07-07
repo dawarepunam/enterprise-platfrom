@@ -1,0 +1,95 @@
+<div class="hr-policies-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Attendance Policies</h2>
+    <button class="primary-btn">+ Create Policy</button>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:1.5rem;">
+    <!-- Late Policy -->
+    <div class="hr-card hoverable" style="padding:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+        <h3 style="margin:0;">Late Policy</h3>
+        <button class="hr-icon-btn" onclick="window.UI.openPolicyDrawer('Late Policy')" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px; font-size:0.875rem;">Edit Policy →</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; color:var(--hr-text-muted); font-size:0.875rem;">
+        <div><span style="font-weight:500; color:var(--hr-text);">Grace Time:</span> 15 Minutes</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Penalty:</span> Half Day</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Max Late Allowed:</span> 3 / Month</div>
+      </div>
+    </div>
+
+    <!-- Half Day Policy -->
+    <div class="hr-card hoverable" style="padding:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+        <h3 style="margin:0;">Half Day Policy</h3>
+        <button class="hr-icon-btn" onclick="window.UI.openPolicyDrawer('Half Day Policy')" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px; font-size:0.875rem;">Edit Policy →</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; color:var(--hr-text-muted); font-size:0.875rem;">
+        <div><span style="font-weight:500; color:var(--hr-text);">Half Day Hours:</span> < 6 Hours</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Auto Deduction:</span> Enabled</div>
+      </div>
+    </div>
+
+    <!-- Overtime Policy -->
+    <div class="hr-card hoverable" style="padding:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+        <h3 style="margin:0;">Overtime Policy</h3>
+        <button class="hr-icon-btn" onclick="window.UI.openPolicyDrawer('Overtime Policy')" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px; font-size:0.875rem;">Edit Policy →</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; color:var(--hr-text-muted); font-size:0.875rem;">
+        <div><span style="font-weight:500; color:var(--hr-text);">Min Hours for OT:</span> 9 Hours</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Rate Multiplier:</span> 1.5x</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Approval Required:</span> Yes</div>
+      </div>
+    </div>
+
+    <!-- WFH Policy -->
+    <div class="hr-card hoverable" style="padding:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+        <h3 style="margin:0;">WFH Policy</h3>
+        <button class="hr-icon-btn" onclick="window.UI.openPolicyDrawer('WFH Policy')" style="border:1px solid var(--hr-border); background:white; padding:0.25rem 0.75rem; border-radius:6px; font-size:0.875rem;">Edit Policy →</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; color:var(--hr-text-muted); font-size:0.875rem;">
+        <div><span style="font-weight:500; color:var(--hr-text);">Max Allowed Days:</span> 2 / Week</div>
+        <div><span style="font-weight:500; color:var(--hr-text);">Prior Approval:</span> Mandatory</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Edit Policy Drawer -->
+<div id="hrPolicyDrawer" class="hr-drawer hidden" style="width:400px; display:flex; flex-direction:column;">
+  <div style="padding:1.5rem; border-bottom:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center; background:#F8FAFC;">
+    <h3 id="plcTitle" style="margin:0;">Edit Policy</h3>
+    <button onclick="window.UI.closePolicyDrawer()" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+  </div>
+  <div style="flex:1; padding:2rem; background:#FFF;">
+    <div style="margin-bottom:1.5rem;">
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Grace Time (Mins)</label>
+      <input type="number" value="15" style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;" />
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Penalty</label>
+      <select style="width:100%; padding:0.75rem; border:1px solid var(--hr-border); border-radius:8px;">
+        <option>Half Day</option>
+        <option>Full Day</option>
+        <option>Loss of Pay</option>
+      </select>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <label style="display:block; font-size:0.875rem; font-weight:500; margin-bottom:0.5rem;">Auto Deduction</label>
+      <label class="hr-switch" style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+        <input type="checkbox" checked />
+        <span style="font-size:0.875rem;">Enabled</span>
+      </label>
+    </div>
+  </div>
+  <div style="padding:1.5rem; border-top:1px solid var(--hr-border); display:flex; justify-content:flex-end; gap:1rem; background:#F8FAFC;">
+    <button onclick="window.UI.closePolicyDrawer()" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; cursor:pointer;">Cancel</button>
+    <button onclick="window.UI.submitPolicy()" class="primary-btn" style="padding:0.5rem 1rem;">Save Policy</button>
+  </div>
+</div>
+
+<script src="/modules/hr/attendance/policies/script.js"></script>

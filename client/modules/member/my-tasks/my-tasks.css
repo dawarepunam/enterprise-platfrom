@@ -1,0 +1,6 @@
+@import url("../member-experience.css");
+
+.task-card {
+  display: grid;
+  gap: 14px;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notification Center</title>
+  <link rel="stylesheet" href="../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="notifications.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <main class="workspace-page standalone-space">
+    <section class="workspace-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Notification Center</p>
+        <h1>Messages, approvals, meetings and reminders in one feed</h1>
+        <p class="hero-text">This inbox keeps role-based alerts organized so users can act quickly on live enterprise changes.</p>
+      </div>
+      <div class="hero-side">
+        <article class="signal-card"><span>Total Alerts</span><strong id="totalAlerts">0</strong></article>
+        <article class="signal-card"><span>Unread</span><strong id="unreadAlerts">0</strong></article>
+        <article class="signal-card accent-card"><span>Critical</span><strong id="criticalAlerts">0</strong><small>Needs fast action</small></article>
+      </div>
+    </section>
+    <section class="workspace-panel">
+      <div class="section-heading"><div><p class="eyebrow">Feed</p><h2>Latest updates</h2></div></div>
+      <div id="notificationFeed" class="stack-list"></div>
+    </section>
+  </main>
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/auth.js"></script>
+  <script src="../../assets/js/enterprise-data.js"></script>
+  <script src="../../assets/js/role-workspace.js"></script>
+  <script src="notifications.js"></script>
+</body>
+</html>

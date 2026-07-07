@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rewards & Recognition - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+
+    /* ── KPI Row ── */
+    .r-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .kpi-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); display: flex; align-items: center; gap: 16px; }
+    .kpi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .kpi-icon.orange { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .kpi-icon.blue { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .kpi-icon.pink { background: rgba(236,72,153,0.1); color: #ec4899; }
+    .kpi-icon.green { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .kpi-val { font-size: 24px; font-weight: 800; color: #2b3674; margin-bottom: 2px; }
+    .kpi-label { font-size: 12px; color: #a3aed1; font-weight: 600; }
+
+    /* ── Hero Banner ── */
+    .r-hero {
+      background: linear-gradient(135deg, #FFB547, #ff8f00); border-radius: 20px; padding: 40px; color: #fff;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; box-shadow: 0 10px 30px rgba(255,181,71,0.3);
+      position: relative; overflow: hidden;
+    }
+    .r-hero::after { content: ""; position: absolute; right: -50px; top: -50px; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .rh-left { z-index: 2; max-width: 500px; }
+    .rh-title { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .rh-desc { font-size: 14px; opacity: 0.9; line-height: 1.5; }
+    .rh-right { z-index: 2; font-size: 80px; opacity: 0.9; }
+
+    /* ── Main Layout ── */
+    .r-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; }
+    .r-card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); margin-bottom: 24px; }
+    .rc-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f0f4ff; padding-bottom: 16px; }
+    .rc-title { font-size: 16px; font-weight: 800; color: #2b3674; display: flex; align-items: center; gap: 8px; }
+    .rc-title i { color: #FFB547; }
+
+    /* Badges */
+    .badge-grid-ui { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 16px; }
+    .b-item { text-align: center; padding: 16px; border: 1.5px solid #f0f4ff; border-radius: 16px; transition: .2s; }
+    .b-item:hover { border-color: #3965FF; box-shadow: 0 4px 16px rgba(57,101,255,0.08); transform: translateY(-2px); }
+    .b-icon { font-size: 32px; margin-bottom: 10px; }
+    .b-name { font-size: 12px; font-weight: 700; color: #2b3674; line-height: 1.2; }
+
+    /* Kudos */
+    #kudosList { display: flex; flex-direction: column; gap: 12px; }
+    .k-item { display: flex; gap: 12px; padding: 16px; border-radius: 16px; background: #f8fafc; border: 1px solid #e2e8f0; }
+    .k-avatar { width: 40px; height: 40px; border-radius: 50%; background: #ec4899; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .k-content { flex: 1; }
+    .k-hdr { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .k-giver { font-size: 13px; font-weight: 700; color: #2b3674; }
+    .k-date { font-size: 11px; color: #a3aed1; }
+    .k-msg { font-size: 13px; color: #5d6d8a; line-height: 1.4; font-style: italic; }
+
+    @media (max-width: 900px) { .r-grid { grid-template-columns: 1fr; } .r-kpi-row { grid-template-columns: repeat(2, 1fr); } .r-hero { flex-direction: column; text-align: center; } .rh-right { display: none; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-trophy" style="color:#FFB547;margin-right:8px;"></i>Rewards & Recognition</h1>
+          <p>Track your achievements, points, and kudos from the team.</p>
+        </div>
+      </div>
+
+      <div class="r-kpi-row">
+        <div class="kpi-card"><div class="kpi-icon orange"><i class="fa fa-coins"></i></div><div><div class="kpi-val" id="rPoints">—</div><div class="kpi-label">Total Points</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon blue"><i class="fa fa-medal"></i></div><div><div class="kpi-val" id="rBadges">—</div><div class="kpi-label">Badges Earned</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon pink"><i class="fa fa-heart"></i></div><div><div class="kpi-val" id="rKudos">—</div><div class="kpi-label">Kudos Received</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon green"><i class="fa fa-chess-king"></i></div><div><div class="kpi-val" id="rRank">—</div><div class="kpi-label">Team Rank</div></div></div>
+      </div>
+
+      <div class="r-hero">
+        <div class="rh-left">
+          <div class="rh-title">Great work this month!</div>
+          <div class="rh-desc">You are currently ranked in the top 10% of your department. Keep collecting points by completing tasks early, helping team members, and receiving kudos to unlock new badges and rewards!</div>
+        </div>
+        <div class="rh-right"><i class="fa fa-gift"></i></div>
+      </div>
+
+      <div class="r-grid">
+        
+        <!-- Badges -->
+        <div>
+          <div class="r-card">
+            <div class="rc-hdr">
+              <div class="rc-title"><i class="fa fa-medal"></i> My Badges</div>
+            </div>
+            <div id="badgeGrid" class="badge-grid-ui">
+              <div style="grid-column:1/-1;text-align:center;padding:40px;color:#a3aed1;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kudos -->
+        <div>
+          <div class="r-card">
+            <div class="rc-hdr">
+              <div class="rc-title" style="color:#ec4899;"><i class="fa fa-heart"></i> Recent Kudos</div>
+            </div>
+            <div id="kudosList"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/rewards/app.js"></script>
+</body>
+</html>

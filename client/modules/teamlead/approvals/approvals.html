@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Lead Approvals</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="approvals.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero approvals-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Review And Approval</p>
+          <h1>Check submission details, send popup feedback and close the review loop</h1>
+          <p class="hero-text">This queue is where the Team Lead tests files, reads notes, approves work, rejects with reasons, and pushes manager-visible updates without losing the chat context.</p>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Pending Reviews</span><strong id="pendingReviews">0</strong></article>
+          <article class="signal-card"><span>Approved</span><strong id="approvedToday">0</strong></article>
+          <article class="signal-card accent-card"><span>Rejected</span><strong id="rejectedCount">0</strong><small>Need rework and follow-up</small></article>
+        </div>
+      </section>
+
+      <section class="workspace-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Review Queue</p>
+            <h2>Submitted work waiting for your action</h2>
+          </div>
+        </div>
+        <div id="leadApprovalBoard" class="stack-list"></div>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="approvals.js"></script>
+</body>
+</html>

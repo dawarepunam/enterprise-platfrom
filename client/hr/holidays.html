@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Calendar - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .holiday-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .holiday-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            position: relative;
+        }
+        
+        .holiday-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .holiday-date {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 4px;
+        }
+        
+        .holiday-month {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-navy);
+            text-transform: uppercase;
+        }
+
+        .holiday-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 4px;
+        }
+
+        .holiday-type {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .holiday-card.national { border-left: 4px solid var(--danger-red); }
+        .holiday-card.company { border-left: 4px solid var(--primary-blue); }
+        .holiday-card.optional { border-left: 4px solid var(--success-green); }
+
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i><span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-calendar-check"></i><span>Workforce</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="attendance.html" class="submenu-item">Attendance</a>
+                            <a href="leaves.html" class="submenu-item">Leaves</a>
+                            <a href="shifts.html" class="submenu-item">Shift Management</a>
+                            <a href="holidays.html" class="submenu-item active">Holiday Calendar</a>
+                            <a href="ess.html" class="submenu-item">ESS Requests</a>
+                            <a href="overtime-compoff.html" class="submenu-item">Overtime & Comp-Off</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Workforce</span> > Holiday Calendar</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Holiday Calendar - 2026</h1>
+                <button class="btn btn-primary" onclick="openModal('addHolidayModal')"><i class="fa-solid fa-plus"></i> Add Holiday</button>
+            </div>
+
+            <!-- Cards -->
+            <div class="holiday-cards">
+                <div class="holiday-card national" onclick="openDrawer('holidayDrawer')">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div class="holiday-date">26</div>
+                            <div class="holiday-month">January</div>
+                        </div>
+                        <span class="badge badge-danger">National</span>
+                    </div>
+                    <div class="holiday-name">Republic Day</div>
+                    <div class="holiday-type">Applicable: All Departments</div>
+                </div>
+                
+                <div class="holiday-card company" onclick="openDrawer('holidayDrawer')">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div class="holiday-date">15</div>
+                            <div class="holiday-month">August</div>
+                        </div>
+                        <span class="badge badge-primary">Company</span>
+                    </div>
+                    <div class="holiday-name">Independence Day</div>
+                    <div class="holiday-type">Applicable: All Departments</div>
+                </div>
+
+                <div class="holiday-card optional" onclick="openDrawer('holidayDrawer')">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div>
+                            <div class="holiday-date">09</div>
+                            <div class="holiday-month">November</div>
+                        </div>
+                        <span class="badge badge-success">Optional</span>
+                    </div>
+                    <div class="holiday-name">Diwali</div>
+                    <div class="holiday-type">Applicable: Subject to selection</div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Add Holiday Modal -->
+    <div class="modal-overlay" id="addHolidayModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Add New Holiday</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Holiday Name</label>
+                    <input type="text" class="form-control" placeholder="E.g. Christmas">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-control">
+                        <option>National Holiday</option>
+                        <option>Company Holiday</option>
+                        <option>Optional Holiday</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Departments</label>
+                    <select class="form-control">
+                        <option>All Departments</option>
+                        <option>Development</option>
+                        <option>Sales</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="submitHoliday()">Save Holiday</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="drawer-overlay" id="holidayDrawer">
+        <div class="drawer" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3>Holiday Details</h3>
+                <button class="drawer-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div class="form-group">
+                    <label class="form-label">Holiday Name</label>
+                    <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">Republic Day</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">26 January 2026</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;"><span class="badge badge-danger">National</span></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description / Notes</label>
+                    <div style="padding: 10px; background: var(--bg-color); border-radius: 8px; min-height: 80px;">Public holiday marking the adoption of the Constitution of India. Mandatory off for all staff.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        function submitHoliday() {
+            closeModal('addHolidayModal');
+            showToast('Holiday Added Successfully', 'success');
+        }
+    </script>
+</body>
+</html>

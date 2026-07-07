@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Tasks — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">✅ Tasks Overview</div>
+      <div class="page-subtitle">Global view of all tasks across projects</div>
+    </div>
+    <div class="page-top-actions">
+      <button class="btn btn-primary" onclick="window.location.href='/admin/projects'">View Projects</button>
+    </div>
+  </div>
+
+  <div class="proj-status-tabs mb-16" style="display:flex;gap:6px;flex-wrap:wrap;">
+    <button class="proj-tab active" onclick="setTaskStatus(this,'')">All</button>
+    <button class="proj-tab" onclick="setTaskStatus(this,'PENDING')">⏳ Pending</button>
+    <button class="proj-tab" onclick="setTaskStatus(this,'IN_PROGRESS')">🔵 In Progress</button>
+    <button class="proj-tab" onclick="setTaskStatus(this,'REVIEW')">👀 Review</button>
+    <button class="proj-tab" onclick="setTaskStatus(this,'COMPLETED')">✅ Completed</button>
+    <button class="proj-tab" onclick="setTaskStatus(this,'BLOCKED')">🚫 Blocked</button>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-topbar">
+      <div><span class="table-topbar-title">All Tasks</span><span class="table-topbar-count" id="taskCount"></span></div>
+      <div class="filter-bar" style="border:none;padding:0;flex:1;margin-left:16px;">
+        <select class="filter-select" id="filterProj" onchange="applyTaskFilters()"><option value="">All Projects</option></select>
+        <select class="filter-select" id="filterPrio" onchange="applyTaskFilters()"><option value="">All Priorities</option><option value="HIGH">High / Critical</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select>
+      </div>
+      <div class="table-search"><span class="table-search-icon">🔍</span><input class="table-search-input" id="taskSearch" placeholder="Search tasks..." oninput="applyTaskFilters()"/></div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Task</th><th>Project</th><th>Assignee</th><th>Priority</th><th>Due Date</th><th>Status</th></tr></thead>
+        <tbody id="taskTableBody"><tr><td colspan="6" style="text-align:center;padding:40px"><div class="loader-spinner" style="margin:0 auto"></div></td></tr></tbody>
+      </table>
+    </div>
+    <div class="table-pagination"><div class="pagination-buttons" id="taskPageBtns"></div></div>
+  </div>
+</main>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+
+<script src="/modules/admin/tasks/tasks.js"></script>
+</body>
+</html>

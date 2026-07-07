@@ -1,0 +1,52 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="920" rx="30" fill="#050816"/>
+  <text x="40" y="60" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="34" font-weight="700">Reports + Automation + Notifications</text>
+  <text x="40" y="92" fill="#93A9CD" font-family="Arial, sans-serif" font-size="18">Manager closes the loop with analytics, alerts, and auto-rules.</text>
+
+  <rect x="36" y="128" width="980" height="756" rx="26" fill="#081225" stroke="#183259"/>
+  <text x="64" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Reports &amp; Analytics</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="64" y="198" width="214" height="108" rx="22" fill="#0B1730"/><text x="88" y="232" fill="#9FB4D8" font-size="18">Completion Rate</text><text x="88" y="280" fill="#FFFFFF" font-size="42" font-weight="700">58%</text>
+    <rect x="292" y="198" width="214" height="108" rx="22" fill="#0B1730"/><text x="316" y="232" fill="#9FB4D8" font-size="18">On-time Delivery</text><text x="316" y="280" fill="#FFFFFF" font-size="42" font-weight="700">86%</text>
+    <rect x="520" y="198" width="214" height="108" rx="22" fill="#0B1730"/><text x="544" y="232" fill="#9FB4D8" font-size="18">Task Performance</text><text x="544" y="280" fill="#FFFFFF" font-size="42" font-weight="700">282</text>
+    <rect x="748" y="198" width="214" height="108" rx="22" fill="#0B1730"/><text x="772" y="232" fill="#9FB4D8" font-size="18">Avg Time</text><text x="772" y="280" fill="#FFFFFF" font-size="42" font-weight="700">4.8d</text>
+
+    <rect x="64" y="332" width="426" height="282" rx="22" fill="#0B1730"/>
+    <text x="90" y="368" fill="#FFFFFF" font-size="22">Project Progress</text>
+    <path d="M108 548H442" stroke="#324765" stroke-width="2"/><path d="M108 492H442" stroke="#324765" stroke-width="2"/><path d="M108 436H442" stroke="#324765" stroke-width="2"/>
+    <path d="M122 520 C170 470 218 488 266 434 C316 376 362 392 428 350" stroke="#06B6D4" stroke-width="6" stroke-linecap="round"/>
+
+    <rect x="518" y="332" width="444" height="282" rx="22" fill="#0B1730"/>
+    <text x="544" y="368" fill="#FFFFFF" font-size="22">Task Status + Priority</text>
+    <circle cx="652" cy="482" r="78" stroke="#1D4ED8" stroke-width="32"/>
+    <path d="M652 404 A78 78 0 0 1 729 500" stroke="#22C55E" stroke-width="32" stroke-linecap="round"/>
+    <path d="M652 404 A78 78 0 0 0 602 542" stroke="#F59E0B" stroke-width="32" stroke-linecap="round"/>
+    <rect x="786" y="424" width="42" height="96" rx="12" fill="#7C3AED"/><rect x="854" y="392" width="42" height="128" rx="12" fill="#22C55E"/><rect x="922" y="456" width="42" height="64" rx="12" fill="#F59E0B"/>
+    <text x="782" y="548" fill="#8EA6CD" font-size="16">High</text><text x="850" y="548" fill="#8EA6CD" font-size="16">Medium</text><text x="922" y="548" fill="#8EA6CD" font-size="16">Low</text>
+
+    <rect x="64" y="642" width="898" height="204" rx="22" fill="#101D37"/>
+    <text x="90" y="680" fill="#FFFFFF" font-size="22">Report Click Flow</text>
+    <text x="90" y="718" fill="#9FB4D8" font-size="18">Project progress chart -> opens filtered project analytics</text>
+    <text x="90" y="750" fill="#9FB4D8" font-size="18">Sprint velocity -> sprint planning / burndown drilldown</text>
+    <text x="90" y="782" fill="#9FB4D8" font-size="18">Delayed tasks -> tasks page filtered by overdue state</text>
+    <text x="90" y="814" fill="#9FB4D8" font-size="18">Export action -> PDF / Excel / CSV</text>
+  </g>
+
+  <rect x="1044" y="128" width="520" height="756" rx="26" fill="#081225" stroke="#6D4AFF" stroke-opacity="0.5"/>
+  <text x="1072" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Automation Rules</text>
+  <g font-family="Arial, sans-serif" font-size="18">
+    <rect x="1072" y="198" width="464" height="62" rx="18" fill="#0B1730"/><text x="1098" y="236" fill="#D8E6FF">Task Completed -> Notify Client</text><text x="1454" y="236" fill="#36E0A1">Active</text>
+    <rect x="1072" y="276" width="464" height="62" rx="18" fill="#0B1730"/><text x="1098" y="314" fill="#D8E6FF">Deadline Near -> Send Reminder</text><text x="1454" y="314" fill="#36E0A1">Active</text>
+    <rect x="1072" y="354" width="464" height="62" rx="18" fill="#0B1730"/><text x="1098" y="392" fill="#D8E6FF">Meeting Scheduled -> Calendar Sync</text><text x="1454" y="392" fill="#36E0A1">Active</text>
+    <rect x="1072" y="432" width="464" height="62" rx="18" fill="#0B1730"/><text x="1098" y="470" fill="#D8E6FF">File Uploaded -> Team Notify</text><text x="1454" y="470" fill="#36E0A1">Active</text>
+    <rect x="1072" y="510" width="464" height="62" rx="18" fill="#0B1730"/><text x="1098" y="548" fill="#D8E6FF">Delay &gt; 2 Days -> Escalate Manager</text><text x="1454" y="548" fill="#36E0A1">Active</text>
+
+    <rect x="1072" y="612" width="464" height="232" rx="22" fill="#101D37"/>
+    <text x="1098" y="650" fill="#FFFFFF" font-size="22">Realtime Events</text>
+    <text x="1098" y="688" fill="#9FB4D8" font-size="18">Task updates</text>
+    <text x="1098" y="718" fill="#9FB4D8" font-size="18">Kanban movement</text>
+    <text x="1098" y="748" fill="#9FB4D8" font-size="18">Meeting notifications</text>
+    <text x="1098" y="778" fill="#9FB4D8" font-size="18">File uploads</text>
+    <text x="1098" y="808" fill="#9FB4D8" font-size="18">Comments and chat messages</text>
+  </g>
+</svg>

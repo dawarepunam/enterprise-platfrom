@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Approvals</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <section class="workspace-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Approval Queue</p>
+                    <h1>Handle quotations and delivery sign-offs</h1>
+                    <p class="hero-text">Manager approvals connect internal execution with client-facing decisions. You can review, approve or reject quotations in one place.</p>
+                </div>
+                <div class="hero-side">
+                    <article class="signal-card"><span>Pending Quotations</span><strong id="approvalCount">0</strong></article>
+                    <article class="signal-card accent-card"><span>Approved Value</span><strong id="approvedValue">INR 0</strong><small>Client-approved commercial amount</small></article>
+                </div>
+            </section>
+            <section class="workspace-panel">
+                <div class="section-heading"><div><p class="eyebrow">Queue</p><h2>Quotation approvals</h2></div></div>
+                <div class="table-wrap">
+                    <table class="workspace-table">
+                        <thead><tr><th>Title</th><th>Client</th><th>Amount</th><th>Status</th><th>Due Date</th><th>Actions</th></tr></thead>
+                        <tbody id="approvalTable"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="approvals.js"></script>
+</body>
+</html>

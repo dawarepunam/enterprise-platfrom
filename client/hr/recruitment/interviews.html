@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interviews & Offers | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+  <style>
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+    .popup-overlay.active { display: flex; }
+    .popup-content { background: var(--white); width: 600px; max-width: 95%; border-radius: 12px; box-shadow: var(--glass-shadow); padding: 25px; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+    .popup-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: var(--transition); }
+    .btn-primary { background: var(--primary-blue); color: var(--white); }
+    .btn-primary:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards" style="margin-bottom: 25px;">
+          <div class="glass-card kpi-card">
+            <div class="card-icon blue"><i class="fas fa-calendar"></i></div>
+            <div class="card-info"><h3>Upcoming</h3><h2>8</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon green"><i class="fas fa-check-double"></i></div>
+            <div class="card-info"><h3>Completed</h3><h2>45</h2></div>
+          </div>
+        </div>
+
+        <div class="table-container glass-card mt-4">
+          <div class="table-responsive">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Candidate</th>
+                  <th>Job Role</th>
+                  <th>Interviewer</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="interviewsTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Popup -->
+      <div class="popup-overlay" id="schedulePopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <h3>Schedule Interview</h3>
+            <button class="popup-close" id="closeScheduleBtn">&times;</button>
+          </div>
+          <form id="scheduleForm">
+            <div class="form-group"><label>Candidate</label><input type="text" id="intCandidate" required></div>
+            <div class="form-group"><label>Interviewer</label><input type="text" id="intPanel" required></div>
+            <div class="form-group"><label>Date</label><input type="date" id="intDate" required></div>
+            <div class="form-group"><label>Time</label><input type="time" id="intTime" required></div>
+            <div class="form-group"><label>Meeting Link</label><input type="url" id="intLink" placeholder="https://zoom.us/j/..."></div>
+            <div style="text-align: right;"><button type="submit" class="btn btn-primary">Schedule</button></div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/interviews.js"></script>
+</body>
+</html>

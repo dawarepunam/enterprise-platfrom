@@ -1,0 +1,11 @@
+.tab-content { display:block; }
+.tab-content.hidden { display:none; }
+.info-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border-light); font-size:13px; }
+.info-row:last-child { border-bottom:none; }
+.info-label { color:var(--text-3); font-weight:500; }
+.info-val { color:var(--text); font-weight:600; }
+.doc-card { background:#fff;border:1px solid var(--border);border-radius:var(--r-md);padding:16px;cursor:pointer;transition:all var(--ease-fast); }
+.doc-card:hover { box-shadow:var(--shadow-md);transform:translateY(-2px); }
+.doc-icon { font-size:32px;margin-bottom:8px; }
+.doc-name { font-size:13px;font-weight:600;color:var(--text); }
+.doc-meta { font-size:11px;color:var(--text-4);margin-top:3px; }

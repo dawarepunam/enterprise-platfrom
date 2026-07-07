@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approvals Inbox - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .inbox-layout { display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: start; }
+        
+        .inbox-nav { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-gray); padding: 12px 0; box-shadow: var(--shadow-sm); }
+        .inbox-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; color: var(--text-gray); font-weight: 500; cursor: pointer; transition: var(--transition-fast); border-left: 3px solid transparent; }
+        .inbox-item:hover { background: var(--bg-color); color: var(--dark-navy); }
+        .inbox-item.active { background: rgba(37,99,235,.05); color: var(--primary-blue); border-left-color: var(--primary-blue); }
+        
+        .req-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-gray); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; }
+        .req-info { display: flex; gap: 16px; align-items: flex-start; }
+        .req-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .req-details h4 { font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 4px; }
+        .req-meta { font-size: .85rem; color: var(--text-gray); display: flex; gap: 12px; }
+        .req-actions { display: flex; gap: 12px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu"><li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back</span></a></li></ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>My Team (MSS)</span> > Approvals Inbox</div>
+                </div>
+                <div class="header-right"><div class="user-profile"><img src="https://ui-avatars.com/api/?name=Engineering+Manager&background=2563EB&color=fff"></div></div>
+            </header>
+
+            <h1 style="font-size:1.5rem; margin-bottom:24px;">Unified Approvals Hub</h1>
+
+            <div class="inbox-layout">
+                <!-- Filter Nav -->
+                <div class="inbox-nav">
+                    <div class="inbox-item active"><span>All Pending</span> <span class="badge badge-primary">4</span></div>
+                    <div class="inbox-item"><span>Leaves</span> <span class="badge badge-warning" style="background:#fef3c7;color:#d97706;">3</span></div>
+                    <div class="inbox-item"><span>Expenses</span> <span class="badge badge-warning" style="background:#fef3c7;color:#d97706;">1</span></div>
+                    <div class="inbox-item"><span>Travel</span></div>
+                    <div class="inbox-item"><span>Appraisals</span></div>
+                    <div style="border-top:1px solid var(--border-gray); margin-top:8px; padding-top:8px;">
+                        <div class="inbox-item"><span>History</span></div>
+                    </div>
+                </div>
+
+                <!-- Requests List -->
+                <div>
+                    <!-- Leave Request -->
+                    <div class="req-card">
+                        <div class="req-info">
+                            <div class="req-icon" style="background:rgba(245,158,11,.1); color:var(--warning-orange);"><i class="fa-solid fa-calendar-minus"></i></div>
+                            <div class="req-details">
+                                <h4>Sick Leave Request</h4>
+                                <div class="req-meta">
+                                    <span><strong>Rahul Sharma</strong></span>
+                                    <span><i class="fa-solid fa-clock"></i> 05 Jul 2026</span>
+                                    <span>2 Days (06 Jul - 07 Jul)</span>
+                                </div>
+                                <p style="font-size:.85rem; color:var(--text-dark); margin-top:8px;">"I am down with severe viral fever. Requesting 2 days off to recover."</p>
+                            </div>
+                        </div>
+                        <div class="req-actions">
+                            <button class="btn btn-outline" style="color:var(--danger-red); border-color:var(--danger-red);" onclick="showToast('Request Rejected','error')"><i class="fa-solid fa-xmark"></i> Reject</button>
+                            <button class="btn btn-primary" onclick="showToast('Request Approved','success')"><i class="fa-solid fa-check"></i> Approve</button>
+                        </div>
+                    </div>
+
+                    <!-- Expense Claim -->
+                    <div class="req-card">
+                        <div class="req-info">
+                            <div class="req-icon" style="background:rgba(34,197,94,.1); color:var(--success-green);"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                            <div class="req-details">
+                                <h4>Team Lunch Expense</h4>
+                                <div class="req-meta">
+                                    <span><strong>Priya Patel</strong></span>
+                                    <span><i class="fa-solid fa-clock"></i> 03 Jul 2026</span>
+                                    <span>Amount: <strong>₹ 4,500</strong></span>
+                                </div>
+                                <p style="font-size:.85rem; color:var(--primary-blue); margin-top:8px; cursor:pointer;"><i class="fa-solid fa-paperclip"></i> bill_receipt.pdf</p>
+                            </div>
+                        </div>
+                        <div class="req-actions">
+                            <button class="btn btn-outline" style="color:var(--danger-red); border-color:var(--danger-red);"><i class="fa-solid fa-xmark"></i> Reject</button>
+                            <button class="btn btn-primary"><i class="fa-solid fa-check"></i> Approve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

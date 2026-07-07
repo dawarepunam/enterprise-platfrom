@@ -1,0 +1,43 @@
+const mongoose = require("mongoose");
+
+const campaignSchema = new mongoose.Schema(
+  {
+    name: { type: String, trim: true, required: true },
+    channel: { type: String, trim: true, default: "" },
+    campaignType: { type: String, trim: true, default: "Demand Generation" },
+    status: { type: String, trim: true, default: "Planning" },
+    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    owner: { type: String, trim: true, default: "" },
+    ownerEmail: { type: String, trim: true, default: "" },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", default: null },
+    projectName: { type: String, trim: true, default: "" },
+    department: { type: String, trim: true, default: "Marketing" },
+    targetAudience: { type: String, trim: true, default: "" },
+    targetCities: [{ type: String, trim: true }],
+    interests: [{ type: String, trim: true }],
+    jobTitles: [{ type: String, trim: true }],
+    industries: [{ type: String, trim: true }],
+    objective: { type: String, trim: true, default: "" },
+    notes: { type: String, trim: true, default: "" },
+    budget: { type: Number, default: 0 },
+    spend: { type: Number, default: 0 },
+    impressions: { type: Number, default: 0 },
+    clicks: { type: Number, default: 0 },
+    ctr: { type: Number, default: 0 },
+    generatedLeads: { type: Number, default: 0 },
+    qualifiedLeads: { type: Number, default: 0 },
+    hotLeads: { type: Number, default: 0 },
+    warmLeads: { type: Number, default: 0 },
+    coldLeads: { type: Number, default: 0 },
+    costPerLead: { type: Number, default: 0 },
+    conversionRate: { type: Number, default: 0 },
+    expectedRevenue: { type: Number, default: 0 },
+    roi: { type: Number, default: 0 },
+    startDate: { type: Date, default: null },
+    endDate: { type: Date, default: null },
+    scheduleAt: { type: Date, default: null },
+  },
+  { timestamps: true },
+);
+
+module.exports = mongoose.models.Campaign || mongoose.model("Campaign", campaignSchema);

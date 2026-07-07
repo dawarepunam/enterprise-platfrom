@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Attendance — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">📅 Attendance</div>
+      <div class="page-subtitle" id="attDateLabel">Today's attendance overview</div>
+    </div>
+    <div class="page-top-actions">
+      <input type="date" class="form-control" id="attDate" style="height:36px;width:160px;" onchange="loadAttendance()"/>
+      <button class="btn btn-outline btn-sm" onclick="exportAttendance()">📤 Export</button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('markAttModal')">+ Mark Attendance</button>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="att-stat-cards mb-24">
+    <div class="att-card" id="cardPresent" onclick="filterByStatus('Present')">
+      <div class="att-card-icon">✅</div>
+      <div class="att-card-value" id="cntPresent">0</div>
+      <div class="att-card-label">Present</div>
+    </div>
+    <div class="att-card" id="cardAbsent" onclick="filterByStatus('Absent')">
+      <div class="att-card-icon">❌</div>
+      <div class="att-card-value" id="cntAbsent">0</div>
+      <div class="att-card-label">Absent</div>
+    </div>
+    <div class="att-card" id="cardLate" onclick="filterByStatus('Half Day')">
+      <div class="att-card-icon">⏰</div>
+      <div class="att-card-value" id="cntLate">0</div>
+      <div class="att-card-label">Half Day</div>
+    </div>
+    <div class="att-card" id="cardWFH" onclick="filterByStatus('WFH')">
+      <div class="att-card-icon">🏠</div>
+      <div class="att-card-value" id="cntWFH">0</div>
+      <div class="att-card-label">WFH</div>
+    </div>
+    <div class="att-card" id="cardLeave" onclick="filterByStatus('On Leave')">
+      <div class="att-card-icon">🌿</div>
+      <div class="att-card-value" id="cntLeave">0</div>
+      <div class="att-card-label">On Leave</div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid-2 mb-24">
+    <div class="chart-box">
+      <div class="chart-header"><div class="chart-title">📊 Department-wise Attendance</div></div>
+      <canvas id="deptAttChart" height="200"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="chart-header">
+        <div class="chart-title">📈 Attendance Trend</div>
+        <select class="filter-select" id="trendPeriod" onchange="loadTrendChart()">
+          <option value="7">7 Days</option><option value="30" selected>30 Days</option><option value="90">90 Days</option>
+        </select>
+      </div>
+      <canvas id="attTrendChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="table-topbar">
+      <div><span class="table-topbar-title">Employee Attendance</span><span class="table-topbar-count" id="attCount"></span></div>
+      <div class="filter-bar" style="border:none;padding:0;flex:1;margin-left:16px;">
+        <select class="filter-select" id="filterDept" onchange="applyFilters()"><option value="">All Departments</option></select>
+        <select class="filter-select" id="filterRole" onchange="applyFilters()">
+          <option value="">All Roles</option><option value="MANAGER">PM</option><option value="MEMBER">Employee</option><option value="HR">HR</option>
+        </select>
+      </div>
+      <div class="table-search">
+        <span class="table-search-icon">🔍</span>
+        <input class="table-search-input" id="attSearch" placeholder="Search employee..." oninput="applyFilters()"/>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Employee</th><th>Department</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Att%</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="attTableBody"><tr><td colspan="8" style="text-align:center;padding:40px"><div class="loader-spinner" style="margin:0 auto"></div></td></tr></tbody>
+      </table>
+    </div>
+    <div class="table-pagination">
+      <span class="pagination-info" id="attPageInfo">Showing 0 of 0</span>
+      <div class="pagination-buttons" id="attPageBtns"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Mark Attendance Modal -->
+<div class="modal-overlay hidden" id="markAttModal">
+  <div class="modal-box modal-sm">
+    <div class="modal-header"><div class="modal-title">📅 Mark Attendance</div><button class="modal-close" onclick="closeModal('markAttModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Employee</label><select class="form-control" id="attEmployee"><option value="">Select Employee</option></select></div>
+      <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="attMarkDate" type="date"/></div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-control" id="attStatus">
+          <option value="Present">Present</option><option value="Absent">Absent</option><option value="Half Day">Half Day</option><option value="WFH">WFH</option><option value="On Leave">On Leave</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Check In</label><input class="form-control" id="attCheckIn" type="time"/></div>
+      <div class="form-group"><label class="form-label">Check Out</label><input class="form-control" id="attCheckOut" type="time"/></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('markAttModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAttendance()">✅ Mark</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/attendance/attendance.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Manager Module</title>
+  <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+  <link rel="stylesheet" href="/modules/product/dashboard/dashboard.css" />
+</head>
+<body>
+  <div class="pm-shell">
+    <aside class="pm-sidebar" id="pmSidebar"></aside>
+
+    <main class="pm-main">
+      <header class="pm-topbar">
+        <div class="pm-top-left">
+          <button class="pm-icon-btn pm-mobile-toggle" id="sidebarToggle" type="button" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <div>
+            <div class="pm-breadcrumb" id="breadcrumb">Dashboard > Product Manager</div>
+            <h1 id="pageTitle">Product Manager Dashboard</h1>
+          </div>
+        </div>
+
+        <label class="pm-search">
+          <span>Search</span>
+          <input id="globalSearch" type="search" placeholder="Lead, client, project, requirement, BRD, meeting..." />
+        </label>
+
+        <div class="pm-top-actions">
+          <button class="pm-icon-btn" type="button" data-action="notifications" data-tooltip="Open notification drawer">N</button>
+          <button class="pm-icon-btn" type="button" data-action="scheduleMeeting" data-tooltip="Schedule Microsoft Teams meeting">M</button>
+          <button class="pm-icon-btn accent" type="button" data-action="analyzeRequirement" data-tooltip="AI requirement analyzer">AI</button>
+          <button class="pm-profile-pill" type="button" data-action="profile" id="profilePill"></button>
+        </div>
+      </header>
+
+      <section id="pageHost" class="pm-page-host"></section>
+    </main>
+  </div>
+
+  <div class="pm-fab-wrap">
+    <button class="pm-fab" id="fabButton" type="button">+</button>
+    <div class="pm-fab-menu" id="fabMenu">
+      <button type="button" data-action="createRequirement">Create Requirement</button>
+      <button type="button" data-action="scheduleMeeting">Schedule Meeting</button>
+      <button type="button" data-action="generateProposal">Create Proposal</button>
+      <button type="button" data-action="createProject">Create Project</button>
+      <button type="button" data-action="createChangeRequest">Create Change Request</button>
+    </div>
+  </div>
+
+  <aside class="pm-drawer hidden" id="pmDrawer">
+    <div class="pm-drawer-head">
+      <div>
+        <span class="pm-eyebrow" id="drawerEyebrow">Details</span>
+        <h2 id="drawerTitle">Workspace</h2>
+      </div>
+      <button class="pm-icon-btn" id="drawerClose" type="button">X</button>
+    </div>
+    <div id="drawerBody" class="pm-drawer-body"></div>
+  </aside>
+
+  <div class="pm-modal hidden" id="pmModal">
+    <div class="pm-modal-card">
+      <div class="pm-modal-head">
+        <div>
+          <span class="pm-eyebrow" id="modalEyebrow">Action</span>
+          <h2 id="modalTitle">Product Action</h2>
+        </div>
+        <button class="pm-icon-btn" id="modalClose" type="button">X</button>
+      </div>
+      <form id="modalForm" class="pm-form"></form>
+    </div>
+  </div>
+
+  <div class="pm-toast-stack" id="toastStack"></div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/notifications.js"></script>
+  <script src="/modules/product/dashboard/dashboard.js"></script>
+</body>
+</html>

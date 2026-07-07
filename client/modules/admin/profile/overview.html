@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Profile Overview</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="overview">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Profile Overview</p>
+                        <h1 id="overviewName">Admin</h1>
+                        <p id="overviewTitle" class="muted">System Owner</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <a class="btn btn-primary" href="../dashboard/dashboard.html">Open Dashboard</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="metric-grid">
+                    <article class="metric-card">
+                        <span class="muted">Total Projects</span>
+                        <strong id="overviewProjects">0</strong>
+                    </article>
+                    <article class="metric-card">
+                        <span class="muted">Total Employees</span>
+                        <strong id="overviewEmployees">0</strong>
+                    </article>
+                    <article class="metric-card">
+                        <span class="muted">Tracked Revenue</span>
+                        <strong id="overviewRevenue">INR 0</strong>
+                    </article>
+                    <article class="metric-card">
+                        <span class="muted">Productivity Score</span>
+                        <strong id="overviewProductivity">0%</strong>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <h2>Security and control status</h2>
+                <div class="mini-grid" style="margin-top: 18px;">
+                    <article class="mini-card">
+                        <span class="muted">2FA Status</span>
+                        <strong id="overview2FA">Enabled</strong>
+                    </article>
+                    <article class="mini-card">
+                        <span class="muted">Notification Alerts</span>
+                        <strong id="overviewAlerts">Active</strong>
+                    </article>
+                    <article class="mini-card">
+                        <span class="muted">Departments</span>
+                        <strong id="overviewDepartments">0</strong>
+                    </article>
+                    <article class="mini-card">
+                        <span class="muted">Managers</span>
+                        <strong id="overviewManagers">0</strong>
+                    </article>
+                    <article class="mini-card full-width">
+                        <span class="muted">Pending Approvals</span>
+                        <strong id="overviewApprovals">0</strong>
+                        <p class="muted">Last login: <span id="overviewLastLogin">--</span></p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Details – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .td-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    
+    .pm-card-header { padding-bottom: 12px; border-bottom: 1px solid var(--pm-border); margin-bottom: 16px; }
+    
+    .td-overview-list { display: flex; flex-direction: column; gap: 12px; }
+    .td-overview-item { display: flex; justify-content: space-between; font-size: 13px; padding-bottom: 8px; border-bottom: 1px dashed var(--pm-border); }
+    .td-overview-item span:first-child { color: var(--pm-text-muted); }
+    .td-overview-item span:last-child { font-weight: 600; }
+    
+    .assignee-card {
+      display: flex; align-items: center; gap: 16px; padding: 16px;
+      border: 1px solid var(--pm-border); border-radius: var(--pm-radius);
+      cursor: pointer; transition: var(--pm-transition); background: var(--pm-surface);
+    }
+    .assignee-card:hover { border-color: var(--pm-accent); transform: translateY(-2px); box-shadow: var(--pm-shadow-sm); }
+    .assignee-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--pm-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; }
+    .assignee-info { flex: 1; }
+    .assignee-name { font-size: 15px; font-weight: 700; }
+    .assignee-role { font-size: 12px; color: var(--pm-text-muted); }
+    
+    .subtask-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid var(--pm-border); }
+    .subtask-item:last-child { border-bottom: none; }
+    .subtask-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--pm-accent); cursor: pointer; }
+    .subtask-title { font-size: 13px; flex: 1; }
+    .subtask-item.completed .subtask-title { text-decoration: line-through; color: var(--pm-text-muted); }
+    
+    .comment-item { display: flex; gap: 12px; margin-bottom: 16px; }
+    .comment-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--pm-text-muted); color:#fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .comment-content { background: var(--pm-surface); padding: 12px; border-radius: 0 12px 12px 12px; flex: 1; border: 1px solid var(--pm-border); }
+    .comment-header { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; }
+    .comment-author { font-weight: 700; color: var(--pm-text); }
+    .comment-time { color: var(--pm-text-muted); }
+    .comment-text { font-size: 13px; line-height: 1.5; color: var(--pm-text); }
+
+    @media (max-width: 900px) { .td-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <a href="/project-manager/dashboard"><i class="fa fa-home"></i> Dashboard</a>
+            <i class="fa fa-chevron-right"></i> <a href="/project-manager/tasks">Tasks</a>
+            <i class="fa fa-chevron-right"></i> <span id="bc-task-name">Loading...</span>
+          </div>
+          <h1 class="pm-page-title" id="page-task-name">Loading Task...</h1>
+          <div class="pm-page-subtitle" id="page-task-project"><i class="fa fa-folder"></i> Project: —</div>
+        </div>
+        <div class="flex gap-8">
+          <select class="pm-btn pm-btn-outline" id="quickStatusSelect" onchange="quickUpdateStatus(this.value)">
+            <option value="TODO">To Do</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="REVIEW">Review</option>
+            <option value="COMPLETED">Completed</option>
+          </select>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="editTask()"><i class="fa fa-edit"></i> Edit</button>
+        </div>
+      </div>
+
+      <div class="td-grid">
+        <!-- Left Column -->
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div class="pm-card">
+            <div class="pm-card-header"><div class="pm-card-title">Description</div></div>
+            <div id="task-desc" style="font-size:13px;line-height:1.6;color:var(--pm-text);white-space:pre-wrap;">No description provided.</div>
+          </div>
+          
+          <div class="pm-card">
+            <div class="pm-card-header" style="display:flex;justify-content:space-between;align-items:center">
+              <div class="pm-card-title">Subtasks</div>
+              <button class="pm-btn pm-btn-outline pm-btn-sm"><i class="fa fa-plus"></i> Add Subtask</button>
+            </div>
+            <div class="pm-progress" style="margin-bottom:16px;height:6px"><div class="pm-progress-bar" id="subtask-progress" style="width:0%;background:var(--green)"></div></div>
+            <div id="subtask-list">
+              <div style="padding:16px;text-align:center;color:var(--pm-text-muted);font-size:12px">No subtasks found.</div>
+            </div>
+          </div>
+
+          <div class="pm-card">
+            <div class="pm-card-header"><div class="pm-card-title">Discussion & Comments</div></div>
+            <div id="comment-list">
+              <!-- Comments will load here -->
+            </div>
+            <div style="display:flex;gap:12px;margin-top:16px">
+              <div class="comment-avatar" style="background:var(--pm-accent)"><i class="fa fa-user"></i></div>
+              <div style="flex:1">
+                <textarea class="pm-form-input" id="newCommentTxt" rows="2" placeholder="Write a comment..." style="resize:vertical;margin-bottom:8px"></textarea>
+                <div style="text-align:right"><button class="pm-btn pm-btn-primary" onclick="postComment()">Post Comment</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div style="display:flex;flex-direction:column;gap:20px">
+          
+          <div class="pm-card">
+            <div class="pm-card-header"><div class="pm-card-title">Assigned Employee</div></div>
+            <div id="assignee-container">
+              <div style="padding:16px;text-align:center;color:var(--pm-text-muted)"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+            </div>
+          </div>
+
+          <div class="pm-card">
+            <div class="pm-card-header"><div class="pm-card-title">Task Details</div></div>
+            <div class="td-overview-list">
+              <div class="td-overview-item"><span>Status</span> <span id="td-status"><span class="pm-badge neutral">—</span></span></div>
+              <div class="td-overview-item"><span>Priority</span> <span id="td-prio"><span class="pm-badge neutral">—</span></span></div>
+              <div class="td-overview-item"><span>Project</span> <span id="td-proj">—</span></div>
+              <div class="td-overview-item"><span>Due Date</span> <span id="td-due">—</span></div>
+              <div class="td-overview-item"><span>Est. Hours</span> <span id="td-est">—</span></div>
+              <div class="td-overview-item"><span>Created At</span> <span id="td-created">—</span></div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let currentTask = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const pathParts = window.location.pathname.split('/');
+  const taskId = pathParts[pathParts.length - 1];
+
+  try {
+    const res = await apiFetch('/api/tasks/' + taskId);
+    const t = res.data || res;
+    currentTask = t;
+
+    document.getElementById('page-task-name').textContent = t.title || 'Untitled Task';
+    document.getElementById('bc-task-name').textContent = t.title || 'Untitled';
+    document.getElementById('page-task-project').innerHTML = \`<i class="fa fa-folder"></i> Project: \${t.project?.name || '—'}\`;
+    
+    document.getElementById('task-desc').textContent = t.description || 'No description provided.';
+    document.getElementById('quickStatusSelect').value = t.status || 'TODO';
+
+    // Details
+    const sMap = { COMPLETED:'success', IN_PROGRESS:'info', TODO:'neutral', REVIEW:'warning', BACKLOG:'neutral' };
+    const pMap = { CRITICAL:'danger', HIGH:'danger', MEDIUM:'warning', LOW:'success' };
+    
+    document.getElementById('td-status').innerHTML = \`<span class="pm-badge \${sMap[t.status]||'neutral'}">\${(t.status||'TODO').replace('_',' ')}</span>\`;
+    document.getElementById('td-prio').innerHTML   = \`<span class="pm-badge \${pMap[t.priority]||'warning'}">\${t.priority||'MEDIUM'}</span>\`;
+    document.getElementById('td-proj').textContent = t.project?.name || '—';
+    document.getElementById('td-due').innerHTML    = t.deadline ? \`<i class="fa fa-calendar"></i> \${new Date(t.deadline).toLocaleDateString()}\` : '—';
+    document.getElementById('td-est').textContent  = t.estimatedHours ? t.estimatedHours + ' hrs' : '—';
+    document.getElementById('td-created').textContent = new Date(t.createdAt).toLocaleDateString();
+
+    // Assignee
+    const ac = document.getElementById('assignee-container');
+    if (t.assignedTo) {
+      const u = typeof t.assignedTo === 'object' ? t.assignedTo : { _id: t.assignedTo, name: t.assigneeName || 'Employee' };
+      const initials = (u.name || 'E').substring(0,2).toUpperCase();
+      ac.innerHTML = \`
+        <div class="assignee-card" onclick="window.location='/project-manager/employee-profile?id=\${u._id}'">
+          <div class="assignee-avatar">\${initials}</div>
+          <div class="assignee-info">
+            <div class="assignee-name">\${u.name}</div>
+            <div class="assignee-role">\${u.department || 'Developer'}</div>
+            <div style="font-size:10px;color:var(--pm-accent);margin-top:4px"><i class="fa fa-history"></i> View Performance & History</div>
+          </div>
+          <i class="fa fa-chevron-right" style="color:var(--pm-text-muted)"></i>
+        </div>
+      \`;
+    } else {
+      ac.innerHTML = '<div style="padding:16px;text-align:center;color:var(--pm-text-muted)">Unassigned</div>';
+    }
+
+    // Subtasks
+    const sl = document.getElementById('subtask-list');
+    if (t.subtasks && t.subtasks.length) {
+      const done = t.subtasks.filter(s => s.isCompleted).length;
+      document.getElementById('subtask-progress').style.width = \`\${Math.round((done/t.subtasks.length)*100)}%\`;
+      
+      sl.innerHTML = t.subtasks.map((st, i) => \`
+        <div class="subtask-item \${st.isCompleted?'completed':''}">
+          <input type="checkbox" \${st.isCompleted?'checked':''} onchange="pmToast('Subtasks logic to be implemented','info')" />
+          <div class="subtask-title">\${st.title}</div>
+        </div>
+      \`).join('');
+    }
+
+    // Comments Mock
+    document.getElementById('comment-list').innerHTML = \`
+      <div class="comment-item">
+        <div class="comment-avatar" style="background:var(--blue)">PM</div>
+        <div class="comment-content">
+          <div class="comment-header"><span class="comment-author">Project Manager</span><span class="comment-time">Yesterday</span></div>
+          <div class="comment-text">Assigned this task. Please ensure all requirements are met before testing.</div>
+        </div>
+      </div>
+    \`;
+
+  } catch(e) {
+    console.error(e);
+    pmToast('Failed to load task details', 'error');
+  }
+});
+
+async function quickUpdateStatus(status) {
+  if(!currentTask) return;
+  try {
+    await apiFetch('/api/tasks/' + currentTask._id, { method: 'PATCH', body: JSON.stringify({status}) });
+    pmToast('Status updated to ' + status, 'success');
+    setTimeout(()=>window.location.reload(), 1000);
+  } catch(e) {
+    pmToast(e.message||'Failed to update', 'error');
+  }
+}
+
+function postComment() {
+  const txt = document.getElementById('newCommentTxt').value;
+  if(!txt.trim()) return;
+  pmToast('Comment posted (Mock)', 'success');
+  document.getElementById('newCommentTxt').value = '';
+}
+</script>
+</body>
+</html>

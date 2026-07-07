@@ -1,0 +1,232 @@
+/* 
+  JMKC Enterprise CRM - Project Detail Workspace
+  Phase 6 Styles
+*/
+
+/* Project Banner */
+.project-banner {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.banner-title-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.banner-title-group h1 { font-size: 2rem; margin: 0; }
+.banner-actions { display: flex; gap: 10px; }
+
+.banner-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+.banner-meta span { color: var(--text-secondary); }
+.banner-meta strong { color: var(--text-primary); margin-left: 5px; }
+
+.banner-progress .progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+.banner-progress .progress-bar-container {
+  height: 8px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.banner-progress .progress-bar-fill {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 4px;
+}
+
+/* KPI Row */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.kpi-box {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.kpi-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  border-color: var(--accent-color);
+}
+.kpi-box-val { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); }
+.kpi-box-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; }
+
+/* Tabs Navigation */
+.tabs-nav {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 24px;
+}
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active { color: var(--accent-color); }
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+/* Tab Content */
+.tab-pane {
+  display: none;
+  animation: fadeInSlideUp 0.3s ease;
+}
+.tab-pane.active { display: block; }
+
+/* Overview Grid */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Tasks Tab */
+.tasks-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.tasks-table-wrapper {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th, td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); }
+th { background: var(--bg-primary); color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+tr:hover { background: rgba(255,255,255,0.02); }
+
+/* Chat Layout */
+.chat-layout {
+  display: flex;
+  height: 600px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.chat-sidebar {
+  width: 250px;
+  border-right: 1px solid var(--border-color);
+  padding: 20px;
+  background: var(--bg-primary);
+}
+.chat-sidebar ul { list-style: none; padding: 0; }
+.chat-sidebar li { padding: 10px; border-radius: 6px; cursor: pointer; color: var(--text-secondary); margin-bottom: 5px; }
+.chat-sidebar li:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.chat-sidebar li.active { background: var(--bg-secondary); color: var(--accent-color); font-weight: 600; }
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+.chat-input-area {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 10px;
+}
+.chat-input-area input {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+/* Grids for other tabs */
+.files-grid, .team-grid, .reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Glass Card Base */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.widget-header { padding: 16px; border-bottom: 1px solid var(--border-color); }
+.widget-header h2 { font-size: 1.1rem; }
+.widget-body { padding: 16px; }
+
+/* Timeline */
+.timeline-container { padding: 20px; border-left: 2px solid var(--border-color); margin-left: 20px; }
+.timeline-item { position: relative; margin-bottom: 20px; padding-left: 20px; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  border: 2px solid var(--bg-primary);
+}
+
+/* Progress Colors */
+.text-danger { color: var(--danger-color); }
+.text-success { color: var(--success-color); }
+.text-warning { color: var(--warning-color); }
+.text-primary { color: var(--accent-color); }

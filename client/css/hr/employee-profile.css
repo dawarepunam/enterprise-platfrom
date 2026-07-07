@@ -1,0 +1,123 @@
+.profile-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 22px;
+}
+
+.profile-side {
+  align-self: start;
+  position: sticky;
+  top: 110px;
+}
+
+.profile-main {
+  min-height: 720px;
+}
+
+.profile-avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 30px;
+  object-fit: cover;
+  margin-bottom: 18px;
+}
+
+.profile-side-top {
+  display: grid;
+  justify-items: start;
+}
+
+.profile-back-btn {
+  margin-bottom: 16px;
+}
+
+.profile-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.profile-stat-grid .hr-card {
+  background: rgba(15, 23, 42, 0.44);
+}
+
+.profile-tabbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.profile-tab {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(124, 58, 237, 0.14);
+  color: #ddd6fe;
+}
+
+.profile-tab.active {
+  background: var(--hr-gradient);
+  color: #fff;
+}
+
+.profile-tabcontent-section {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-overview-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.profile-overview-card {
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profile-modal-content {
+  background: rgba(8, 15, 32, 0.95);
+  color: #e2e8f0;
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  border-radius: 24px;
+}
+
+.upload-dropzone {
+  border: 2px dashed rgba(124, 58, 237, 0.42);
+  padding: 28px;
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.72);
+  transition: border-color 0.22s ease, transform 0.22s ease;
+}
+
+.upload-dropzone.dragover {
+  border-color: rgba(6, 182, 212, 0.56);
+  transform: scale(1.01);
+}
+
+.profile-upload-progress {
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.profile-upload-progress .progress-bar {
+  background: var(--hr-gradient);
+}
+
+@media (max-width: 980px) {
+  .profile-layout,
+  .profile-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-side {
+    position: static;
+  }
+}

@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shift History – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* ── Summary Cards ───────────────────────────────── */
+    .shift-summary-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .shift-stat-card {
+      background: var(--pm-card, #fff);
+      border: 1px solid var(--pm-border, #eef0f4);
+      border-radius: 14px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .shift-stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+    }
+    .shift-stat-card:nth-child(1)::before { background: #3b82f6; }
+    .shift-stat-card:nth-child(2)::before { background: #22c55e; }
+    .shift-stat-card:nth-child(3)::before { background: #f97316; }
+    .shift-stat-card:nth-child(4)::before { background: #a855f7; }
+    .shift-stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+    .shift-stat-label {
+      font-size: 11px; text-transform: uppercase; font-weight: 700;
+      color: var(--pm-text-muted, #64748b); letter-spacing: 0.6px; margin-bottom: 8px;
+    }
+    .shift-stat-value { font-size: 26px; font-weight: 800; color: var(--pm-text, #111); line-height: 1; }
+    .shift-stat-sub { font-size: 11.5px; color: var(--pm-text-muted, #64748b); margin-top: 4px; }
+    .shift-stat-icon { font-size: 28px; opacity: 0.75; }
+
+    /* ── Filters ─────────────────────────────────────── */
+    .shift-filters {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      margin-bottom: 18px;
+    }
+    .shift-filter-tab {
+      padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+      cursor: pointer; border: 1px solid #e5e7eb; background: #fff; color: #6b7280;
+      transition: all 0.15s;
+    }
+    .shift-filter-tab.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+    .shift-filter-tab:hover:not(.active) { background: #f1f5f9; }
+    .shift-date-input {
+      padding: 6px 12px; border-radius: 8px; font-size: 13px;
+      border: 1px solid #e5e7eb; color: #374151; font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .shift-date-input:focus { outline: none; border-color: #3b82f6; }
+
+    /* ── Table ───────────────────────────────────────── */
+    .pm-table tbody tr { cursor: pointer; transition: background 0.15s; }
+    .pm-table tbody tr:hover { background: rgba(59,130,246,0.04) !important; }
+    .pm-table tbody tr:hover td:first-child { color: #2563eb; }
+
+    /* ── Shift Badges ────────────────────────────────── */
+    .badge-shift {
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .badge-overtime  { background: #dbeafe; color: #2563eb; }
+    .badge-regular   { background: #dcfce7; color: #16a34a; }
+    .badge-short     { background: #fee2e2; color: #dc2626; }
+
+    /* ── Employee Avatar ─────────────────────────────── */
+    .emp-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff;
+      margin-right: 10px; flex-shrink: 0;
+    }
+
+    /* ── Detail Modal ────────────────────────────────── */
+    .shift-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      z-index: 1000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .shift-modal-overlay.open { opacity: 1; pointer-events: all; }
+    .shift-modal {
+      background: #fff; border-radius: 16px; padding: 32px;
+      width: 560px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px); transition: transform 0.2s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .shift-modal-overlay.open .shift-modal { transform: translateY(0); }
+    .shift-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;
+    }
+    .shift-modal-title { font-size: 18px; font-weight: 700; color: #111; }
+    .shift-modal-close {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: #f1f5f9; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #374151; transition: background 0.15s;
+    }
+    .shift-modal-close:hover { background: #e5e7eb; }
+    .shift-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .shift-detail-item { background: #f8fafc; border-radius: 10px; padding: 14px 16px; }
+    .shift-detail-label {
+      font-size: 11px; font-weight: 600; color: #64748b;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .shift-detail-value { font-size: 15px; font-weight: 600; color: #111; }
+    .shift-detail-full { grid-column: 1 / -1; }
+
+    /* ── Progress bar for hours ──────────────────────── */
+    .hours-bar {
+      background: #e5e7eb; border-radius: 99px; height: 6px; margin-top: 8px;
+      overflow: hidden;
+    }
+    .hours-bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
+
+    /* ── Footer ──────────────────────────────────────── */
+    .pm-page-footer {
+      margin-top: 48px; padding: 24px 0 16px;
+      border-top: 1px solid var(--pm-border, #eef0f4);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .pm-footer-brand { display: flex; align-items: center; gap: 10px; }
+    .pm-footer-logo {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 11px; font-weight: 800;
+    }
+    .pm-footer-text { font-size: 12.5px; color: var(--pm-text-muted, #94a3b8); }
+    .pm-footer-links { display: flex; gap: 16px; }
+    .pm-footer-link { font-size: 12px; color: var(--pm-text-muted, #94a3b8); text-decoration: none; }
+    .pm-footer-link:hover { color: #3b82f6; }
+
+    /* ── Back button ─────────────────────────────────── */
+    .pm-back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 8px;
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      font-size: 13px; font-weight: 500; color: #374151;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.15s; margin-bottom: 12px;
+    }
+    .pm-back-btn:hover { background: #e2e8f0; color: #1e293b; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <!-- Back Button -->
+      
+
+      <!-- Page Header -->
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Shift History</span>
+          </div>
+          <h1 class="pm-page-title"><i class="fa fa-history" style="color:#3b82f6;margin-right:8px;"></i> Shift History Logs</h1>
+          <p class="pm-page-subtitle">Complete shift records with clock-in, clock-out, and hour tracking.</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <div class="pm-header-search" style="margin:0;box-shadow:none;border:1px solid var(--pm-border);">
+            <i class="fa fa-search"></i>
+            <input type="text" id="shiftSearch" placeholder="Search employee..." oninput="filterShifts()" />
+          </div>
+          <button class="pm-btn pm-btn-secondary" onclick="loadShifts()" style="gap:6px;">
+            <i class="fa fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="shift-summary-bar">
+        <div class="shift-stat-card">
+          <div>
+            <div class="shift-stat-label">Total Shift Logs</div>
+            <div class="shift-stat-value" id="statLogs">0</div>
+            <div class="shift-stat-sub">Records found</div>
+          </div>
+          <div class="shift-stat-icon" style="color:#3b82f6;"><i class="fa fa-list-alt"></i></div>
+        </div>
+        <div class="shift-stat-card">
+          <div>
+            <div class="shift-stat-label">Total Hours Worked</div>
+            <div class="shift-stat-value" id="statHours">0 hrs</div>
+            <div class="shift-stat-sub">Across all shifts</div>
+          </div>
+          <div class="shift-stat-icon" style="color:#22c55e;"><i class="fa fa-clock"></i></div>
+        </div>
+        <div class="shift-stat-card">
+          <div>
+            <div class="shift-stat-label">Avg Shift Length</div>
+            <div class="shift-stat-value" id="statAvg">0 hrs</div>
+            <div class="shift-stat-sub">Per shift</div>
+          </div>
+          <div class="shift-stat-icon" style="color:#f97316;"><i class="fa fa-chart-bar"></i></div>
+        </div>
+        <div class="shift-stat-card">
+          <div>
+            <div class="shift-stat-label">Overtime Shifts</div>
+            <div class="shift-stat-value" id="statOvertime">0</div>
+            <div class="shift-stat-sub">More than 9 hrs</div>
+          </div>
+          <div class="shift-stat-icon" style="color:#a855f7;"><i class="fa fa-bolt"></i></div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="shift-filters">
+        <div class="shift-filter-tab active" onclick="filterByType('ALL', this)">All Types</div>
+        <div class="shift-filter-tab" onclick="filterByType('Overtime', this)">Overtime</div>
+        <div class="shift-filter-tab" onclick="filterByType('Regular', this)">Regular</div>
+        <div class="shift-filter-tab" onclick="filterByType('Short Shift', this)">Short Shift</div>
+        <input type="date" class="shift-date-input" id="filterDate" onchange="filterShifts()" placeholder="Filter by date" />
+      </div>
+
+      <!-- Table -->
+      <div class="pm-card" style="padding:0;overflow:hidden;">
+        <table class="pm-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Shift Date</th>
+              <th>Clock In</th>
+              <th>Clock Out</th>
+              <th>Total Hours</th>
+              <th>Type</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="shiftBody">
+            <tr>
+              <td colspan="7" style="text-align:center;padding:48px;color:var(--pm-text-muted);">
+                <i class="fa fa-spinner fa-spin" style="font-size:24px;display:block;margin-bottom:8px;"></i>
+                Fetching shift records...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      
+    </main>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="shift-modal-overlay" id="shiftModal" onclick="closeShiftModal(event)">
+  <div class="shift-modal">
+    <div class="shift-modal-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="shiftModalAvatar" style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;"></div>
+        <div>
+          <div class="shift-modal-title" id="shiftModalName"></div>
+          <div style="font-size:12px;color:#6b7280;" id="shiftModalRole"></div>
+        </div>
+      </div>
+      <button class="shift-modal-close" onclick="document.getElementById('shiftModal').classList.remove('open')"><i class="fa fa-times"></i></button>
+    </div>
+    <div class="shift-detail-grid" id="shiftModalBody"></div>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let allShifts = [];
+  let currentTypeFilter = 'ALL';
+  const AVATAR_COLORS = ['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444','#06b6d4','#ec4899'];
+
+  function getToken() {
+    return localStorage.getItem('token') || localStorage.getItem('jmkc_token') || '';
+  }
+
+  function getInitials(name) {
+    return (name || 'NA').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  function getColor(name) {
+    let h = 0;
+    for (let i = 0; i < (name || '').length; i++) h += name.charCodeAt(i);
+    return AVATAR_COLORS[h % AVATAR_COLORS.length];
+  }
+
+  function getShiftType(hrs) {
+    const h = parseFloat(hrs) || 0;
+    if (h >= 9) return 'Overtime';
+    if (h < 6) return 'Short Shift';
+    return 'Regular';
+  }
+
+  function getShiftBadgeClass(type) {
+    if (type === 'Overtime') return 'badge-overtime';
+    if (type === 'Short Shift') return 'badge-short';
+    return 'badge-regular';
+  }
+
+  async function loadShifts() {
+    document.getElementById('shiftBody').innerHTML =
+      '<tr><td colspan="7" style="text-align:center;padding:48px;color:var(--pm-text-muted);"><i class="fa fa-spinner fa-spin" style="font-size:22px;display:block;margin-bottom:8px;"></i>Loading...</td></tr>';
+
+    try {
+      const token = getToken();
+      const res = await fetch('/api/attendance/history?days=30', {
+        headers: { Authorization: 'Bearer ' + token }
+      });
+
+      let data = [];
+      if (res.ok) {
+        const json = await res.json();
+        data = json.data || json.records || [];
+      }
+
+      // Fallback: try main attendance list
+      if (!data.length) {
+        const res2 = await fetch('/api/attendance?size=200', {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        if (res2.ok) {
+          const j2 = await res2.json();
+          data = j2.data || [];
+        }
+      }
+
+      allShifts = data.map(s => {
+        const name = s.userId?.name || s.userName || s.employeeName || 'Staff Member';
+        const role = s.userId?.role || s.userId?.designation || s.role || '—';
+        const department = s.userId?.department || s.department || '—';
+        const ci = s.clockIn ? new Date(s.clockIn) : null;
+        const co = s.clockOut ? new Date(s.clockOut) : null;
+        const clockIn  = ci ? ci.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : '—';
+        const clockOut = co ? co.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : 'Not clocked out';
+        let totalHrs = parseFloat(s.totalHours || 0);
+        if (!totalHrs && ci && co) totalHrs = (co - ci) / 3600000;
+        const type = getShiftType(totalHrs);
+        const dateStr = new Date(s.clockIn || s.date || s.createdAt).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+        return {
+          _id: s._id, name, role, department,
+          email: s.userId?.email || s.email || '—',
+          clockIn, clockOut, totalHrs: totalHrs.toFixed(1),
+          type, dateStr, dateRaw: s.clockIn || s.date || s.createdAt,
+          breakMinutes: s.breakMinutes || 0,
+          notes: s.notes || s.remark || '—'
+        };
+      });
+
+      calculateStats(allShifts);
+      renderShifts(allShifts);
+    } catch (err) {
+      console.error('Shift load error:', err);
+      document.getElementById('shiftBody').innerHTML =
+        '<tr><td colspan="7" style="text-align:center;padding:40px;color:#ef4444;"><i class="fa fa-exclamation-triangle"></i> Failed to load shifts. Please refresh.</td></tr>';
+    }
+  }
+
+  function calculateStats(data) {
+    const totalHrs = data.reduce((s, r) => s + parseFloat(r.totalHrs || 0), 0);
+    const avg = data.length ? (totalHrs / data.length).toFixed(1) : 0;
+    const overtime = data.filter(r => r.type === 'Overtime').length;
+    document.getElementById('statLogs').textContent    = data.length;
+    document.getElementById('statHours').textContent   = totalHrs.toFixed(1) + ' hrs';
+    document.getElementById('statAvg').textContent     = avg + ' hrs';
+    document.getElementById('statOvertime').textContent = overtime;
+  }
+
+  function renderShifts(data) {
+    const tbody = document.getElementById('shiftBody');
+    let filtered = data;
+    if (currentTypeFilter !== 'ALL') {
+      filtered = data.filter(r => r.type === currentTypeFilter);
+    }
+    const dateFilter = document.getElementById('filterDate').value;
+    if (dateFilter) {
+      filtered = filtered.filter(r => {
+        return new Date(r.dateRaw).toISOString().slice(0,10) === dateFilter;
+      });
+    }
+    const searchQ = document.getElementById('shiftSearch').value.toLowerCase().trim();
+    if (searchQ) {
+      filtered = filtered.filter(r => r.name.toLowerCase().includes(searchQ));
+    }
+
+    calculateStats(filtered);
+
+    if (!filtered.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--pm-text-muted);"><i class="fa fa-search" style="margin-right:8px;"></i>No records found for this filter.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(s => {
+      const initials = getInitials(s.name);
+      const color    = getColor(s.name);
+      const badgeClass = getShiftBadgeClass(s.type);
+      const pct = Math.min(100, (parseFloat(s.totalHrs) / 10) * 100);
+      const barColor = s.type === 'Overtime' ? '#3b82f6' : s.type === 'Short Shift' ? '#ef4444' : '#22c55e';
+
+      return `
+        <tr onclick="openShiftModal(${JSON.stringify(s).replace(/"/g,'&quot;')})">
+          <td>
+            <div style="display:flex;align-items:center;">
+              <div class="emp-avatar" style="background:${color};">${initials}</div>
+              <span style="font-weight:600;">${s.name}</span>
+            </div>
+          </td>
+          <td style="font-size:13px;">${s.dateStr}</td>
+          <td><i class="fa fa-sign-in-alt" style="color:#22c55e;margin-right:4px;"></i>${s.clockIn}</td>
+          <td><i class="fa fa-sign-out-alt" style="color:#ef4444;margin-right:4px;"></i>${s.clockOut}</td>
+          <td>
+            <div style="font-weight:700;">${s.totalHrs} hrs</div>
+            <div class="hours-bar"><div class="hours-bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+          </td>
+          <td><span class="badge-shift ${badgeClass}">${s.type}</span></td>
+          <td>
+            <button class="pm-btn" style="padding:5px 10px;font-size:11px;border-radius:6px;" onclick="event.stopPropagation(); openShiftModal(${JSON.stringify(s).replace(/"/g,'&quot;')})">
+              <i class="fa fa-eye"></i>
+            </button>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  function filterByType(type, el) {
+    currentTypeFilter = type;
+    document.querySelectorAll('.shift-filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderShifts(allShifts);
+  }
+
+  function filterShifts() {
+    renderShifts(allShifts);
+  }
+
+  function openShiftModal(s) {
+    const color    = getColor(s.name);
+    const initials = getInitials(s.name);
+    const badgeClass = getShiftBadgeClass(s.type);
+
+    document.getElementById('shiftModalAvatar').style.background = color;
+    document.getElementById('shiftModalAvatar').textContent = initials;
+    document.getElementById('shiftModalName').textContent = s.name;
+    document.getElementById('shiftModalRole').textContent = s.role;
+
+    const pct = Math.min(100, (parseFloat(s.totalHrs) / 10) * 100);
+    const barColor = s.type === 'Overtime' ? '#3b82f6' : s.type === 'Short Shift' ? '#ef4444' : '#22c55e';
+
+    document.getElementById('shiftModalBody').innerHTML = `
+      <div class="shift-detail-item">
+        <div class="shift-detail-label">Shift Date</div>
+        <div class="shift-detail-value">${s.dateStr}</div>
+      </div>
+      <div class="shift-detail-item">
+        <div class="shift-detail-label">Shift Type</div>
+        <div class="shift-detail-value"><span class="badge-shift ${badgeClass}">${s.type}</span></div>
+      </div>
+      <div class="shift-detail-item">
+        <div class="shift-detail-label"><i class="fa fa-sign-in-alt" style="color:#22c55e;margin-right:4px;"></i>Clock In</div>
+        <div class="shift-detail-value">${s.clockIn}</div>
+      </div>
+      <div class="shift-detail-item">
+        <div class="shift-detail-label"><i class="fa fa-sign-out-alt" style="color:#ef4444;margin-right:4px;"></i>Clock Out</div>
+        <div class="shift-detail-value">${s.clockOut}</div>
+      </div>
+      <div class="shift-detail-item shift-detail-full">
+        <div class="shift-detail-label">Total Hours Worked</div>
+        <div class="shift-detail-value">${s.totalHrs} hrs</div>
+        <div class="hours-bar" style="margin-top:8px;"><div class="hours-bar-fill" style="width:${pct}%;background:${barColor};"></div></div>
+      </div>
+      <div class="shift-detail-item">
+        <div class="shift-detail-label">Department</div>
+        <div class="shift-detail-value">${s.department}</div>
+      </div>
+      <div class="shift-detail-item">
+        <div class="shift-detail-label">Break Time</div>
+        <div class="shift-detail-value">${s.breakMinutes || 0} min</div>
+      </div>
+      <div class="shift-detail-item shift-detail-full">
+        <div class="shift-detail-label">Notes / Remarks</div>
+        <div class="shift-detail-value" style="font-size:14px;font-weight:500;color:#374151;">${s.notes}</div>
+      </div>
+    `;
+    document.getElementById('shiftModal').classList.add('open');
+  }
+
+  function closeShiftModal(e) {
+    if (e.target === document.getElementById('shiftModal')) {
+      document.getElementById('shiftModal').classList.remove('open');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => setTimeout(loadShifts, 400));
+</script>
+</body>
+</html>

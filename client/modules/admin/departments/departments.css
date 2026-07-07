@@ -1,0 +1,11 @@
+.dept-card { background:#fff; border:1px solid var(--border); border-radius:var(--r-lg); padding:20px; cursor:pointer; transition:all var(--ease-med); position:relative; overflow:hidden; }
+    .dept-card:hover { box-shadow:var(--shadow-md); transform:translateY(-4px); border-color:var(--primary); }
+    .dept-icon { width:48px; height:48px; border-radius:var(--r-md); background:var(--primary-light); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:16px; }
+    .dept-name { font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; }
+    .dept-desc { font-size:12px; color:var(--text-4); margin-bottom:16px; min-height:36px; }
+    .dept-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; border-top:1px solid var(--border-light); padding-top:16px; }
+    .dept-stat-val { font-size:18px; font-weight:700; color:var(--text); }
+    .dept-stat-label { font-size:11px; color:var(--text-4); font-weight:500; }
+    .dept-footer { display:flex; align-items:center; justify-content:space-between; }
+    .dept-head { display:flex; align-items:center; gap:8px; }
+    .dept-head-name { font-size:12px; font-weight:600; }

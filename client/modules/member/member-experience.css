@@ -1,0 +1,437 @@
+@import url("../../assets/css/role-workspace.css");
+
+.member-shell {
+  display: grid;
+  gap: 24px;
+}
+
+.member-hero-pro {
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.16), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.15), transparent 26%),
+    linear-gradient(135deg, #0f172a, #0b5cab 54%, #0f766e 100%);
+  color: #eff6ff;
+}
+
+.member-hero-pro .hero-text,
+.member-hero-pro .eyebrow,
+.member-hero-pro h1,
+.member-hero-pro p,
+.member-hero-pro span,
+.member-hero-pro small {
+  color: inherit;
+}
+
+.hero-badges,
+.chip-row,
+.toolbar-row,
+.card-metrics,
+.task-inline-actions,
+.workspace-meta-grid,
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-badges {
+  margin-top: 18px;
+}
+
+.member-chip,
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.member-chip strong {
+  font-size: 0.95rem;
+}
+
+.toolbar-row {
+  margin-top: 16px;
+}
+
+.icon-chip {
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  color: var(--text);
+}
+
+.icon-chip svg,
+.tool-btn svg,
+.inline-icon svg,
+.metric-icon svg,
+.workspace-tile svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.85;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.project-grid,
+.workspace-tile-grid,
+.task-column-grid,
+.insight-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.project-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.project-card {
+  display: grid;
+  gap: 16px;
+}
+
+.card-topline,
+.project-titlebar,
+.workspace-titlebar,
+.task-row-top,
+.feed-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 14px;
+}
+
+.project-titlebar strong,
+.workspace-titlebar strong {
+  display: block;
+  font-size: 1.08rem;
+}
+
+.project-copy,
+.task-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.project-copy p,
+.task-copy p,
+.workspace-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.card-metrics {
+  gap: 10px;
+}
+
+.metric-mini {
+  min-width: 112px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: #f8fbff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.metric-mini span,
+.metric-mini small {
+  display: block;
+  color: var(--muted);
+}
+
+.metric-mini strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.2rem;
+}
+
+.progress-rail {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.progress-rail span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0f766e, #2563eb);
+}
+
+.workspace-layout-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  gap: 20px;
+}
+
+.workspace-sidebar,
+.workspace-main {
+  display: grid;
+  gap: 20px;
+}
+
+.workspace-room-list,
+.message-stack,
+.activity-feed,
+.project-mini-list {
+  display: grid;
+  gap: 12px;
+}
+
+.workspace-room {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  border-radius: 20px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.workspace-room.active {
+  border-color: rgba(37, 99, 235, 0.3);
+  background: linear-gradient(180deg, #eff6ff, #ffffff);
+}
+
+.workspace-room strong,
+.workspace-room span {
+  display: block;
+}
+
+.workspace-room span {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.workspace-chat-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.workspace-toolbar {
+  display: grid;
+  gap: 16px;
+}
+
+.tool-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  color: var(--text);
+}
+
+.tool-btn.is-wide {
+  width: auto;
+  padding: 0 14px;
+}
+
+.message-search,
+.workspace-composer input,
+.workspace-composer textarea,
+.workspace-composer select,
+.workspace-composer button,
+.workspace-update-form input,
+.workspace-update-form textarea,
+.workspace-update-form select,
+.workspace-update-form button,
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+  font: inherit;
+}
+
+.message-search,
+.workspace-composer input,
+.workspace-composer textarea,
+.workspace-update-form input,
+.workspace-update-form textarea,
+.workspace-update-form select,
+.ticket-form input,
+.ticket-form textarea,
+.ticket-form select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.workspace-composer,
+.workspace-update-form,
+.ticket-form {
+  display: grid;
+  gap: 12px;
+}
+
+.workspace-composer-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+}
+
+.message-stack {
+  min-height: 360px;
+  max-height: 560px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.message-bubble,
+.activity-card,
+.workspace-tile,
+.status-banner {
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+}
+
+.message-bubble.me {
+  background: linear-gradient(180deg, #eff6ff, #ffffff);
+  border-color: rgba(37, 99, 235, 0.24);
+}
+
+.message-bubble p,
+.activity-card p,
+.status-banner p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.workspace-tile-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.workspace-tile {
+  display: grid;
+  gap: 10px;
+}
+
+.workspace-tile strong,
+.metric-with-icon strong {
+  font-size: 1.1rem;
+}
+
+.metric-with-icon {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+}
+
+.metric-icon,
+.inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.task-column-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.task-column {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 18px;
+  border-radius: 22px;
+  background: #f8fbff;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.task-column h3,
+.task-column p {
+  margin: 0;
+}
+
+.task-inline-actions .btn,
+.panel-actions .btn {
+  min-height: 40px;
+}
+
+.reward-banner {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #fff;
+}
+
+.reward-banner p,
+.reward-banner span {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.empty-inline {
+  padding: 18px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+  text-align: center;
+  color: var(--muted);
+}
+
+@media (max-width: 1200px) {
+  .workspace-layout-grid,
+  .task-column-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .workspace-tile-grid,
+  .content-grid,
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-composer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-actions {
+    grid-auto-flow: row;
+  }
+
+  .project-titlebar,
+  .workspace-titlebar,
+  .task-row-top {
+    flex-direction: column;
+  }
+
+  .workspace-page {
+    padding: 16px;
+  }
+
+  .workspace-hero {
+    padding: 22px;
+  }
+}

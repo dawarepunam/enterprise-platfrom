@@ -1,0 +1,92 @@
+<div class="pm-queue" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div class="pm-toolbar" style="margin-bottom:0;">
+    <div>
+      <span class="pm-eyebrow">Intake</span>
+      <h2>PM Queue</h2>
+    </div>
+  </div>
+
+  <div class="pm-card" style="display:flex; flex-direction:column; gap:1rem; flex:1;">
+    <!-- Filters Row -->
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:1rem;">
+        <select class="pm-form-control" style="width:200px;">
+          <option>All Departments</option>
+          <option>Finance</option>
+          <option>Healthcare</option>
+          <option>Logistics</option>
+        </select>
+        <select class="pm-form-control" style="width:150px;">
+          <option>All Priority</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+        <select class="pm-form-control" style="width:150px;">
+          <option>All Owners</option>
+          <option>Amit Patel</option>
+          <option>Neha Verma</option>
+          <option>Unassigned</option>
+        </select>
+      </div>
+      <div>
+        <button class="pm-btn">
+          <span style="margin-right:0.5rem;">⚙️</span> Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="pm-table-wrapper" id="queueStateContainer" style="flex:1;">
+      
+      <div id="queueLoadingState" style="text-align: center; padding: 2rem;">
+        <div class="pm-loader">Loading queue...</div>
+      </div>
+      
+      <div id="queueEmptyState" class="hidden" style="text-align: center; padding: 3rem;">
+        <span style="font-size: 3rem; opacity: 0.5;">📭</span>
+        <h3 style="margin-top:1rem;">Queue is empty</h3>
+        <p style="color:var(--pm-text-muted);">No pending requirements from Department Review.</p>
+      </div>
+
+      <div id="queueErrorState" class="hidden" style="text-align: center; padding: 3rem; color: var(--pm-danger);">
+        <h3>Error Loading Queue</h3>
+        <p id="queueErrorMsg"></p>
+        <button class="pm-btn primary" onclick="window.init_pm_queue()">Retry</button>
+      </div>
+
+      <table class="pm-table hidden" id="queueTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Requirement Title</th>
+            <th>Client</th>
+            <th>Priority</th>
+            <th>Budget</th>
+            <th>Timeline</th>
+            <th>Risk</th>
+            <th>Owner</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="queueTableBody">
+          <!-- Rows injected via script -->
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; color:var(--pm-text-muted); font-size:0.875rem;">
+      <span id="queueEntriesText">Showing 0 to 0 of 0 entries</span>
+      <div style="display:flex; gap:0.5rem;">
+        <button class="pm-btn" disabled>&lt;</button>
+        <button class="pm-btn primary">1</button>
+        <button class="pm-btn">2</button>
+        <button class="pm-btn">3</button>
+        <button class="pm-btn">4</button>
+        <button class="pm-btn">&gt;</button>
+      </div>
+    </div>
+
+  </div>
+</div>

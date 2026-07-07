@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Dashboard - Enterprise HRMS</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-banner {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            flex-shrink: 0; /* prevent squishing text */
+        }
+        
+        .banner-content h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--dark-navy);
+        }
+        
+        .banner-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .banner-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .banner-stat i {
+            color: var(--primary-blue);
+        }
+
+        .dept-scroll-wrapper {
+            margin-bottom: 30px;
+        }
+        
+        .dept-scroll-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .dept-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            min-height: 120px;
+            align-items: flex-start;
+        }
+        
+        .dept-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .dept-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-gray);
+            border-radius: 3px;
+        }
+        
+        .dept-card {
+            min-width: 170px;
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-lg);
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .dept-card:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+        
+        .dept-card:hover .dept-count,
+        .dept-card:hover .dept-badge {
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .dept-card i {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+        }
+        
+        .dept-card:hover i {
+            color: var(--white);
+        }
+        
+        .dept-name {
+            font-weight: 600;
+            font-family: var(--font-heading);
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .dept-count {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+        }
+        
+        .dept-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            background: rgba(37,99,235,0.1);
+            color: var(--primary-blue);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .dept-skeleton {
+            min-width: 170px;
+            height: 120px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: var(--radius-lg);
+            flex-shrink: 0;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .dept-error-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            color: var(--danger-red, #dc2626);
+            width: 100%;
+        }
+
+        .dept-empty-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 24px;
+            color: var(--text-gray);
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard.html" class="menu-item active">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-users"></i>
+                            <span>People</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Workforce</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="attendance.html" class="submenu-item">Attendance</a>
+                            <a href="leaves.html" class="submenu-item">Leaves</a>
+                            <a href="shifts.html" class="submenu-item">Shift Management</a>
+                            <a href="holidays.html" class="submenu-item">Holiday Calendar</a>
+                            <a href="ess.html" class="submenu-item">ESS Requests</a>
+                            <a href="overtime-compoff.html" class="submenu-item">Overtime & Comp-Off</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <span>Payroll</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="run-payroll.html" class="submenu-item">Run Payroll</a>
+                            <a href="salary-structures.html" class="submenu-item">Salary Structures</a>
+                            <a href="payslips.html" class="submenu-item">Payslips</a>
+                            <a href="claims.html" class="submenu-item">Claims / Expenses</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>Recruitment</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="jobs.html" class="submenu-item">Job Postings</a>
+                            <a href="applications.html" class="submenu-item">Applications Pipeline</a>
+                            <a href="interviews.html" class="submenu-item">Interviews</a>
+                            <a href="offers.html" class="submenu-item">Offer Letters</a>
+                            <a href="onboarding.html" class="submenu-item">Onboarding</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <span>Talent</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="goals.html" class="submenu-item">Goals & OKRs</a>
+                            <a href="appraisals.html" class="submenu-item">Appraisals</a>
+                            <a href="training.html" class="submenu-item">Learning & Training</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-bullhorn"></i>
+                            <span>Engagement</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="announcements.html" class="submenu-item">Announcements</a>
+                            <a href="helpdesk.html" class="submenu-item">IT & HR Helpdesk</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-plane"></i>
+                            <span>Travel</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="travel.html" class="submenu-item">Travel Requests</a>
+                            <a href="advances.html" class="submenu-item">Cash Advances</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-door-open"></i>
+                            <span>Exit</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="resignations.html" class="submenu-item">Resignations</a>
+                            <a href="exit-interviews.html" class="submenu-item">Exit Interviews</a>
+                            <a href="fnf.html" class="submenu-item">F&F Settlement</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <span>My Team (MSS)</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="mss-dashboard.html" class="submenu-item">Team Dashboard</a>
+                            <a href="approvals.html" class="submenu-item">Approvals Inbox</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="reports.html" class="submenu-item">Analytics & Reports</a>
+                            <a href="settings.html" class="submenu-item">System Settings</a>
+                            <a href="roles-permissions.html" class="submenu-item">Roles & Permissions</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <span>Dashboard</span> > Overview
+                    </div>
+                </div>
+                
+                <div class="header-center">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="globalSearch" placeholder="Search Employee, Department, Document...">
+                        <span class="search-shortcut">Ctrl+K</span>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="header-icon" title="Create New">
+                        <i class="fa-solid fa-plus-circle"></i>
+                    </div>
+                    <div class="header-icon" title="Notifications">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge">7</span>
+                    </div>
+                    <div class="header-icon" title="Tasks">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="header-icon" title="Messages">
+                        <i class="fa-regular fa-comment-dots"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- DASHBOARD CONTENT -->
+            <div class="dashboard-banner">
+                <div class="banner-content">
+                    <h1><span id="dashGreeting">Good Morning,</span> <span id="dashUserName">HR Manager</span> 👋</h1>
+                    <p class="text-gray">Here is what's happening today in your organization.</p>
+                    
+                    <div class="banner-stats">
+                        <div class="banner-stat">
+                            <i class="fa-solid fa-user-plus"></i> 4 New Employees
+                        </div>
+                        <div class="banner-stat">
+                            <i class="fa-solid fa-calendar-minus"></i> 3 Leave Requests
+                        </div>
+                        <div class="banner-stat">
+                            <i class="fa-solid fa-cake-candles"></i> 2 Birthdays
+                        </div>
+                        <div class="banner-stat">
+                            <i class="fa-solid fa-arrow-up-right-dots"></i> 1 Promotion Due
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card glass" onclick="window.location.href='employees.html'">
+                    <div class="kpi-top">
+                        <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                        <span class="badge badge-primary">Live</span>
+                    </div>
+                    <div class="kpi-title">Total Employees</div>
+                    <div class="kpi-value" id="statTotalEmp">...</div>
+                    <div class="kpi-bottom">
+                        <span>View Directory</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass" onclick="window.location.href='leaves.html'">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--success-green); background:rgba(34,197,94,0.1)"><i class="fa-solid fa-calendar-minus"></i></div>
+                    </div>
+                    <div class="kpi-title">Pending Leaves</div>
+                    <div class="kpi-value" id="statPendingLeaves">...</div>
+                    <div class="kpi-bottom">
+                        <span>Review Requests</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--warning-orange); background:rgba(245,158,11,0.1)"><i class="fa-solid fa-file-signature"></i></div>
+                    </div>
+                    <div class="kpi-title">Documents Pending</div>
+                    <div class="kpi-value">34</div>
+                    <div class="kpi-bottom">
+                        <span>Review Now</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="kpi-card glass">
+                    <div class="kpi-top">
+                        <div class="kpi-icon" style="color:var(--dark-navy); background:rgba(15,23,42,0.1)"><i class="fa-solid fa-laptop"></i></div>
+                    </div>
+                    <div class="kpi-title">Assets Assigned</div>
+                    <div class="kpi-value">845</div>
+                    <div class="kpi-bottom">
+                        <span>View Details</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Horizontal Scroll -->
+            <div class="dept-scroll-wrapper">
+                <div class="dept-scroll-header">
+                    <h3>Departments <span id="deptTotalBadge" style="font-size:0.8rem; background:rgba(37,99,235,0.1); color:var(--primary-blue); padding:2px 10px; border-radius:12px; margin-left:8px; font-weight:500; display:none;"></span></h3>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-outline" id="deptRetryBtn" style="display:none;" onclick="loadDashboardDepartments()"><i class="fa-solid fa-rotate-right"></i> Retry</button>
+                        <button class="btn btn-outline" onclick="window.location.href='departments.html'">View All</button>
+                    </div>
+                </div>
+                <div class="dept-scroll" id="dashDeptScroll">
+                    <!-- Skeleton loaders -->
+                    <div class="dept-skeleton"></div>
+                    <div class="dept-skeleton"></div>
+                    <div class="dept-skeleton"></div>
+                    <div class="dept-skeleton"></div>
+                </div>
+            </div>
+
+            <!-- Recent Employees Table -->
+            <div class="table-container" style="margin-bottom:40px; overflow-y:auto; max-height:400px;">
+                <div class="table-header">
+                    <h3>Recent Joiners</h3>
+                    <button class="btn btn-primary" onclick="window.location.href='employees.html'">Full Directory</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Joining Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashEmpTableBody">
+                        <tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-gray);"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading live data...</td></tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Rahul+Sharma&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500; color: var(--dark-navy)">Rahul Sharma</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Development</td>
+                            <td>Frontend Dev</td>
+                            <td>12 June 2026</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="action-btn" title="View"><i class="fa-solid fa-eye"></i></button>
+                                    <button class="action-btn" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Priya+Patel&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500; color: var(--dark-navy)">Priya Patel</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>HR</td>
+                            <td>HR Executive</td>
+                            <td>15 June 2026</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="action-btn"><i class="fa-solid fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-cell">
+                                    <img src="https://ui-avatars.com/api/?name=Amit+Verma&background=random" class="employee-avatar">
+                                    <div>
+                                        <div style="font-weight: 500; color: var(--dark-navy)">Amit Verma</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-gray)">EMP003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Sales</td>
+                            <td>Sales Manager</td>
+                            <td>18 June 2026</td>
+                            <td><span class="badge badge-warning">Notice Period</span></td>
+                            <td>
+                                <div class="row-actions">
+                                    <button class="action-btn"><i class="fa-solid fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fa-solid fa-pen"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status">
+                    <i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0 | Last Backup: 02:00 AM
+                </div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/hr-api.js"></script>
+    <script>
+
+    // Department icons map
+    const DEPT_ICONS = [
+        'fa-sitemap', 'fa-bullhorn', 'fa-chart-line', 'fa-headset',
+        'fa-code', 'fa-coins', 'fa-briefcase', 'fa-users-gear',
+        'fa-truck', 'fa-flask', 'fa-shield-halved', 'fa-building'
+    ];
+
+    // Department color palettes
+    const DEPT_COLORS = [
+        { bg: 'rgba(37,99,235,0.08)',  icon: '#2563eb' },
+        { bg: 'rgba(16,185,129,0.08)', icon: '#10b981' },
+        { bg: 'rgba(245,158,11,0.08)', icon: '#f59e0b' },
+        { bg: 'rgba(139,92,246,0.08)', icon: '#8b5cf6' },
+        { bg: 'rgba(239,68,68,0.08)',  icon: '#ef4444' },
+        { bg: 'rgba(20,184,166,0.08)', icon: '#14b8a6' },
+        { bg: 'rgba(249,115,22,0.08)', icon: '#f97316' },
+        { bg: 'rgba(99,102,241,0.08)', icon: '#6366f1' },
+    ];
+
+    async function loadDashboardDepartments(allEmployees = []) {
+        const deptScroll = document.getElementById('dashDeptScroll');
+        const retryBtn   = document.getElementById('deptRetryBtn');
+        const totalBadge = document.getElementById('deptTotalBadge');
+        if (!deptScroll) return;
+
+        // Show skeletons while loading
+        deptScroll.innerHTML = Array(4).fill('<div class="dept-skeleton"></div>').join('');
+        if (retryBtn) retryBtn.style.display = 'none';
+        if (totalBadge) totalBadge.style.display = 'none';
+
+        try {
+            const token = localStorage.getItem('token') || localStorage.getItem('jmkc_token') || '';
+            if (!token) {
+                deptScroll.innerHTML = `
+                    <div class="dept-error-box">
+                        <i class="fa-solid fa-lock" style="font-size:1.5rem;"></i>
+                        <div>Session expired. Please <a href="/login" style="color:var(--primary-blue);">login again</a>.</div>
+                    </div>`;
+                return;
+            }
+
+            const deptRes = await HR_API.getDepartments();
+            const depts = deptRes.data || deptRes || [];
+
+            if (depts.length === 0) {
+                deptScroll.innerHTML = `
+                    <div class="dept-empty-box">
+                        <i class="fa-solid fa-building-circle-xmark" style="font-size:2rem; color:var(--border-gray);"></i>
+                        <div style="font-weight:600;">No Departments Yet</div>
+                        <div style="font-size:0.85rem;">Admin can create departments from the settings.</div>
+                        <button class="btn btn-primary" style="margin-top:6px;" onclick="window.location.href='departments.html'">
+                            <i class="fa-solid fa-plus"></i> Add Department
+                        </button>
+                    </div>`;
+                return;
+            }
+
+            // Show total badge
+            if (totalBadge) {
+                totalBadge.textContent = depts.length + ' Total';
+                totalBadge.style.display = 'inline-block';
+            }
+
+            deptScroll.innerHTML = depts.map((d, i) => {
+                const icon  = DEPT_ICONS[i % DEPT_ICONS.length];
+                const color = DEPT_COLORS[i % DEPT_COLORS.length];
+                const name  = d.name  || d.code || 'Department';
+                const code  = d.code  || '';
+                const status = d.status || 'ACTIVE';
+
+                // Live employee count from allEmployees array OR from API's enriched count
+                const empCount = d.employeeCount != null
+                    ? d.employeeCount
+                    : allEmployees.filter(emp =>
+                        (emp.department && emp.department._id === d._id) ||
+                        (emp.department && emp.department.name === name) ||
+                        (emp.department === name)
+                    ).length;
+
+                return `
+                <div class="dept-card" onclick="window.location.href='employees.html?department=${encodeURIComponent(name)}'" title="${name} — ${empCount} employees">
+                    <div style="width:44px; height:44px; border-radius:12px; background:${color.bg}; display:flex; align-items:center; justify-content:center; margin: 0 auto 10px;">
+                        <i class="fa-solid ${icon}" style="font-size:1.3rem; color:${color.icon};"></i>
+                    </div>
+                    <div class="dept-name">${name}</div>
+                    <div class="dept-count">${empCount} Employee${empCount !== 1 ? 's' : ''}</div>
+                    ${code ? `<div class="dept-badge">${code}</div>` : ''}
+                    ${status === 'INACTIVE' ? '<div style="font-size:0.7rem; color:#ef4444; margin-top:4px;"><i class="fa-solid fa-circle-pause"></i> Inactive</div>' : ''}
+                </div>`;
+            }).join('');
+
+        } catch (err) {
+            console.error('[Dashboard] Departments load failed:', err.message);
+            deptScroll.innerHTML = `
+                <div class="dept-error-box">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size:1.5rem;"></i>
+                    <div><strong>Failed to load departments</strong></div>
+                    <div style="font-size:0.82rem; color:var(--text-gray);">${err.message || 'Server error'}</div>
+                </div>`;
+            if (retryBtn) retryBtn.style.display = 'inline-flex';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // 1. Personalized greeting
+        const user = HR_API.getUser();
+        const greetEl     = document.getElementById('dashGreeting');
+        const greetNameEl = document.getElementById('dashUserName');
+        if (greetEl) {
+            const hour = new Date().getHours();
+            greetEl.textContent = (hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening') + ',';
+        }
+        if (greetNameEl) {
+            greetNameEl.textContent = user?.name || 'HR Manager';
+        }
+
+        let allEmployees = [];
+
+        // 2. Live stat cards
+        try {
+            const stats = await HR_API.getDashboardStats();
+            const empCountEl   = document.getElementById('statTotalEmp');
+            const leaveCountEl = document.getElementById('statPendingLeaves');
+            if (empCountEl)   empCountEl.textContent   = stats.employees;
+            if (leaveCountEl) leaveCountEl.textContent = stats.pendingLeaves;
+
+            const res = await HR_API.getEmployees();
+            allEmployees = res.data || res.users || res || [];
+        } catch (e) {
+            console.warn('[Dashboard] Stats/Employees error:', e.message);
+        }
+
+        // 3. Load departments dynamically
+        await loadDashboardDepartments(allEmployees);
+
+        // 4. Recent Joiners table
+        const tbody = document.getElementById('dashEmpTableBody');
+        if (tbody) {
+            const recent = allEmployees
+                .slice()
+                .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+                .slice(0, 5);
+
+            if (recent.length > 0) {
+                tbody.innerHTML = recent.map(emp => `
+                    <tr>
+                        <td>
+                            <div class="employee-cell">
+                                <img src="${HR_API.getAvatarUrl(emp.name)}" class="employee-avatar">
+                                <div>
+                                    <div style="font-weight:500; color:var(--dark-navy)">${emp.name || '--'}</div>
+                                    <div style="font-size:0.8rem; color:var(--text-gray)">${emp.employeeId || emp._id?.slice(-6)?.toUpperCase() || '--'}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${emp.department?.name || emp.department || '--'}</td>
+                        <td>${emp.designation || emp.role || '--'}</td>
+                        <td>${HR_API.formatDate(emp.joiningDate || emp.createdAt)}</td>
+                        <td><span class="badge ${emp.isActive !== false ? 'badge-success' : 'badge-danger'}">${emp.isActive !== false ? 'Active' : 'Inactive'}</span></td>
+                        <td><div class="row-actions">
+                            <button class="action-btn" onclick="window.location.href='employees.html'"><i class="fa-solid fa-eye"></i></button>
+                        </div></td>
+                    </tr>`).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-gray);">No recent joiners found.</td></tr>';
+            }
+        }
+    });
+    </script>
+</body>
+</html>

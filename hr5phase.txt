@@ -1,0 +1,25204 @@
+हो 😄. जर खरंच development करायचं असेल तर HR Module phase-wise आणि page-wise design करायला पाहिजे. फक्त pages ची list नको, तर Header, Footer, Cards, Table, Drawer, Hover, Redirect, Modal सगळं आधी design केलं पाहिजे.
+
+मी **PHASE-1 (Core HR Foundation)** enterprise-level detailed layout देतो.
+
+---
+
+# 🔥 PHASE-1 : CORE HR FOUNDATION
+
+Goal :
+
+```text
+Admin User Create
+        ↓
+Employee Directory
+        ↓
+Employee Profile
+        ↓
+Documents
+        ↓
+Assets
+```
+
+---
+
+# Main Layout (All Pages)
+
+```text
+┌──────────────── Header ─────────────────────────────┐
+│ Logo | HR Module | Breadcrumb | Search | Bell | Profile |
+├──────────── Sidebar ────────┬───────────────────────┤
+│ Dashboard                   │                       │
+│ People ▼                    │ Main Content          │
+│ Workforce ▼                 │                       │
+│ Talent ▼                    │                       │
+│ Operations ▼                │                       │
+│ Payroll ▼                   │                       │
+│ Analytics ▼                 │                       │
+│ Settings ▼                  │                       │
+└─────────────────────────────┴───────────────────────┘
+                    Footer
+```
+
+---
+
+# Header (Fixed)
+
+Height
+
+```text
+70px
+```
+
+Left Side
+
+```text
+JMKC CRM Logo
+
+HR Module
+
+Breadcrumb
+
+Dashboard > Employees
+```
+
+Center
+
+Global Search
+
+Placeholder
+
+```text
+Search Employee, Department, Document...
+```
+
+Shortcut
+
+```text
+Ctrl + K
+```
+
+Right Side
+
+Icons
+
+```text
+Create +
+
+Bell
+
+Task
+
+Chat
+
+Profile
+```
+
+---
+
+## Hover Bell
+
+Badge
+
+```text
+7
+```
+
+Click Bell
+
+Right Drawer
+
+```text
+Pending Leave Requests
+
+2 Birthdays
+
+1 Promotion Due
+
+3 New Joiners
+```
+
+Click notification
+
+↓
+
+Redirect related page.
+
+---
+
+# Sidebar
+
+Default
+
+Collapsed
+
+Only Icons
+
+Hover Sidebar
+
+↓
+
+Expand Smoothly
+
+---
+
+People
+
+```text
+▼ People
+```
+
+Expand
+
+```text
+Employee Directory
+
+Departments
+
+Designations
+
+Documents
+
+Assets
+```
+
+Active menu
+
+Blue background
+
+Blue border-left
+
+---
+
+# Footer
+
+Fixed
+
+```text
+© 2026 JMKC Group India
+
+Version 1.0
+
+Server Status 🟢
+
+Last Backup 02:00 AM
+
+Created By Punam
+```
+
+---
+
+# PAGE-1 Dashboard
+
+Route
+
+```text
+/hr/dashboard
+```
+
+---
+
+Top Banner
+
+```text
+Good Morning HR Manager 👋
+
+Today
+
+4 New Employees
+
+3 Leave Requests
+
+2 Birthdays
+
+1 Promotion Due
+```
+
+Background
+
+Light blue gradient
+
+---
+
+# KPI Cards
+
+Grid
+
+2 × 4
+
+Cards
+
+```text
+Total Employees
+
+Active Employees
+
+Inactive Employees
+
+New Joiners
+
+Documents Pending
+
+Assets Assigned
+
+Departments
+
+Managers
+```
+
+---
+
+Card Design
+
+Top
+
+Icon
+
+Center
+
+Count
+
+Bottom
+
+```text
+View Details →
+```
+
+---
+
+Hover Card
+
+```text
+scale(1.03)
+
+shadow-xl
+```
+
+Card lifts up.
+
+---
+
+Total Employees Card Click
+
+Redirect
+
+```text
+/hr/employees
+```
+
+---
+
+# Department Cards
+
+Horizontal Scroll
+
+Cards
+
+```text
+HR
+
+Marketing
+
+Sales
+
+Calling
+
+Development
+
+Finance
+
+Support
+```
+
+Hover
+
+Card color changes
+
+Employee count visible
+
+```text
+35 Employees
+```
+
+Click Sales
+
+Redirect
+
+```text
+/hr/employees?department=sales
+```
+
+---
+
+# Recent Employees Table
+
+Columns
+
+```text
+Photo
+
+Name
+
+Department
+
+Designation
+
+Joining Date
+
+Status
+```
+
+Hover Row
+
+Action buttons appear
+
+```text
+View
+
+Edit
+```
+
+---
+
+# PAGE-2 Employee Directory
+
+Route
+
+```text
+/hr/employees
+```
+
+---
+
+Top Header
+
+Left
+
+```text
+Employee Directory
+```
+
+Right
+
+Buttons
+
+```text
++ Add Employee
+
+Import
+
+Export Excel
+```
+
+---
+
+Filters
+
+```text
+Search
+
+Department
+
+Designation
+
+Status
+
+Location
+```
+
+---
+
+Table
+
+```text
+Photo
+
+Employee ID
+
+Name
+
+Department
+
+Designation
+
+Manager
+
+Joining Date
+
+Status
+
+Action
+```
+
+---
+
+Status Chips
+
+Green
+
+```text
+Active
+```
+
+Red
+
+```text
+Inactive
+```
+
+Yellow
+
+```text
+Notice Period
+```
+
+---
+
+Hover Row
+
+Buttons appear
+
+```text
+View
+
+Edit
+
+Delete
+```
+
+---
+
+Click Row
+
+NO Redirect
+
+Right Drawer Opens
+
+Animation
+
+```text
+slide-right
+```
+
+---
+
+# Employee Drawer
+
+Tabs
+
+```text
+Overview
+
+Employment
+
+Documents
+
+Assets
+
+Timeline
+```
+
+---
+
+Overview
+
+Left
+
+Photo
+
+Center
+
+```text
+Name
+
+Employee ID
+
+Department
+
+Designation
+
+Email
+
+Phone
+```
+
+Right
+
+Cards
+
+```text
+Attendance %
+
+Leaves
+
+Assets
+
+Documents
+```
+
+---
+
+Documents Tab
+
+Cards
+
+```text
+Aadhar.pdf
+
+PAN.pdf
+
+OfferLetter.pdf
+```
+
+Hover Document
+
+Icons
+
+```text
+Preview
+
+Download
+
+Delete
+```
+
+---
+
+Preview click
+
+Modal Opens
+
+PDF Viewer
+
+---
+
+Assets Tab
+
+Cards
+
+```text
+Laptop
+
+Mouse
+
+ID Card
+```
+
+Status
+
+```text
+Assigned
+```
+
+---
+
+Timeline Tab
+
+```text
+Joined Company
+
+Department Changed
+
+Promotion
+
+Warning
+
+Award
+```
+
+---
+
+Full Profile Button
+
+Redirect
+
+```text
+/hr/employees/EMP001
+```
+
+---
+
+# PAGE-3 Employee Full Profile
+
+Layout
+
+```text
+Left Sidebar
+
+Center
+
+Right Stats
+```
+
+---
+
+Left Card
+
+Photo
+
+Name
+
+Designation
+
+Department
+
+Manager
+
+Status
+
+---
+
+Center Tabs
+
+```text
+Overview
+
+Employment
+
+Documents
+
+Assets
+
+Timeline
+```
+
+---
+
+Right Side Cards
+
+```text
+Attendance %
+
+Leave Balance
+
+Performance Score
+
+Assigned Assets
+```
+
+---
+
+Hover Timeline Event
+
+Tooltip
+
+```text
+Date
+
+Changed By
+
+Comments
+```
+
+---
+
+# PAGE-4 Departments
+
+Route
+
+```text
+/hr/departments
+```
+
+Cards
+
+```text
+HR
+
+Marketing
+
+Sales
+
+Calling
+
+Finance
+
+Development
+```
+
+---
+
+Hover Card
+
+Employee Count visible
+
+```text
+15 Employees
+```
+
+---
+
+Click Department
+
+Redirect
+
+```text
+/hr/departments/marketing
+```
+
+---
+
+Department Page
+
+Top
+
+Department Info
+
+Middle
+
+Manager Card
+
+Bottom
+
+Employees Table
+
+---
+
+# PAGE-5 Designations
+
+Cards
+
+```text
+Intern
+
+Executive
+
+Senior Executive
+
+Lead
+
+Manager
+```
+
+Click
+
+↓
+
+Employees having that designation.
+
+---
+
+# PAGE-6 Documents
+
+Cards
+
+```text
+Aadhar
+
+PAN
+
+Offer Letter
+
+Certificates
+```
+
+Filters
+
+```text
+Pending
+
+Verified
+
+Rejected
+```
+
+---
+
+Hover Card
+
+```text
+Preview
+
+Download
+
+Verify
+```
+
+---
+
+# PAGE-7 Assets
+
+Cards
+
+```text
+Laptop
+
+Monitor
+
+Mouse
+
+Keyboard
+
+ID Card
+```
+
+Status
+
+```text
+Available
+
+Assigned
+
+Damaged
+```
+
+---
+
+Hover Card
+
+```text
+Assign
+
+Return
+
+Replace
+```
+
+---
+
+# Create (+)
+
+Header
+
+Click +
+
+Dropdown
+
+```text
+Add Employee
+
+Assign Asset
+
+Upload Document
+
+Generate Report
+```
+
+---
+
+Add Employee
+
+3 Step Form
+
+### Step-1
+
+Personal Details
+
+```text
+Name
+
+Email
+
+Phone
+
+Gender
+```
+
+↓
+
+Next
+
+---
+
+### Step-2
+
+Employment
+
+```text
+Department
+
+Designation
+
+Manager
+
+Joining Date
+```
+
+↓
+
+Next
+
+---
+
+### Step-3
+
+Documents
+
+Upload
+
+```text
+Aadhar
+
+PAN
+
+Photo
+```
+
+↓
+
+Submit
+
+---
+
+Success Animation
+
+Toast
+
+```text
+Employee Created Successfully
+```
+
+↓
+
+Redirect
+
+```text
+/hr/employees
+```
+
+---
+
+# UI Rules
+
+### Cards
+
+```text
+Rounded 20px
+
+Glassmorphism
+
+Shadow
+
+Hover Scale
+```
+
+### Tables
+
+```text
+Search
+
+Filter
+
+Sort
+
+Pagination
+
+Export
+```
+
+### Drawer
+
+Used for
+
+```text
+View Employee
+
+Edit Employee
+
+Documents
+
+Assets
+```
+
+### Modals
+
+Used for
+
+```text
+Delete
+
+Verify
+
+Assign Asset
+```
+
+### Notifications
+
+Top Right
+
+```text
+Employee Created
+
+Document Verified
+
+Asset Assigned
+```
+
+---
+
+हा पूर्ण **PHASE-1 Core HR Foundation** झाला.
+
+यानंतर **PHASE-2 (Attendance + Leave + Shift + Holiday + ESS)** सुरू करायचा, जो HR चा सर्वात important phase आहे. तो यापेक्षा अजून detailed page-by-page बनवता येईल.
+. जर Phase-1 पूर्ण enterprise-level झाला असेल, तर **Phase-2 (Workforce Management)** चा final flow असा ठेव. हा flow Darwinbox + Keka + BambooHR + Zoho People style आहे आणि सर्व data realtime API/WebSocket/SSE मुळे refresh न करता update होईल.
+
+---
+
+# 🔥 PHASE-2 : WORKFORCE MANAGEMENT
+
+```text
+Attendance
+     ↓
+Attendance Logs
+     ↓
+Regularization
+     ↓
+Leave Management
+     ↓
+Shift Management
+     ↓
+Holiday Calendar
+     ↓
+ESS Requests
+     ↓
+Overtime
+     ↓
+Comp-Off
+     ↓
+Attendance Analytics
+     ↓
+Calendar Center
+     ↓
+Notifications
+```
+
+---
+
+# Layout (Same as Phase-1)
+
+```text
+Header (Fixed)
+
+Logo | Breadcrumb | Search | Bell | Task | Chat | Profile
+
+------------------------------------------------------
+
+Sidebar
+
+Dashboard
+
+People ▼
+
+Workforce ▼
+
+Talent ▼
+
+Operations ▼
+
+Analytics ▼
+
+Settings ▼
+
+------------------------------------------------------
+
+Main Content
+
+------------------------------------------------------
+
+Footer (Fixed)
+```
+
+---
+
+# Workforce Sidebar
+
+Hover Workforce
+
+Smooth Expand Animation
+
+```text
+Attendance
+
+Leaves
+
+Shift Management
+
+Holiday Calendar
+
+ESS Requests
+
+Overtime
+
+Comp-Off
+
+Attendance Analytics
+
+Calendar Center
+
+Attendance Policies
+```
+
+Blue Active Border
+
+Glassmorphism
+
+---
+
+# PAGE-1 Attendance Dashboard
+
+Route
+
+```text
+/hr/attendance
+```
+
+---
+
+## Top Banner
+
+Gradient Background
+
+```text
+Good Morning HR 👋
+
+Today's Attendance Summary
+
+Present : 125
+
+Absent : 12
+
+Late : 7
+
+WFH : 18
+```
+
+Real-time Updates
+
+Without Refresh
+
+Count Automatically Updates
+
+---
+
+# KPI Cards
+
+2×2 Grid
+
+### Present
+
+Green Card
+
+Icon
+
+People icon
+
+Center
+
+```text
+125 Employees
+```
+
+Bottom
+
+```text
+View Details →
+```
+
+Hover
+
+Scale
+
+Shadow
+
+Card Lift
+
+---
+
+Click Present Card
+
+Redirect
+
+```text
+/hr/attendance?status=present
+```
+
+Filtered Table Opens
+
+---
+
+# Attendance Table
+
+Columns
+
+```text
+Photo
+
+Employee
+
+Department
+
+Check In
+
+Check Out
+
+Hours
+
+Status
+
+Actions
+```
+
+Status Chips
+
+```text
+Present
+
+Late
+
+Absent
+
+WFH
+```
+
+---
+
+Hover Row
+
+Buttons Appear
+
+```text
+View Logs
+
+Regularize
+
+Edit
+```
+
+---
+
+# View Logs
+
+No Page Redirect
+
+Right Drawer Opens
+
+Animation
+
+Slide Right
+
+---
+
+Tabs
+
+```text
+Today's Logs
+
+Monthly Logs
+
+Location
+
+Device
+
+Timeline
+```
+
+---
+
+Location Tab
+
+Shows
+
+```text
+Latitude
+
+Longitude
+
+Address
+
+Map
+```
+
+Hover
+
+```text
+View Map
+```
+
+Click
+
+Map Modal Opens
+
+---
+
+Timeline Tab
+
+Hover Event
+
+Tooltip
+
+```text
+Updated By
+
+Date
+
+Reason
+```
+
+---
+
+Full Attendance Profile
+
+Button
+
+↓
+
+Redirect
+
+```text
+/hr/attendance/EMP001
+```
+
+---
+
+# Regularize Button
+
+Popup Modal
+
+```text
+Date
+
+Reason
+
+Remarks
+```
+
+Buttons
+
+```text
+Cancel
+
+Submit
+```
+
+Toast
+
+```text
+Attendance Updated Successfully
+```
+
+Table Updates Automatically
+
+No Refresh
+
+---
+
+# PAGE-2 Leave Management
+
+Route
+
+```text
+/hr/leaves
+```
+
+---
+
+Top Cards
+
+```text
+Pending
+
+Approved
+
+Rejected
+
+Cancelled
+```
+
+Color Cards
+
+Yellow
+
+Green
+
+Red
+
+Gray
+
+---
+
+Hover Card
+
+Shows
+
+```text
+View Details →
+```
+
+Click Pending
+
+↓
+
+Redirect
+
+```text
+/hr/leaves?status=pending
+```
+
+---
+
+Table
+
+```text
+Photo
+
+Employee
+
+Leave Type
+
+From
+
+To
+
+Days
+
+Status
+```
+
+---
+
+Hover Row
+
+Buttons
+
+```text
+Approve
+
+Reject
+
+Details
+```
+
+---
+
+Details
+
+Drawer Opens
+
+Tabs
+
+```text
+Overview
+
+History
+
+Comments
+
+Timeline
+```
+
+---
+
+Timeline
+
+```text
+Submitted
+
+Manager Approved
+
+HR Approved
+
+Completed
+```
+
+---
+
+Approve
+
+Popup
+
+```text
+Comment
+
+Notify Employee ✓
+```
+
+Approve
+
+↓
+
+Toast
+
+```text
+Leave Approved Successfully
+```
+
+↓
+
+Bell Notification
+
+↓
+
+Mail
+
+↓
+
+WhatsApp
+
+↓
+
+Employee App Updated
+
+Without Refresh
+
+---
+
+# Calendar View
+
+Toggle
+
+```text
+Table View
+
+Calendar View
+```
+
+Calendar Shows
+
+```text
+Leaves
+
+Holidays
+
+Birthdays
+```
+
+Hover Date
+
+Tooltip
+
+```text
+Employee
+
+Leave Type
+```
+
+---
+
+# PAGE-3 Shift Management
+
+Route
+
+```text
+/hr/shifts
+```
+
+Cards
+
+```text
+Morning Shift
+
+Evening Shift
+
+Night Shift
+
+Rotational Shift
+```
+
+Hover
+
+```text
+Employees : 18
+```
+
+---
+
+Click Morning Shift
+
+Redirect
+
+```text
+/hr/shifts/morning
+```
+
+---
+
+Shift Details
+
+Cards
+
+```text
+Employees
+
+Late Count
+
+Average Hours
+```
+
+Table
+
+```text
+Employee
+
+Department
+
+Timing
+
+Status
+```
+
+---
+
+Hover Row
+
+Buttons
+
+```text
+Change Shift
+
+View Logs
+```
+
+---
+
+Change Shift
+
+Popup
+
+```text
+Current Shift
+
+New Shift
+
+Effective Date
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Shift Updated Successfully
+```
+
+Realtime Table Update
+
+---
+
+# PAGE-4 Holiday Calendar
+
+Route
+
+```text
+/hr/holidays
+```
+
+Cards
+
+```text
+National Holidays
+
+Company Holidays
+
+Optional Holidays
+```
+
+Calendar View
+
+Month Wise
+
+---
+
+Hover Holiday
+
+Tooltip
+
+```text
+Holiday Name
+
+Date
+
+Departments
+```
+
+---
+
+Click Holiday
+
+Drawer Opens
+
+```text
+Description
+
+Notes
+
+Applicable Departments
+```
+
+---
+
+* Add Holiday
+
+Popup
+
+```text
+Holiday Name
+
+Date
+
+Type
+
+Departments
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Holiday Added Successfully
+```
+
+Calendar Updates Automatically
+
+---
+
+# PAGE-5 ESS Requests
+
+Route
+
+```text
+/hr/ess
+```
+
+Cards
+
+```text
+Open
+
+Approved
+
+Rejected
+
+Pending
+```
+
+---
+
+Table
+
+```text
+Employee
+
+Request Type
+
+Priority
+
+Status
+```
+
+Request Types
+
+```text
+Attendance Correction
+
+Leave Cancellation
+
+Asset Request
+
+Profile Update
+
+Document Update
+
+Shift Change
+```
+
+---
+
+Hover Row
+
+Buttons
+
+```text
+Approve
+
+Reject
+
+View
+```
+
+---
+
+View
+
+Drawer Opens
+
+Tabs
+
+```text
+Overview
+
+Comments
+
+History
+
+Attachments
+```
+
+---
+
+Approve
+
+Popup
+
+```text
+Remarks
+
+Notify Employee ✓
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Request Approved Successfully
+```
+
+Realtime Status Update
+
+---
+
+# Overtime Module
+
+Route
+
+```text
+/hr/overtime
+```
+
+Cards
+
+```text
+Pending
+
+Approved
+
+Paid
+```
+
+Hover Row
+
+```text
+Approve
+
+Reject
+
+View
+```
+
+Approve
+
+↓
+
+Payroll Updated Automatically
+
+---
+
+# Comp-Off Module
+
+Route
+
+```text
+/hr/compoff
+```
+
+Cards
+
+```text
+Available
+
+Used
+
+Expired
+```
+
+Assign Comp-Off
+
+Popup
+
+```text
+Date
+
+Reason
+```
+
+Save
+
+↓
+
+Balance Updated
+
+---
+
+# Attendance Analytics
+
+Route
+
+```text
+/hr/attendance/analytics
+```
+
+Charts
+
+```text
+Present %
+
+Late %
+
+Absent %
+
+Department Wise Attendance
+```
+
+Hover Graph
+
+Tooltip
+
+```text
+Count
+
+Percentage
+```
+
+Click Graph
+
+↓
+
+Detailed Report
+
+↓
+
+Export PDF
+
+---
+
+# Calendar Center
+
+Route
+
+```text
+/hr/calendar
+```
+
+Single Calendar Shows
+
+```text
+Leaves
+
+Birthdays
+
+Shifts
+
+WFH
+
+Meetings
+
+Holidays
+```
+
+Hover Event
+
+Tooltip
+
+```text
+Employee Name
+
+Type
+```
+
+Click Event
+
+↓
+
+Drawer Opens
+
+---
+
+# Bell Notification
+
+Bell Click
+
+Right Drawer
+
+Sections
+
+```text
+Leave Requests
+
+Attendance Corrections
+
+Shift Changes
+
+Holiday Updates
+
+Birthdays
+```
+
+Click Notification
+
+↓
+
+Direct Redirect
+
+```text
+/hr/leaves
+
+/hr/attendance
+
+/hr/shifts
+
+/hr/holidays
+```
+
+---
+
+# Ctrl + K Global Search
+
+Search
+
+```text
+Rahul Attendance
+
+Pending Leaves
+
+Morning Shift
+
+Diwali Holiday
+```
+
+Select Result
+
+Instant Redirect
+
+---
+
+# Create (+)
+
+Dropdown
+
+```text
+Regularize Attendance
+
+Add Holiday
+
+Create Shift
+
+Approve Leave
+
+ESS Request
+```
+
+---
+
+# Real-Time System (No Refresh)
+
+Using
+
+```text
+Socket.IO
+
+WebSocket
+
+Server Sent Events
+```
+
+Whenever
+
+```text
+Leave Approved
+
+Attendance Updated
+
+Holiday Added
+
+Shift Changed
+
+ESS Approved
+```
+
+Immediately
+
+```text
+Cards Update
+
+Tables Update
+
+Charts Update
+
+Bell Notification Update
+
+Employee Side Update
+```
+
+Without Page Refresh
+
+---
+
+# Final Enterprise Flow
+
+```text
+Attendance Dashboard
+        ↓
+Attendance Drawer
+        ↓
+Regularization
+        ↓
+Leave Management
+        ↓
+Multi-Level Approval
+        ↓
+Shift Management
+        ↓
+Holiday Calendar
+        ↓
+ESS Requests
+        ↓
+Overtime
+        ↓
+Comp-Off
+        ↓
+Analytics
+        ↓
+Calendar Center
+        ↓
+Notifications
+        ↓
+Real-Time Sync
+```
+
+हा flow complete झाला की तुझा Workforce Module Keka, Darwinbox आणि BambooHR सारखा enterprise-level दिसेल आणि मग Phase-3 (Performance + Goals + Promotions + Transfers + Training + Awards) सुरू करायला perfect foundation तयार होईल.
+हो 😄. Phase-3 ला आता पूर्ण Enterprise Talent & Performance Module बनवायचा असेल तर तो फक्त modules नसून complete navigation, redirects, drawers, hover actions, modals, notifications, analytics आणि realtime updates सह असायला पाहिजे.
+
+---
+
+# 🔥 PHASE-3 : TALENT & PERFORMANCE MANAGEMENT
+
+```text
+Dashboard
+      ↓
+Performance
+      ↓
+Goals & OKRs
+      ↓
+KPI / KRA
+      ↓
+Appraisal Cycle
+      ↓
+360 Feedback
+      ↓
+Training & Learning
+      ↓
+Certifications
+      ↓
+Skills Matrix
+      ↓
+Promotions
+      ↓
+Transfers
+      ↓
+Awards & Recognition
+      ↓
+Career Path
+      ↓
+Succession Planning
+      ↓
+Survey & Feedback
+      ↓
+Analytics
+```
+
+---
+
+# HEADER (Fixed)
+
+Top Header (70px)
+
+```text
+JMKC CRM Logo
+
+Breadcrumb
+
+Global Search (Ctrl+K)
+
+Bell
+
+Task
+
+Chat
+
+Create +
+
+Profile
+```
+
+Hover Bell
+
+Right Notification Drawer
+
+Sections
+
+```text
+Goal Assigned
+
+Review Pending
+
+Training Reminder
+
+Promotion Request
+
+Feedback Request
+```
+
+Click Notification
+
+Auto Redirect
+
+```text
+Goal Assigned
+↓
+/hr/goals
+
+Review Pending
+↓
+/hr/performance
+
+Training Reminder
+↓
+/hr/training
+```
+
+---
+
+# SIDEBAR
+
+Hover Talent
+
+Smooth Expand
+
+```text
+Performance
+
+Goals & OKR
+
+KPI / KRA
+
+Appraisals
+
+360 Feedback
+
+Training
+
+Certifications
+
+Skills Matrix
+
+Promotions
+
+Transfers
+
+Awards
+
+Career Path
+
+Succession
+
+Surveys
+
+Analytics
+```
+
+Active Menu
+
+```css
+Blue Border Left
+Background Blur
+```
+
+---
+
+# PAGE-1 Performance Dashboard
+
+Route
+
+```text
+/hr/performance
+```
+
+---
+
+Top Banner
+
+Gradient
+
+```text
+Good Morning HR 👋
+
+Active Reviews : 28
+
+Pending : 6
+
+Completed : 20
+
+Average Rating : 4.5
+```
+
+Realtime Updates
+
+Without Refresh
+
+---
+
+## KPI Cards
+
+```text
+Pending Reviews
+
+Completed Reviews
+
+Top Performers
+
+Average Rating
+```
+
+Hover Card
+
+Card Lift Animation
+
+Bottom
+
+```text
+View Details →
+```
+
+---
+
+Click Pending Reviews
+
+Redirect
+
+```text
+/hr/performance/reviews?status=pending
+```
+
+---
+
+# Review Table
+
+Columns
+
+```text
+Photo
+
+Employee
+
+Department
+
+Manager
+
+Rating
+
+Status
+
+Action
+```
+
+Hover Row
+
+Buttons
+
+```text
+Review
+
+History
+
+Goals
+```
+
+---
+
+Review
+
+No Redirect
+
+Right Drawer Opens
+
+Animation
+
+Slide Right
+
+Tabs
+
+```text
+Overview
+
+Competencies
+
+Goals
+
+Comments
+
+Timeline
+```
+
+---
+
+Manager Rating
+
+Popup Modal
+
+```text
+Technical Skills
+
+Communication
+
+Leadership
+
+Innovation
+
+Remarks
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Review Submitted Successfully
+```
+
+Table Updates Automatically
+
+---
+
+# PAGE-2 Goals & OKRs
+
+Route
+
+```text
+/hr/goals
+```
+
+Top Cards
+
+```text
+Personal Goals
+
+Team Goals
+
+Department Goals
+
+Company Goals
+```
+
+---
+
+Goal Card
+
+Contains
+
+```text
+Goal Name
+
+Progress Ring
+
+Due Date
+
+Priority
+```
+
+Hover
+
+Shows
+
+```text
+View Goal →
+```
+
+---
+
+Click Goal
+
+Drawer Opens
+
+Tabs
+
+```text
+Overview
+
+Milestones
+
+Tasks
+
+Comments
+
+Timeline
+```
+
+Progress Ring
+
+```text
+75%
+```
+
+Realtime Update
+
+Without Refresh
+
+---
+
+# PAGE-3 KPI / KRA
+
+Route
+
+```text
+/hr/kpi
+```
+
+Cards
+
+```text
+Sales KPI
+
+Marketing KPI
+
+Development KPI
+
+Support KPI
+```
+
+---
+
+Graph Hover
+
+Tooltip
+
+```text
+Target
+
+Achieved
+
+Remaining
+```
+
+---
+
+Click Graph
+
+Redirect
+
+```text
+/hr/kpi/details
+```
+
+---
+
+Employee KPI Table
+
+```text
+Employee
+
+Target
+
+Achieved
+
+Completion %
+
+Rating
+```
+
+Hover Row
+
+```text
+View
+
+Edit
+
+History
+```
+
+---
+
+# PAGE-4 Appraisal Cycle
+
+Route
+
+```text
+/hr/appraisals
+```
+
+Cards
+
+```text
+Draft
+
+In Progress
+
+Completed
+
+Published
+```
+
+---
+
+Flow Timeline
+
+```text
+Self Review
+      ↓
+Manager Review
+      ↓
+HR Review
+      ↓
+Final Rating
+```
+
+---
+
+Hover Employee
+
+Buttons
+
+```text
+Open Appraisal
+
+History
+
+Feedback
+```
+
+---
+
+Drawer Tabs
+
+```text
+Self Comments
+
+Manager Comments
+
+Ratings
+
+Timeline
+```
+
+---
+
+# PAGE-5 360 Feedback
+
+Route
+
+```text
+/hr/feedback
+```
+
+Cards
+
+```text
+Self
+
+Manager
+
+Peers
+
+Subordinates
+```
+
+---
+
+Radar Chart
+
+Hover Point
+
+Tooltip
+
+```text
+Leadership
+
+Communication
+
+Innovation
+
+Team Work
+```
+
+---
+
+Click Chart
+
+Drawer Opens
+
+```text
+Detailed Feedback
+
+Comments
+
+History
+```
+
+---
+
+# PAGE-6 Training & Learning
+
+Route
+
+```text
+/hr/training
+```
+
+Cards
+
+```text
+Upcoming
+
+Completed
+
+Mandatory
+
+Assigned
+```
+
+---
+
+Table
+
+```text
+Course
+
+Trainer
+
+Duration
+
+Status
+```
+
+Hover Row
+
+Buttons
+
+```text
+Enroll
+
+View Details
+
+Certificate
+```
+
+---
+
+Click Course
+
+Drawer Opens
+
+Tabs
+
+```text
+Overview
+
+Resources
+
+Attendance
+
+Feedback
+```
+
+---
+
+# PAGE-7 Certifications
+
+Route
+
+```text
+/hr/certifications
+```
+
+Cards
+
+```text
+AWS
+
+Java
+
+Python
+
+Salesforce
+```
+
+Status Chips
+
+```text
+Active
+
+Expired
+
+Renewal Due
+```
+
+Hover Card
+
+```text
+Renew Certificate
+```
+
+---
+
+# PAGE-8 Skills Matrix
+
+Route
+
+```text
+/hr/skills
+```
+
+Department Cards
+
+```text
+Development
+
+Sales
+
+Marketing
+
+HR
+```
+
+---
+
+Skill Table
+
+```text
+Java
+
+React
+
+Node
+
+SQL
+
+Leadership
+```
+
+Level
+
+```text
+Beginner
+
+Intermediate
+
+Expert
+```
+
+Hover Skill
+
+```text
+Edit Skill
+```
+
+---
+
+# PAGE-9 Promotions
+
+Route
+
+```text
+/hr/promotions
+```
+
+Cards
+
+```text
+Pending
+
+Approved
+
+Completed
+```
+
+Click Pending
+
+Redirect
+
+```text
+/hr/promotions/pending
+```
+
+---
+
+Table
+
+```text
+Employee
+
+Current Role
+
+New Role
+
+Salary Revision
+
+Status
+```
+
+Hover Row
+
+```text
+Approve
+
+Reject
+
+Details
+```
+
+---
+
+Approve
+
+Popup
+
+```text
+New Designation
+
+Increment %
+
+Effective Date
+
+Remarks
+```
+
+Toast
+
+```text
+Promotion Approved Successfully
+```
+
+---
+
+# PAGE-10 Transfers
+
+Route
+
+```text
+/hr/transfers
+```
+
+Cards
+
+```text
+Department
+
+Location
+
+Manager Change
+```
+
+Click Card
+
+Redirect
+
+```text
+/hr/transfers/location
+```
+
+---
+
+Drawer
+
+```text
+Current Department
+
+New Department
+
+Reason
+
+Effective Date
+```
+
+---
+
+# PAGE-11 Awards
+
+Route
+
+```text
+/hr/awards
+```
+
+Cards
+
+```text
+Employee Of Month
+
+Leadership Award
+
+Innovation Award
+
+Best Performer
+```
+
+Hover
+
+```text
+Nominate →
+```
+
+Click
+
+Popup
+
+```text
+Award
+
+Employee
+
+Reason
+```
+
+---
+
+# PAGE-12 Career Path
+
+Route
+
+```text
+/hr/career-path
+```
+
+Flow
+
+```text
+Intern
+ ↓
+Executive
+ ↓
+Senior Executive
+ ↓
+Lead
+ ↓
+Manager
+ ↓
+Senior Manager
+```
+
+Hover Role
+
+Shows
+
+```text
+Requirements →
+```
+
+Click
+
+Drawer
+
+```text
+Experience
+
+Skills
+
+Training
+
+Certifications
+
+Performance Score
+```
+
+---
+
+# PAGE-13 Succession Planning
+
+Route
+
+```text
+/hr/succession
+```
+
+Cards
+
+```text
+Critical Roles
+
+Ready Now
+
+Ready In 1 Year
+
+High Potential
+```
+
+---
+
+9 Box Matrix
+
+```text
+Performance vs Potential
+```
+
+Hover Cell
+
+```text
+5 Employees
+```
+
+Click Cell
+
+Redirect
+
+```text
+/hr/succession/high-potential
+```
+
+---
+
+# PAGE-14 Surveys
+
+Route
+
+```text
+/hr/surveys
+```
+
+Cards
+
+```text
+Engagement
+
+Responses
+
+Pending Surveys
+```
+
+Question Types
+
+```text
+Rating
+
+MCQ
+
+Text
+```
+
+Hover Survey
+
+```text
+Open Survey
+```
+
+---
+
+# PAGE-15 Analytics
+
+Route
+
+```text
+/hr/performance/analytics
+```
+
+Charts
+
+```text
+Performance Trend
+
+Department Rating
+
+Promotion Statistics
+
+Training Completion
+```
+
+Hover Chart
+
+Tooltip
+
+```text
+Count
+
+Percentage
+
+Average
+```
+
+Click Chart
+
+↓
+
+Detailed Report
+
+↓
+
+Export PDF
+
+---
+
+# Create (+)
+
+Dropdown
+
+```text
+Create Goal
+
+Start Review
+
+Assign Training
+
+Create Promotion
+
+Launch Survey
+```
+
+---
+
+# Footer
+
+Fixed
+
+```text
+Version 1.3
+
+Server Status 🟢
+
+Last Backup 02:00 AM
+
+© 2026 JMKC CRM
+
+Created By Punam
+```
+
+---
+
+# Realtime Engine
+
+Using
+
+```text
+Socket.IO
+WebSocket
+SSE
+```
+
+Whenever
+
+```text
+Goal Updated
+
+Review Submitted
+
+Promotion Approved
+
+Training Assigned
+
+Survey Published
+```
+
+Immediately
+
+```text
+Cards Update
+
+Tables Update
+
+Bell Notifications Update
+
+Charts Update
+
+Employee Dashboard Update
+```
+
+Without Page Refresh.
+
+---
+
+# FINAL PHASE-3 FLOW
+
+```text
+Performance Dashboard
+        ↓
+Goals & OKRs
+        ↓
+KPI / KRA
+        ↓
+Appraisal Cycle
+        ↓
+360 Feedback
+        ↓
+Training & Learning
+        ↓
+Certifications
+        ↓
+Skills Matrix
+        ↓
+Promotions
+        ↓
+Transfers
+        ↓
+Awards
+        ↓
+Career Path
+        ↓
+Succession Planning
+        ↓
+Surveys
+        ↓
+Analytics
+        ↓
+Realtime Sync
+```
+
+हे complete झाल्यावर तुझा HRMS जवळपास **Darwinbox + SAP SuccessFactors + Workday + Keka** level चा enterprise Talent Management Suite बनेल आणि मग Phase-4 मध्ये **Payroll + Claims + Travel + Expenses + Recruitment (ATS) + Onboarding + Exit Management** सुरू करता येईल.
+# 🔥 PHASE-4 → PART 4.1
+
+# Common Layout + Header + Sidebar + Footer + Theme
+
+*(Payroll + Recruitment + Employee Lifecycle साठी Common Structure)*
+
+हा Part सगळ्या Phase-4 pages साठी common राहील.
+
+---
+
+# 🎨 UI Theme
+
+### Colors
+
+```text
+Primary Blue      #2563EB
+Dark Navy         #0F172A
+Background        #F8FAFC
+White             #FFFFFF
+Success Green     #22C55E
+Warning Orange    #F59E0B
+Danger Red        #EF4444
+Border Gray       #E2E8F0
+Text Gray         #64748B
+```
+
+---
+
+# Fonts
+
+```text
+Headings → Poppins
+Body → Inter
+```
+
+---
+
+# Icons
+
+```text
+Lucide Icons
+HeroIcons
+FontAwesome
+```
+
+प्रत्येक card ला icon असावा म्हणजे लगेच समजेल.
+
+उदाहरण:
+
+```text
+Payroll → Wallet icon
+
+Claims → Receipt icon
+
+Recruitment → Users icon
+
+Interview → Calendar icon
+
+Onboarding → User Plus icon
+
+Exit → User Minus icon
+```
+
+---
+
+# Common Layout
+
+```text
+-------------------------------------------------
+Header
+-------------------------------------------------
+
+Sidebar | Main Content Area
+
+Sidebar | Cards
+Sidebar | Tables
+Sidebar | Charts
+
+-------------------------------------------------
+Footer
+-------------------------------------------------
+```
+
+---
+
+# HEADER
+
+Fixed Header (Top)
+
+Height
+
+```text
+70px
+```
+
+Background
+
+```text
+White
+```
+
+Shadow
+
+```text
+Light Shadow
+```
+
+---
+
+# Header Left
+
+### Logo
+
+```text
+JMKCGRPINDIA
+```
+
+Click Logo
+
+Redirect
+
+```text
+/dashboard
+```
+
+---
+
+### Breadcrumb
+
+Example
+
+```text
+Dashboard > Payroll > Payroll Dashboard
+```
+
+Click Payroll
+
+Redirect
+
+```text
+/hr/payroll
+```
+
+---
+
+# Header Center
+
+## Global Search
+
+Placeholder
+
+```text
+Search employees, payroll, claims...
+```
+
+Ctrl+K
+
+Search Modal Open
+
+Popup width
+
+```text
+700px
+```
+
+Results
+
+```text
+Employee
+
+Claims
+
+Payslips
+
+Jobs
+
+Candidates
+```
+
+Click Result
+
+Direct Redirect
+
+---
+
+# Header Right
+
+## Tasks Icon
+
+Hover
+
+Small Popup
+
+```text
+Pending Tasks
+
+Approve Claims
+
+Interview Today
+
+Pending Payroll
+```
+
+Click
+
+Redirect
+
+```text
+/tasks
+```
+
+---
+
+## Chat Icon
+
+Click
+
+Right Drawer
+
+Width
+
+```text
+400px
+```
+
+Contains
+
+```text
+HR Chat
+
+Managers
+
+Recent Messages
+```
+
+---
+
+## Bell Notification
+
+Hover
+
+Right Drawer Opens
+
+Width
+
+```text
+380px
+```
+
+Shows
+
+```text
+Payroll Pending
+
+Interview Scheduled
+
+Offer Accepted
+
+Claim Pending
+
+Asset Assigned
+```
+
+Notification Card Hover
+
+Shows
+
+```text
+Time
+
+Priority
+
+Department
+```
+
+Click Notification
+
+Redirect
+
+```text
+Payroll Pending
+↓
+/hr/payroll
+
+Interview Scheduled
+↓
+/hr/recruitment/interviews
+
+Claim Pending
+↓
+/hr/claims
+
+Offer Accepted
+↓
+/hr/onboarding
+```
+
+---
+
+## Create (+)
+
+Dropdown
+
+```text
+Add Employee
+
+Create Job
+
+Create Claim
+
+Schedule Interview
+
+Generate Payroll
+```
+
+Click
+
+Redirect respective pages.
+
+---
+
+## Profile
+
+Hover
+
+Dropdown
+
+```text
+My Profile
+
+Settings
+
+Theme
+
+Logout
+```
+
+---
+
+# LEFT SIDEBAR
+
+Width
+
+```text
+280px
+```
+
+Collapsed
+
+```text
+80px
+```
+
+Background
+
+```text
+Dark Navy
+```
+
+---
+
+# Sidebar Menu
+
+```text
+Dashboard
+
+People ▼
+
+Workforce ▼
+
+Talent ▼
+
+Payroll ▼
+
+Recruitment ▼
+
+Lifecycle ▼
+
+Analytics ▼
+
+Administration ▼
+```
+
+---
+
+# Hover Menu
+
+Blue Border
+
+```text
+border-left:4px solid #2563EB
+```
+
+Background
+
+```text
+rgba(255,255,255,.1)
+```
+
+Animation
+
+```text
+0.3s ease
+```
+
+---
+
+# Payroll Dropdown
+
+Click Payroll
+
+Expand Animation
+
+Shows
+
+```text
+Payroll Dashboard
+
+Processed Payroll
+
+Salary Structure
+
+Payslips
+
+Bonuses
+
+Arrears
+
+Loans
+
+Claims
+
+Travel
+
+Tax Center
+
+Benefits
+```
+
+Click Payroll Dashboard
+
+Redirect
+
+```text
+/hr/payroll
+```
+
+---
+
+# Recruitment Dropdown
+
+Shows
+
+```text
+Jobs
+
+Candidates
+
+Interviews
+
+Offers
+
+Feedback
+
+Talent Pool
+
+Background Verification
+```
+
+---
+
+# Lifecycle Dropdown
+
+Shows
+
+```text
+Onboarding
+
+Documents
+
+Assets
+
+Exit Management
+
+Knowledge Transfer
+
+Offboarding
+```
+
+---
+
+# Active Menu
+
+Current Page
+
+Blue Background
+
+```text
+Payroll Dashboard
+```
+
+Shows
+
+```text
+Blue Dot
+```
+
+---
+
+# MAIN CONTENT
+
+Padding
+
+```text
+20px
+```
+
+Cards Gap
+
+```text
+20px
+```
+
+Border Radius
+
+```text
+20px
+```
+
+Shadow
+
+```text
+Soft Shadow
+```
+
+---
+
+# Common Card Design
+
+Card Contains
+
+```text
+Icon
+
+Title
+
+Count
+
+Amount
+
+Mini Graph
+```
+
+Hover Card
+
+Animation
+
+```css
+transform:translateY(-5px)
+```
+
+Shadow becomes larger.
+
+---
+
+Hover Shows
+
+```text
+View Details →
+
+Last Updated
+
+Department Count
+```
+
+---
+
+Card Click
+
+Redirect
+
+```text
+Card
+↓
+Table Page
+↓
+Row Click
+↓
+Drawer
+↓
+Popup
+↓
+Save
+↓
+Toast
+↓
+Realtime Update
+```
+
+---
+
+# Common Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Status
+
+Date
+
+Actions
+```
+
+---
+
+Row Hover
+
+Buttons Appear
+
+```text
+View
+
+Edit
+
+Delete
+
+History
+```
+
+---
+
+Click View
+
+Right Drawer
+
+Width
+
+```text
+500px
+```
+
+Animation
+
+```text
+Slide Right
+```
+
+Tabs
+
+```text
+Overview
+
+History
+
+Comments
+
+Attachments
+
+Timeline
+```
+
+---
+
+# Popup
+
+Size
+
+```text
+600px
+```
+
+Background Blur
+
+```text
+Enabled
+```
+
+Fields
+
+```text
+Remarks
+
+Comments
+
+Attachment
+
+Confirm
+```
+
+Buttons
+
+```text
+Cancel
+
+Save
+```
+
+Save
+
+↓
+
+Popup closes
+
+↓
+
+Toast appears
+
+---
+
+# Toast Notification
+
+Top Right
+
+Green Color
+
+```text
+Updated Successfully
+```
+
+Auto Hide
+
+```text
+3 seconds
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+```
+
+Sidebar becomes
+
+```text
+Hamburger Menu
+```
+
+Tables become
+
+```text
+Scrollable
+```
+
+Drawers become
+
+```text
+Full Width
+```
+
+Popup width
+
+```text
+95%
+```
+
+---
+
+# Footer (All Pages)
+
+Always Visible
+
+```text
+------------------------------------------------
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+------------------------------------------------
+```
+
+---
+
+# Common Backend Flow
+
+```text
+HTML
+↓
+CSS
+↓
+JavaScript
+↓
+Express API
+↓
+Controller
+↓
+Service
+↓
+MongoDB
+↓
+Socket.IO
+↓
+Realtime Update
+```
+
+---
+
+# Role Flow
+
+```text
+Admin
+↓
+HR
+↓
+Manager
+↓
+Employee
+```
+
+Admin ने employee add केला की तो:
+
+```text
+Attendance
+Payroll
+Claims
+Recruitment
+Performance
+Assets
+Dashboard
+```
+
+सर्व modules मध्ये automatically दिसला पाहिजे.
+
+---
+
+# Common Animations
+
+```text
+Fade In
+
+Slide Up
+
+Scale
+
+Drawer Right
+
+Accordion Expand
+
+Hover Glow
+-----------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 → PART 4.2
+
+# PAYROLL DASHBOARD MODULE (Enterprise Level)
+
+Route
+
+```text
+/hr/payroll
+```
+
+हा Payroll Module HR, Finance Manager आणि Admin साठी असेल.
+
+---
+
+# Complete Flow
+
+```text
+Payroll Dashboard
+        ↓
+Processed Payroll
+        ↓
+Employee Salary Table
+        ↓
+View Salary Drawer
+        ↓
+Generate Payslip Popup
+        ↓
+Save
+        ↓
+Toast
+        ↓
+Socket.IO Realtime Update
+```
+
+---
+
+# Header
+
+Breadcrumb
+
+```text
+Dashboard > Payroll > Payroll Dashboard
+```
+
+Click Payroll
+
+Redirect
+
+```text
+/hr/payroll
+```
+
+---
+
+# Top Banner
+
+Height
+
+```text
+180px
+```
+
+Gradient
+
+```text
+Blue → Indigo
+```
+
+Contains
+
+### Payroll Month
+
+```text
+June 2026
+```
+
+### Processed
+
+```text
+128 Employees
+```
+
+### Pending
+
+```text
+8 Employees
+```
+
+### Total Payroll
+
+```text
+₹68,20,000
+```
+
+### Generate Payroll Button
+
+Blue Button
+
+Hover
+
+```text
+Generate June Payroll
+```
+
+Click
+
+Popup Opens
+
+---
+
+# Banner Popup
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Month
+
+Department
+
+Employee Type
+
+Notes
+```
+
+Buttons
+
+```text
+Cancel
+
+Generate Payroll
+```
+
+Generate Payroll
+
+↓
+
+POST API
+
+```javascript
+POST /api/payroll/generate
+```
+
+↓
+
+Toast
+
+```text
+Payroll Generated Successfully
+```
+
+↓
+
+Socket.IO
+
+↓
+
+Cards update automatically.
+
+---
+
+# KPI Cards Section
+
+4 Cards in Desktop
+
+2 Cards Tablet
+
+1 Card Mobile
+
+Gap
+
+```text
+20px
+```
+
+---
+
+# Card 1
+
+## Processed Payroll
+
+Icon
+
+```text
+Wallet Icon
+```
+
+Contains
+
+```text
+128 Employees
+
+₹65,20,000
+```
+
+Mini Chart
+
+Green Graph
+
+---
+
+Hover Card
+
+Shows
+
+```text
+Last Process Date
+
+Departments : 10
+
+View Details →
+```
+
+Animation
+
+```css
+transform:translateY(-5px)
+```
+
+---
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/processed
+```
+
+---
+
+# Card 2
+
+Pending Payroll
+
+Icon
+
+```text
+Clock Icon
+```
+
+Contains
+
+```text
+8 Employees
+```
+
+Hover
+
+Shows
+
+```text
+Employees Waiting
+
+Due Date
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/pending
+```
+
+---
+
+# Card 3
+
+Bonuses
+
+Icon
+
+```text
+Gift Icon
+```
+
+Contains
+
+```text
+₹1,20,000
+```
+
+Hover
+
+Shows
+
+```text
+Performance Bonus
+
+Festival Bonus
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/bonuses
+```
+
+---
+
+# Card 4
+
+Deductions
+
+Icon
+
+```text
+Receipt Icon
+```
+
+Contains
+
+```text
+₹45,000
+```
+
+Hover
+
+Shows
+
+```text
+PF
+
+Tax
+
+Loans
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/deductions
+```
+
+---
+
+# Charts Section
+
+Left Side
+
+### Monthly Payroll Trend
+
+Bar Chart
+
+Months
+
+```text
+Jan
+Feb
+Mar
+Apr
+May
+Jun
+```
+
+Hover Bar
+
+Shows
+
+```text
+Month
+
+Payroll Amount
+
+Employees
+```
+
+---
+
+Right Side
+
+Department Salary Distribution
+
+Pie Chart
+
+```text
+HR
+
+Marketing
+
+Sales
+
+Calling
+
+Development
+```
+
+Hover Pie
+
+Shows
+
+```text
+Department
+
+Employees
+
+Total Salary
+```
+
+---
+
+# Search Section
+
+Placeholder
+
+```text
+Search Employee...
+```
+
+Filters
+
+```text
+Department
+
+Designation
+
+Status
+
+Month
+```
+
+Search Button
+
+Blue
+
+Reset Button
+
+Gray
+
+---
+
+# Payroll Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Designation
+
+Net Salary
+
+PF
+
+Tax
+
+Status
+
+Actions
+```
+
+---
+
+Status Colors
+
+Processed
+
+Green Badge
+
+Pending
+
+Orange Badge
+
+Rejected
+
+Red Badge
+
+---
+
+Row Hover
+
+Action Buttons Appear
+
+```text
+View Salary
+
+Generate Payslip
+
+History
+
+Edit
+```
+
+---
+
+# View Salary
+
+Click
+
+Right Drawer Opens
+
+Width
+
+```text
+500px
+```
+
+Animation
+
+```text
+Slide From Right
+```
+
+Tabs
+
+```text
+Overview
+
+CTC
+
+Allowances
+
+Deductions
+
+Tax
+
+History
+```
+
+---
+
+## Overview Tab
+
+Contains
+
+```text
+Employee Photo
+
+Employee ID
+
+Department
+
+Designation
+
+Joining Date
+
+Manager
+```
+
+---
+
+## CTC Tab
+
+Shows
+
+```text
+Basic Salary
+
+HRA
+
+Special Allowance
+
+Gross Salary
+```
+
+---
+
+## Allowances Tab
+
+Shows
+
+```text
+Travel
+
+Medical
+
+Internet
+
+Food
+```
+
+---
+
+## Deductions Tab
+
+Shows
+
+```text
+PF
+
+Professional Tax
+
+Loans
+
+Advance
+```
+
+---
+
+## History Tab
+
+Shows
+
+Table
+
+```text
+Month
+
+Net Salary
+
+Status
+
+Download
+```
+
+---
+
+# Generate Payslip
+
+Click
+
+Center Popup Opens
+
+Width
+
+```text
+700px
+```
+
+Fields
+
+```text
+Month
+
+Remarks
+
+Email Employee
+
+Download PDF
+```
+
+Checkbox
+
+```text
+Send Email Automatically
+```
+
+Buttons
+
+```text
+Cancel
+
+Generate Payslip
+```
+
+---
+
+Generate Payslip
+
+↓
+
+API
+
+```javascript
+POST /api/payroll/payslip
+```
+
+↓
+
+Toast
+
+```text
+Payslip Generated Successfully
+```
+
+↓
+
+Socket.IO
+
+↓
+
+Employee Portal Updated
+
+↓
+
+Notification Sent
+
+---
+
+# History
+
+Click
+
+Drawer Opens
+
+Tabs
+
+```text
+Salary History
+
+Increment History
+
+Bonus History
+
+Comments
+```
+
+---
+
+# Edit Salary
+
+Click
+
+Popup Opens
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Basic Salary
+
+Allowances
+
+Tax
+
+Remarks
+```
+
+Buttons
+
+```text
+Cancel
+
+Update Salary
+```
+
+Save
+
+↓
+
+PUT API
+
+```javascript
+PUT /api/payroll/:employeeId
+```
+
+↓
+
+Toast
+
+```text
+Salary Updated Successfully
+```
+
+---
+
+# Export Buttons
+
+Top Right
+
+Buttons
+
+```text
+Excel
+
+CSV
+
+PDF
+```
+
+Click PDF
+
+↓
+
+Download Starts
+
+---
+
+# Notifications
+
+Bell Icon
+
+Shows
+
+```text
+Payroll Processed
+
+Salary Updated
+
+Payslip Generated
+
+Bonus Approved
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+```
+
+Charts become vertical.
+
+Sidebar becomes hamburger.
+
+Tables become horizontal scroll.
+
+Drawer width
+
+```text
+100%
+```
+
+Popup width
+
+```text
+95%
+```
+
+---
+
+# Backend APIs
+
+### Dashboard
+
+```javascript
+GET /api/payroll/dashboard
+```
+
+---
+
+### Employee Salary
+
+```javascript
+GET /api/payroll/:employeeId
+```
+
+---
+
+### Generate Payroll
+
+```javascript
+POST /api/payroll/generate
+```
+
+---
+
+### Generate Payslip
+
+```javascript
+POST /api/payroll/payslip
+```
+
+---
+
+### Update Salary
+
+```javascript
+PUT /api/payroll/:employeeId
+```
+
+---
+
+### Delete Payroll
+
+```javascript
+DELETE /api/payroll/:id
+```
+
+---
+
+# MongoDB Collections
+
+```text
+payrolls
+
+salaryStructures
+
+payslips
+
+bonuses
+
+deductions
+
+taxes
+
+notifications
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+payrollGenerated
+
+salaryUpdated
+
+payslipGenerated
+
+bonusApproved
+```
+
+---
+
+# Role Access
+
+```text
+Admin
+    ↓
+HR
+    ↓
+Finance Manager
+    ↓
+Employee (Read Only)
+```
+
+---
+
+# Footer
+
+```text
+-------------------------------------
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+--------------------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 → PART 4.3
+
+# PROCESSED PAYROLL PAGE
+
+Route
+
+```text
+/hr/payroll/processed
+```
+
+जेव्हा Payroll Dashboard वरील **Processed Payroll Card** वर click होईल तेव्हा user या page वर येईल.
+
+---
+
+# Complete Flow
+
+```text
+Payroll Dashboard
+        ↓
+Processed Payroll Card
+        ↓
+Processed Payroll Page
+        ↓
+Employee Table
+        ↓
+View Salary
+        ↓
+Salary Drawer
+        ↓
+History
+        ↓
+Download Payslip
+        ↓
+Toast
+        ↓
+Realtime Update
+```
+
+---
+
+# Page Header
+
+Breadcrumb
+
+```text
+Dashboard > Payroll > Processed Payroll
+```
+
+Right Side Buttons
+
+```text
+Export Excel
+
+Export CSV
+
+Export PDF
+```
+
+Hover Button
+
+Shows
+
+```text
+Last Export Date
+```
+
+---
+
+# Top Summary Cards
+
+### Card 1
+
+Processed Employees
+
+Icon
+
+```text
+Users Icon
+```
+
+Count
+
+```text
+128 Employees
+```
+
+Hover
+
+```text
+Last Processed :
+24 June 2026
+
+View Details →
+```
+
+---
+
+### Card 2
+
+Total Salary Paid
+
+Icon
+
+```text
+Wallet Icon
+```
+
+Amount
+
+```text
+₹68,20,000
+```
+
+Hover
+
+```text
+Departments : 10
+```
+
+---
+
+### Card 3
+
+Total Bonus Paid
+
+Icon
+
+```text
+Gift Icon
+```
+
+Amount
+
+```text
+₹1,20,000
+```
+
+Hover
+
+```text
+Festival Bonus
+
+Performance Bonus
+```
+
+---
+
+### Card 4
+
+Successful Transfers
+
+Icon
+
+```text
+Bank Icon
+```
+
+Count
+
+```text
+128 Transfers
+```
+
+Hover
+
+```text
+Bank Sync Completed
+```
+
+---
+
+# Filters Section
+
+Search Box
+
+```text
+Search Employee...
+```
+
+Dropdown Filters
+
+```text
+Department
+
+Designation
+
+Month
+
+Status
+```
+
+Date Filter
+
+```text
+From Date
+
+To Date
+```
+
+Buttons
+
+```text
+Search
+
+Reset
+```
+
+---
+
+# Employee Payroll Table
+
+Columns
+
+```text
+Employee Photo
+
+Employee Name
+
+Employee ID
+
+Department
+
+Designation
+
+Net Salary
+
+Status
+
+Payment Date
+
+Actions
+```
+
+Status Badge
+
+```text
+Processed → Green
+
+Pending → Orange
+
+Rejected → Red
+```
+
+---
+
+# Row Hover
+
+Background
+
+```text
+Light Blue
+```
+
+Action Buttons Appear
+
+```text
+View Salary
+
+Download Payslip
+
+History
+
+Comments
+```
+
+---
+
+# View Salary
+
+Click
+
+↓
+
+Right Drawer Opens
+
+Width
+
+```text
+500px
+```
+
+Animation
+
+```text
+Slide From Right
+```
+
+---
+
+# Drawer Tabs
+
+```text
+Overview
+
+CTC
+
+Allowances
+
+Deductions
+
+Tax
+
+History
+
+Comments
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Employee Photo
+
+Employee Name
+
+Department
+
+Manager
+
+Joining Date
+
+Current Salary
+```
+
+---
+
+## CTC Tab
+
+Shows
+
+```text
+Basic Salary
+
+HRA
+
+Special Allowance
+
+Gross Salary
+```
+
+---
+
+## Allowance Tab
+
+Shows
+
+```text
+Travel
+
+Medical
+
+Food
+
+Internet
+```
+
+---
+
+## Deductions Tab
+
+Shows
+
+```text
+PF
+
+Professional Tax
+
+Loan EMI
+
+Advance Salary
+```
+
+---
+
+## History Tab
+
+Table
+
+```text
+Month
+
+Salary
+
+Bonus
+
+Status
+
+Download
+```
+
+---
+
+# Download Payslip
+
+Click
+
+↓
+
+Popup Opens
+
+Size
+
+```text
+650px
+```
+
+Fields
+
+```text
+Month
+
+Send Email
+
+Password Protect PDF
+```
+
+Checkbox
+
+```text
+Send Email Automatically
+```
+
+Buttons
+
+```text
+Cancel
+
+Download PDF
+```
+
+Click Download PDF
+
+↓
+
+API
+
+```javascript
+POST /api/payroll/download-payslip
+```
+
+↓
+
+Toast
+
+```text
+Payslip Downloaded Successfully
+```
+
+---
+
+# History Button
+
+Click
+
+↓
+
+Center Modal Opens
+
+Size
+
+```text
+800px
+```
+
+Contains
+
+Timeline
+
+```text
+Jan 2026
+
+Feb 2026
+
+Mar 2026
+
+Apr 2026
+
+May 2026
+
+Jun 2026
+```
+
+Hover Timeline
+
+Shows
+
+```text
+Salary
+
+Bonus
+
+Tax
+```
+
+---
+
+# Comments Button
+
+Click
+
+↓
+
+Small Popup
+
+Contains
+
+```text
+Comment Box
+
+Add Note
+
+Save
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Comment Added Successfully
+```
+
+---
+
+# Export Buttons
+
+Top Right
+
+```text
+Excel
+
+CSV
+
+PDF
+```
+
+Click PDF
+
+↓
+
+Loading Animation
+
+↓
+
+Download Starts
+
+↓
+
+Toast
+
+```text
+Export Completed Successfully
+```
+
+---
+
+# Notifications
+
+Bell Icon
+
+Shows
+
+```text
+Payslip Generated
+
+Salary Updated
+
+Bonus Approved
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/processed
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+Full Table
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+Horizontal Scroll Table
+```
+
+Drawer Width
+
+```text
+100%
+```
+
+Popup Width
+
+```text
+95%
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+---
+
+# APIs
+
+### Get Processed Payroll
+
+```javascript
+GET /api/payroll/processed
+```
+
+---
+
+### Get Salary Details
+
+```javascript
+GET /api/payroll/:employeeId
+```
+
+---
+
+### Download Payslip
+
+```javascript
+POST /api/payroll/download-payslip
+```
+
+---
+
+### Add Comment
+
+```javascript
+POST /api/payroll/comment
+```
+
+---
+
+### Export PDF
+
+```javascript
+GET /api/payroll/export/pdf
+```
+
+---
+
+# MongoDB Collections
+
+```text
+payrolls
+
+salaryStructures
+
+payslips
+
+bonuses
+
+comments
+
+notifications
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+salaryUpdated
+
+payslipDownloaded
+
+commentAdded
+
+bonusApproved
+```
+
+---
+
+# Role Access
+
+```text
+Admin
+HR
+Finance Manager
+Employee (View Only)
+```
+
+---
+
+# Footer
+
+```text
+-----------------------------------
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+------------------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 → PART 4.4
+
+# SALARY STRUCTURE MODULE
+
+Route
+
+```text
+/hr/payroll/salary-structure
+```
+
+हे module Admin, HR आणि Finance Manager साठी असेल. इथून company मधील प्रत्येक designation, department, grade आणि employee type नुसार salary structure manage करता येईल.
+
+---
+
+# Complete Flow
+
+```text
+Payroll Dashboard
+      ↓
+Salary Structure
+      ↓
+Grade Cards
+      ↓
+Salary Structure Table
+      ↓
+View Structure Drawer
+      ↓
+Edit Structure Popup
+      ↓
+Approval Flow
+      ↓
+Save
+      ↓
+Toast
+      ↓
+Realtime Update
+```
+
+---
+
+# Page Header
+
+Breadcrumb
+
+```text
+Dashboard > Payroll > Salary Structure
+```
+
+Right Side Buttons
+
+```text
++ Add Structure
+
+Import Excel
+
+Export PDF
+```
+
+Hover Add Structure
+
+Shows
+
+```text
+Create New Salary Template
+```
+
+---
+
+# Top Summary Cards
+
+### Grade A
+
+Icon
+
+```text
+Briefcase Icon
+```
+
+Contains
+
+```text
+Employees : 32
+
+Avg CTC : ₹12 LPA
+```
+
+Hover
+
+```text
+Managers
+
+Senior Developers
+
+View Details →
+```
+
+Click
+
+↓
+
+Filter Table
+
+Grade A Employees Only
+
+---
+
+### Grade B
+
+Contains
+
+```text
+Employees : 56
+
+Avg CTC : ₹7.5 LPA
+```
+
+Hover
+
+```text
+Developers
+
+Marketing Leads
+```
+
+---
+
+### Grade C
+
+Contains
+
+```text
+Employees : 40
+
+Avg CTC : ₹4.8 LPA
+```
+
+---
+
+### Contract Employees
+
+Contains
+
+```text
+Employees : 18
+
+Avg CTC : ₹3.2 LPA
+```
+
+---
+
+# Search + Filter Section
+
+Search
+
+```text
+Search Designation...
+```
+
+Dropdown Filters
+
+```text
+Department
+
+Grade
+
+Employee Type
+
+Status
+```
+
+Buttons
+
+```text
+Search
+
+Reset
+```
+
+---
+
+# Salary Structure Table
+
+Columns
+
+```text
+Grade
+
+Designation
+
+Basic
+
+HRA
+
+Special Allowance
+
+PF
+
+Professional Tax
+
+Gross Salary
+
+Status
+
+Actions
+```
+
+---
+
+# Row Hover
+
+Background becomes light blue.
+
+Buttons appear
+
+```text
+View
+
+Edit
+
+History
+
+Clone
+```
+
+---
+
+# View Button
+
+Click
+
+↓
+
+Right Drawer Opens
+
+Width
+
+```text
+520px
+```
+
+Animation
+
+```text
+Slide From Right
+```
+
+---
+
+# Drawer Tabs
+
+```text
+Overview
+
+Components
+
+Tax
+
+History
+
+Comments
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Designation
+
+Department
+
+Employee Type
+
+CTC
+
+Effective Date
+```
+
+---
+
+## Components Tab
+
+Shows
+
+```text
+Basic Salary
+
+HRA
+
+Medical
+
+Internet
+
+Travel
+
+Special Allowance
+```
+
+Pie Chart
+
+Displays percentage distribution.
+
+Hover Chart
+
+Shows
+
+```text
+Component
+
+Amount
+
+Percentage
+```
+
+---
+
+## Tax Tab
+
+Contains
+
+```text
+PF
+
+Professional Tax
+
+TDS
+
+ESI
+```
+
+---
+
+## History Tab
+
+Timeline
+
+```text
+Created
+
+Updated
+
+Approved
+```
+
+Hover Timeline
+
+Shows
+
+```text
+Updated By
+
+Date
+
+Remarks
+```
+
+---
+
+# Edit Structure
+
+Click
+
+↓
+
+Popup Opens
+
+Width
+
+```text
+700px
+```
+
+Height
+
+```text
+Auto Scroll
+```
+
+---
+
+# Fields
+
+```text
+Designation
+
+Basic Salary
+
+HRA
+
+Medical
+
+Travel
+
+Internet
+
+Special Allowance
+
+PF %
+
+Tax %
+
+Effective Date
+
+Remarks
+```
+
+Buttons
+
+```text
+Cancel
+
+Save Changes
+```
+
+---
+
+Save
+
+↓
+
+API
+
+```javascript
+PUT /api/salary-structure/:id
+```
+
+↓
+
+Toast
+
+```text
+Salary Structure Updated Successfully
+```
+
+↓
+
+Socket.IO
+
+↓
+
+All payroll screens update automatically.
+
+---
+
+# Clone Button
+
+Click
+
+↓
+
+Popup
+
+```text
+Copy Structure From
+
+Grade A
+
+To
+
+Grade B
+```
+
+Button
+
+```text
+Clone Structure
+```
+
+Toast
+
+```text
+Structure Cloned Successfully
+```
+
+---
+
+# Add Structure
+
+Click
+
+↓
+
+Center Modal
+
+Width
+
+```text
+800px
+```
+
+Tabs
+
+```text
+General
+
+Components
+
+Tax
+
+Preview
+```
+
+---
+
+## General Tab
+
+```text
+Department
+
+Designation
+
+Grade
+
+Employee Type
+```
+
+---
+
+## Components Tab
+
+```text
+Basic
+
+HRA
+
+Medical
+
+Travel
+
+Internet
+
+Special Allowance
+```
+
+---
+
+## Tax Tab
+
+```text
+PF
+
+Professional Tax
+
+TDS
+```
+
+---
+
+## Preview Tab
+
+Card Preview
+
+Shows
+
+```text
+Gross Salary
+
+Net Salary
+
+Deductions
+```
+
+---
+
+Save
+
+↓
+
+POST API
+
+```javascript
+POST /api/salary-structure
+```
+
+↓
+
+Toast
+
+```text
+New Salary Structure Created Successfully
+```
+
+---
+
+# Approval Flow
+
+```text
+HR Creates Structure
+         ↓
+Finance Manager Reviews
+         ↓
+Admin Approves
+         ↓
+Active Structure
+```
+
+Status Badges
+
+```text
+Draft → Gray
+
+Pending Approval → Orange
+
+Approved → Green
+
+Rejected → Red
+```
+
+---
+
+# Notifications
+
+Bell Icon
+
+Shows
+
+```text
+Structure Approved
+
+Structure Updated
+
+Structure Rejected
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/salary-structure
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+Full Table
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+Horizontal Scroll Table
+```
+
+Drawer Width
+
+```text
+100%
+```
+
+Popup Width
+
+```text
+95%
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+---
+
+# APIs
+
+### Get Structures
+
+```javascript
+GET /api/salary-structure
+```
+
+---
+
+### Add Structure
+
+```javascript
+POST /api/salary-structure
+```
+
+---
+
+### Update Structure
+
+```javascript
+PUT /api/salary-structure/:id
+```
+
+---
+
+### Clone Structure
+
+```javascript
+POST /api/salary-structure/clone
+```
+
+---
+
+### Delete Structure
+
+```javascript
+DELETE /api/salary-structure/:id
+```
+
+---
+
+# MongoDB Collections
+
+```text
+salaryStructures
+
+designations
+
+departments
+
+taxConfigurations
+
+notifications
+
+auditLogs
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+structureCreated
+
+structureUpdated
+
+structureApproved
+
+structureCloned
+```
+
+---
+
+# Role Access
+
+```text
+Admin → Full Access
+
+HR → Create + Edit
+
+Finance Manager → Review
+
+Employee → No Access
+```
+
+---
+
+# Footer
+
+```text
+--------------------------------------
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 → PART 4.5
+
+# PAYSLIPS MODULE
+
+Route
+
+```text
+/hr/payroll/payslips
+```
+
+हा module Employee, HR, Finance Manager आणि Admin साठी असेल.
+
+---
+
+# Complete Flow
+
+```text
+Payroll Dashboard
+      ↓
+Payslips
+      ↓
+Monthly Cards
+      ↓
+Payslip Table
+      ↓
+View Payslip
+      ↓
+Salary Breakdown Drawer
+      ↓
+Download PDF
+      ↓
+Email Payslip
+      ↓
+Toast
+      ↓
+Socket.IO Realtime Update
+```
+
+---
+
+# Page Header
+
+Breadcrumb
+
+```text
+Dashboard > Payroll > Payslips
+```
+
+Top Right Buttons
+
+```text
+Generate Payslip
+
+Export Excel
+
+Export PDF
+```
+
+Hover Generate Button
+
+Shows
+
+```text
+Generate Monthly Payslips
+```
+
+---
+
+# Summary Cards
+
+### Total Payslips
+
+Icon
+
+```text
+FileText Icon
+```
+
+Contains
+
+```text
+128 Payslips
+```
+
+Hover
+
+```text
+Current Month
+
+View Details →
+```
+
+---
+
+### Downloaded
+
+Icon
+
+```text
+Download Icon
+```
+
+Contains
+
+```text
+105 Downloads
+```
+
+Hover
+
+```text
+Last Downloaded Employee
+```
+
+---
+
+### Pending Email
+
+Icon
+
+```text
+Mail Icon
+```
+
+Contains
+
+```text
+23 Pending
+```
+
+Hover
+
+```text
+Send Emails
+```
+
+---
+
+### Generated Amount
+
+Icon
+
+```text
+Wallet Icon
+```
+
+Contains
+
+```text
+₹68,20,000
+```
+
+Hover
+
+```text
+Current Payroll Total
+```
+
+---
+
+# Month Cards
+
+Cards
+
+```text
+January
+
+February
+
+March
+
+April
+
+May
+
+June
+```
+
+Hover Month Card
+
+Shows
+
+```text
+Employees
+
+Total Salary
+
+View Payslips →
+```
+
+Click June
+
+↓
+
+Filter Table
+
+Only June Payslips
+
+---
+
+# Search and Filters
+
+Search
+
+```text
+Search Employee...
+```
+
+Dropdown Filters
+
+```text
+Department
+
+Month
+
+Status
+
+Designation
+```
+
+Buttons
+
+```text
+Search
+
+Reset
+```
+
+---
+
+# Payslip Table
+
+Columns
+
+```text
+Employee
+
+Employee ID
+
+Department
+
+Month
+
+Net Salary
+
+Status
+
+Generated Date
+
+Actions
+```
+
+Status
+
+```text
+Generated → Green
+
+Pending → Orange
+
+Failed → Red
+```
+
+---
+
+# Row Hover
+
+Buttons Appear
+
+```text
+View
+
+Download
+
+Email
+
+History
+```
+
+---
+
+# View Payslip
+
+Click
+
+↓
+
+Right Drawer Opens
+
+Width
+
+```text
+500px
+```
+
+Tabs
+
+```text
+Overview
+
+Salary Breakdown
+
+Deductions
+
+Tax
+
+History
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Employee Photo
+
+Employee Name
+
+Employee ID
+
+Department
+
+Designation
+
+Month
+```
+
+---
+
+## Salary Breakdown
+
+Cards
+
+```text
+Basic Salary
+
+HRA
+
+Medical
+
+Travel
+
+Internet
+
+Special Allowance
+```
+
+Hover Card
+
+Shows
+
+```text
+Amount
+
+Percentage
+```
+
+Pie Chart
+
+Shows
+
+Salary Distribution
+
+---
+
+## Deductions Tab
+
+Contains
+
+```text
+PF
+
+Professional Tax
+
+TDS
+
+Loan EMI
+```
+
+---
+
+## Tax Tab
+
+Contains
+
+```text
+Taxable Income
+
+Tax Amount
+
+Net Income
+```
+
+---
+
+## History Tab
+
+Timeline
+
+```text
+Generated
+
+Downloaded
+
+Emailed
+```
+
+Hover Timeline
+
+Shows
+
+```text
+Date
+
+User
+
+Remarks
+```
+
+---
+
+# Download Button
+
+Click
+
+↓
+
+Popup Opens
+
+Size
+
+```text
+600px
+```
+
+Fields
+
+```text
+Month
+
+Password Protection
+
+File Format
+```
+
+Checkbox
+
+```text
+Encrypt PDF
+```
+
+Buttons
+
+```text
+Cancel
+
+Download
+```
+
+Download
+
+↓
+
+API
+
+```javascript
+POST /api/payslips/download
+```
+
+↓
+
+Toast
+
+```text
+Payslip Downloaded Successfully
+```
+
+---
+
+# Email Payslip
+
+Click
+
+↓
+
+Popup
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Employee Email
+
+CC Email
+
+Message
+```
+
+Checkbox
+
+```text
+Send Copy To HR
+```
+
+Buttons
+
+```text
+Cancel
+
+Send Email
+```
+
+↓
+
+POST API
+
+```javascript
+POST /api/payslips/email
+```
+
+↓
+
+Toast
+
+```text
+Payslip Sent Successfully
+```
+
+↓
+
+Notification
+
+Employee receives mail.
+
+---
+
+# History Button
+
+Click
+
+↓
+
+Center Modal
+
+Width
+
+```text
+800px
+```
+
+Timeline
+
+```text
+Generated
+
+Downloaded
+
+Shared
+
+Printed
+```
+
+Hover
+
+Shows
+
+```text
+Date
+
+Action By
+
+Remarks
+```
+
+---
+
+# Generate Payslip
+
+Click
+
+↓
+
+Popup Opens
+
+Width
+
+```text
+750px
+```
+
+Fields
+
+```text
+Month
+
+Department
+
+Employee Type
+
+Remarks
+```
+
+Buttons
+
+```text
+Cancel
+
+Generate
+```
+
+↓
+
+POST API
+
+```javascript
+POST /api/payslips/generate
+```
+
+↓
+
+Toast
+
+```text
+Payslips Generated Successfully
+```
+
+↓
+
+Socket.IO
+
+↓
+
+Employee Portal Updates Automatically
+
+---
+
+# Notifications
+
+Bell Icon
+
+Shows
+
+```text
+Payslip Generated
+
+Payslip Downloaded
+
+Payslip Shared
+
+Email Delivered
+```
+
+Click
+
+Redirect
+
+```text
+/hr/payroll/payslips
+```
+
+---
+
+# Export Buttons
+
+Buttons
+
+```text
+Excel
+
+CSV
+
+PDF
+```
+
+Click PDF
+
+↓
+
+Download Starts
+
+↓
+
+Toast
+
+```text
+Export Completed Successfully
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+
+Full Table
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+
+Horizontal Table Scroll
+```
+
+Drawer Width
+
+```text
+100%
+```
+
+Popup Width
+
+```text
+95%
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+---
+
+# APIs
+
+### Get Payslips
+
+```javascript
+GET /api/payslips
+```
+
+### Generate Payslip
+
+```javascript
+POST /api/payslips/generate
+```
+
+### Download PDF
+
+```javascript
+POST /api/payslips/download
+```
+
+### Send Email
+
+```javascript
+POST /api/payslips/email
+```
+
+### History
+
+```javascript
+GET /api/payslips/history/:id
+```
+
+---
+
+# MongoDB Collections
+
+```text
+payslips
+
+payrolls
+
+salaryStructures
+
+emailLogs
+
+notifications
+
+auditLogs
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+payslipGenerated
+
+payslipDownloaded
+
+emailSent
+
+historyUpdated
+```
+
+---
+
+# Role Access
+
+```text
+Admin → Full Access
+
+HR → Generate + Download
+
+Finance Manager → Generate + Export
+
+Employee → View + Download Own Payslip
+```
+
+---
+
+# Footer
+
+```text
+---------------------------------------
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+# 🔥 PHASE-4 : PART 4.6 — Bonuses + Arrears + Loans Module
+
+*(Enterprise HRMS – HTML + CSS + JS + Express + MongoDB)*
+
+---
+
+# Purpose
+
+हा module Payroll Dashboard च्या खाली येईल.
+
+```text
+Payroll
+ ↓
+Payroll Dashboard
+ ↓
+Bonuses
+Arrears
+Loans
+```
+
+हे सर्व employee collection शी connected राहतील.
+
+```text
+Attendance
+ ↓
+Payroll
+ ↓
+Bonuses
+ ↓
+Loans
+ ↓
+Final Salary
+```
+
+---
+
+# Sidebar Flow
+
+```text
+Payroll ▼
+
+Payroll Dashboard
+Processed Payroll
+Salary Structure
+Payslips
+Bonuses
+Arrears
+Loans
+Claims
+Tax Center
+Benefits
+```
+
+Current page active असेल तर
+
+```css
+background:#DBEAFE;
+border-left:4px solid #2563EB;
+```
+
+---
+
+# 1. Bonuses Module
+
+Route
+
+```text
+/hr/payroll/bonuses
+```
+
+---
+
+# Top Banner
+
+Left side
+
+```text
+Bonus Management
+```
+
+Right side
+
+Buttons
+
+```text
++ Add Bonus
+Export Excel
+Filter
+```
+
+---
+
+# Statistics Cards
+
+### Performance Bonus
+
+Card
+
+```text
+🏆 Icon
+
+Performance Bonus
+
+₹4,50,000
+
+145 Employees
+```
+
+---
+
+### Festival Bonus
+
+```text
+🎉 Icon
+
+Festival Bonus
+
+₹2,80,000
+
+98 Employees
+```
+
+---
+
+### Joining Bonus
+
+```text
+💼 Icon
+
+Joining Bonus
+
+₹1,90,000
+```
+
+---
+
+### Referral Bonus
+
+```text
+👥 Icon
+
+Referral Bonus
+
+₹70,000
+```
+
+---
+
+# Card Hover
+
+Animation
+
+```css
+transform:scale(1.03);
+transition:.3s;
+```
+
+Show
+
+```text
+Last Updated
+Eligible Employees
+View Details →
+```
+
+---
+
+# Click Card
+
+Example
+
+Performance Bonus
+
+Redirect
+
+```text
+/hr/payroll/bonuses/performance
+```
+
+---
+
+# Bonus Table
+
+Columns
+
+```text
+Employee
+Department
+Bonus Type
+Amount
+Date
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons appear
+
+```text
+View
+Edit
+History
+Delete
+```
+
+---
+
+# View
+
+Right Drawer Opens
+
+Width
+
+```text
+700px
+```
+
+Tabs
+
+```text
+Overview
+
+Salary Details
+
+Bonus History
+
+Comments
+```
+
+---
+
+# Add Bonus Button
+
+Popup
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Employee
+
+Bonus Type
+
+Amount
+
+Reason
+
+Attachment
+
+Effective Date
+```
+
+Buttons
+
+```text
+Cancel
+Save
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Bonus Added Successfully
+```
+
+---
+
+# API
+
+```javascript
+GET /api/bonuses
+
+POST /api/bonuses
+
+PUT /api/bonuses/:id
+
+DELETE /api/bonuses/:id
+```
+
+---
+
+# Collection
+
+```text
+bonuses
+```
+
+---
+
+# Socket Event
+
+```javascript
+bonusCreated
+bonusUpdated
+```
+
+Dashboard card updates instantly.
+
+---
+
+# 2. Arrears Module
+
+Route
+
+```text
+/hr/payroll/arrears
+```
+
+---
+
+# Cards
+
+```text
+Pending Arrears
+
+Approved Arrears
+
+Paid Arrears
+
+Rejected Arrears
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Employees Count
+
+Amount
+
+View Details →
+```
+
+---
+
+# Click Card
+
+Redirect
+
+```text
+/hr/payroll/arrears/pending
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Employee
+
+Previous Salary
+
+Revised Salary
+
+Difference
+
+Month
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Approve
+
+Reject
+
+History
+```
+
+---
+
+# Approve
+
+Popup
+
+Fields
+
+```text
+Approval Remarks
+
+Effective Month
+
+Notify Employee ✓
+```
+
+Buttons
+
+```text
+Cancel
+
+Approve
+```
+
+---
+
+# Toast
+
+```text
+Arrear Approved Successfully
+```
+
+---
+
+# Drawer
+
+Tabs
+
+```text
+Salary Revision
+
+Arrear Details
+
+Timeline
+
+Comments
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/arrears
+
+POST /api/arrears
+
+PUT /api/arrears/:id
+```
+
+---
+
+# Collection
+
+```text
+arrears
+```
+
+---
+
+# Socket
+
+```javascript
+arrearApproved
+```
+
+---
+
+# 3. Loans Module
+
+Route
+
+```text
+/hr/payroll/loans
+```
+
+---
+
+# Dashboard Cards
+
+### Active Loans
+
+```text
+💰
+
+120 Employees
+
+₹35,00,000
+```
+
+---
+
+### Closed Loans
+
+```text
+✅
+
+50 Employees
+```
+
+---
+
+### Pending Approval
+
+```text
+⏳
+
+15 Requests
+```
+
+---
+
+### Overdue Loans
+
+```text
+⚠️
+
+7 Employees
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Monthly EMI
+
+Interest Rate
+
+View Details →
+```
+
+---
+
+# Click
+
+Redirect
+
+```text
+/hr/payroll/loans/active
+```
+
+---
+
+# Loan Table
+
+Columns
+
+```text
+Employee
+
+Loan Type
+
+Amount
+
+EMI
+
+Remaining
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Approve
+
+Close
+
+History
+```
+
+---
+
+# View
+
+Right Drawer
+
+Tabs
+
+```text
+Loan Details
+
+Repayment Schedule
+
+Documents
+
+History
+```
+
+---
+
+# Approve Loan
+
+Popup
+
+Fields
+
+```text
+Loan Amount
+
+Interest Rate
+
+EMI
+
+Tenure
+
+Remarks
+```
+
+Buttons
+
+```text
+Approve
+
+Reject
+```
+
+---
+
+# Toast
+
+```text
+Loan Approved Successfully
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/loans
+
+POST /api/loans
+
+PUT /api/loans/:id
+
+DELETE /api/loans/:id
+```
+
+---
+
+# Collections
+
+```text
+loans
+
+loanRepayments
+```
+
+---
+
+# Mobile Layout
+
+Desktop
+
+```text
+4 cards per row
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+Tables
+
+```text
+Horizontal Scroll
+```
+
+---
+
+# Footer (All Pages)
+
+```text
+────────────────────
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+────────────────────-----------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 : PART 4.7 — Claims + Travel + Benefits Module
+
+*(Enterprise HRMS — HTML + CSS + JS + Express + MongoDB + Socket.IO)*
+
+---
+
+# Sidebar Flow
+
+```text
+Payroll ▼
+
+Payroll Dashboard
+Processed Payroll
+Salary Structure
+Payslips
+Bonuses
+Arrears
+Loans
+Claims
+Travel
+Tax Center
+Benefits
+```
+
+---
+
+# CLAIMS MODULE
+
+Route
+
+```text
+/hr/payroll/claims
+```
+
+---
+
+# Page Header
+
+Left Side
+
+```text
+Claims Management
+```
+
+Right Side
+
+Buttons
+
+```text
++ New Claim
+
+Filter
+
+Export Excel
+
+Download Report
+```
+
+---
+
+# Statistics Cards
+
+### Medical Claims
+
+```text
+🏥 Medical
+
+₹1,80,000
+
+35 Claims
+```
+
+---
+
+### Travel Claims
+
+```text
+✈️ Travel
+
+₹90,000
+
+15 Claims
+```
+
+---
+
+### Food Claims
+
+```text
+🍔 Food
+
+₹45,000
+
+25 Claims
+```
+
+---
+
+### Internet Claims
+
+```text
+🌐 Internet
+
+₹18,000
+
+10 Claims
+```
+
+---
+
+# Hover Card
+
+Animation
+
+```css
+transform:scale(1.03);
+box-shadow:0px 10px 25px rgba(0,0,0,.1);
+```
+
+Shows
+
+```text
+Pending Amount
+
+Approved Claims
+
+View Details →
+```
+
+---
+
+# Click Card
+
+Medical Claims
+
+↓
+
+Redirect
+
+```text
+/hr/payroll/claims/medical
+```
+
+---
+
+# Claims Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Claim Type
+
+Amount
+
+Applied Date
+
+Status
+```
+
+---
+
+# Row Hover
+
+Buttons Appear
+
+```text
+View
+
+Approve
+
+Reject
+
+History
+```
+
+---
+
+# View Button
+
+Right Drawer Opens
+
+Width
+
+```text
+700px
+```
+
+Tabs
+
+```text
+Overview
+
+Attachments
+
+Approval Timeline
+
+Comments
+```
+
+---
+
+# Approve Button
+
+Popup Opens
+
+Size
+
+```text
+650px
+```
+
+Fields
+
+```text
+Employee Name
+
+Amount
+
+Remarks
+
+Finance Approval ✓
+
+Attachment
+
+Notify Employee ✓
+```
+
+Buttons
+
+```text
+Cancel
+
+Approve
+```
+
+Save
+
+↓
+
+Toast
+
+```text
+Claim Approved Successfully
+```
+
+---
+
+# Reject
+
+Popup
+
+```text
+Reason
+
+Comments
+```
+
+Buttons
+
+```text
+Reject
+
+Cancel
+```
+
+Toast
+
+```text
+Claim Rejected Successfully
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/claims
+
+POST /api/claims
+
+PUT /api/claims/:id
+
+DELETE /api/claims/:id
+```
+
+---
+
+# Collections
+
+```text
+claims
+
+claimAttachments
+```
+
+---
+
+# Socket.IO
+
+```javascript
+claimApproved
+
+claimRejected
+
+claimCreated
+```
+
+Dashboard updates automatically.
+
+---
+
+# TRAVEL MODULE
+
+Route
+
+```text
+/hr/payroll/travel
+```
+
+---
+
+# Cards
+
+### Flight
+
+```text
+✈️
+
+₹60,000
+```
+
+### Hotel
+
+```text
+🏨
+
+₹30,000
+```
+
+### Cab
+
+```text
+🚕
+
+₹20,000
+```
+
+### Fuel
+
+```text
+⛽
+
+₹10,000
+```
+
+---
+
+# Hover
+
+Shows
+
+```text
+Pending Requests
+
+Approved Amount
+
+View Details →
+```
+
+---
+
+# Click
+
+Redirect
+
+```text
+/hr/payroll/travel/history
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Employee
+
+Source
+
+Destination
+
+Amount
+
+Date
+
+Status
+```
+
+---
+
+# Row Hover
+
+Buttons
+
+```text
+View
+
+Approve
+
+Reject
+
+Download Bill
+```
+
+---
+
+# View
+
+Drawer Opens
+
+Tabs
+
+```text
+Journey
+
+Bills
+
+Approvals
+
+Comments
+```
+
+---
+
+# BENEFITS CENTER
+
+Route
+
+```text
+/hr/payroll/benefits
+```
+
+---
+
+# Top Cards
+
+### Insurance
+
+```text
+🛡️
+
+Health Insurance
+
+120 Employees
+```
+
+---
+
+### PF
+
+```text
+💰
+
+PF Contributions
+```
+
+---
+
+### Gratuity
+
+```text
+🏆
+
+Eligible Employees
+```
+
+---
+
+### Leave Encashment
+
+```text
+📅
+
+Available Balance
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Policy Details
+
+Coverage Amount
+
+View Benefits →
+```
+
+---
+
+# Click Insurance
+
+Redirect
+
+```text
+/hr/payroll/benefits/insurance
+```
+
+---
+
+# Insurance Page
+
+Cards
+
+```text
+Health Insurance
+
+Accidental Insurance
+
+Family Coverage
+```
+
+---
+
+# Row Hover
+
+Buttons
+
+```text
+View Policy
+
+Download
+
+Nominee Details
+
+History
+```
+
+---
+
+# View Policy
+
+Right Drawer
+
+Width
+
+```text
+700px
+```
+
+Tabs
+
+```text
+Overview
+
+Coverage
+
+Nominee
+
+History
+```
+
+---
+
+# New Benefit Enrollment
+
+Popup Size
+
+```text
+600px
+```
+
+Fields
+
+```text
+Benefit Type
+
+Employee
+
+Coverage
+
+Nominee
+
+Effective Date
+```
+
+Buttons
+
+```text
+Save
+
+Cancel
+```
+
+Toast
+
+```text
+Benefit Added Successfully
+```
+
+---
+
+# Collections
+
+```text
+benefits
+
+insurancePolicies
+
+pfAccounts
+
+gratuities
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/benefits
+
+POST /api/benefits
+
+PUT /api/benefits/:id
+```
+
+---
+
+# Realtime Events
+
+```javascript
+benefitAdded
+
+benefitUpdated
+
+insuranceUpdated
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 cards in row
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Tables become
+
+```text
+Horizontal Scroll
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+Cards become
+
+```text
+Stack Layout
+```
+
+---
+
+# Footer (All Pages)
+
+```text
+────────────────────
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+────────────────────---------------------------------------------------------------------------------------------------
+
+# 🔥 PHASE-4 : PART 4.8 — Recruitment ATS Module
+
+*(Enterprise HRMS — HTML + CSS + JS + Express + MongoDB + Socket.IO)*
+
+---
+
+# Sidebar Flow
+
+```text
+Recruitment ▼
+
+Jobs
+Candidates
+Pipeline
+Interviews
+Feedback
+Offers
+BGV
+Talent Pool
+```
+
+---
+
+# Recruitment Dashboard
+
+Route
+
+```text
+/hr/recruitment
+```
+
+---
+
+# Top Banner
+
+Left Side
+
+```text
+Recruitment ATS
+```
+
+Right Side Buttons
+
+```text
++ Create Job
+
+Import Candidates
+
+Reports
+
+Filter
+```
+
+---
+
+# Top Cards
+
+### Open Positions
+
+```text
+💼
+
+25 Jobs
+
+150 Candidates
+```
+
+---
+
+### Urgent Hiring
+
+```text
+🔥
+
+8 Jobs
+```
+
+---
+
+### Offers Sent
+
+```text
+📄
+
+30 Offers
+```
+
+---
+
+### Joined Candidates
+
+```text
+✅
+
+18 Employees
+```
+
+---
+
+# Card Hover
+
+Shows
+
+```text
+Department
+
+Vacancies
+
+View Details →
+```
+
+Animation
+
+```css
+transform:scale(1.03);
+box-shadow
+```
+
+---
+
+# Click Open Positions
+
+Redirect
+
+```text
+/hr/recruitment/jobs
+```
+
+---
+
+# JOBS PAGE
+
+Columns
+
+```text
+Job Title
+
+Department
+
+Vacancies
+
+Applied
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+Candidates
+
+Edit
+
+Close Job
+
+History
+```
+
+---
+
+# Click Candidates
+
+Redirect
+
+```text
+/hr/recruitment/candidates
+```
+
+---
+
+# Candidates Page
+
+Cards
+
+```text
+Applied
+
+Screening
+
+Interview
+
+Offer
+
+Joined
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Candidate Count
+
+Average Experience
+
+View Candidates →
+```
+
+---
+
+# Click Applied
+
+Redirect
+
+```text
+/hr/recruitment/candidates/applied
+```
+
+---
+
+# Candidate Table
+
+Columns
+
+```text
+Name
+
+Email
+
+Experience
+
+Skills
+
+Status
+```
+
+---
+
+# Row Hover
+
+Buttons
+
+```text
+Resume
+
+Schedule Interview
+
+Move Stage
+
+Reject
+```
+
+---
+
+# Resume Button
+
+Opens Right Drawer
+
+Width
+
+```text
+750px
+```
+
+Tabs
+
+```text
+Resume
+
+Experience
+
+Skills
+
+Education
+
+Comments
+```
+
+---
+
+# Schedule Interview
+
+Popup Size
+
+```text
+650px
+```
+
+Fields
+
+```text
+Panel Member
+
+Interview Date
+
+Time
+
+Mode
+
+Meeting Link
+
+Remarks
+```
+
+Buttons
+
+```text
+Cancel
+
+Schedule
+```
+
+Toast
+
+```text
+Interview Scheduled Successfully
+```
+
+---
+
+# Candidate Pipeline
+
+Route
+
+```text
+/hr/recruitment/pipeline
+```
+
+---
+
+# Beautiful Kanban Layout
+
+```text
+Applied
+↓
+Screening
+↓
+Technical Interview
+↓
+HR Round
+↓
+Offer
+↓
+Joined
+```
+
+---
+
+# Candidate Card
+
+Contains
+
+```text
+Photo
+
+Name
+
+Experience
+
+Current CTC
+
+Expected CTC
+```
+
+---
+
+# Hover Candidate
+
+Buttons
+
+```text
+Resume
+
+Move Stage
+
+Schedule
+
+Feedback
+```
+
+---
+
+# Drag Drop
+
+Candidate moves
+
+```text
+Applied
+↓
+Screening
+```
+
+Realtime update
+
+Without Refresh
+
+Socket.IO
+
+---
+
+# Interview Calendar
+
+Route
+
+```text
+/hr/recruitment/interviews
+```
+
+---
+
+# Calendar View
+
+Cards
+
+```text
+Candidate
+
+Panel
+
+Date
+
+Time
+
+Mode
+```
+
+---
+
+# Hover Card
+
+Buttons
+
+```text
+Join Meeting
+
+Feedback
+
+Reschedule
+```
+
+---
+
+# Feedback Popup
+
+Width
+
+```text
+700px
+```
+
+Fields
+
+```text
+Technical Rating
+
+Communication
+
+Coding
+
+Remarks
+
+Recommendation
+```
+
+Buttons
+
+```text
+Reject
+
+Shortlist
+```
+
+Toast
+
+```text
+Feedback Submitted Successfully
+```
+
+---
+
+# Offer Management
+
+Route
+
+```text
+/hr/recruitment/offers
+```
+
+---
+
+# Cards
+
+```text
+Offer Sent
+
+Accepted
+
+Rejected
+
+Pending
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Candidates Count
+
+View Details →
+```
+
+---
+
+# Click Accepted
+
+Redirect
+
+```text
+/hr/recruitment/offers/accepted
+```
+
+---
+
+# Offer Table
+
+Columns
+
+```text
+Candidate
+
+Position
+
+Salary
+
+Joining Date
+
+Status
+```
+
+---
+
+# Row Hover
+
+Buttons
+
+```text
+View Offer
+
+Download PDF
+
+Resend
+
+History
+```
+
+---
+
+# Offer Drawer
+
+Tabs
+
+```text
+Offer Details
+
+Salary Structure
+
+Attachments
+
+Timeline
+```
+
+---
+
+# BGV Module
+
+Route
+
+```text
+/hr/recruitment/bgv
+```
+
+---
+
+# Cards
+
+```text
+Pending Verification
+
+Verified
+
+Rejected
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Agency
+
+Candidate Count
+
+View Details →
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Candidate
+
+Company
+
+Education
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+Verify
+
+Documents
+
+History
+```
+
+---
+
+# Talent Pool
+
+Route
+
+```text
+/hr/recruitment/talent-pool
+```
+
+---
+
+# Cards
+
+```text
+Java
+
+React
+
+Node
+
+HR
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Candidates Available
+
+Experience Range
+
+View →
+```
+
+---
+
+# Click React
+
+Redirect
+
+```text
+/hr/recruitment/talent-pool/react
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/jobs
+
+POST /api/jobs
+
+PUT /api/jobs/:id
+
+GET /api/candidates
+
+POST /api/interviews
+
+POST /api/offers
+
+PUT /api/bgv/:id
+```
+
+---
+
+# Collections
+
+```text
+jobs
+
+candidates
+
+interviews
+
+feedbacks
+
+offers
+
+bgvVerifications
+
+talentPools
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+candidateAdded
+
+stageChanged
+
+interviewScheduled
+
+feedbackSubmitted
+
+offerAccepted
+
+candidateJoined
+```
+
+Dashboard updates instantly.
+
+---
+
+# Role Flow
+
+```text
+Admin
+ ↓
+HR Manager
+ ↓
+Recruiter
+ ↓
+Interview Panel
+ ↓
+Candidate
+ ↓
+Employee
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 Cards
+```
+
+Tablet
+
+```text
+2 Cards
+```
+
+Mobile
+
+```text
+1 Card
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+Tables
+
+```text
+Horizontal Scroll
+```
+
+---
+
+# Footer
+
+```text
+────────────────────
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+-------------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE-4 : PART 4.9 — Employee Lifecycle Module
+
+*(Onboarding + Documents + Assets + Exit + Knowledge Transfer + Offboarding)*
+
+---
+
+# Sidebar Flow
+
+```text
+Lifecycle ▼
+
+Onboarding
+Documents Center
+Assets
+Training Checklist
+Employee Activation
+Exit Management
+Knowledge Transfer
+Offboarding
+```
+
+---
+
+# 🔥 ONBOARDING MODULE
+
+Route
+
+```text
+/hr/lifecycle/onboarding
+```
+
+---
+
+# Top Banner
+
+Left Side
+
+```text
+Employee Onboarding
+```
+
+Right Side
+
+Buttons
+
+```text
++ New Employee
+
+Import Data
+
+Reports
+
+Filter
+```
+
+---
+
+# Progress Cards
+
+### Offer Accepted
+
+```text
+📄
+
+35 Employees
+```
+
+---
+
+### Documents Pending
+
+```text
+📁
+
+12 Employees
+```
+
+---
+
+### Assets Pending
+
+```text
+💻
+
+8 Employees
+```
+
+---
+
+### Employee Activated
+
+```text
+✅
+
+15 Employees
+```
+
+---
+
+# Card Hover
+
+Shows
+
+```text
+Last Updated
+
+Progress %
+
+View Details →
+```
+
+Animation
+
+```css
+scale(1.03)
+shadow-lg
+```
+
+---
+
+# Click Documents Pending
+
+Redirect
+
+```text
+/hr/lifecycle/onboarding/documents
+```
+
+---
+
+# Employee Cards
+
+Card Contains
+
+```text
+Photo
+
+Name
+
+Department
+
+Joining Date
+
+Progress Bar
+```
+
+---
+
+# Hover Employee Card
+
+Buttons
+
+```text
+View Profile
+
+Documents
+
+Assets
+
+Checklist
+```
+
+---
+
+# Click Employee
+
+Open Right Drawer
+
+Width
+
+```text
+750px
+```
+
+Tabs
+
+```text
+Profile
+
+Documents
+
+Assets
+
+Training
+
+Checklist
+
+Timeline
+```
+
+---
+
+# Employee Onboarding Flow
+
+```text
+Offer Accepted
+        ↓
+Document Upload
+        ↓
+HR Verification
+        ↓
+Asset Allocation
+        ↓
+Training
+        ↓
+Manager Assignment
+        ↓
+Employee Activation
+```
+
+Realtime Status Color
+
+```text
+Green = Completed
+
+Orange = Pending
+
+Red = Overdue
+```
+
+---
+
+# DOCUMENT CENTER
+
+Route
+
+```text
+/hr/lifecycle/documents
+```
+
+---
+
+# Cards
+
+```text
+Aadhar
+
+PAN
+
+Passport
+
+Educational Certificates
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Uploaded Files
+
+Pending Documents
+
+View →
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Employee
+
+Document Type
+
+Uploaded Date
+
+Verified By
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Download
+
+Approve
+
+History
+```
+
+---
+
+# Click View
+
+Open Drawer
+
+Tabs
+
+```text
+Preview
+
+Versions
+
+Comments
+
+Timeline
+```
+
+---
+
+# Approve Document Popup
+
+Size
+
+```text
+600px
+```
+
+Fields
+
+```text
+Remarks
+
+Verified By
+
+Notify Employee ✓
+```
+
+Buttons
+
+```text
+Cancel
+
+Approve
+```
+
+Toast
+
+```text
+Document Approved Successfully
+```
+
+---
+
+# ASSET MANAGEMENT
+
+Route
+
+```text
+/hr/lifecycle/assets
+```
+
+---
+
+# Cards
+
+```text
+Laptop
+
+Desktop
+
+Mobile
+
+Accessories
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Assigned
+
+Available
+
+View Details →
+```
+
+---
+
+# Asset Table
+
+Columns
+
+```text
+Employee
+
+Asset ID
+
+Asset Type
+
+Assigned Date
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Replace
+
+Return
+
+History
+```
+
+---
+
+# Asset Drawer
+
+Tabs
+
+```text
+Details
+
+Warranty
+
+History
+
+Documents
+```
+
+---
+
+# Asset Allocation Popup
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Employee
+
+Asset Type
+
+Serial Number
+
+Assigned Date
+
+Remarks
+```
+
+Toast
+
+```text
+Asset Assigned Successfully
+```
+
+---
+
+# TRAINING CHECKLIST
+
+Route
+
+```text
+/hr/lifecycle/training
+```
+
+---
+
+Cards
+
+```text
+Pending
+
+Completed
+
+Mandatory
+
+Overdue
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Progress %
+
+Training Hours
+
+View →
+```
+
+---
+
+# Click Pending
+
+Redirect
+
+```text
+/hr/lifecycle/training/pending
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Employee
+
+Course
+
+Trainer
+
+Status
+
+Due Date
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Assign
+
+Complete
+
+History
+```
+
+---
+
+# EXIT MANAGEMENT
+
+Route
+
+```text
+/hr/lifecycle/exit
+```
+
+---
+
+# Cards
+
+```text
+Resignation
+
+Manager Approval
+
+IT Clearance
+
+Finance Clearance
+
+Completed Exit
+```
+
+---
+
+# Exit Flow
+
+```text
+Resignation
+      ↓
+Manager Approval
+      ↓
+HR Approval
+      ↓
+IT Clearance
+      ↓
+Finance Clearance
+      ↓
+Final Settlement
+      ↓
+Exit Interview
+      ↓
+Offboarding
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Pending Employees
+
+Average Exit Time
+
+View →
+```
+
+---
+
+# Exit Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Notice Period
+
+Last Working Date
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Approve
+
+Reject
+
+History
+```
+
+---
+
+# Click View
+
+Open Drawer
+
+Tabs
+
+```text
+Profile
+
+Settlement
+
+Clearance
+
+Documents
+
+Timeline
+```
+
+---
+
+# KNOWLEDGE TRANSFER
+
+Route
+
+```text
+/hr/lifecycle/knowledge-transfer
+```
+
+---
+
+Cards
+
+```text
+Pending
+
+Completed
+
+Overdue
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Assigned Tasks
+
+Completion %
+
+View →
+```
+
+---
+
+# Table
+
+Columns
+
+```text
+Employee
+
+Successor
+
+Tasks
+
+Status
+```
+
+---
+
+# Hover Row
+
+Buttons
+
+```text
+View
+
+Assign
+
+Complete
+
+History
+```
+
+---
+
+# OFFBOARDING
+
+Route
+
+```text
+/hr/lifecycle/offboarding
+```
+
+---
+
+Cards
+
+```text
+Assets Returned
+
+Documents Closed
+
+Account Disabled
+
+Completed
+```
+
+---
+
+# Hover Card
+
+Shows
+
+```text
+Completion %
+
+Responsible Person
+
+View →
+```
+
+---
+
+# Offboarding Flow
+
+```text
+Asset Return
+      ↓
+Account Disable
+      ↓
+Final Documents
+      ↓
+Exit Survey
+      ↓
+Archive Employee
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/onboarding
+
+POST /api/onboarding
+
+GET /api/documents
+
+POST /api/assets
+
+PUT /api/assets/:id
+
+GET /api/exits
+
+PUT /api/exits/:id
+
+POST /api/knowledge-transfer
+```
+
+---
+
+# MongoDB Collections
+
+```text
+onboardings
+
+documents
+
+assets
+
+assetHistories
+
+trainingChecklists
+
+exits
+
+settlements
+
+knowledgeTransfers
+
+offboardings
+```
+
+---
+
+# Socket.IO Events
+
+```javascript
+employeeActivated
+
+documentApproved
+
+assetAssigned
+
+trainingCompleted
+
+exitApproved
+
+assetReturned
+
+employeeArchived
+```
+
+Updates appear instantly on:
+
+```text
+Dashboard
+
+Notifications
+
+Employee Profile
+
+Manager Portal
+
+HR Dashboard
+```
+
+---
+
+# Role Flow
+
+```text
+Admin
+ ↓
+HR
+ ↓
+Manager
+ ↓
+IT Team
+ ↓
+Finance Team
+ ↓
+Employee
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 cards per row
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+Tables
+
+```text
+Horizontal Scroll
+```
+
+Drawers
+
+```text
+Full Screen on Mobile
+```
+
+---
+
+# Footer
+
+```text
+────────────────────
+
+Version : 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+# 🔥 Phase-4 Part 4.9 — Onboarding + Documents + Assets Module
+
+हा module Offer Accept झाल्यानंतर Employee ला company मध्ये properly onboard करण्यासाठी आहे.
+
+---
+
+# 📍 Route Structure
+
+```text
+/hr/onboarding
+/hr/onboarding/documents
+/hr/onboarding/assets
+/hr/onboarding/training
+/hr/onboarding/checklist
+```
+
+---
+
+# 🎨 Main Onboarding Dashboard
+
+Top Banner
+
+```text
+New Joiners : 18
+
+Pending Documents : 7
+
+Assets Pending : 4
+
+Training Pending : 5
+```
+
+---
+
+# Cards
+
+### Offer Accepted
+
+Icon
+
+```text
+📄
+```
+
+Hover
+
+```text
+Employee Name
+
+Joining Date
+
+Department
+```
+
+Click
+
+↓
+
+```text
+/hr/onboarding/documents
+```
+
+---
+
+### Documents Pending
+
+Icon
+
+```text
+📁
+```
+
+Hover
+
+```text
+Aadhar Missing
+
+PAN Pending
+
+Bank Details Pending
+```
+
+Click
+
+↓
+
+Document Page
+
+---
+
+### Asset Allocation
+
+Icon
+
+```text
+💻
+```
+
+Hover
+
+```text
+Laptop Pending
+
+Mouse Pending
+
+ID Card Pending
+```
+
+Click
+
+↓
+
+```text
+/hr/onboarding/assets
+```
+
+---
+
+### Training
+
+Icon
+
+```text
+🎓
+```
+
+Hover
+
+```text
+Assigned Modules
+
+Completion %
+
+Trainer
+```
+
+Click
+
+↓
+
+Training Page
+
+---
+
+# Employee Cards
+
+Card Contains
+
+```text
+Profile Photo
+
+Employee Name
+
+Department
+
+Joining Date
+
+Progress Bar
+```
+
+Example
+
+```text
+70% Completed
+```
+
+---
+
+Hover Card
+
+Shows
+
+```text
+View Profile
+
+Assign Assets
+
+Upload Documents
+
+Training Status
+```
+
+Animation
+
+```text
+scale(1.03)
+
+shadow-xl
+```
+
+---
+
+Click Card
+
+Right Drawer Opens
+
+Width
+
+```text
+600px
+```
+
+Tabs
+
+```text
+Overview
+
+Documents
+
+Assets
+
+Training
+
+Checklist
+
+Timeline
+```
+
+---
+
+# Documents Tab
+
+Table
+
+```text
+Document Name
+
+Status
+
+Uploaded Date
+```
+
+Hover Row
+
+Buttons
+
+```text
+Preview
+
+Replace
+
+Download
+```
+
+---
+
+Upload Document
+
+Popup
+
+Size
+
+```text
+500px
+```
+
+Fields
+
+```text
+Document Type
+
+Choose File
+
+Remarks
+```
+
+Buttons
+
+```text
+Upload
+
+Cancel
+```
+
+Toast
+
+```text
+Document Uploaded Successfully
+```
+
+---
+
+# Assets Tab
+
+Cards
+
+```text
+Laptop
+
+Monitor
+
+Mouse
+
+ID Card
+
+Headphones
+```
+
+Hover Asset Card
+
+Shows
+
+```text
+Serial Number
+
+Issued Date
+
+Status
+```
+
+Click Asset
+
+Popup
+
+Fields
+
+```text
+Asset Name
+
+Serial Number
+
+Assign Date
+
+Remarks
+```
+
+Button
+
+```text
+Assign Asset
+```
+
+Toast
+
+```text
+Asset Assigned Successfully
+```
+
+---
+
+# Training Tab
+
+Cards
+
+```text
+Company Policies
+
+Security Training
+
+HR Orientation
+
+Project Training
+```
+
+Hover
+
+```text
+Duration
+
+Trainer
+
+Completion %
+```
+
+Click
+
+↓
+
+Training Details Page
+
+Progress Circle
+
+```text
+80%
+```
+
+---
+
+# Checklist Tab
+
+Steps
+
+```text
+Offer Accepted
+↓
+
+Documents Uploaded
+↓
+
+Assets Assigned
+↓
+
+Training Completed
+↓
+
+Employee Activated
+```
+
+Green
+
+```text
+Completed
+```
+
+Orange
+
+```text
+Pending
+```
+
+---
+
+# Timeline Tab
+
+Activities
+
+```text
+Offer Accepted
+
+PAN Uploaded
+
+Laptop Assigned
+
+Training Started
+
+Employee Activated
+```
+
+---
+
+# Table Hover Actions
+
+```text
+View
+
+Edit
+
+History
+
+Download
+```
+
+---
+
+# Popup Animation
+
+```text
+fadeIn
+
+zoomIn
+```
+
+---
+
+# Toast Position
+
+```text
+Top Right
+```
+
+Example
+
+```text
+Employee Activated Successfully
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 cards
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Drawer becomes
+
+```text
+Bottom Sheet
+```
+
+---
+
+# APIs
+
+### Employee Onboarding
+
+```javascript
+GET /api/onboarding
+
+GET /api/onboarding/:id
+
+POST /api/onboarding
+```
+
+---
+
+### Documents
+
+```javascript
+POST /api/documents
+
+GET /api/documents/:employeeId
+```
+
+---
+
+### Assets
+
+```javascript
+POST /api/assets/assign
+
+GET /api/assets
+```
+
+---
+
+# MongoDB Collections
+
+```text
+onboardings
+
+documents
+
+assets
+
+trainings
+
+checklists
+```
+
+---
+
+# Socket.IO Events
+
+When
+
+```text
+Document Uploaded
+
+Asset Assigned
+
+Training Completed
+
+Employee Activated
+```
+
+Update
+
+```text
+Cards
+
+Progress Bars
+
+Notifications
+
+Tables
+```
+
+Without Refresh
+
+---
+
+# Footer
+
+```text
+────────────────────
+
+Version 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+────────────────────
+```
+
+---
+
+# Flow
+
+```text
+Offer Accepted
+        ↓
+Documents Upload
+        ↓
+Asset Allocation
+        ↓
+Training Assignment
+        ↓
+Checklist Verification
+        ↓
+Employee Activated
+        ↓
+Notification Sent
+```
+==================================================================================================================
+# 🔥 Phase-4 Part 4.10 — Exit Management + Knowledge Transfer + Offboarding
+
+हा module Employee resignation पासून Full & Final Settlement पर्यंत संपूर्ण process automate करतो.
+
+---
+
+# 📍 Routes
+
+```text
+/hr/exit
+
+/hr/exit/resignations
+
+/hr/exit/clearance
+
+/hr/exit/fnf
+
+/hr/exit/interview
+
+/hr/exit/knowledge-transfer
+
+/hr/exit/offboarding
+```
+
+---
+
+# Exit Dashboard
+
+Top Banner
+
+```text
+Active Exit Requests : 8
+
+Pending Clearance : 5
+
+F&F Pending : 2
+
+Exit Interview Pending : 3
+```
+
+---
+
+# Cards
+
+### Resignation Requests
+
+Icon
+
+```text
+📤
+```
+
+Hover
+
+Shows
+
+```text
+Employee Name
+
+Department
+
+Last Working Date
+
+Status
+```
+
+Click
+
+↓
+
+```text
+/hr/exit/resignations
+```
+
+---
+
+### Clearance Pending
+
+Icon
+
+```text
+🔒
+```
+
+Hover
+
+Shows
+
+```text
+IT Clearance Pending
+
+Finance Clearance Pending
+
+Asset Return Pending
+```
+
+Click
+
+↓
+
+```text
+/hr/exit/clearance
+```
+
+---
+
+### F&F Settlement
+
+Icon
+
+```text
+💰
+```
+
+Hover
+
+Shows
+
+```text
+Salary Payable
+
+Leave Encashment
+
+Deductions
+```
+
+Click
+
+↓
+
+```text
+/hr/exit/fnf
+```
+
+---
+
+### Exit Interview
+
+Icon
+
+```text
+🎤
+```
+
+Hover
+
+```text
+Interview Date
+
+HR Assigned
+
+Status
+```
+
+Click
+
+↓
+
+```text
+/hr/exit/interview
+```
+
+---
+
+# Resignation Page
+
+Table
+
+```text
+Employee
+
+Department
+
+Applied Date
+
+Last Working Date
+
+Status
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+
+Approve
+
+Reject
+
+History
+```
+
+---
+
+# Click View
+
+Right Drawer Opens
+
+Width
+
+```text
+650px
+```
+
+Tabs
+
+```text
+Overview
+
+Timeline
+
+Projects
+
+Assets
+
+Documents
+
+Comments
+```
+
+---
+
+# Approve Button
+
+Popup
+
+Size
+
+```text
+500px
+```
+
+Fields
+
+```text
+Reason
+
+Notice Period
+
+Remarks
+```
+
+Buttons
+
+```text
+Approve
+
+Cancel
+```
+
+Toast
+
+```text
+Resignation Approved Successfully
+```
+
+---
+
+# Exit Flow
+
+```text
+Resignation Submitted
+          ↓
+Manager Approval
+          ↓
+HR Approval
+          ↓
+IT Clearance
+          ↓
+Asset Return
+          ↓
+Finance Clearance
+          ↓
+F&F Settlement
+          ↓
+Exit Interview
+          ↓
+Knowledge Transfer
+          ↓
+Employee Offboarded
+```
+
+---
+
+# Clearance Page
+
+Cards
+
+```text
+IT
+
+Admin
+
+Finance
+
+HR
+```
+
+---
+
+Hover Card
+
+Shows
+
+```text
+Responsible Person
+
+Pending Tasks
+
+Due Date
+```
+
+Click Card
+
+↓
+
+Table Opens
+
+Columns
+
+```text
+Task
+
+Assigned To
+
+Status
+
+Completed Date
+```
+
+Hover Row
+
+```text
+Approve
+
+Reject
+
+View
+```
+
+---
+
+# Asset Return Popup
+
+Fields
+
+```text
+Laptop Returned
+
+ID Card Returned
+
+Mouse Returned
+
+Remarks
+```
+
+Buttons
+
+```text
+Confirm Return
+
+Cancel
+```
+
+Toast
+
+```text
+Assets Returned Successfully
+```
+
+---
+
+# F&F Settlement Page
+
+Cards
+
+```text
+Pending Salary
+
+Leave Encashment
+
+Bonus
+
+Recovery
+```
+
+Hover
+
+Shows
+
+```text
+Amount
+
+Status
+
+Processed Date
+```
+
+Click Card
+
+↓
+
+Detailed Table
+
+```text
+Component
+
+Amount
+
+Type
+```
+
+---
+
+Buttons
+
+```text
+Generate Statement
+
+Download PDF
+
+History
+```
+
+---
+
+# Exit Interview Page
+
+Employee Card
+
+Contains
+
+```text
+Photo
+
+Department
+
+Manager
+
+Exit Date
+```
+
+Hover
+
+```text
+Interview Details
+
+Feedback
+
+Status
+```
+
+Click
+
+↓
+
+Popup
+
+Fields
+
+```text
+Reason For Leaving
+
+Work Culture Rating
+
+Manager Rating
+
+Suggestions
+
+Would Rejoin?
+```
+
+Buttons
+
+```text
+Submit Feedback
+```
+
+Toast
+
+```text
+Feedback Submitted Successfully
+```
+
+---
+
+# Knowledge Transfer
+
+Kanban Layout
+
+```text
+Pending
+
+In Progress
+
+Completed
+```
+
+Cards
+
+Contain
+
+```text
+Project Name
+
+Assigned Person
+
+Due Date
+```
+
+Hover
+
+```text
+View Documents
+
+Assign Backup
+
+Comments
+```
+
+Click Card
+
+↓
+
+Drawer Opens
+
+Tabs
+
+```text
+Files
+
+Checklist
+
+Comments
+
+Timeline
+```
+
+---
+
+# Offboarding Page
+
+Checklist
+
+```text
+Account Disabled
+
+Email Closed
+
+Assets Returned
+
+Salary Settled
+
+Knowledge Transfer Done
+
+Employee Archived
+```
+
+Green Badge
+
+```text
+Completed
+```
+
+Orange Badge
+
+```text
+Pending
+```
+
+---
+
+# Timeline
+
+Shows
+
+```text
+Resignation Submitted
+
+Manager Approved
+
+Assets Returned
+
+F&F Generated
+
+Interview Completed
+
+Employee Archived
+```
+
+---
+
+# Hover Actions
+
+Table Row Hover
+
+```text
+View
+
+Edit
+
+History
+
+Comments
+```
+
+---
+
+# Drawer Animation
+
+```text
+slideRight
+
+fadeIn
+```
+
+---
+
+# Popup Animation
+
+```text
+zoomIn
+
+fadeIn
+```
+
+---
+
+# Toast Position
+
+```text
+Top Right
+```
+
+Example
+
+```text
+Employee Offboarded Successfully
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 cards
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Sidebar
+
+↓
+
+Hamburger Menu
+
+Drawer
+
+↓
+
+Bottom Sheet
+
+---
+
+# APIs
+
+### Resignation
+
+```javascript
+GET /api/exits
+
+POST /api/exits
+
+PUT /api/exits/:id
+```
+
+---
+
+### Clearance
+
+```javascript
+GET /api/clearance
+
+POST /api/clearance
+```
+
+---
+
+### F&F
+
+```javascript
+GET /api/fnf
+
+POST /api/fnf/generate
+```
+
+---
+
+### Exit Interview
+
+```javascript
+POST /api/exit-feedback
+```
+
+---
+
+### Knowledge Transfer
+
+```javascript
+GET /api/knowledge-transfer
+
+POST /api/knowledge-transfer
+```
+
+---
+
+# MongoDB Collections
+
+```text
+exits
+
+clearances
+
+assetReturns
+
+fnfSettlements
+
+exitInterviews
+
+knowledgeTransfers
+
+offboardings
+```
+
+---
+
+# Socket.IO Events
+
+When
+
+```text
+Resignation Approved
+
+Asset Returned
+
+F&F Generated
+
+Interview Submitted
+
+Knowledge Transfer Completed
+
+Employee Archived
+```
+
+Realtime Update
+
+```text
+Dashboard
+
+Notifications
+
+Tables
+
+Cards
+
+Timeline
+
+Employee Directory
+```
+
+Without Refresh
+
+---
+
+# Footer
+
+```text
+────────────────────────
+
+Version 2.0.0
+
+Server 🟢 Connected
+
+Last Backup : 11:30 PM
+
+© JMKCGRPINDIA
+
+Created By Punam ❤️
+
+────────────────────────
+
+# 🔥 PART 5.1
+
+# Performance Dashboard + Goals + OKR
+
+---
+
+# Sidebar
+
+```text
+Performance ▼
+
+Dashboard
+Goals & OKR
+Milestones
+Goal Progress
+Goal History
+Performance History
+```
+
+Current page active
+
+```css
+background:#DBEAFE;
+border-left:4px solid #2563EB;
+```
+
+---
+
+# Routes
+
+```text
+/hr/performance
+
+/hr/performance/goals
+
+/hr/performance/milestones
+
+/hr/performance/progress
+
+/hr/performance/history
+```
+
+---
+
+# Dashboard Header
+
+Left Side
+
+```text
+Performance Dashboard
+```
+
+Right Side
+
+Buttons
+
+```text
++ Create Goal
+
+Filter
+
+Export Excel
+
+Analytics
+```
+
+---
+
+# Top Statistics Cards
+
+### Pending Reviews
+
+```text
+📝
+
+125 Employees
+
+Current Cycle Q2
+```
+
+Hover
+
+```text
+Department Wise Pending
+
+Last Updated
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/performance/history/pending
+```
+
+---
+
+### Completed Reviews
+
+```text
+✅
+
+250 Employees
+```
+
+Hover
+
+```text
+Completion %
+
+Average Rating
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/performance/history/completed
+```
+
+---
+
+### Top Performers
+
+```text
+🏆
+
+35 Employees
+```
+
+Hover
+
+```text
+Average Score
+
+Promotion Eligible
+
+View Profile →
+```
+
+Click
+
+↓
+
+```text
+/hr/performance/top-performers
+```
+
+---
+
+### PIP Employees
+
+```text
+⚠️
+
+12 Employees
+```
+
+Hover
+
+```text
+Review Date
+
+Manager Name
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/performance/pip
+```
+
+---
+
+Animation
+
+```css
+transform:scale(1.03);
+transition:.3s;
+box-shadow:0 15px 30px rgba(37,99,235,.2);
+```
+
+---
+
+# Goals & OKR
+
+Route
+
+```text
+/hr/performance/goals
+```
+
+---
+
+# Cards
+
+### Completed Goals
+
+```text
+🎯
+
+420 Goals
+```
+
+---
+
+### In Progress
+
+```text
+⏳
+
+210 Goals
+```
+
+---
+
+### Overdue
+
+```text
+⚠️
+
+35 Goals
+```
+
+---
+
+### Achieved
+
+```text
+🏆
+
+390 Goals
+```
+
+---
+
+Hover
+
+```text
+Department
+
+Goal Owner
+
+Progress %
+
+View Details →
+```
+
+---
+
+Click In Progress
+
+↓
+
+```text
+/hr/performance/goals/in-progress
+```
+
+---
+
+# Goal Table
+
+Columns
+
+```text
+Goal Name
+
+Department
+
+Assigned To
+
+Start Date
+
+End Date
+
+Progress %
+
+Status
+```
+
+---
+
+# Row Hover
+
+Buttons Appear
+
+```text
+View
+
+Edit
+
+Comments
+
+Timeline
+
+History
+
+Delete
+```
+
+---
+
+# View
+
+Right Drawer Opens
+
+Width
+
+```text
+700px
+```
+
+Tabs
+
+```text
+Overview
+
+Progress
+
+Timeline
+
+Comments
+
+Attachments
+```
+
+---
+
+Overview
+
+```text
+Goal Name
+
+Department
+
+Owner
+
+Priority
+
+Target
+```
+
+---
+
+Progress
+
+Chart
+
+```text
+Month Wise %
+
+Completion Graph
+```
+
+---
+
+Timeline
+
+```text
+Goal Created
+
+Manager Assigned
+
+Progress Updated
+
+Completed
+```
+
+---
+
+Comments
+
+```text
+Manager Comments
+
+Employee Comments
+
+HR Comments
+```
+
+---
+
+Attachments
+
+```text
+PDF
+
+Excel
+
+Documents
+```
+
+---
+
+# Create Goal Popup
+
+Width
+
+```text
+650px
+```
+
+Fields
+
+```text
+Goal Name
+
+Goal Type
+
+Department
+
+Assign To
+
+Start Date
+
+End Date
+
+Priority
+
+Weightage %
+
+Description
+
+Attachment
+```
+
+Buttons
+
+```text
+Cancel
+
+Save
+```
+
+Toast
+
+```text
+Goal Created Successfully
+```
+
+---
+
+# Goal Flow
+
+```text
+Admin Goal
+     ↓
+Department Goal
+     ↓
+Manager Goal
+     ↓
+Employee Goal
+     ↓
+Milestone
+     ↓
+Progress Tracking
+     ↓
+Goal Completed
+```
+
+---
+
+# Milestones Page
+
+Route
+
+```text
+/hr/performance/milestones
+```
+
+Cards
+
+```text
+Completed Milestones
+
+Pending
+
+Overdue
+
+Critical
+```
+
+Hover
+
+```text
+Owner
+
+Due Date
+
+View Details →
+```
+
+Click
+
+↓
+
+Milestone Details Page
+
+---
+
+Table
+
+```text
+Milestone
+
+Goal
+
+Owner
+
+Due Date
+
+Status
+```
+
+Hover Row
+
+```text
+View
+
+Edit
+
+Complete
+
+History
+```
+
+---
+
+# Progress Page
+
+Route
+
+```text
+/hr/performance/progress
+```
+
+Charts
+
+```text
+Department Wise Progress
+
+Employee Wise Progress
+
+Quarter Wise Progress
+
+Heatmap
+```
+
+---
+
+Cards
+
+```text
+Average Completion
+
+Highest Goal Score
+
+Lowest Goal Score
+
+Department Ranking
+```
+
+---
+
+# Goal History Page
+
+Route
+
+```text
+/hr/performance/history
+```
+
+Columns
+
+```text
+Goal
+
+Owner
+
+Completion Date
+
+Rating
+
+Status
+```
+
+Hover Row
+
+```text
+View
+
+Download
+
+History
+
+Comments
+```
+
+---
+
+# Notifications
+
+```text
+Goal Assigned Successfully
+
+Goal Updated Successfully
+
+Milestone Completed
+
+Goal Achieved
+```
+
+Position
+
+```text
+Top Right
+```
+
+---
+
+# Socket Events
+
+```javascript
+goalCreated
+
+goalUpdated
+
+goalAssigned
+
+milestoneCompleted
+
+goalCompleted
+```
+
+Dashboard updates instantly.
+
+---
+
+# MongoDB Collections
+
+```text
+goals
+
+goalMilestones
+
+goalProgress
+
+goalComments
+
+goalHistories
+
+goalAttachments
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/goals
+
+POST /api/goals
+
+PUT /api/goals/:id
+
+DELETE /api/goals/:id
+
+GET /api/milestones
+
+POST /api/milestones
+
+PUT /api/progress/:id
+```
+
+---
+
+# Role Flow
+
+```text
+Admin
+ ↓
+HR
+ ↓
+Department Head
+ ↓
+Manager
+ ↓
+Employee
+```
+
+---
+
+# Mobile Responsive
+
+Desktop
+
+```text
+4 cards
+```
+
+Tablet
+
+```text
+2 cards
+```
+
+Mobile
+
+```text
+1 card
+```
+
+Sidebar
+
+```text
+Hamburger Menu
+```
+
+Drawers
+
+```text
+Bottom Sheet
+```
+
+Tables
+
+```text
+Horizontal Scroll
+```
+
+---
+
+# Cross Module Integration
+
+```text
+Employee
+     ↓
+Performance Goals
+     ↓
+KPI Tracker
+     ↓
+Appraisal
+     ↓
+360 Feedback
+     ↓
+Rewards
+     ↓
+Analytics
+     ↓
+AI Insights
+---------------------------------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE 5.2 — KPI Tracker + Scorecards (Enterprise HRMS Detailed Flow)
+
+हा module Performance Management मधला सर्वात महत्त्वाचा module आहे. यात Company → Department → Team → Employee level KPI track केले जातात.
+
+# Sidebar
+
+```text
+Performance ▼
+ ├── Dashboard
+ ├── Goals & OKR
+ ├── KPI Tracker ⭐
+ ├── Department KPI
+ ├── Employee KPI
+ ├── Scorecards
+ ├── KPI Analytics
+ ├── KPI History
+```
+
+Route
+
+```text
+/hr/performance/kpi
+```
+
+---
+
+# KPI Dashboard Page
+
+Top Header
+
+```text
+Search Employee
+Filter Department
+Filter Quarter
+Filter Status
+Export Excel
++ Create KPI
+```
+
+---
+
+# Summary Cards
+
+### Total KPIs
+
+```text
+520
+```
+
+Hover Animation
+
+```text
+scale(1.03)
+blue glow shadow
+```
+
+Tooltip
+
+```text
+Total active KPIs
+```
+
+---
+
+### Achieved KPIs
+
+```text
+390
+75%
+```
+
+Green progress ring animation
+
+---
+
+### In Progress
+
+```text
+95
+```
+
+Yellow border
+
+---
+
+### Overdue
+
+```text
+35
+```
+
+Red pulse animation
+
+---
+
+### Top Performers
+
+```text
+15 Employees
+```
+
+Click
+
+↓
+
+Redirect
+
+```text
+/hr/performance/top-performers
+```
+
+---
+
+# KPI Table
+
+Columns
+
+```text
+Employee
+Department
+KPI Name
+Target
+Achieved
+Progress %
+Weightage
+Due Date
+Status
+Action
+```
+
+Example
+
+| Employee | KPI                 | Target | Achieved | Progress |
+| -------- | ------------------- | ------ | -------- | -------- |
+| Rahul    | Sales Conversion    | 100    | 87       | 87%      |
+| Priya    | Recruitment Closure | 30     | 25       | 83%      |
+
+---
+
+Hover Row
+
+Row color
+
+```text
+#DBEAFE
+```
+
+Actions appear
+
+```text
+View
+Edit
+History
+Comments
+Delete
+```
+
+Fade Animation
+
+```text
+opacity 0→1
+```
+
+---
+
+# Click View
+
+Redirect
+
+```text
+/hr/performance/kpi-details/:id
+```
+
+---
+
+# KPI Details Page
+
+Breadcrumb
+
+```text
+Performance > KPI Tracker > KPI Details
+```
+
+---
+
+# Left Card
+
+Employee Information
+
+```text
+Photo
+Name
+Department
+Manager
+Designation
+Review Cycle
+```
+
+---
+
+# Center Card
+
+KPI Information
+
+```text
+KPI Name
+
+Target
+
+Achieved
+
+Weightage
+
+Progress %
+```
+
+Circular Progress Bar
+
+```text
+87%
+```
+
+Animated loading
+
+---
+
+# Tabs
+
+```text
+Overview
+Timeline
+Comments
+Attachments
+History
+Analytics
+```
+
+---
+
+# Overview Tab
+
+Displays
+
+```text
+Description
+Start Date
+End Date
+Priority
+Current Stage
+```
+
+---
+
+# Timeline Tab
+
+Vertical timeline
+
+```text
+KPI Created
+
+Manager Assigned
+
+Employee Started
+
+Mid Review
+
+Final Review
+```
+
+Hover
+
+Shows
+
+```text
+Date
+Time
+Updated By
+```
+
+---
+
+# Comments Tab
+
+Chat UI
+
+```text
+Manager Comment
+
+Employee Comment
+
+HR Comment
+```
+
+Real-time Socket.IO
+
+```javascript
+commentAdded
+```
+
+Toast
+
+```text
+Comment Added Successfully
+```
+
+---
+
+# Attachments Tab
+
+Files
+
+```text
+Excel
+PDF
+Screenshot
+Documents
+```
+
+Hover
+
+```text
+Preview
+Download
+Delete
+```
+
+---
+
+# History Tab
+
+Table
+
+```text
+Old Target
+Updated Target
+Updated By
+Date
+```
+
+---
+
+# Analytics Tab
+
+Charts
+
+```text
+Monthly Progress
+Weekly Achievement
+Completion Trend
+```
+
+Chart animation
+
+```text
+grow effect
+```
+
+---
+
+# Create KPI Popup
+
+Button
+
+```text
++ Create KPI
+```
+
+Popup
+
+Center Zoom Animation
+
+---
+
+Fields
+
+### Employee
+
+Dropdown
+
+```text
+Rahul
+Priya
+Sneha
+```
+
+---
+
+### KPI Name
+
+```text
+Sales Conversion
+```
+
+---
+
+### Target
+
+```text
+100
+```
+
+---
+
+### Weightage
+
+```text
+30%
+```
+
+---
+
+### Start Date
+
+Calendar Picker
+
+---
+
+### End Date
+
+Calendar Picker
+
+---
+
+### Priority
+
+Dropdown
+
+```text
+Low
+Medium
+High
+Critical
+```
+
+Color
+
+```text
+Low → Green
+Medium → Blue
+High → Orange
+Critical → Red
+```
+
+---
+
+Buttons
+
+```text
+Cancel
+Save KPI
+```
+
+Save Animation
+
+```text
+Loading spinner
+```
+
+Toast
+
+```text
+KPI Created Successfully
+```
+
+Socket Event
+
+```javascript
+kpiCreated
+```
+
+---
+
+# Edit KPI Drawer
+
+Slides from right
+
+Width
+
+```text
+500px
+```
+
+Tabs
+
+```text
+Basic Info
+Target Update
+Comments
+History
+```
+
+---
+
+# Target Update
+
+Fields
+
+```text
+Old Target
+
+New Target
+
+Reason
+```
+
+Submit
+
+↓
+
+Toast
+
+```text
+Target Updated
+```
+
+Socket Event
+
+```javascript
+kpiUpdated
+```
+
+---
+
+# Scorecards Module
+
+Route
+
+```text
+/hr/performance/scorecards
+```
+
+---
+
+Cards
+
+```text
+Excellent
+Good
+Average
+Poor
+```
+
+Hover
+
+```text
+scale(1.04)
+shadow animation
+```
+
+---
+
+Table
+
+Columns
+
+```text
+Employee
+Overall Score
+KPI Score
+Attendance Score
+Behaviour Score
+Final Grade
+```
+
+Grades
+
+```text
+A+
+A
+B+
+B
+C
+```
+
+Colors
+
+```text
+A+ Green
+
+A Blue
+
+B Yellow
+
+C Red
+```
+
+---
+
+Click Employee
+
+Redirect
+
+```text
+/hr/performance/scorecards/:id
+```
+
+---
+
+# Employee Scorecard Page
+
+Sections
+
+### KPI Score
+
+Progress Circle
+
+---
+
+### Attendance Score
+
+Bar Chart
+
+---
+
+### Behaviour Score
+
+Radar Chart
+
+---
+
+### Manager Rating
+
+Stars
+
+```text
+★★★★★
+```
+
+---
+
+### Final Grade
+
+Large Card
+
+```text
+A+
+```
+
+Gold animation
+
+---
+
+# KPI Analytics Page
+
+Route
+
+```text
+/hr/performance/kpi-analytics
+```
+
+Charts
+
+```text
+Department Performance
+
+Employee Performance
+
+Monthly Completion
+
+Quarterly Trend
+
+Heatmap
+```
+
+Hover Chart
+
+Shows
+
+```text
+Exact values
+Percentage
+```
+
+---
+
+# Export
+
+Buttons
+
+```text
+Excel
+PDF
+CSV
+Email
+```
+
+Toast
+
+```text
+Report Generated Successfully
+```
+
+---
+
+# MongoDB Collections
+
+```text
+kpis
+
+kpiHistories
+
+scorecards
+
+kpiComments
+
+kpiAttachments
+
+kpiAnalytics
+```
+
+---
+
+# Socket Events
+
+```javascript
+kpiCreated
+
+kpiUpdated
+
+commentAdded
+
+scoreUpdated
+
+reportGenerated
+```
+
+---
+
+# Animations Used
+
+```css
+fadeIn
+slideRight
+zoomIn
+pulse
+scale(1.03)
+blueShadow
+```
+
+---
+
+# Phase 5.2 Complete Flow
+
+```text
+KPI Dashboard
+      ↓
+Create KPI
+      ↓
+Employee Assigned
+      ↓
+Progress Tracking
+      ↓
+Comments
+      ↓
+History
+      ↓
+Analytics
+      ↓
+Scorecard Generation
+      ↓
+Performance Reports
+-----------------------------------------------------------------------------------------------------------
+# 🔥 PHASE 5.3 — Appraisal Cycle + Reviews (Enterprise HRMS Detailed Flow)
+
+हा पूर्ण module Employee Performance Evaluation साठी आहे.
+
+Flow :
+
+```text
+Self Review
+      ↓
+Manager Review
+      ↓
+360 Feedback
+      ↓
+HR Review
+      ↓
+Final Rating
+      ↓
+Salary Revision
+      ↓
+Promotion Recommendation
+      ↓
+Appraisal History
+```
+
+---
+
+# Sidebar
+
+```text
+Performance ▼
+
+Dashboard
+Goals & OKR
+KPI Tracker
+Appraisal Cycle ⭐
+Self Review
+Manager Review
+HR Review
+360 Feedback
+Salary Revision
+Promotion
+Appraisal History
+```
+
+Route
+
+```text
+/hr/performance/appraisal
+```
+
+---
+
+# Appraisal Dashboard
+
+Top Filters
+
+```text
+Search Employee
+
+Department
+
+Review Cycle
+
+Status
+
+Year
+
+Export
+```
+
+---
+
+# Dashboard Cards
+
+### Pending Reviews
+
+```text
+38
+```
+
+Yellow Card
+
+Hover
+
+```text
+View Pending Reviews →
+```
+
+---
+
+### Completed Reviews
+
+```text
+165
+```
+
+Green Card
+
+---
+
+### Approved Reviews
+
+```text
+145
+```
+
+Blue Card
+
+---
+
+### Rejected Reviews
+
+```text
+20
+```
+
+Red Card
+
+Pulse animation
+
+---
+
+### Salary Revisions
+
+```text
+45
+```
+
+Purple Card
+
+---
+
+Hover Card
+
+```css
+transform:scale(1.03);
+box-shadow:blue glow;
+```
+
+---
+
+# Appraisal Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Manager
+
+Cycle
+
+Current Stage
+
+Rating
+
+Status
+
+Action
+```
+
+Example
+
+| Employee | Stage          | Rating |
+| -------- | -------------- | ------ |
+| Rahul    | Manager Review | 4.5    |
+| Priya    | HR Review      | 4.2    |
+
+---
+
+Hover Row
+
+Background
+
+```text
+#DBEAFE
+```
+
+Actions appear
+
+```text
+View
+Edit
+Comments
+History
+Approve
+Reject
+```
+
+Animation
+
+```css
+fadeIn
+```
+
+---
+
+# Click View
+
+Redirect
+
+```text
+/hr/performance/appraisal/:id
+```
+
+---
+
+# Appraisal Details Page
+
+Breadcrumb
+
+```text
+Performance > Appraisal > Employee Appraisal
+```
+
+---
+
+# Employee Profile Card
+
+Contains
+
+```text
+Photo
+
+Name
+
+Department
+
+Designation
+
+Manager
+
+Joining Date
+
+Current Salary
+```
+
+---
+
+# Progress Tracker
+
+Horizontal Stepper
+
+```text
+Self Review
+↓
+Manager Review
+↓
+360 Feedback
+↓
+HR Review
+↓
+Final Rating
+↓
+Salary Revision
+```
+
+Current step glows blue.
+
+---
+
+# Tabs
+
+```text
+Overview
+
+Self Review
+
+Manager Review
+
+Feedback
+
+Documents
+
+History
+```
+
+---
+
+# Self Review Tab
+
+Route
+
+```text
+/hr/performance/self-review
+```
+
+Questions
+
+### Achievements
+
+Textarea
+
+---
+
+### Challenges Faced
+
+Textarea
+
+---
+
+### Trainings Completed
+
+Multi-select
+
+---
+
+### Goals Achieved
+
+Checkbox
+
+---
+
+### Goals Next Quarter
+
+Textarea
+
+---
+
+### Rating Yourself
+
+Stars
+
+```text
+★★★★★
+```
+
+---
+
+Buttons
+
+```text
+Save Draft
+
+Submit Review
+```
+
+Loading Animation
+
+```css
+spinner
+```
+
+Toast
+
+```text
+Self Review Submitted Successfully
+```
+
+Socket Event
+
+```javascript
+selfReviewSubmitted
+```
+
+---
+
+# Manager Review Page
+
+Route
+
+```text
+/hr/performance/manager-review
+```
+
+Evaluation Categories
+
+### Technical Skills
+
+Slider
+
+```text
+1-5
+```
+
+---
+
+### Communication
+
+Slider
+
+---
+
+### Leadership
+
+Slider
+
+---
+
+### Teamwork
+
+Slider
+
+---
+
+### Attendance
+
+Slider
+
+---
+
+### Behaviour
+
+Slider
+
+---
+
+Manager Comments
+
+```text
+Strengths
+
+Weaknesses
+
+Suggestions
+```
+
+Buttons
+
+```text
+Approve
+
+Send Back
+
+Save Draft
+```
+
+Toast
+
+```text
+Manager Review Completed
+```
+
+---
+
+# 360 Feedback
+
+Route
+
+```text
+/hr/performance/360-feedback
+```
+
+Participants
+
+```text
+Manager
+
+Peers
+
+Subordinates
+
+Self
+```
+
+Cards
+
+```text
+Positive Feedback
+
+Neutral Feedback
+
+Improvement Areas
+```
+
+Hover Card
+
+Shows
+
+```text
+Feedback Count
+
+Average Rating
+```
+
+---
+
+Click Feedback
+
+Popup opens
+
+Contains
+
+```text
+Reviewer
+
+Comments
+
+Date
+
+Rating
+```
+
+---
+
+# HR Review
+
+Route
+
+```text
+/hr/performance/hr-review
+```
+
+Fields
+
+```text
+Previous Rating
+
+Current Rating
+
+Promotion Eligible
+
+Salary Revision %
+
+Remarks
+```
+
+Dropdown
+
+```text
+Promotion Eligible
+
+Yes
+
+No
+```
+
+Buttons
+
+```text
+Approve
+
+Reject
+
+Send Back
+```
+
+---
+
+Toast
+
+```text
+HR Review Submitted
+```
+
+Socket Event
+
+```javascript
+hrReviewCompleted
+```
+
+---
+
+# Final Rating Page
+
+Route
+
+```text
+/hr/performance/final-rating
+```
+
+Cards
+
+### KPI Score
+
+```text
+85%
+```
+
+---
+
+### Attendance Score
+
+```text
+90%
+```
+
+---
+
+### Behaviour Score
+
+```text
+92%
+```
+
+---
+
+### Final Rating
+
+Large Card
+
+```text
+4.5 / 5
+```
+
+Color
+
+```text
+Green
+```
+
+Animation
+
+```css
+zoomIn
+```
+
+---
+
+# Salary Revision Page
+
+Route
+
+```text
+/hr/performance/salary-revision
+```
+
+Current Salary
+
+```text
+₹8,00,000
+```
+
+Proposed Salary
+
+```text
+₹9,20,000
+```
+
+Increment
+
+```text
+15%
+```
+
+Bonus
+
+```text
+₹50,000
+```
+
+Buttons
+
+```text
+Approve
+
+Reject
+```
+
+Popup
+
+```text
+Reason
+
+Effective Date
+
+Comments
+```
+
+Toast
+
+```text
+Salary Revision Approved
+```
+
+---
+
+# Promotion Recommendation Page
+
+Route
+
+```text
+/hr/performance/promotion
+```
+
+Current Designation
+
+```text
+Software Engineer
+```
+
+Recommended Position
+
+```text
+Senior Software Engineer
+```
+
+Promotion Date
+
+Calendar
+
+---
+
+Manager Remarks
+
+Textarea
+
+---
+
+Buttons
+
+```text
+Approve Promotion
+
+Reject
+```
+
+---
+
+# Documents Tab
+
+Files
+
+```text
+Self Review PDF
+
+Manager Report
+
+Salary Letter
+
+Promotion Letter
+```
+
+Hover
+
+```text
+Preview
+
+Download
+
+Delete
+```
+
+---
+
+# History Tab
+
+Table
+
+```text
+Year
+
+Rating
+
+Increment %
+
+Promotion
+
+Reviewer
+```
+
+Example
+
+| Year | Rating | Increment |
+| ---- | ------ | --------- |
+| 2024 | 4.2    | 12%       |
+| 2025 | 4.5    | 15%       |
+
+---
+
+# Appraisal Analytics
+
+Route
+
+```text
+/hr/performance/appraisal-analytics
+```
+
+Charts
+
+```text
+Department Ratings
+
+Average Ratings
+
+Promotion Trend
+
+Salary Increment Trend
+```
+
+Animation
+
+```css
+grow animation
+```
+
+---
+
+# Export
+
+Buttons
+
+```text
+Export Excel
+
+Export PDF
+
+Email Report
+```
+
+Toast
+
+```text
+Report Generated Successfully
+```
+
+---
+
+# MongoDB Collections
+
+```text
+appraisals
+
+selfReviews
+
+managerReviews
+
+hrReviews
+
+finalRatings
+
+salaryRevisions
+
+promotions
+
+appraisalHistory
+```
+
+---
+
+# Socket Events
+
+```javascript
+selfReviewSubmitted
+
+managerReviewCompleted
+
+feedbackAdded
+
+hrReviewCompleted
+
+salaryRevisionApproved
+
+promotionApproved
+```
+
+---
+
+# Animations
+
+```css
+fadeIn
+slideRight
+zoomIn
+pulse
+blueGlow
+spinner
+```
+
+---
+
+# Complete Flow
+
+```text
+Employee
+    ↓
+Self Review
+    ↓
+Manager Review
+    ↓
+360 Feedback
+    ↓
+HR Review
+    ↓
+Final Rating
+    ↓
+Salary Revision
+    ↓
+Promotion Recommendation
+    ↓
+History
+    ↓
+Reports
+------------------------------------------------------------------------------------
+# 🔥 PHASE 5.4 — 360° Feedback + PIP (Performance Improvement Plan)
+
+हा Phase Employee Performance Improvement आणि Complete Feedback Cycle साठी आहे.
+
+Flow :
+
+```text
+Employee
+    ↓
+360° Feedback
+    ↓
+Peer Feedback
+    ↓
+Manager Feedback
+    ↓
+Subordinate Feedback
+    ↓
+Improvement Areas
+    ↓
+PIP Creation
+    ↓
+Action Plan
+    ↓
+Review Meetings
+    ↓
+Progress Tracking
+    ↓
+Closure
+```
+
+---
+
+# Sidebar
+
+```text
+Performance ▼
+
+Dashboard
+Goals & OKR
+KPI Tracker
+Appraisal
+360 Feedback ⭐
+Peer Feedback
+Manager Feedback
+Subordinate Feedback
+PIP
+Action Plans
+Review Meetings
+Improvement Tracking
+Closure
+```
+
+---
+
+# 360 Feedback Dashboard
+
+Route
+
+```text
+/hr/performance/360-feedback
+```
+
+---
+
+# Top Cards
+
+### Total Feedbacks
+
+```text
+850
+```
+
+Hover
+
+```text
+View Details →
+```
+
+Animation
+
+```css
+scale(1.03)
+blue shadow
+```
+
+---
+
+### Positive Feedback
+
+Green Card
+
+```text
+520
+```
+
+---
+
+### Neutral Feedback
+
+Yellow Card
+
+```text
+210
+```
+
+---
+
+### Improvement Areas
+
+Red Card
+
+```text
+120
+```
+
+Pulse Animation
+
+---
+
+### Pending Responses
+
+Orange Card
+
+```text
+35
+```
+
+---
+
+# Filters
+
+```text
+Search Employee
+
+Department
+
+Review Cycle
+
+Feedback Type
+
+Status
+```
+
+---
+
+# Feedback Table
+
+Columns
+
+```text
+Employee
+
+Reviewer
+
+Role
+
+Feedback Type
+
+Rating
+
+Status
+
+Action
+```
+
+Example
+
+| Employee | Reviewer | Type    | Rating |
+| -------- | -------- | ------- | ------ |
+| Rahul    | Priya    | Peer    | 4.2    |
+| Sneha    | Amit     | Manager | 4.8    |
+
+---
+
+Hover Row
+
+Background
+
+```css
+#DBEAFE
+```
+
+Actions appear
+
+```text
+View
+Edit
+History
+Comments
+Delete
+```
+
+Animation
+
+```css
+fadeIn
+```
+
+---
+
+# Click View
+
+Redirect
+
+```text
+/hr/performance/360-feedback/:id
+```
+
+---
+
+# Feedback Details Page
+
+Tabs
+
+```text
+Overview
+Positive
+Neutral
+Improvement Areas
+Comments
+History
+Analytics
+```
+
+---
+
+# Overview Tab
+
+Displays
+
+```text
+Employee Name
+
+Department
+
+Manager
+
+Current Rating
+
+Cycle
+```
+
+---
+
+# Positive Feedback Tab
+
+Cards
+
+```text
+Communication
+
+Leadership
+
+Teamwork
+
+Technical Skills
+```
+
+Hover Card
+
+Shows
+
+```text
+Average Rating
+
+Reviewer Count
+```
+
+---
+
+# Improvement Areas
+
+Cards
+
+```text
+Attendance
+
+Task Completion
+
+Time Management
+
+Behavior
+```
+
+Red Border Animation
+
+---
+
+# Comments Section
+
+Chat UI
+
+```text
+Peer Comment
+
+Manager Comment
+
+HR Comment
+```
+
+Socket Event
+
+```javascript
+feedbackAdded
+```
+
+Toast
+
+```text
+New Feedback Added
+```
+
+---
+
+# Peer Feedback Module
+
+Route
+
+```text
+/hr/performance/peer-feedback
+```
+
+Popup Form
+
+Fields
+
+```text
+Employee
+
+Communication
+
+Collaboration
+
+Problem Solving
+
+Comments
+
+Rating
+```
+
+Buttons
+
+```text
+Save Draft
+
+Submit
+```
+
+Toast
+
+```text
+Peer Feedback Submitted
+```
+
+---
+
+# Manager Feedback Module
+
+Route
+
+```text
+/hr/performance/manager-feedback
+```
+
+Fields
+
+```text
+Leadership
+
+Productivity
+
+Quality
+
+Attendance
+
+Technical Skills
+
+Remarks
+```
+
+Slider
+
+```text
+1-5
+```
+
+---
+
+# Subordinate Feedback
+
+Route
+
+```text
+/hr/performance/subordinate-feedback
+```
+
+Fields
+
+```text
+Leadership
+
+Supportiveness
+
+Team Handling
+
+Communication
+
+Remarks
+```
+
+Anonymous Option
+
+Checkbox
+
+```text
+Anonymous Feedback
+```
+
+---
+
+# Analytics Page
+
+Route
+
+```text
+/hr/performance/feedback-analytics
+```
+
+Charts
+
+```text
+Department Ratings
+
+Top Strengths
+
+Improvement Areas
+
+Monthly Feedback Trend
+
+Average Rating
+```
+
+Chart Animation
+
+```css
+grow effect
+```
+
+---
+
+# PIP Module
+
+Route
+
+```text
+/hr/performance/pip
+```
+
+---
+
+# Dashboard Cards
+
+### Active PIP
+
+Blue Card
+
+```text
+28
+```
+
+---
+
+### Completed
+
+Green Card
+
+```text
+95
+```
+
+---
+
+### Overdue
+
+Red Card
+
+```text
+8
+```
+
+Pulse Animation
+
+---
+
+### Under Review
+
+Orange Card
+
+```text
+12
+```
+
+---
+
+# PIP Table
+
+Columns
+
+```text
+Employee
+
+Issue
+
+Manager
+
+Start Date
+
+End Date
+
+Status
+
+Action
+```
+
+---
+
+Hover Row
+
+Actions
+
+```text
+View
+Edit
+History
+Close
+```
+
+---
+
+# Create PIP Popup
+
+Button
+
+```text
++ Create PIP
+```
+
+Center Modal Animation
+
+```css
+zoomIn
+```
+
+Fields
+
+### Employee
+
+Dropdown
+
+---
+
+### Issue Type
+
+```text
+Low Performance
+
+Attendance
+
+Behaviour
+
+Task Delay
+```
+
+---
+
+### Severity
+
+```text
+Low
+Medium
+High
+Critical
+```
+
+Colors
+
+```text
+Green
+Blue
+Orange
+Red
+```
+
+---
+
+### Description
+
+Textarea
+
+---
+
+### Target Improvement %
+
+```text
+20%
+```
+
+---
+
+### Review Duration
+
+```text
+30 Days
+60 Days
+90 Days
+```
+
+---
+
+Buttons
+
+```text
+Cancel
+
+Save PIP
+```
+
+Toast
+
+```text
+PIP Created Successfully
+```
+
+Socket Event
+
+```javascript
+pipCreated
+```
+
+---
+
+# PIP Details Page
+
+Route
+
+```text
+/hr/performance/pip/:id
+```
+
+---
+
+# Progress Stepper
+
+```text
+Issue Identified
+      ↓
+Action Plan
+      ↓
+Review Meeting
+      ↓
+Progress Tracking
+      ↓
+Closure
+```
+
+Current Step
+
+Blue Glow
+
+---
+
+# Tabs
+
+```text
+Overview
+Action Plans
+Meetings
+Progress
+Attachments
+History
+```
+
+---
+
+# Action Plans Tab
+
+Table
+
+```text
+Task
+
+Owner
+
+Deadline
+
+Status
+```
+
+Buttons
+
+```text
+Add Task
+
+Edit
+
+Delete
+```
+
+---
+
+# Review Meetings
+
+Calendar Timeline
+
+```text
+Weekly Review
+
+Monthly Review
+
+Final Review
+```
+
+Hover
+
+Shows
+
+```text
+Date
+
+Attendees
+
+Meeting Notes
+```
+
+---
+
+# Progress Tracking
+
+Progress Bar
+
+```text
+68%
+```
+
+Animation
+
+```css
+width animation
+```
+
+---
+
+Metrics
+
+```text
+Attendance Improvement
+
+Task Completion
+
+Quality Score
+
+Behaviour Score
+```
+
+---
+
+# Closure Page
+
+Buttons
+
+```text
+Successful Completion
+
+Extend PIP
+
+Terminate PIP
+```
+
+Popup
+
+```text
+Final Remarks
+
+Manager Comments
+
+HR Comments
+```
+
+Toast
+
+```text
+PIP Closed Successfully
+```
+
+Socket Event
+
+```javascript
+pipClosed
+```
+
+---
+
+# History Page
+
+Columns
+
+```text
+Issue
+
+Start Date
+
+End Date
+
+Outcome
+
+Reviewer
+```
+
+---
+
+# Export
+
+Buttons
+
+```text
+Excel
+
+PDF
+
+Email
+```
+
+Toast
+
+```text
+Report Generated Successfully
+```
+
+---
+
+# MongoDB Collections
+
+```text
+feedbacks
+
+peerFeedbacks
+
+managerFeedbacks
+
+subordinateFeedbacks
+
+feedbackComments
+
+pipPlans
+
+pipTasks
+
+pipMeetings
+
+pipHistory
+```
+
+---
+
+# Socket Events
+
+```javascript
+feedbackAdded
+
+feedbackUpdated
+
+pipCreated
+
+pipUpdated
+
+meetingScheduled
+
+pipClosed
+```
+
+---
+
+# Animations
+
+```css
+fadeIn
+slideRight
+zoomIn
+pulse
+blueGlow
+progressAnimation
+```
+
+---
+
+# Complete Flow
+
+```text
+360 Feedback
+      ↓
+Peer Feedback
+      ↓
+Manager Feedback
+      ↓
+Subordinate Feedback
+      ↓
+Improvement Areas
+      ↓
+PIP Creation
+      ↓
+Action Plan
+      ↓
+Meetings
+      ↓
+Progress Tracking
+      ↓
+Closure
+      ↓
+History
+-------------------------------------------------------------------------------------------
+# 🔥 PHASE 5.5 — Rewards & Recognition (Enterprise Level Detailed Flow)
+
+हा module Employee Motivation, Appreciation आणि Recognition साठी आहे. Workday, Darwinbox, SAP SuccessFactors सारख्या HRMS मध्ये हा खूप महत्त्वाचा module असतो.
+
+---
+
+# Main Flow
+
+```text
+Nomination
+      ↓
+Approval
+      ↓
+Voting
+      ↓
+Winner Selection
+      ↓
+Award Grant
+      ↓
+Certificate
+      ↓
+Reward Points
+      ↓
+Recognition Feed
+      ↓
+Achievement History
+```
+
+---
+
+# Sidebar
+
+```text
+Recognition ▼
+
+Dashboard
+Employee Of Month
+Star Performer
+Innovation Awards
+Team Awards
+Certificates
+Reward Points
+Recognition Feed
+Leaderboard
+Achievement History
+```
+
+Route
+
+```text
+/hr/recognition
+```
+
+---
+
+# Recognition Dashboard
+
+## Top Cards
+
+### Employee Of Month
+
+```text
+Current Winner
+```
+
+Hover
+
+```text
+Department
+Votes
+View Details →
+```
+
+Animation
+
+```css
+transform:scale(1.03);
+blue-shadow;
+```
+
+---
+
+### Star Performer
+
+```text
+Top Performer
+```
+
+Gold border
+
+---
+
+### Team Award
+
+```text
+Best Team
+```
+
+Blue gradient
+
+---
+
+### Total Reward Points
+
+```text
+12500
+```
+
+Purple card
+
+---
+
+### Pending Nominations
+
+```text
+15
+```
+
+Orange card
+
+Pulse animation
+
+---
+
+# Dashboard Filters
+
+```text
+Month
+Department
+Award Type
+Search Employee
+```
+
+---
+
+# Employee Of Month Page
+
+Route
+
+```text
+/hr/recognition/employee-month
+```
+
+---
+
+# Winner Card
+
+Contains
+
+```text
+Photo
+
+Name
+
+Department
+
+Designation
+
+Votes
+
+Achievements
+```
+
+Golden Glow Animation
+
+---
+
+# Nominees Table
+
+Columns
+
+```text
+Employee
+
+Department
+
+Achievements
+
+Votes
+
+Status
+
+Action
+```
+
+Hover Row
+
+Background
+
+```css
+#DBEAFE
+```
+
+Actions
+
+```text
+View
+Vote
+History
+```
+
+---
+
+# Vote Button
+
+Popup Opens
+
+Fields
+
+```text
+Reason
+
+Comments
+```
+
+Buttons
+
+```text
+Submit Vote
+Cancel
+```
+
+Toast
+
+```text
+Vote Submitted Successfully
+```
+
+Socket Event
+
+```javascript
+voteSubmitted
+```
+
+---
+
+# Star Performer Page
+
+Route
+
+```text
+/hr/recognition/star-performer
+```
+
+Cards
+
+```text
+Monthly
+
+Quarterly
+
+Yearly
+```
+
+Hover
+
+Shows
+
+```text
+KPI Score
+
+Attendance Score
+
+Manager Rating
+```
+
+---
+
+# Click Card
+
+Redirect
+
+```text
+/hr/recognition/star-performer/:id
+```
+
+---
+
+# Star Performer Details
+
+Tabs
+
+```text
+Overview
+
+Achievements
+
+Awards
+
+History
+
+Certificates
+```
+
+---
+
+# Achievement Timeline
+
+```text
+Project Completed
+
+Top KPI
+
+Customer Appreciation
+
+Innovation Award
+```
+
+Hover
+
+Displays
+
+```text
+Date
+
+Given By
+
+Comments
+```
+
+---
+
+# Innovation Award
+
+Route
+
+```text
+/hr/recognition/innovation-awards
+```
+
+---
+
+Cards
+
+```text
+Best Idea
+
+Best Automation
+
+Best Process Improvement
+```
+
+Hover
+
+Shows
+
+```text
+Submitted By
+
+Department
+
+Votes
+```
+
+---
+
+Click
+
+↓
+
+Opens Drawer
+
+---
+
+Drawer Tabs
+
+```text
+Idea Details
+
+Benefits
+
+Comments
+
+Voting
+```
+
+Animation
+
+```css
+slideRight
+```
+
+---
+
+# Team Awards
+
+Route
+
+```text
+/hr/recognition/team-awards
+```
+
+Cards
+
+```text
+Best Sales Team
+
+Best Development Team
+
+Best Support Team
+```
+
+---
+
+Click Card
+
+↓
+
+Team Details Page
+
+Contains
+
+```text
+Team Members
+
+Projects
+
+Achievements
+
+Manager
+
+Reward Amount
+```
+
+---
+
+# Certificates Page
+
+Route
+
+```text
+/hr/recognition/certificates
+```
+
+---
+
+Table
+
+Columns
+
+```text
+Certificate Name
+
+Award Type
+
+Issued Date
+
+Employee
+
+Download
+```
+
+Hover Row
+
+Actions
+
+```text
+Preview
+
+Download PDF
+
+Delete
+```
+
+---
+
+Click Preview
+
+Center Modal Opens
+
+Contains
+
+```text
+Certificate Image
+
+Issued By
+
+Date
+
+Award Type
+```
+
+Zoom Animation
+
+---
+
+# Reward Points Module
+
+Route
+
+```text
+/hr/recognition/reward-points
+```
+
+---
+
+Top Cards
+
+```text
+Available Points
+
+Redeemed Points
+
+Pending Points
+
+Expired Points
+```
+
+---
+
+Reward Table
+
+Columns
+
+```text
+Employee
+
+Points
+
+Reason
+
+Date
+
+Status
+```
+
+---
+
+Hover Row
+
+Actions
+
+```text
+View
+
+Edit
+
+History
+```
+
+---
+
+# Add Points Popup
+
+Fields
+
+```text
+Employee
+
+Points
+
+Reason
+
+Comments
+```
+
+Buttons
+
+```text
+Save
+
+Cancel
+```
+
+Toast
+
+```text
+Reward Points Added Successfully
+```
+
+Socket Event
+
+```javascript
+rewardPointsAdded
+```
+
+---
+
+# Recognition Feed
+
+Route
+
+```text
+/hr/recognition/feed
+```
+
+Looks Like
+
+```text
+LinkedIn Style Feed
+```
+
+Posts
+
+```text
+Rahul received Employee Of Month
+
+Priya completed 5 years
+
+Sneha got Innovation Award
+```
+
+---
+
+Hover Post
+
+Buttons
+
+```text
+Like
+
+Celebrate
+
+Comment
+```
+
+Animation
+
+```css
+fadeIn
+```
+
+---
+
+# Leaderboard
+
+Route
+
+```text
+/hr/recognition/leaderboard
+```
+
+Top 10 Employees
+
+Cards
+
+```text
+Rank
+
+Photo
+
+Department
+
+Points
+
+Awards
+```
+
+Top 3
+
+Gold Animation
+
+```css
+glow effect
+```
+
+---
+
+# Achievement History
+
+Route
+
+```text
+/hr/recognition/history
+```
+
+Table
+
+Columns
+
+```text
+Award
+
+Date
+
+Points
+
+Department
+
+Issued By
+```
+
+---
+
+Click Row
+
+Redirect
+
+```text
+/hr/recognition/history/:id
+```
+
+---
+
+# History Details
+
+Tabs
+
+```text
+Overview
+
+Certificate
+
+Comments
+
+Timeline
+```
+
+---
+
+# Export Buttons
+
+```text
+Excel
+
+PDF
+
+Email Report
+```
+
+Toast
+
+```text
+Recognition Report Generated Successfully
+```
+
+---
+
+# MongoDB Collections
+
+```text
+awards
+
+nominations
+
+votes
+
+rewardPoints
+
+certificates
+
+recognitionFeeds
+
+leaderboards
+
+achievementHistory
+```
+
+---
+
+# Socket Events
+
+```javascript
+awardCreated
+
+voteSubmitted
+
+rewardPointsAdded
+
+certificateIssued
+
+feedUpdated
+
+leaderboardUpdated
+```
+
+---
+
+# Animations
+
+```css
+fadeIn
+slideRight
+zoomIn
+goldGlow
+blueShadow
+pulse
+scale(1.03)
+```
+
+---
+
+# Complete Flow
+
+```text
+Nomination
+     ↓
+Voting
+     ↓
+Approval
+     ↓
+Award Selection
+     ↓
+Certificate Generation
+     ↓
+Reward Points
+     ↓
+Recognition Feed
+     ↓
+Leaderboard
+     ↓
+Achievement History
+------------------------------------------------------------------------------------------------------------------------
+
+# 🔥 PHASE 5.6 — Employee Engagement Module (Enterprise Level Detailed Flow)
+
+हा module employee engagement, internal communication, events, appreciation आणि company culture साठी वापरला जाईल.
+
+---
+
+# Sidebar
+
+```text
+Engagement ▼
+
+Dashboard
+Announcements
+Events
+Birthday Wall
+Work Anniversary
+Recognition Feed
+Wish Center
+Gallery
+Polls
+```
+
+---
+
+# Route Structure
+
+```text
+/hr/engagement
+/hr/engagement/announcements
+/hr/engagement/events
+/hr/engagement/birthdays
+/hr/engagement/anniversary
+/hr/engagement/feed
+/hr/engagement/wishes
+/hr/engagement/gallery
+/hr/engagement/polls
+```
+
+---
+
+# 1. Engagement Dashboard
+
+Route
+
+```text
+/hr/engagement
+```
+
+---
+
+## Top Cards
+
+```text
+Announcements
+Upcoming Events
+Today's Birthdays
+Anniversaries
+Recognition Posts
+Active Polls
+```
+
+Cards hover :
+
+```text
+Scale 1.03
+Blue glow shadow
+Smooth 0.3s transition
+```
+
+---
+
+## Charts
+
+Left
+
+```text
+Monthly Participation Chart
+```
+
+Right
+
+```text
+Employee Engagement Score
+```
+
+---
+
+## Recent Activities Feed
+
+Shows
+
+```text
+Birthday wishes
+Recognition posts
+Events
+Announcements
+Poll votes
+```
+
+Click activity
+
+↓
+
+Redirect
+
+```text
+Activity Details Page
+```
+
+---
+
+# 2. Announcements Module
+
+Route
+
+```text
+/hr/engagement/announcements
+```
+
+---
+
+## Header
+
+Left
+
+```text
+Announcements
+```
+
+Right
+
+```text
++ Create Announcement
+```
+
+---
+
+## Filters
+
+```text
+Department
+Priority
+Category
+Status
+Date
+```
+
+---
+
+## Announcement Card
+
+Contains
+
+```text
+Title
+Description
+Department
+Created By
+Priority Badge
+Attachments
+Views
+Comments
+```
+
+---
+
+Hover card
+
+Shows
+
+```text
+View
+Edit
+Delete
+Pin
+Archive
+```
+
+Animation
+
+```text
+Lift effect
+Blue border
+Box shadow
+```
+
+---
+
+Click card
+
+↓
+
+Open Right Drawer
+
+---
+
+# Drawer Tabs
+
+### Overview
+
+```text
+Title
+Description
+Priority
+Department
+Attachments
+```
+
+---
+
+### Comments
+
+```text
+Employee comments
+Replies
+Emoji reactions
+```
+
+---
+
+### Seen By
+
+```text
+Viewed Employees
+Read Time
+```
+
+---
+
+### Timeline
+
+```text
+Created
+Updated
+Edited
+```
+
+---
+
+# Create Announcement Popup
+
+Fields
+
+```text
+Title
+Description
+Department
+Priority
+Attachment
+Publish Date
+```
+
+Button
+
+```text
+Publish
+```
+
+Toast
+
+```text
+Announcement Published Successfully
+```
+
+Socket Event
+
+```javascript
+announcementPosted
+```
+
+---
+
+# 3. Events Module
+
+Route
+
+```text
+/hr/engagement/events
+```
+
+---
+
+## Cards
+
+```text
+Upcoming Events
+Completed Events
+Registrations
+Cancelled
+```
+
+---
+
+## Event Table
+
+Columns
+
+```text
+Event Name
+Date
+Venue
+Organizer
+Participants
+Status
+Action
+```
+
+---
+
+Hover row
+
+Shows
+
+```text
+View
+Edit
+Participants
+Cancel
+```
+
+---
+
+Click Event
+
+↓
+
+Redirect
+
+```text
+/hr/engagement/events/event-details
+```
+
+---
+
+# Event Details Page
+
+Top Banner
+
+```text
+Image
+Title
+Date
+Venue
+```
+
+---
+
+Tabs
+
+### Overview
+
+```text
+Description
+Agenda
+Rules
+```
+
+---
+
+### Participants
+
+```text
+Employee Name
+Department
+Joined Time
+```
+
+---
+
+### Gallery
+
+Images
+
+Videos
+
+Certificates
+
+---
+
+### Feedback
+
+Ratings
+
+Comments
+
+---
+
+# Event Registration Popup
+
+Fields
+
+```text
+Employee
+Department
+Food Preference
+Special Requirement
+```
+
+Button
+
+```text
+Register
+```
+
+Toast
+
+```text
+Registration Completed
+```
+
+---
+
+# 4. Birthday Wall
+
+Route
+
+```text
+/hr/engagement/birthdays
+```
+
+---
+
+Grid Cards
+
+Contains
+
+```text
+Photo
+Name
+Department
+Designation
+Age
+```
+
+Button
+
+```text
+Send Wishes
+```
+
+---
+
+Hover
+
+Card zoom
+
+Blue glow
+
+Confetti animation
+
+---
+
+Click
+
+↓
+
+Wish Popup
+
+---
+
+Fields
+
+```text
+Message
+Emoji
+GIF
+```
+
+Buttons
+
+```text
+Send Wish
+```
+
+Toast
+
+```text
+Birthday Wishes Sent
+```
+
+Socket
+
+```javascript
+birthdayWishSent
+```
+
+---
+
+# 5. Work Anniversary
+
+Route
+
+```text
+/hr/engagement/anniversary
+```
+
+Cards
+
+```text
+Employee Photo
+Years Completed
+Department
+Designation
+```
+
+---
+
+Button
+
+```text
+Congratulate
+```
+
+Popup
+
+```text
+Message
+Sticker
+GIF
+```
+
+---
+
+Toast
+
+```text
+Congratulations Sent Successfully
+```
+
+---
+
+# 6. Recognition Feed
+
+Route
+
+```text
+/hr/engagement/feed
+```
+
+Similar to LinkedIn feed
+
+---
+
+Card
+
+Contains
+
+```text
+Employee Photo
+Award Badge
+Description
+Likes
+Comments
+```
+
+---
+
+Hover
+
+Shows
+
+```text
+Like
+Comment
+Share
+Save
+```
+
+---
+
+Click Post
+
+↓
+
+Detailed Post Page
+
+Tabs
+
+```text
+Comments
+Likes
+Attachments
+```
+
+---
+
+# Create Recognition Post
+
+Popup
+
+Fields
+
+```text
+Employee
+Badge
+Achievement
+Attachment
+```
+
+Toast
+
+```text
+Recognition Shared
+```
+
+Socket
+
+```javascript
+recognitionPosted
+```
+
+---
+
+# 7. Wish Center
+
+Route
+
+```text
+/hr/engagement/wishes
+```
+
+Cards
+
+```text
+Birthday Wishes
+Anniversary Wishes
+Festival Wishes
+Achievement Wishes
+```
+
+---
+
+Templates
+
+```text
+Formal
+Friendly
+Funny
+Professional
+```
+
+Hover
+
+```text
+Preview
+Edit
+Use
+```
+
+---
+
+Click Template
+
+↓
+
+Popup
+
+```text
+Edit Message
+Send
+```
+
+---
+
+# 8. Gallery
+
+Route
+
+```text
+/hr/engagement/gallery
+```
+
+Tabs
+
+```text
+Photos
+Videos
+Documents
+Certificates
+```
+
+---
+
+Grid View
+
+Hover
+
+```text
+Preview
+Download
+Delete
+```
+
+Animation
+
+```text
+Zoom effect
+```
+
+---
+
+Click Image
+
+↓
+
+Lightbox Modal
+
+Supports
+
+```text
+Previous
+Next
+Download
+Share
+```
+
+---
+
+# Polls
+
+Route
+
+```text
+/hr/engagement/polls
+```
+
+Cards
+
+```text
+Active Polls
+Closed Polls
+Votes
+Participation %
+```
+
+---
+
+Poll Card
+
+Contains
+
+```text
+Question
+Options
+Votes
+Status
+```
+
+---
+
+Hover
+
+```text
+Vote
+Results
+Close
+```
+
+---
+
+Vote Popup
+
+Radio buttons
+
+Submit
+
+Toast
+
+```text
+Vote Submitted Successfully
+```
+
+Socket
+
+```javascript
+pollVoteAdded
+```
+
+---
+
+# Common Animations
+
+### Cards
+
+```css
+transform: scale(1.03);
+transition: .3s;
+box-shadow: blue glow;
+```
+
+### Drawer
+
+```css
+slideFromRight .4s
+```
+
+### Popup
+
+```css
+zoomIn .3s
+```
+
+### Table Rows
+
+```css
+background change
+left border blue
+```
+
+### Buttons
+
+```css
+hover lift
+shadow
+```
+
+---
+
+# MongoDB Collections
+
+```text
+announcements
+
+events
+
+eventParticipants
+
+birthdayWishes
+
+anniversaryWishes
+
+recognitionPosts
+
+wishTemplates
+
+gallery
+
+polls
+
+pollVotes
+```
+
+---
+
+# Socket Events
+
+```javascript
+announcementPosted
+
+eventCreated
+
+birthdayWishSent
+
+anniversaryWishSent
+
+recognitionPosted
+
+pollVoteAdded
+-----------------------------------------------------------------------------------------------
+
+# 🔥 PHASE 5.6 — Employee Engagement Module (Enterprise Detailed Flow)
+
+हा module Employee Engagement वाढवण्यासाठी आहे. यात Announcements, Events, Polls, Surveys, Suggestions, Recognition Feed, Birthday Wall, Work Anniversary आणि Wish Center असतील.
+
+---
+
+# Sidebar
+
+```text
+Engagement ▼
+
+Dashboard
+Announcements
+Events
+Polls
+Survey
+Suggestions
+Recognition Feed
+Birthday Wall
+Work Anniversary
+Wish Center
+```
+
+Animation:
+
+* Sidebar expand → slideDown 0.3s
+* Active menu → Blue background (#DBEAFE)
+* Hover → scale(1.02)
+
+---
+
+# Route
+
+```text
+/hr/engagement
+```
+
+---
+
+# Engagement Dashboard
+
+Top Cards
+
+```text
+Announcements
+Upcoming Events
+Active Polls
+Birthdays Today
+```
+
+Card Hover
+
+```text
+View Details →
+```
+
+Animation
+
+```css
+transform: translateY(-5px);
+box-shadow: blue glow;
+```
+
+---
+
+# Dashboard Charts
+
+Left
+
+```text
+Survey Participation %
+```
+
+Right
+
+```text
+Event Attendance Trend
+```
+
+Bottom
+
+```text
+Recognition Activity Timeline
+```
+
+---
+
+# Recent Activities
+
+Table
+
+```text
+Employee
+Activity
+Date
+Status
+```
+
+Hover Row
+
+Buttons appear
+
+```text
+View
+Comment
+Like
+```
+
+---
+
+# 5.6.1 Announcements Module
+
+Route
+
+```text
+/hr/engagement/announcements
+```
+
+Top Buttons
+
+```text
++ New Announcement
+Filter
+Search
+```
+
+Cards
+
+```text
+Company News
+Policy Updates
+Holiday Notice
+Event Notice
+```
+
+---
+
+## Announcement Card
+
+Shows
+
+```text
+Title
+Description
+Posted By
+Date
+Priority
+Attachments
+```
+
+Priority Colors
+
+```text
+High → Red
+Medium → Orange
+Low → Green
+```
+
+Hover
+
+Card expands
+
+Buttons appear
+
+```text
+Read More
+Edit
+Archive
+```
+
+---
+
+Click Card
+
+↓
+
+Announcement Details Drawer Opens
+
+Right Drawer Width
+
+```text
+450px
+```
+
+Tabs
+
+```text
+Overview
+Comments
+Attachments
+Audience
+History
+```
+
+Animation
+
+```css
+slideInRight
+```
+
+---
+
+# Add Announcement Popup
+
+Fields
+
+```text
+Title
+Category
+Department
+Priority
+Description
+Attachment
+Notify Employees
+```
+
+Buttons
+
+```text
+Save Draft
+Publish
+```
+
+Toast
+
+```text
+Announcement Published Successfully
+```
+
+Socket Event
+
+```javascript
+announcementPosted
+```
+
+---
+
+# 5.6.2 Events Module
+
+Route
+
+```text
+/hr/engagement/events
+```
+
+Cards
+
+```text
+Upcoming Events
+Completed Events
+Registered Employees
+Attendance %
+```
+
+---
+
+Calendar View
+
+Month View
+
+Click Date
+
+↓
+
+Popup Opens
+
+Shows
+
+```text
+Event Name
+Location
+Organizer
+Time
+Attendees
+```
+
+Buttons
+
+```text
+Register
+View Details
+```
+
+---
+
+Event Card Hover
+
+Displays
+
+```text
+Seats Available
+Department
+Event Type
+```
+
+---
+
+Click Event
+
+↓
+
+Event Details Page
+
+```text
+Overview
+Participants
+Agenda
+Photos
+Feedback
+```
+
+---
+
+# Add Event Popup
+
+Fields
+
+```text
+Event Name
+Date
+Time
+Venue
+Description
+Capacity
+Department
+```
+
+Toast
+
+```text
+Event Created Successfully
+```
+
+---
+
+# 5.6.3 Polls
+
+Route
+
+```text
+/hr/engagement/polls
+```
+
+Cards
+
+```text
+Active Polls
+Completed Polls
+Total Votes
+Participation %
+```
+
+---
+
+Poll Table
+
+Columns
+
+```text
+Question
+Created By
+Status
+Votes
+End Date
+```
+
+Hover Row
+
+Buttons
+
+```text
+Vote
+Results
+Delete
+```
+
+---
+
+Vote Popup
+
+Question
+
+```text
+Preferred Office Timing?
+```
+
+Options
+
+```text
+9 AM
+10 AM
+11 AM
+```
+
+After Submit
+
+Toast
+
+```text
+Vote Submitted Successfully
+```
+
+---
+
+Results Modal
+
+Pie Chart
+
+```text
+Option
+Votes %
+```
+
+---
+
+# 5.6.4 Recognition Feed
+
+Route
+
+```text
+/hr/engagement/recognition-feed
+```
+
+Cards
+
+```text
+Star Performer
+Innovation Award
+Team Achievement
+```
+
+Feed Layout
+
+LinkedIn Style
+
+Shows
+
+```text
+Employee Photo
+Department
+Achievement
+Award Badge
+Likes
+Comments
+```
+
+Hover
+
+Buttons appear
+
+```text
+Like
+Comment
+Share
+```
+
+Animation
+
+```css
+fadeUp
+```
+
+---
+
+Click Post
+
+↓
+
+Post Drawer Opens
+
+Tabs
+
+```text
+Comments
+History
+Award Details
+```
+
+---
+
+# 5.6.5 Birthday Wall
+
+Route
+
+```text
+/hr/engagement/birthday-wall
+```
+
+Cards
+
+Each Card
+
+```text
+Employee Image
+Name
+Department
+Age
+Birthday Date
+```
+
+Buttons
+
+```text
+Wish
+Gift
+View Profile
+```
+
+Hover
+
+Confetti animation
+
+Card scale
+
+```css
+transform: scale(1.03)
+```
+
+---
+
+Wish Popup
+
+Field
+
+```text
+Message
+Emoji
+GIF
+```
+
+Button
+
+```text
+Send Wish
+```
+
+Toast
+
+```text
+Birthday Wishes Sent Successfully
+```
+
+Socket
+
+```javascript
+birthdayWishSent
+```
+
+---
+
+# 5.6.6 Work Anniversary
+
+Route
+
+```text
+/hr/engagement/work-anniversary
+```
+
+Cards
+
+```text
+Employee Photo
+Years Completed
+Department
+Joining Date
+```
+
+Hover
+
+Blue Border Animation
+
+Buttons
+
+```text
+Congratulate
+View Profile
+```
+
+---
+
+# 5.6.7 Wish Center
+
+Route
+
+```text
+/hr/engagement/wish-center
+```
+
+Tabs
+
+```text
+Birthday Wishes
+Anniversary Wishes
+Festival Wishes
+Custom Wishes
+```
+
+---
+
+History Table
+
+Columns
+
+```text
+Employee
+Wish Type
+Date
+Sent By
+Status
+```
+
+Hover Row
+
+Buttons
+
+```text
+Resend
+View
+Delete
+```
+
+---
+
+# Notifications
+
+Bell Icon
+
+Shows
+
+```text
+New Announcement
+Upcoming Event
+Birthday Reminder
+Poll Closing Soon
+```
+
+Dropdown Animation
+
+```css
+slideDown
+```
+
+---
+
+# Socket Events
+
+```javascript
+announcementPosted
+
+eventCreated
+
+pollCreated
+
+voteSubmitted
+
+birthdayWishSent
+
+recognitionAdded
+```
+
+---
+
+# MongoDB Collections
+
+```text
+announcements
+
+events
+
+polls
+
+votes
+
+recognitions
+
+birthdays
+
+anniversaries
+
+wishes
+```
+
+---
+
+# UI Animations
+
+Cards
+
+```css
+transition:0.3s;
+hover scale(1.03);
+blue glow shadow;
+```
+
+Drawer
+
+```css
+slideRight
+```
+
+Popup
+
+```css
+zoomIn
+```
+
+Toast
+
+```css
+fadeTop
+```
+
+Tables
+
+```css
+row highlight on hover
+```
+
+---
+
+## Part 5.7 Next
+
+```text
+Survey Builder
+Anonymous Feedback
+Poll Analytics
+Suggestion Box
+Voting System
+Survey Reports
+Participation Dashboard
+```
+
+हा Phase-4 सारख्याच enterprise level detail मध्ये पुढचा part असेल.
+------------------------------------------------------------------------# 🔥 PHASE 5.7 — Survey + Poll + Suggestion Box (Enterprise Detailed Flow)
+
+हा module Employee Feedback, Employee Voice, Engagement Analysis आणि Anonymous Suggestions साठी वापरला जाईल.
+
+---
+
+# Sidebar
+
+```text
+Engagement ▼
+
+Survey Builder
+Active Surveys
+Polls
+Anonymous Feedback
+Suggestion Box
+Voting System
+Survey Analytics
+Reports
+```
+
+Animation
+
+```css
+slideDown 0.3s
+```
+
+Hover
+
+```css
+background:#DBEAFE;
+transform:scale(1.02);
+```
+
+---
+
+# Route
+
+```text
+/hr/engagement/survey
+```
+
+---
+
+# Survey Dashboard
+
+Top Cards
+
+```text
+Active Surveys
+Completed Surveys
+Participation %
+Pending Responses
+```
+
+Card Hover
+
+Shows
+
+```text
+View Details →
+Department Wise Data
+```
+
+Animation
+
+```css
+translateY(-5px)
+blue glow shadow
+```
+
+---
+
+# Charts
+
+Left
+
+```text
+Participation Trend
+```
+
+Right
+
+```text
+Average Ratings
+```
+
+Bottom
+
+```text
+Department Feedback Score
+```
+
+---
+
+# Recent Activity Table
+
+Columns
+
+```text
+Survey
+Created By
+Responses
+Status
+Date
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+Analytics
+Delete
+```
+
+---
+
+# 5.7.1 Survey Builder
+
+Route
+
+```text
+/hr/engagement/survey-builder
+```
+
+Top Buttons
+
+```text
++ Create Survey
+Templates
+Import
+```
+
+---
+
+# Create Survey Popup
+
+Animation
+
+```css
+zoomIn
+```
+
+Fields
+
+```text
+Survey Name
+Description
+Department
+Start Date
+End Date
+Anonymous Mode
+```
+
+Question Types
+
+```text
+Text
+Textarea
+Rating
+Multiple Choice
+Checkbox
+Dropdown
+Emoji Rating
+File Upload
+```
+
+Buttons
+
+```text
+Save Draft
+Publish
+```
+
+Toast
+
+```text
+Survey Published Successfully
+```
+
+Socket Event
+
+```javascript
+surveyCreated
+```
+
+---
+
+# Survey Templates
+
+Cards
+
+```text
+Employee Satisfaction
+Work Environment
+Manager Feedback
+Training Feedback
+Exit Survey
+Onboarding Survey
+```
+
+Hover
+
+Buttons
+
+```text
+Preview
+Use Template
+```
+
+---
+
+# Survey Questions Page
+
+Route
+
+```text
+/hr/engagement/questions
+```
+
+Left Side
+
+Question List
+
+```text
+Q1
+Q2
+Q3
+```
+
+Right Side
+
+Preview
+
+---
+
+Drag & Drop Question Builder
+
+Employee can drag
+
+```text
+Rating
+Text
+Dropdown
+Checkbox
+```
+
+Animation
+
+```css
+scale(1.02)
+```
+
+---
+
+# Survey Responses
+
+Route
+
+```text
+/hr/engagement/responses
+```
+
+Table
+
+Columns
+
+```text
+Employee
+Department
+Survey
+Submitted On
+Status
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+Export
+Analytics
+```
+
+---
+
+Click View
+
+↓
+
+Response Drawer Opens
+
+Width
+
+```text
+500px
+```
+
+Tabs
+
+```text
+Answers
+Ratings
+Comments
+History
+```
+
+Animation
+
+```css
+slideInRight
+```
+
+---
+
+# 5.7.2 Anonymous Feedback
+
+Route
+
+```text
+/hr/engagement/anonymous-feedback
+```
+
+Cards
+
+```text
+Pending Reviews
+Resolved
+High Priority
+Escalated
+```
+
+---
+
+Feedback Table
+
+Columns
+
+```text
+Category
+Priority
+Date
+Status
+```
+
+Priority Color
+
+```text
+High → Red
+Medium → Orange
+Low → Green
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+Assign
+Close
+```
+
+---
+
+Click Row
+
+↓
+
+Feedback Drawer Opens
+
+Tabs
+
+```text
+Details
+Comments
+Resolution
+History
+```
+
+---
+
+# Add Feedback Popup
+
+Fields
+
+```text
+Category
+Priority
+Subject
+Message
+Attachment
+```
+
+Checkbox
+
+```text
+Remain Anonymous
+```
+
+Toast
+
+```text
+Feedback Submitted Successfully
+```
+
+Socket
+
+```javascript
+feedbackSubmitted
+```
+
+---
+
+# 5.7.3 Suggestion Box
+
+Route
+
+```text
+/hr/engagement/suggestions
+```
+
+Cards
+
+```text
+Pending Suggestions
+Approved
+Rejected
+Implemented
+```
+
+---
+
+Table
+
+Columns
+
+```text
+Suggestion
+Category
+Department
+Status
+Votes
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+Approve
+Reject
+```
+
+---
+
+Suggestion Detail Page
+
+Tabs
+
+```text
+Overview
+Comments
+Votes
+History
+Implementation
+```
+
+---
+
+Manager Actions
+
+Buttons
+
+```text
+Approve
+Reject
+Assign
+Mark Implemented
+```
+
+Toast
+
+```text
+Suggestion Approved Successfully
+```
+
+---
+
+# Add Suggestion Popup
+
+Fields
+
+```text
+Category
+Department
+Title
+Description
+Attachment
+```
+
+Checkbox
+
+```text
+Anonymous
+```
+
+Button
+
+```text
+Submit Suggestion
+```
+
+---
+
+# 5.7.4 Poll System
+
+Route
+
+```text
+/hr/engagement/polls
+```
+
+Cards
+
+```text
+Active Polls
+Completed Polls
+Participation %
+Total Votes
+```
+
+---
+
+Poll Table
+
+Columns
+
+```text
+Question
+Status
+Votes
+End Date
+```
+
+Hover Row
+
+Buttons
+
+```text
+Vote
+Results
+Delete
+```
+
+---
+
+Vote Popup
+
+Question
+
+```text
+Preferred Work Mode?
+```
+
+Options
+
+```text
+Hybrid
+Remote
+Office
+```
+
+Button
+
+```text
+Submit Vote
+```
+
+Toast
+
+```text
+Vote Submitted Successfully
+```
+
+---
+
+Results Modal
+
+Charts
+
+```text
+Pie Chart
+Bar Chart
+```
+
+Table
+
+```text
+Option
+Votes
+Percentage
+```
+
+Animation
+
+```css
+zoomIn
+```
+
+---
+
+# 5.7.5 Voting System
+
+Route
+
+```text
+/hr/engagement/voting
+```
+
+Cards
+
+```text
+Active Voting
+Closed Voting
+Top Nominees
+```
+
+---
+
+Voting Categories
+
+```text
+Employee Of Month
+Best Team
+Innovation Award
+```
+
+---
+
+Vote Page
+
+Cards
+
+Each Employee Card Shows
+
+```text
+Photo
+Department
+Designation
+Votes
+```
+
+Hover
+
+Buttons
+
+```text
+Vote
+Profile
+```
+
+Animation
+
+```css
+scale(1.03)
+```
+
+---
+
+After Voting
+
+Toast
+
+```text
+Vote Submitted Successfully
+```
+
+Socket
+
+```javascript
+voteSubmitted
+```
+
+---
+
+# 5.7.6 Survey Analytics
+
+Route
+
+```text
+/hr/engagement/analytics
+```
+
+Top Cards
+
+```text
+Average Rating
+Participation %
+Positive Feedback
+Negative Feedback
+```
+
+---
+
+Charts
+
+```text
+Department Wise Ratings
+Response Trend
+Participation Trend
+Sentiment Analysis
+```
+
+---
+
+Heatmap
+
+Displays
+
+```text
+Department
+Engagement Score
+```
+
+Color
+
+```text
+Green = Excellent
+Yellow = Average
+Red = Poor
+```
+
+---
+
+# Export Buttons
+
+```text
+Export PDF
+Export Excel
+Email Report
+Print
+```
+
+---
+
+# Notifications
+
+Bell Dropdown
+
+Shows
+
+```text
+New Survey Created
+Survey Deadline Tomorrow
+Suggestion Approved
+Anonymous Feedback Received
+```
+
+Animation
+
+```css
+slideDown
+```
+
+---
+
+# Socket Events
+
+```javascript
+surveyCreated
+
+surveySubmitted
+
+feedbackSubmitted
+
+suggestionCreated
+
+suggestionApproved
+
+voteSubmitted
+```
+
+---
+
+# MongoDB Collections
+
+```text
+surveys
+
+questions
+
+responses
+
+feedbacks
+
+suggestions
+
+polls
+
+votes
+
+analytics
+```
+
+---
+
+# Global Animations
+
+### Cards
+
+```css
+transition:0.3s;
+transform:scale(1.03);
+box-shadow:blue glow;
+```
+
+### Drawers
+
+```css
+slideRight
+```
+
+### Popups
+
+```css
+zoomIn
+```
+
+### Tables
+
+```css
+row highlight
+```
+
+### Toast
+
+```css
+fadeTop
+```
+
+---
+
+# Flow
+
+```text
+Survey Builder
+     ↓
+Publish Survey
+     ↓
+Employee Response
+     ↓
+Responses Saved
+     ↓
+Analytics Generated
+     ↓
+Reports Export
+```
+
+---
+
+# Part 5.8 (Reports Center) मध्ये येईल
+
+```text
+Attendance Reports
+Leave Reports
+Payroll Reports
+Performance Reports
+Recruitment Reports
+Analytics Reports
+
+Export PDF
+Export Excel
+Schedule Reports
+Email Reports
+Dashboard Widgets
+```
+
+हा पूर्ण enterprise-level Reporting Center असेल, Workday + Darwinbox style मध्ये.
+--------------------------------------------------------------------------------------
+# 🔥 PHASE 5.8 — Reports Center (Enterprise Detailed Flow)
+
+हा module HRMS मधील सर्व modules चा reporting engine असेल. Attendance, Leave, Payroll, Recruitment, Performance, Exit Management, Engagement आणि Analytics चे reports इथून generate होतील.
+
+---
+
+# Sidebar
+
+```text
+Reports ▼
+
+Dashboard
+Attendance Reports
+Leave Reports
+Payroll Reports
+Recruitment Reports
+Performance Reports
+Lifecycle Reports
+Engagement Reports
+Analytics Reports
+Scheduled Reports
+Export Center
+```
+
+Animation
+
+```css
+slideDown .3s
+```
+
+Active Menu
+
+```css
+background:#DBEAFE;
+border-left:4px solid #2563EB;
+```
+
+---
+
+# Main Route
+
+```text
+/hr/reports
+```
+
+---
+
+# Reports Dashboard
+
+Top KPI Cards
+
+```text
+Generated Reports
+
+Scheduled Reports
+
+Pending Emails
+
+Export Count
+```
+
+Hover Card
+
+Displays
+
+```text
+Last Generated
+Created By
+View Details →
+```
+
+Animation
+
+```css
+transform:translateY(-5px);
+box-shadow:0 0 20px #3B82F6;
+```
+
+---
+
+# Dashboard Charts
+
+Left
+
+```text
+Department Wise Reports
+```
+
+Right
+
+```text
+Monthly Report Trend
+```
+
+Bottom
+
+```text
+Export Statistics
+```
+
+---
+
+# Recent Reports Table
+
+Columns
+
+```text
+Report Name
+Module
+Generated By
+Date
+Status
+```
+
+Hover Row
+
+Buttons appear
+
+```text
+View
+Download
+Email
+Delete
+```
+
+---
+
+# 5.8.1 Attendance Reports
+
+Route
+
+```text
+/hr/reports/attendance
+```
+
+Cards
+
+```text
+Present Employees
+
+Absent Employees
+
+Late Arrivals
+
+Overtime Hours
+```
+
+Filters
+
+```text
+Department
+Date Range
+Shift
+Employee
+```
+
+Buttons
+
+```text
+Generate Report
+Export PDF
+Export Excel
+```
+
+---
+
+Click Generate
+
+↓
+
+Table
+
+Columns
+
+```text
+Employee
+Department
+Present Days
+Absent Days
+Late Count
+OT Hours
+```
+
+Hover Row
+
+```text
+View Details
+Attendance History
+```
+
+---
+
+Click Employee
+
+↓
+
+Right Drawer Opens
+
+Tabs
+
+```text
+Summary
+Daily Attendance
+Overtime
+History
+```
+
+Animation
+
+```css
+slideInRight
+```
+
+---
+
+# 5.8.2 Leave Reports
+
+Route
+
+```text
+/hr/reports/leave
+```
+
+Cards
+
+```text
+Approved Leaves
+
+Pending Leaves
+
+Rejected Leaves
+
+Leave Balance
+```
+
+Charts
+
+```text
+Monthly Leave Trend
+Department Wise Leave Analysis
+```
+
+Table
+
+```text
+Employee
+Leave Type
+Days
+Status
+```
+
+Hover Row
+
+Buttons
+
+```text
+View
+History
+Export
+```
+
+---
+
+# 5.8.3 Payroll Reports
+
+Route
+
+```text
+/hr/reports/payroll
+```
+
+Cards
+
+```text
+Total Salary Paid
+
+Bonuses Paid
+
+Pending Payroll
+
+Deductions
+```
+
+Charts
+
+```text
+Salary Distribution
+Department Wise Salary Cost
+```
+
+Table
+
+Columns
+
+```text
+Employee
+Basic Salary
+Bonus
+Deduction
+Net Salary
+```
+
+Hover
+
+```text
+Payslip
+History
+Export
+```
+
+---
+
+Click Payslip
+
+↓
+
+Modal Opens
+
+```text
+Download PDF
+Email Payslip
+View Full Payslip
+```
+
+Animation
+
+```css
+zoomIn
+```
+
+---
+
+# 5.8.4 Recruitment Reports
+
+Route
+
+```text
+/hr/reports/recruitment
+```
+
+Cards
+
+```text
+Open Positions
+
+Candidates
+
+Interviews
+
+Offers Released
+```
+
+Charts
+
+```text
+Hiring Trend
+
+Department Hiring
+```
+
+Table
+
+```text
+Job Position
+Candidates
+Selected
+Rejected
+```
+
+Hover
+
+```text
+Pipeline
+Interview History
+```
+
+---
+
+# 5.8.5 Performance Reports
+
+Route
+
+```text
+/hr/reports/performance
+```
+
+Cards
+
+```text
+Top Performers
+
+Average Rating
+
+Pending Reviews
+
+PIP Employees
+```
+
+Charts
+
+```text
+Rating Distribution
+Goal Completion Trend
+```
+
+Table
+
+```text
+Employee
+Rating
+Goal %
+Review Status
+```
+
+Hover
+
+```text
+View Appraisal
+Goal History
+```
+
+---
+
+# 5.8.6 Lifecycle Reports
+
+Route
+
+```text
+/hr/reports/lifecycle
+```
+
+Cards
+
+```text
+New Joiners
+
+Exit Employees
+
+Assets Assigned
+
+Training Completed
+```
+
+Charts
+
+```text
+Joining Trend
+Attrition Trend
+```
+
+Table
+
+```text
+Employee
+Joining Date
+Exit Date
+Status
+```
+
+---
+
+# 5.8.7 Engagement Reports
+
+Route
+
+```text
+/hr/reports/engagement
+```
+
+Cards
+
+```text
+Survey Responses
+
+Suggestions
+
+Votes
+
+Recognition Count
+```
+
+Charts
+
+```text
+Participation %
+Feedback Trend
+```
+
+---
+
+# Report Details Page
+
+Route
+
+```text
+/hr/reports/view/:id
+```
+
+Header
+
+```text
+Report Name
+Created Date
+Generated By
+```
+
+Tabs
+
+```text
+Overview
+Charts
+Tables
+History
+Export Logs
+```
+
+---
+
+# Export Center
+
+Route
+
+```text
+/hr/reports/export-center
+```
+
+Cards
+
+```text
+PDF Exports
+
+Excel Exports
+
+CSV Exports
+
+Email Reports
+```
+
+---
+
+Table
+
+```text
+File Name
+Module
+Created By
+Date
+Size
+```
+
+Hover Row
+
+Buttons
+
+```text
+Download
+Delete
+Share
+```
+
+---
+
+# Schedule Reports
+
+Route
+
+```text
+/hr/reports/schedule
+```
+
+Cards
+
+```text
+Daily Reports
+
+Weekly Reports
+
+Monthly Reports
+
+Failed Jobs
+```
+
+---
+
+Add Schedule Popup
+
+Fields
+
+```text
+Report Type
+Frequency
+Time
+Email Recipients
+Format
+```
+
+Frequency
+
+```text
+Daily
+Weekly
+Monthly
+```
+
+Buttons
+
+```text
+Save Schedule
+Cancel
+```
+
+Toast
+
+```text
+Report Scheduled Successfully
+```
+
+---
+
+# Email Reports Module
+
+Route
+
+```text
+/hr/reports/email
+```
+
+Table
+
+```text
+Report
+Recipient
+Sent Date
+Status
+```
+
+Hover
+
+```text
+Resend
+View Logs
+```
+
+---
+
+# Notification Bell
+
+Shows
+
+```text
+Report Generated
+
+Email Delivered
+
+Export Completed
+
+Schedule Failed
+```
+
+Animation
+
+```css
+slideDown
+```
+
+---
+
+# Right Drawer Width
+
+```css
+width:500px;
+```
+
+Tabs
+
+```text
+Overview
+Charts
+History
+Attachments
+Logs
+```
+
+---
+
+# Socket Events
+
+```javascript
+reportGenerated
+
+reportExported
+
+reportEmailed
+
+scheduleCreated
+
+scheduleFailed
+```
+
+---
+
+# MongoDB Collections
+
+```text
+reports
+
+reportLogs
+
+scheduledReports
+
+emailReports
+
+exportHistory
+
+analyticsReports
+```
+
+---
+
+# Global Animations
+
+### Cards
+
+```css
+transition:.3s;
+transform:scale(1.03);
+box-shadow:blue glow;
+```
+
+### Drawers
+
+```css
+slideRight
+```
+
+### Popups
+
+```css
+zoomIn
+```
+
+### Tables
+
+```css
+row hover highlight
+```
+
+### Toast
+
+```css
+fadeTop
+```
+
+---
+
+# Complete Flow
+
+```text
+Dashboard
+     ↓
+Select Report
+     ↓
+Apply Filters
+     ↓
+Generate Report
+     ↓
+View Charts & Tables
+     ↓
+Export PDF/Excel
+     ↓
+Email Report
+     ↓
+Schedule Future Reports
+```
+
+---
+
+# 🔥 Part 5.9 Next
+
+```text
+Analytics Dashboard
+
+Employee Growth
+
+Attrition Rate
+
+Salary Distribution
+
+Hiring Trend
+
+Department Performance
+
+Heatmaps
+
+AI Charts
+
+Predictive Analytics
+
+Real-time Widgets
+```
+
+हा Workday + Darwinbox + SAP SuccessFactors level चा complete Analytics Center असेल.
+-------------------------------------------------------------------------------------------------------------
+# 🔥 PHASE 5.9 — Analytics Dashboard (Enterprise Detailed Flow)
+
+हा पूर्ण HR Analytics Engine असेल. Workday, Darwinbox आणि SAP SuccessFactors प्रमाणे सर्व modules मधील data वापरून Charts, Trends, Heatmaps आणि Insights दाखवेल.
+
+---
+
+# Route
+
+```text
+/hr/analytics
+```
+
+---
+
+# Sidebar
+
+```text
+Analytics ▼
+
+Dashboard
+Workforce Analytics
+Performance Analytics
+Attendance Analytics
+Payroll Analytics
+Recruitment Analytics
+Attrition Analytics
+Department Analytics
+Heatmaps
+Trend Analysis
+Forecasting
+```
+
+Hover Animation
+
+```css
+background:#DBEAFE;
+transform:scale(1.02);
+```
+
+---
+
+# Analytics Dashboard
+
+## Top KPI Cards
+
+```text
+Total Employees
+
+Active Employees
+
+Attrition %
+
+Average Salary
+
+Attendance %
+
+Hiring Rate
+```
+
+Hover
+
+Shows
+
+```text
+Last Month
+Current Month
+Growth %
+```
+
+Animation
+
+```css
+transform:translateY(-5px);
+box-shadow:0 0 20px #3B82F6;
+```
+
+---
+
+# Dashboard Widgets
+
+### Left Widget
+
+Employee Growth
+
+Chart
+
+```text
+Line Chart
+```
+
+### Right Widget
+
+Department Distribution
+
+```text
+Pie Chart
+```
+
+Bottom Widget
+
+```text
+Monthly Workforce Trend
+```
+
+---
+
+# Date Filter
+
+```text
+Today
+Weekly
+Monthly
+Quarterly
+Yearly
+Custom Range
+```
+
+Hover
+
+```css
+background:#EFF6FF;
+```
+
+---
+
+# 5.9.1 Workforce Analytics
+
+Route
+
+```text
+/hr/analytics/workforce
+```
+
+Cards
+
+```text
+Total Employees
+
+New Joiners
+
+Resigned Employees
+
+Retention %
+```
+
+---
+
+Charts
+
+```text
+Gender Distribution
+
+Department Distribution
+
+Designation Distribution
+```
+
+---
+
+Click Pie Chart
+
+↓
+
+Popup Opens
+
+Shows
+
+```text
+Department Name
+
+Employees Count
+
+Percentage
+```
+
+Animation
+
+```css
+zoomIn
+```
+
+---
+
+# 5.9.2 Performance Analytics
+
+Route
+
+```text
+/hr/analytics/performance
+```
+
+Cards
+
+```text
+Top Performers
+
+Average Rating
+
+Goal Completion %
+
+PIP Employees
+```
+
+Charts
+
+```text
+Rating Distribution
+
+Goal Progress
+
+KPI Performance
+```
+
+---
+
+Table
+
+Columns
+
+```text
+Employee
+Department
+Rating
+Goal %
+```
+
+Hover Row
+
+Buttons
+
+```text
+View Profile
+Performance History
+```
+
+---
+
+# 5.9.3 Attendance Analytics
+
+Route
+
+```text
+/hr/analytics/attendance
+```
+
+Cards
+
+```text
+Attendance %
+
+Late Arrivals
+
+Overtime Hours
+
+Leaves Taken
+```
+
+Charts
+
+```text
+Attendance Trend
+
+Late Arrival Trend
+
+Department Attendance
+```
+
+---
+
+Heatmap
+
+Colors
+
+```text
+Green = Excellent
+
+Yellow = Moderate
+
+Red = Poor
+```
+
+---
+
+# 5.9.4 Payroll Analytics
+
+Route
+
+```text
+/hr/analytics/payroll
+```
+
+Cards
+
+```text
+Total Payroll Cost
+
+Average Salary
+
+Bonuses
+
+Deductions
+```
+
+Charts
+
+```text
+Salary Distribution
+
+Department Salary Cost
+
+Payroll Trend
+```
+
+---
+
+Table
+
+```text
+Department
+Salary Cost
+Bonus Cost
+Net Cost
+```
+
+---
+
+# 5.9.5 Recruitment Analytics
+
+Route
+
+```text
+/hr/analytics/recruitment
+```
+
+Cards
+
+```text
+Open Jobs
+
+Candidates
+
+Interviews
+
+Hiring Success %
+```
+
+Charts
+
+```text
+Hiring Trend
+
+Source Analysis
+
+Interview Conversion
+```
+
+---
+
+Kanban Statistics
+
+```text
+Applied
+
+Screening
+
+Interview
+
+Offer
+
+Joined
+```
+
+---
+
+# 5.9.6 Attrition Analytics
+
+Route
+
+```text
+/hr/analytics/attrition
+```
+
+Cards
+
+```text
+Resigned Employees
+
+Attrition %
+
+Retention %
+
+Exit Reasons
+```
+
+Charts
+
+```text
+Monthly Attrition
+
+Department Attrition
+
+Reason Distribution
+```
+
+---
+
+Click Chart
+
+↓
+
+Drawer Opens
+
+Tabs
+
+```text
+Overview
+
+History
+
+Department Wise
+
+Comparison
+```
+
+Animation
+
+```css
+slideRight
+```
+
+---
+
+# 5.9.7 Department Analytics
+
+Route
+
+```text
+/hr/analytics/departments
+```
+
+Cards
+
+```text
+HR
+
+IT
+
+Finance
+
+Marketing
+```
+
+Hover
+
+Shows
+
+```text
+Employees
+
+Performance %
+
+Attrition %
+
+Average Salary
+```
+
+---
+
+Click Department
+
+↓
+
+Department Analytics Page
+
+Tabs
+
+```text
+Employees
+
+Attendance
+
+Performance
+
+Payroll
+
+Recruitment
+```
+
+---
+
+# 5.9.8 Heatmaps
+
+Route
+
+```text
+/hr/analytics/heatmaps
+```
+
+Heatmaps
+
+```text
+Attendance Heatmap
+
+Performance Heatmap
+
+Attrition Heatmap
+
+Engagement Heatmap
+```
+
+Colors
+
+```text
+Green → Excellent
+
+Yellow → Average
+
+Orange → Low
+
+Red → Critical
+```
+
+Hover Cell
+
+Shows
+
+```text
+Department
+Value
+Trend
+```
+
+---
+
+# 5.9.9 Trend Analysis
+
+Route
+
+```text
+/hr/analytics/trends
+```
+
+Charts
+
+```text
+Employee Growth
+
+Attendance Trend
+
+Salary Trend
+
+Hiring Trend
+
+Goal Trend
+```
+
+Filter
+
+```text
+Daily
+
+Weekly
+
+Monthly
+
+Quarterly
+```
+
+---
+
+# Comparison Dashboard
+
+Compare
+
+```text
+Current Year vs Previous Year
+
+Department vs Department
+
+Month vs Month
+```
+
+---
+
+# 5.9.10 Forecasting
+
+Route
+
+```text
+/hr/analytics/forecasting
+```
+
+Cards
+
+```text
+Expected Hiring
+
+Expected Attrition
+
+Salary Forecast
+
+Growth Forecast
+```
+
+Charts
+
+```text
+Prediction Trend
+
+Future Workforce
+
+Expected Cost
+```
+
+---
+
+# Analytics Detail Drawer
+
+Width
+
+```css
+500px
+```
+
+Tabs
+
+```text
+Overview
+
+Charts
+
+Table
+
+History
+
+Insights
+```
+
+Animation
+
+```css
+slideInRight
+```
+
+---
+
+# Export Buttons
+
+```text
+Export PDF
+
+Export Excel
+
+Print
+
+Share Dashboard
+```
+
+---
+
+# Notification Bell
+
+Shows
+
+```text
+Analytics Generated
+
+Trend Updated
+
+Forecast Ready
+
+New Insight Available
+```
+
+---
+
+# Socket Events
+
+```javascript
+analyticsUpdated
+
+chartGenerated
+
+forecastCreated
+
+trendUpdated
+
+heatmapGenerated
+```
+
+---
+
+# MongoDB Collections
+
+```text
+analytics
+
+heatmaps
+
+trends
+
+forecasts
+
+dashboardWidgets
+
+chartHistory
+```
+
+---
+
+# Global UI Animations
+
+### Cards
+
+```css
+transition:.3s;
+transform:scale(1.03);
+box-shadow:blue glow;
+```
+
+### Charts
+
+```css
+fadeIn
+```
+
+### Drawers
+
+```css
+slideRight
+```
+
+### Popups
+
+```css
+zoomIn
+```
+
+### Toast
+
+```css
+fadeTop
+```
+
+---
+
+# Complete Flow
+
+```text
+Dashboard
+      ↓
+Select Analytics Module
+      ↓
+Apply Filters
+      ↓
+Generate Charts
+      ↓
+Heatmaps & Trends
+      ↓
+Department Insights
+      ↓
+Forecasting
+      ↓
+Export Dashboard
+```
+
+---
+
+# 🔥 PART 5.10 (FINAL PART)
+
+यामध्ये येईल :
+
+```text
+AI Insights
+Promotion Recommendation
+Training Recommendation
+High Performers
+Employees At Risk
+Attrition Prediction
+Hiring Prediction
+Smart Notifications
+AI Assistant
+AI Reports
+Predictive HR Engine
+```
+
+हा Phase-5 चा सर्वात advanced आणि enterprise-level भाग असेल, जो Workday AI + SAP SuccessFactors AI सारखा असेल.
+--------------------------------------------------------------------------------------------------------------------------------------
+# 🔥 Phase 5.10 — AI Insights + Predictive HR (Detailed Enterprise Flow)
+
+हा Phase-5 चा शेवटचा part आहे. Phase-4 प्रमाणेच हा पूर्ण dynamic, dashboard-based आणि enterprise-level असेल.
+
+---
+
+# Sidebar
+
+```text
+AI Insights ▼
+
+Dashboard
+High Performers
+Employees At Risk
+Promotion Recommendation
+Training Recommendation
+Attrition Prediction
+Hiring Prediction
+Smart Notifications
+AI History
+Settings
+```
+
+---
+
+# Route
+
+```text
+/hr/ai-insights
+```
+
+---
+
+# AI Dashboard Page
+
+Header
+
+```text
+AI Insights Dashboard
+
+Date Filter
+Department Filter
+Export Report
+Generate New Insights
+```
+
+---
+
+## Top Cards
+
+### High Performers
+
+```text
+42 Employees
+↑ 8%
+```
+
+Hover
+
+```text
+Top Department
+Average Rating
+View Details →
+```
+
+Animation
+
+```css
+transform:translateY(-8px);
+box-shadow:0 0 25px rgba(37,99,235,.25);
+```
+
+---
+
+### Employees At Risk
+
+```text
+14 Employees
+```
+
+Hover
+
+```text
+Low Engagement
+Low Attendance
+View List
+```
+
+Card color
+
+```text
+Light Red
+```
+
+---
+
+### Promotion Recommendations
+
+```text
+9 Employees
+```
+
+Hover
+
+```text
+Ready For Promotion
+Current Rating
+Department
+```
+
+---
+
+### Training Recommendations
+
+```text
+27 Employees
+```
+
+Hover
+
+```text
+Skill Gap
+Recommended Course
+```
+
+---
+
+# Charts Section
+
+## Performance Distribution
+
+Chart
+
+```text
+Top Performers
+Average
+Need Improvement
+```
+
+Animation
+
+```text
+Fade In
+```
+
+---
+
+## Attrition Prediction Chart
+
+Graph
+
+```text
+Month Wise Prediction
+```
+
+Color
+
+```text
+Blue
+Orange
+Red
+```
+
+---
+
+## Hiring Forecast
+
+Chart
+
+```text
+Current Employees
+Required Employees
+Predicted Hiring
+```
+
+---
+
+# High Performers Page
+
+Route
+
+```text
+/hr/ai-insights/high-performers
+```
+
+Table
+
+| Employee | Department | Rating | Goals Achieved | Promotion Chance |
+| -------- | ---------- | ------ | -------------- | ---------------- |
+
+Hover Row
+
+Icons appear
+
+```text
+View Profile
+Generate Report
+Recommend Promotion
+```
+
+Click Employee
+
+↓
+
+Redirect
+
+```text
+/hr/ai-insights/high-performers/details
+```
+
+---
+
+# Right Drawer
+
+Tabs
+
+```text
+Overview
+Performance
+Goals
+Awards
+Attendance
+Training
+```
+
+---
+
+# Employees At Risk
+
+Route
+
+```text
+/hr/ai-insights/at-risk
+```
+
+Cards
+
+```text
+Low Attendance
+
+Poor Performance
+
+Negative Feedback
+
+High Leave Count
+```
+
+Click Card
+
+↓
+
+Employee Risk Details
+
+---
+
+## Risk Meter
+
+Gauge
+
+```text
+85% Risk
+```
+
+Color
+
+```text
+Green
+Yellow
+Red
+```
+
+---
+
+## Reasons Section
+
+```text
+Attendance ↓
+
+Engagement ↓
+
+Performance ↓
+
+Feedback ↓
+```
+
+---
+
+# Promotion Recommendation
+
+Route
+
+```text
+/hr/ai-insights/promotions
+```
+
+Cards
+
+```text
+Recommended Employees
+Pending Promotions
+Approved Promotions
+```
+
+---
+
+Table
+
+```text
+Employee
+Current Designation
+Suggested Designation
+Readiness %
+```
+
+Hover Row
+
+```text
+Approve
+Reject
+View
+```
+
+---
+
+Popup
+
+### Approve Promotion
+
+Fields
+
+```text
+New Designation
+Salary Increment
+Effective Date
+Remarks
+```
+
+Button
+
+```text
+Approve Promotion
+```
+
+Toast
+
+```text
+Promotion Recommendation Approved
+```
+
+---
+
+# Training Recommendation
+
+Route
+
+```text
+/hr/ai-insights/training
+```
+
+Cards
+
+```text
+Skill Gap
+Pending Training
+Completed Training
+```
+
+---
+
+Table
+
+```text
+Employee
+Weak Skill
+Suggested Course
+Priority
+```
+
+Hover
+
+```text
+Assign Training
+View History
+```
+
+---
+
+# Attrition Prediction
+
+Route
+
+```text
+/hr/ai-insights/attrition
+```
+
+Cards
+
+```text
+High Risk
+Medium Risk
+Low Risk
+```
+
+---
+
+Heatmap
+
+Departments
+
+```text
+HR
+IT
+Sales
+Marketing
+Finance
+```
+
+Colors
+
+```text
+Green
+Yellow
+Red
+```
+
+---
+
+Click Department
+
+↓
+
+Employees list
+
+↓
+
+Employee Drawer
+
+Tabs
+
+```text
+Attendance
+Performance
+Leave History
+Feedback
+Risk Factors
+```
+
+---
+
+# Hiring Prediction
+
+Route
+
+```text
+/hr/ai-insights/hiring
+```
+
+Charts
+
+```text
+Upcoming Requirements
+Department Demand
+Vacancy Trend
+```
+
+---
+
+Cards
+
+```text
+Need Immediate Hiring
+
+Normal Requirement
+
+Overstaffed Departments
+```
+
+---
+
+# Smart Notifications
+
+Route
+
+```text
+/hr/ai-insights/notifications
+```
+
+Notifications
+
+```text
+Promotion Recommended
+
+Employee At Risk
+
+Low Attendance Alert
+
+Training Suggested
+
+High Performer Alert
+```
+
+---
+
+Hover Notification
+
+Buttons
+
+```text
+View
+
+Assign Training
+
+Promote
+
+Dismiss
+```
+
+---
+
+# AI History
+
+Route
+
+```text
+/hr/ai-insights/history
+```
+
+Table
+
+```text
+Date
+Type
+Generated By
+Action Taken
+Status
+```
+
+Filters
+
+```text
+Department
+Date
+AI Type
+```
+
+---
+
+# Settings
+
+Route
+
+```text
+/hr/ai-insights/settings
+```
+
+Options
+
+```text
+Enable Predictions
+
+Enable Smart Notifications
+
+Promotion Threshold
+
+Risk Threshold
+
+Auto Training Recommendation
+```
+
+Toggle Animation
+
+```css
+scale(1.1)
+```
+
+---
+
+# Popups
+
+## Generate Insights
+
+Fields
+
+```text
+Department
+
+Date Range
+
+Insight Type
+```
+
+Button
+
+```text
+Generate
+```
+
+Loader
+
+```text
+AI Processing...
+```
+
+Animation
+
+```text
+Zoom In
+```
+
+---
+
+# Socket Events
+
+```javascript
+insightGenerated
+
+riskDetected
+
+promotionSuggested
+
+trainingSuggested
+
+notificationCreated
+```
+
+---
+
+# MongoDB Collections
+
+```text
+aiInsights
+
+highPerformers
+
+riskEmployees
+
+promotionRecommendations
+
+trainingRecommendations
+
+attritionPredictions
+
+hiringPredictions
+
+smartNotifications
+```
+
+---
+
+# Page Animations
+
+### Card Hover
+
+```css
+transform: translateY(-8px);
+transition:.3s;
+```
+
+### Drawer
+
+```css
+slideRight .4s ease;
+```
+
+### Popup
+
+```css
+zoomIn .3s ease;
+```
+
+### Table Row Hover
+
+```css
+background:#DBEAFE;
+`
+# 🔥 PHASE 6 — Payroll & Compensation (Real Enterprise Flow)
+
+## Main Flow
+
+```text
+Admin Login
+      ↓
+HR Module
+      ↓
+Payroll
+      ↓
+Payroll Dashboard
+```
+
+---
+
+# 1. Payroll Dashboard
+
+**Route**
+
+```text
+/hr/payroll
+```
+
+Sidebar
+
+```text
+HR
+ └── Payroll
+      ├── Dashboard
+      ├── Salary Structure
+      ├── Payroll Processing
+      ├── Payslips
+      ├── Salary Revision
+      ├── Reports
+```
+
+---
+
+## Dashboard Open झाल्यावर
+
+Header
+
+```text
+Payroll Dashboard
+```
+
+Right Side
+
+```text
++ Run Payroll
+
+Generate Payslips
+
+Export
+
+Reports
+```
+
+---
+
+### Dashboard Cards
+
+```text
+Total Employees
+
+Pending Payroll
+
+Processed Payroll
+
+Monthly Salary
+
+Pending Approval
+```
+
+---
+
+### Card 1
+
+**Total Employees**
+
+Shows
+
+```text
+520 Employees
+```
+
+Hover
+
+```text
+Project Managers : 20
+
+Sales : 85
+
+Marketing : 60
+
+HR : 15
+
+Employees : 340
+
+Click to View →
+```
+
+Click
+
+↓
+
+Redirect
+
+```text
+/hr/payroll/employees
+```
+
+---
+
+# Payroll Employees Page
+
+Page Opens
+
+Table
+
+```text
+Employee Photo
+
+Employee Name
+
+Employee ID
+
+Department
+
+Role
+
+Designation
+
+Salary Status
+
+Action
+```
+
+Example
+
+| Name         | Department  | Role                |
+| ------------ | ----------- | ------------------- |
+| Rahul Patil  | Development | Project Manager     |
+| Priya Sharma | Marketing   | Marketing Executive |
+| Amit Joshi   | Sales       | Sales Manager       |
+
+> **इथे Admin ने तयार केलेले सर्व users दिसतील.** Project Manager, Product Manager, Sales, Marketing, HR, Employee – Payroll मध्ये हे सर्व Employee म्हणून दिसतील.
+
+---
+
+Hover Row
+
+Buttons
+
+```text
+View
+
+Salary Structure
+
+Payroll History
+
+Generate Payslip
+```
+
+---
+
+## Click "View"
+
+↓
+
+Redirect
+
+```text
+/hr/payroll/employees/:id
+```
+
+---
+
+# Employee Payroll Profile
+
+Top
+
+Employee Card
+
+```text
+Photo
+
+Name
+
+Employee ID
+
+Department
+
+Designation
+
+Manager
+
+Joining Date
+```
+
+Below
+
+Cards
+
+```text
+Current Salary
+
+Last Payslip
+
+Pending Loan
+
+Attendance
+```
+
+Tabs
+
+```text
+Salary
+
+Payroll History
+
+Payslips
+
+Loans
+
+Documents
+```
+
+---
+
+## Salary Tab
+
+Shows
+
+```text
+Basic Salary
+
+HRA
+
+Medical
+
+Travel
+
+Special Allowance
+
+PF
+
+ESI
+
+Professional Tax
+
+TDS
+
+Net Salary
+```
+
+Buttons
+
+```text
+Edit Salary
+
+Salary Revision
+```
+
+---
+
+Click
+
+**Salary Revision**
+
+↓
+
+Open Popup
+
+Fields
+
+```text
+Current Salary
+
+New Salary
+
+Effective Date
+
+Reason
+```
+
+Approve
+
+↓
+
+Toast
+
+```text
+Salary Revised Successfully
+```
+
+Database Updated
+
+↓
+
+Employee Salary Updated
+
+---
+
+# Payroll Processing
+
+Back
+
+↓
+
+Sidebar
+
+↓
+
+Payroll Processing
+
+Route
+
+```text
+/hr/payroll/process
+```
+
+---
+
+Page
+
+Table
+
+```text
+Employee
+
+Attendance
+
+Leaves
+
+Overtime
+
+Gross Salary
+
+Net Salary
+
+Status
+```
+
+Hover
+
+Buttons
+
+```text
+Calculate
+
+Preview
+
+Approve
+
+Generate Payslip
+```
+
+---
+
+Click
+
+Calculate
+
+↓
+
+System Automatically
+
+```text
+Attendance Module
+
+↓
+
+Leave Module
+
+↓
+
+Overtime Module
+
+↓
+
+Bonus
+
+↓
+
+PF
+
+↓
+
+ESI
+
+↓
+
+Tax
+
+↓
+
+Net Salary
+```
+
+Everything calculates automatically.
+
+---
+
+Click
+
+Preview
+
+↓
+
+Right Drawer Opens
+
+Shows
+
+```text
+Attendance
+
+Leave
+
+OT
+
+Allowances
+
+Deductions
+
+Gross Salary
+
+Net Salary
+```
+
+Approve
+
+↓
+
+Status becomes
+
+```text
+Approved
+```
+
+---
+
+Generate Payslip
+
+↓
+
+Redirect
+
+```text
+/hr/payroll/payslips
+```
+
+---
+
+# Payslips Page
+
+Cards
+
+```text
+Generated
+
+Pending
+
+Downloaded
+
+Emailed
+```
+
+Table
+
+```text
+Employee
+
+Month
+
+Gross Salary
+
+Net Salary
+
+Status
+```
+
+Hover
+
+Buttons
+
+```text
+Preview
+
+Download PDF
+
+Email
+
+History
+```
+
+---
+
+Click
+
+Preview
+
+↓
+
+Popup
+
+Shows
+
+Professional Payslip
+
+```text
+Company Logo
+
+Employee Name
+
+Salary Details
+
+PF
+
+Tax
+
+Net Salary
+
+QR Code
+```
+
+Buttons
+
+```text
+Download
+
+Email
+
+Print
+```
+
+---
+
+# Reports
+
+Sidebar
+
+↓
+
+Reports
+
+Route
+
+```text
+/hr/payroll/reports
+```
+
+Cards
+
+```text
+Monthly Payroll
+
+Department Payroll
+
+Salary Register
+
+Tax Report
+```
+
+Click
+
+Monthly Payroll
+
+↓
+
+Charts Open
+
+```text
+Salary Expense
+
+Department Expense
+
+Net Payroll
+
+Pending Payroll
+```
+
+Buttons
+
+```text
+Export Excel
+
+Export PDF
+
+Email Report
+------------------------------------------
+ PHASE 7 — Analytics & Reports (Professional Flow)
+ Sidebar
+
+HR Module
+    ↓
+Analytics & Reports
+```
+
+Click
+
+↓
+
+```
+/hr/analytics/dashboard
+```
+
+---
+
+# Analytics Dashboard
+
+Page Open झाल्यावर
+
+Top Header
+
+```
+HR Analytics Dashboard
+```
+
+Right Side
+
+```
+Search
+
+Department Filter
+
+Date Filter
+
+Export
+
+Generate Report
+```
+
+---
+
+# Summary Cards
+
+```
+Total Employees
+
+Attendance %
+
+Leave %
+
+Performance %
+
+Payroll Cost
+
+Recruitment
+
+Attrition
+```
+
+सगळा Data
+
+MongoDB मधून Live येईल.
+
+Admin ने add केलेले
+
+```
+Employee
+
+HR
+
+Sales
+
+Marketing
+
+Project Manager
+
+Product Manager
+
+Finance
+
+Support
+```
+
+हे सर्व Employees म्हणून analytics मध्ये दिसतील.
+
+---
+
+Card
+
+Hover
+
+↓
+
+```
+Current Month
+
+Previous Month
+
+Growth %
+
+View Report →
+```
+
+Click
+
+↓
+
+```
+/hr/analytics/employees
+```
+
+---
+
+# Employee Analytics Page
+
+Breadcrumb
+
+```
+Dashboard
+
+>
+
+Analytics
+
+>
+
+Employees
+```
+
+Back Button
+
+↓
+
+Analytics Dashboard
+
+---
+
+Top
+
+Search
+
+↓
+
+```
+Search Employee
+```
+
+Department
+
+↓
+
+```
+IT
+
+HR
+
+Sales
+
+Marketing
+```
+
+Role
+
+↓
+
+```
+Employee
+
+Project Manager
+
+Product Manager
+
+Marketing
+
+Sales
+
+HR
+```
+
+---
+
+Table
+
+```
+Photo
+
+Employee Name
+
+Department
+
+Role
+
+Attendance
+
+Leave
+
+Performance
+
+Salary
+
+Status
+```
+
+Example
+
+```
+👤 Rahul Sharma
+
+Development
+
+Project Manager
+
+96%
+
+2 Leave
+
+4.8 Rating
+
+₹85,000
+
+Active
+```
+
+---
+
+Hover Row
+
+Buttons Show
+
+```
+View
+
+History
+
+Performance
+
+Attendance
+
+Payroll
+
+Projects
+```
+
+---
+
+Click
+
+View
+
+↓
+
+```
+/hr/analytics/employee/EMP001
+```
+
+---
+
+# Employee Details Page
+
+Header
+
+```
+Employee Profile
+```
+
+Left
+
+Photo
+
+```
+Rahul Sharma
+
+Project Manager
+
+Development
+
+Joined
+
+12 Jan 2023
+```
+
+Center
+
+Statistics
+
+```
+Attendance
+
+Leave
+
+Projects
+
+Performance
+
+Goals
+
+Salary
+
+Promotion
+
+Rewards
+```
+
+---
+
+Tabs
+
+```
+Overview
+
+Attendance
+
+Performance
+
+Payroll
+
+Projects
+
+Documents
+
+History
+```
+
+---
+
+## Overview
+
+Shows
+
+```
+Employee Basic Details
+
+Current Department
+
+Current Manager
+
+Current Team
+
+Email
+
+Phone
+
+Employment Status
+```
+
+---
+
+Click
+
+Manager Name
+
+↓
+
+Manager Profile
+
+---
+
+Click
+
+Department
+
+↓
+
+Department Details
+
+---
+
+Click
+
+Project Count
+
+↓
+
+Project List
+
+---
+
+## Attendance Tab
+
+Shows
+
+Calendar
+
+↓
+
+Green
+
+Present
+
+Yellow
+
+Half Day
+
+Red
+
+Absent
+
+Blue
+
+Leave
+
+---
+
+Below
+
+Attendance Graph
+
+```
+Weekly
+
+Monthly
+
+Yearly
+```
+
+Hover Graph
+
+↓
+
+```
+Date
+
+Punch In
+
+Punch Out
+
+Working Hours
+```
+
+---
+
+Click Any Day
+
+↓
+
+Attendance Details Popup
+
+Contains
+
+```
+Punch In
+
+Punch Out
+
+Break Time
+
+Working Hours
+
+Location
+
+Device
+```
+
+---
+
+## Performance Tab
+
+Shows
+
+```
+Current KPI
+
+Current Goals
+
+Current Rating
+
+Current Review
+
+Current Appraisal
+```
+
+Click
+
+Goal
+
+↓
+
+Goal Details
+
+---
+
+Click
+
+KPI
+
+↓
+
+KPI Details
+
+---
+
+Click
+
+Appraisal
+
+↓
+
+Appraisal Page
+
+---
+
+## Payroll Tab
+
+Shows
+
+```
+Current Salary
+
+Bonus
+
+Allowance
+
+Deduction
+
+PF
+
+Tax
+```
+
+Click Salary
+
+↓
+
+Salary Slip
+
+---
+
+Download
+
+↓
+
+PDF
+
+---
+
+## Projects Tab
+
+Shows
+
+```
+Current Projects
+
+Completed Projects
+
+Pending Projects
+```
+
+Click Project
+
+↓
+
+```
+/projects/PRJ001
+```
+
+---
+
+Project Opens
+
+Shows
+
+```
+Members
+
+Deadline
+
+Progress
+
+Tasks
+
+Client
+```
+
+---
+
+Click Client
+
+↓
+
+Client Profile
+
+---
+
+## Documents Tab
+
+Shows
+
+```
+Offer Letter
+
+ID Proof
+
+Certificates
+
+Salary Slip
+
+Promotion Letter
+```
+
+Hover
+
+↓
+
+```
+Preview
+
+Download
+
+Delete
+```
+
+---
+
+## History Tab
+
+Timeline
+
+```
+Employee Created
+
+Department Changed
+
+Promotion
+
+Salary Updated
+
+Manager Changed
+
+Performance Updated
+```
+
+Hover Timeline
+
+↓
+
+```
+Date
+
+Time
+
+Updated By
+```
+
+---
+
+# Export
+
+Buttons
+
+```
+Excel
+
+PDF
+
+CSV
+
+Email
+```
+
+Click Export PDF
+
+↓
+
+Loading
+
+↓
+
+Toast
+
+```
+Report Generated Successfully
+```
+
+↓
+
+PDF Download
+
+---
+
+# Notifications
+
+Top Right
+
+```
+Analytics Updated
+
+Report Generated
+
+Employee Updated
+
+Export Completed
+```
+
+---
+
+# Database Flow
+
+Admin
+
+↓
+
+Creates Employee
+
+↓
+
+MongoDB
+
+↓
+
+Employee Collection
+
+↓
+
+Analytics Engine
+
+↓
+
+Dashboard
+
+↓
+
+Employee Details
+
+↓
+
+Reports
+
+↓
+
+Export
+
+---
+
+# MongoDB Collections
+
+```
+employees
+
+attendance
+
+leaves
+
+payrolls
+
+performances
+
+projects
+
+analytics
+
+reports
+
+
+GET /api/analytics/dashboard
+
+GET /api/analytics/employees
+
+GET /api/analytics/employee/:id
+
+GET /api/analytics/report
+
+POST /api/report/export
+
+GET /api/projects/:id
+
+# Redirect Flow
+
+```
+Sidebar
+      ↓
+Analytics Dashboard
+      ↓
+Employee Analytics
+      ↓
+Employee Details
+      ↓
+Attendance / Payroll / Performance / Projects
+      ↓
+Related Details
+      ↓
+Export
+      ↓
+Back
+      ↓
+Dashboard
+------------
+# PHASE 8 — Advanced UI & Workflow
+## Main Flow
+
+```text
+Login
+      ↓
+HR Dashboard
+      ↓
+Select Module
+      ↓
+Open Module Dashboard
+      ↓
+View Details
+      ↓
+Create / Edit
+      ↓
+Approval Workflow
+      ↓
+Notification
+      ↓
+History
+      ↓
+Reports
+```
+
+---
+
+# Sidebar
+
+Click
+
+```text
+HR Module
+      ↓
+Advanced Workflow
+```
+
+Redirect
+
+```text
+/hr/workflow/dashboard
+```
+
+---
+
+# Workflow Dashboard
+
+Header
+
+```text
+Advanced Workflow Dashboard
+```
+
+Right Side
+
+```text
+Search
+
+Department Filter
+
+Role Filter
+
+Status Filter
+
+Date Filter
+
+Export
+
+Settings
+```
+
+---
+
+# Summary Cards
+
+### Pending Approvals
+
+```text
+128 Requests
+```
+
+Hover
+
+```text
+Department Wise
+
+Pending Since
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/workflow/pending
+```
+
+---
+
+### Approved
+
+```text
+985 Requests
+```
+
+Hover
+
+```text
+Today's Approvals
+
+Monthly
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/workflow/approved
+```
+
+---
+
+### Rejected
+
+```text
+34 Requests
+```
+
+Hover
+
+```text
+Reason
+
+Rejected By
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/workflow/rejected
+```
+
+---
+
+### Draft
+
+```text
+52 Requests
+```
+
+Hover
+
+```text
+Saved By
+
+Last Updated
+
+Continue →
+```
+
+Click
+
+↓
+
+```text
+/hr/workflow/drafts
+```
+
+---
+
+# Workflow Table
+
+Columns
+
+```text
+Workflow ID
+
+Module
+
+Employee
+
+Department
+
+Requested By
+
+Current Approver
+
+Status
+
+Priority
+
+Created Date
+
+Action
+```
+
+Example
+
+```text
+WF-2026-001
+
+Leave Approval
+
+Rahul Sharma
+
+Development
+
+Project Manager
+
+HR
+
+Pending
+
+High
+```
+
+---
+
+Hover Row
+
+Buttons appear
+
+```text
+View
+
+Approve
+
+Reject
+
+Assign
+
+Comments
+
+History
+```
+
+---
+
+Click View
+
+↓
+
+```text
+/hr/workflow/details/WF-2026-001
+```
+
+---
+
+# Workflow Details Page
+
+Breadcrumb
+
+```text
+Dashboard
+
+>
+
+Workflow
+
+>
+
+Details
+```
+
+Back Button
+
+↓
+
+Workflow Dashboard
+
+---
+
+## Left Panel
+
+Employee Information
+
+```text
+Photo
+
+Name
+
+Employee ID
+
+Department
+
+Role
+
+Manager
+```
+
+All employee data should come dynamically from MongoDB.
+
+If Admin creates:
+
+```text
+Employee
+
+Project Manager
+
+Product Manager
+
+Sales
+
+Marketing
+
+Finance
+
+Support
+
+HR
+```
+
+All of them should automatically appear here as employees.
+
+---
+
+## Center Panel
+
+Workflow Details
+
+```text
+Workflow Name
+
+Current Status
+
+Priority
+
+Module
+
+Requested Date
+
+Expected Completion
+
+Current Stage
+```
+
+---
+
+## Right Panel
+
+Approval Timeline
+
+```text
+Created
+
+Manager Approved
+
+HR Approved
+
+Final Approval
+
+Completed
+```
+
+Hover Timeline
+
+Shows
+
+```text
+Approved By
+
+Date
+
+Time
+
+Comments
+```
+
+---
+
+# Tabs
+
+```text
+Overview
+
+Approval Chain
+
+Comments
+
+Attachments
+
+History
+
+Audit Logs
+```
+
+---
+
+## Overview Tab
+
+Shows
+
+```text
+Workflow Summary
+
+Employee Details
+
+Reason
+
+Requested Action
+
+Current Stage
+
+Priority
+```
+
+---
+
+## Approval Chain
+
+Stepper
+
+```text
+Employee
+
+↓
+
+Manager
+
+↓
+
+Department Head
+
+↓
+
+HR
+
+↓
+
+Admin
+
+↓
+
+Completed
+```
+
+Current Stage
+
+Blue Glow
+
+Completed Stage
+
+Green
+
+Rejected Stage
+
+Red
+
+---
+
+Click Any Stage
+
+↓
+
+Popup
+
+Shows
+
+```text
+Approver Name
+
+Approval Time
+
+Remarks
+
+Decision
+```
+
+---
+
+## Comments
+
+Real-time Chat UI
+
+```text
+Employee
+
+Manager
+
+HR
+
+Admin
+```
+
+Buttons
+
+```text
+Reply
+
+Mention
+
+Attach File
+```
+
+Socket.IO
+
+```javascript
+workflowCommentAdded
+```
+
+Toast
+
+```text
+Comment Added Successfully
+```
+
+---
+
+## Attachments
+
+Files
+
+```text
+PDF
+
+Excel
+
+Image
+
+Document
+```
+
+Hover
+
+```text
+Preview
+
+Download
+
+Replace
+
+Delete
+```
+
+---
+
+## History
+
+Timeline
+
+```text
+Workflow Created
+
+Manager Approved
+
+HR Updated
+
+Admin Approved
+
+Completed
+```
+
+---
+
+## Audit Logs
+
+Table
+
+```text
+Action
+
+Performed By
+
+Date
+
+IP Address
+
+Browser
+
+Remarks
+```
+
+---
+
+# Create Workflow Button
+
+Top Right
+
+```text
++ New Workflow
+```
+
+Click
+
+↓
+
+Popup
+
+Width
+
+```text
+700px
+```
+
+---
+
+Fields
+
+```text
+Workflow Name
+
+Department
+
+Employee
+
+Module
+
+Priority
+
+Description
+
+Approver
+
+Due Date
+
+Attachment
+```
+
+Buttons
+
+```text
+Cancel
+
+Create Workflow
+```
+
+Loading
+
+↓
+
+Spinner
+
+Toast
+
+↓
+
+```text
+Workflow Created Successfully
+```
+
+Socket Event
+
+```javascript
+workflowCreated
+```
+
+---
+
+# Notifications
+
+Top Right
+
+```text
+Workflow Assigned
+
+Approval Pending
+
+Workflow Approved
+
+Workflow Rejected
+
+Reminder Sent
+```
+
+---
+
+# Global Search
+
+Available in Header
+
+Search
+
+```text
+Employee
+
+Workflow ID
+
+Department
+
+Module
+
+Approver
+```
+
+Search Result
+
+↓
+
+Instant Dropdown
+
+Click Result
+
+↓
+
+Open Related Page
+
+---
+
+# Universal Back Button
+
+Every Page
+
+Top Left
+
+```text
+← Back
+```
+
+Redirect
+
+↓
+
+Previous Page
+
+---
+
+# Breadcrumb
+
+Every Page
+
+Example
+
+```text
+Dashboard
+
+>
+
+Workflow
+
+>
+
+Details
+
+>
+
+History
+```
+
+Click Any Breadcrumb
+
+↓
+
+Navigate directly
+
+---
+
+# Quick Action Floating Button
+
+Bottom Right
+
+Contains
+
+```text
+Create Workflow
+
+Send Notification
+
+Export Report
+
+Help
+
+Teams Chat
+```
+
+---
+
+# Microsoft Teams Integration
+
+Workflow Approved
+
+↓
+
+Automatic Teams Notification
+
+```text
+Rahul Sharma Leave Request Approved
+```
+
+Manager Clicks
+
+↓
+
+Open HRMS Workflow
+
+---
+
+# Email Integration
+
+Employee Gets
+
+```text
+Approval Email
+
+Reminder
+
+Completion Email
+```
+
+---
+
+# Mobile Flow
+
+Desktop
+
+```text
+3 Panel Layout
+```
+
+Tablet
+
+```text
+2 Panels
+```
+
+Mobile
+
+```text
+Single Panel
+```
+
+Drawer
+
+↓
+
+Bottom Sheet
+
+Tables
+
+↓
+
+Horizontal Scroll
+
+---
+
+# MongoDB Collections
+
+```text
+workflows
+
+workflowApprovals
+
+workflowComments
+
+workflowAttachments
+
+workflowHistory
+
+workflowAuditLogs
+
+workflowNotifications
+```
+
+---
+
+# APIs
+
+```javascript
+GET /api/workflows
+
+GET /api/workflows/:id
+
+POST /api/workflows
+
+PUT /api/workflows/:id
+
+DELETE /api/workflows/:id
+
+POST /api/workflows/approve
+
+POST /api/workflows/reject
+
+POST /api/workflows/comment
+
+GET /api/workflows/history/:id
+```
+
+---
+
+# Socket Events
+
+```javascript
+workflowCreated
+
+workflowUpdated
+
+workflowApproved
+
+workflowRejected
+
+workflowCommentAdded
+
+workflowAssigned
+
+notificationSent
+```
+
+---
+
+# Complete Redirect Flow
+
+```text
+HR Dashboard
+      ↓
+Workflow Dashboard
+      ↓
+Pending / Approved / Draft / Rejected
+      ↓
+Workflow Details
+      ↓
+Overview
+      ↓
+Approval Chain
+      ↓
+Comments
+      ↓
+Attachments
+      ↓
+History
+      ↓
+Audit Logs
+      ↓
+Export / Print
+      ↓
+Back
+      ↓
+Workflow Dashboard
+-----------------------------------
+# 🚀 PHASE 9 — Enterprise Integrations & Communication Hub
+## Main Flow``text
+Login
+      ↓
+HR Dashboard
+      ↓
+Integrations Dashboard
+      ↓
+Select Integration
+      ↓
+Connect Account
+      ↓
+Authorize
+      ↓
+Sync Data
+      ↓
+Live Notifications
+      ↓
+Integration Logs
+      ↓
+Settings
+# Sidebar
+
+```text
+HR Module
+      ↓
+Integrations
+      ├── Dashboard
+      ├── Microsoft Teams
+      ├── Outlook Email
+      ├── Google Calendar
+      ├── Zoom Meetings
+      ├── Slack
+      ├── Webhooks
+      ├── API Management
+      ├── File Storage
+      ├── Notification Center
+      ├── Integration Logs
+      ├── Settings
+```
+
+Route
+
+```text
+/hr/integrations
+```
+
+---
+
+# Integrations Dashboard
+
+Page Open
+
+Header
+
+```text
+Enterprise Integrations
+```
+
+Right Side
+
+```text
+Search
+
+Integration Type
+
+Status Filter
+
+Refresh
+
+Settings
+```
+
+---
+
+# Integration Cards
+
+```text
+Microsoft Teams
+
+Outlook Email
+
+Google Calendar
+
+Zoom
+
+Slack
+
+Webhooks
+
+REST APIs
+
+Cloud Storage
+```
+
+Each Card
+
+Shows
+
+```text
+Connected
+
+Last Sync
+
+Health Status
+
+Version
+```
+
+Hover
+
+```text
+View Details →
+
+Sync Now →
+
+Open Settings →
+```
+
+---
+
+Click
+
+Microsoft Teams
+
+↓
+
+Redirect
+
+```text
+/hr/integrations/teams
+```
+
+---
+
+# Microsoft Teams Page
+
+Top Card
+
+```text
+Connection Status
+
+Organization
+
+Connected User
+
+Last Sync
+
+Sync Status
+```
+
+Buttons
+
+```text
+Reconnect
+
+Sync Now
+
+Disconnect
+```
+
+---
+
+Below
+
+Activity Timeline
+
+```text
+Meeting Scheduled
+
+Leave Approved
+
+Payroll Generated
+
+Performance Review
+
+Task Assigned
+```
+
+Hover Activity
+
+Shows
+
+```text
+Date
+
+Time
+
+Triggered By
+
+Open Related Module
+```
+
+---
+
+Click
+
+Leave Approved
+
+↓
+
+Redirect
+
+```text
+/leave/request/LV-1005
+```
+
+---
+
+# Teams Notifications
+
+Cards
+
+```text
+Attendance Alerts
+
+Leave Approval
+
+Payroll Alert
+
+Interview Schedule
+
+Project Assignment
+```
+
+Click Notification
+
+↓
+
+Related Page Opens
+
+---
+
+# Outlook Integration
+
+Route
+
+```text
+/hr/integrations/outlook
+```
+
+Dashboard
+
+Shows
+
+```text
+Connected Email
+
+Mailbox Status
+
+Daily Emails
+
+Pending Emails
+```
+
+Buttons
+
+```text
+Compose
+
+Templates
+
+Sync
+
+Logs
+```
+
+---
+
+Click
+
+Compose
+
+↓
+
+Popup
+
+Fields
+
+```text
+Recipients
+
+Subject
+
+Message
+
+Attachments
+```
+
+Buttons
+
+```text
+Send
+
+Save Draft
+
+Cancel
+```
+
+Toast
+
+```text
+Email Sent Successfully
+```
+
+---
+
+# Google Calendar
+
+Route
+
+```text
+/hr/integrations/calendar
+```
+
+Calendar
+
+Displays
+
+```text
+Interviews
+
+Meetings
+
+Payroll Dates
+
+Training
+
+Holidays
+```
+
+Click Event
+
+↓
+
+Event Details
+
+---
+
+Buttons
+
+```text
+Edit
+
+Delete
+
+Notify Participants
+```
+
+---
+
+# Zoom Integration
+
+Route
+
+```text
+/hr/integrations/zoom
+```
+
+Table
+
+```text
+Meeting
+
+Organizer
+
+Participants
+
+Date
+
+Status
+```
+
+Hover
+
+Buttons
+
+```text
+Join
+
+Edit
+
+Cancel
+
+History
+```
+
+---
+
+Click
+
+Join
+
+↓
+
+Zoom Meeting Opens
+
+---
+
+# Slack Integration
+
+Route
+
+```text
+/hr/integrations/slack
+```
+
+Channels
+
+```text
+HR
+
+Projects
+
+Marketing
+
+Sales
+
+Management
+```
+
+Click Channel
+
+↓
+
+Messages
+
+Hover
+
+```text
+Reply
+
+Pin
+
+Forward
+```
+
+---
+
+# Webhooks
+
+Route
+
+```text
+/hr/integrations/webhooks
+```
+
+Table
+
+```text
+Webhook Name
+
+Module
+
+Status
+
+URL
+
+Last Trigger
+```
+
+Click
+
+↓
+
+Webhook Details
+
+Shows
+
+```text
+Headers
+
+Payload
+
+Response
+
+Logs
+```
+
+---
+
+# API Management
+
+Route
+
+```text
+/hr/integrations/apis
+```
+
+Table
+
+```text
+API Name
+
+Endpoint
+
+Method
+
+Status
+
+Requests
+
+Latency
+```
+
+Hover
+
+```text
+View Docs
+
+Copy Endpoint
+
+Disable
+
+Analytics
+```
+
+---
+
+Click API
+
+↓
+
+API Details
+
+Tabs
+
+```text
+Overview
+
+Headers
+
+Authentication
+
+Examples
+
+Logs
+```
+
+---
+
+# Cloud Storage
+
+Route
+
+```text
+/hr/integrations/storage
+```
+
+Cards
+
+```text
+Documents
+
+Employee Files
+
+Payroll PDFs
+
+Offer Letters
+
+Certificates
+```
+
+Click Folder
+
+↓
+
+File Manager
+
+---
+
+Hover File
+
+```text
+Preview
+
+Download
+
+Share
+
+Delete
+```
+
+---
+
+# Notification Center
+
+Route
+
+```text
+/hr/integrations/notifications
+```
+
+Tabs
+
+```text
+Unread
+
+Read
+
+Archived
+
+Failed
+```
+
+Click Notification
+
+↓
+
+Related Module Opens
+
+Example
+
+```text
+Payroll Notification
+
+↓
+
+Payroll Details
+```
+
+---
+
+# Integration Logs
+
+Route
+
+```text
+/hr/integrations/logs
+```
+
+Table
+
+```text
+Service
+
+Action
+
+Status
+
+Date
+
+User
+
+Response Time
+```
+
+Hover
+
+```text
+View Log
+
+Retry
+
+Download
+```
+
+---
+
+# Settings
+
+Route
+
+```text
+/hr/integrations/settings
+```
+
+Sections
+
+```text
+Authentication
+
+API Keys
+
+OAuth
+
+Webhook Settings
+
+Notification Rules
+
+Auto Sync
+```
+
+---
+
+# Universal Header Actions
+
+Available on Every Integration Page
+
+```text
+Search
+
+Notifications
+
+Help
+
+Sync Now
+
+Profile
+# Universal Footer
+
+Displays
+
+```text
+System Version
+
+API Status
+
+Connected Services
+
+Last Sync Time
+
+Copyright
+# Data Flow
+
+```text
+Admin Creates Employee
+        ↓
+Employee Saved in MongoDB
+        ↓
+HR Module
+        ↓
+Microsoft Teams Sync
+        ↓
+Outlook Sync
+        ↓
+Google Calendar
+        ↓
+Zoom
+        ↓
+Slack
+        ↓
+Notifications
+        ↓
+Integration Logs
+# MongoDB Collections
+
+```text
+integrations
+
+integrationLogs
+
+notifications
+
+calendarEvents
+
+emailTemplates
+
+meetings
+
+webhooks
+
+apiKeys
+
+cloudFiles
+# APIs
+
+```javascript
+GET /api/integrations
+
+POST /api/integrations/connect
+
+POST /api/integrations/sync
+
+GET /api/integrations/logs
+
+POST /api/notifications/send
+
+GET /api/calendar/events
+
+POST /api/meetings/create
+
+GET /api/apis
+# Socket Events
+
+```javascript
+integrationConnected
+
+integrationSynced
+
+notificationReceived
+
+meetingCreated
+
+emailSent
+
+calendarUpdated
+
+webhookTriggered
+# Complete Redirect Flow
+
+```text
+HR Dashboard
+      ↓
+Integrations Dashboard
+      ↓
+Select Integration
+      ↓
+Integration Details
+      ↓
+Sync / Configure
+      ↓
+Logs
+      ↓
+Notifications
+      ↓
+Related HR Module
+      ↓
+Back
+      ↓
+Integrations Dashboard
+-------------------------------------------
+# 🚀 PHASE 10 — AI Automation & Smart HR (Enterprise Final Phase)
+# Main Flow
+
+```text
+Login
+      ↓
+HR Dashboard
+      ↓
+AI Dashboard
+      ↓
+AI Assistant
+      ↓
+Smart Recommendations
+      ↓
+Predictive Analytics
+      ↓
+AI Approvals
+      ↓
+Reports
+      ↓
+Notifications
+```
+
+---
+
+# Sidebar
+
+```text
+AI & Automation ▼
+
+AI Dashboard
+
+AI Assistant
+
+AI Employee Insights
+
+AI Attendance
+
+AI Leave Insights
+
+AI Performance
+
+AI Payroll
+
+AI Recruitment
+
+AI Chat
+
+AI Reports
+
+Predictive Analytics
+
+AI Notifications
+
+Automation Rules
+
+Decision Engine
+
+AI Settings
+```
+
+Route
+
+```text
+/hr/ai/dashboard
+```
+
+---
+
+# AI Dashboard
+
+Header
+
+```text
+AI HR Intelligence Center
+```
+
+Right Side
+
+```text
+Search
+
+Department Filter
+
+AI Model Filter
+
+Generate Report
+
+Refresh AI
+
+Settings
+```
+
+---
+
+# AI Summary Cards
+
+### Employees At Risk
+
+```text
+15 Employees
+```
+
+Hover
+
+```text
+High Attrition Probability
+
+Attendance Drop
+
+Performance Declining
+
+View Details →
+```
+
+Click
+
+↓
+
+```text
+/hr/ai/employee-insights
+```
+
+---
+
+### Attendance Prediction
+
+```text
+98%
+```
+
+Hover
+
+```text
+Predicted Absentees
+
+Late Arrival Trend
+
+Weekly Forecast
+```
+
+Click
+
+↓
+
+```text
+/hr/ai/attendance
+```
+
+---
+
+### Payroll Alerts
+
+```text
+8 Issues
+```
+
+Hover
+
+```text
+Salary Mismatch
+
+Missing Bank Details
+
+Pending Approval
+```
+
+Click
+
+↓
+
+```text
+/hr/ai/payroll
+```
+
+---
+
+### Recruitment AI
+
+```text
+32 Candidates
+```
+
+Hover
+
+```text
+Top Resume Match
+
+Interview Recommendation
+
+Skill Gap
+```
+
+Click
+
+↓
+
+```text
+/hr/ai/recruitment
+```
+
+---
+
+### Performance Insights
+
+```text
+125 Employees
+```
+
+Hover
+
+```text
+Promotion Eligible
+
+Low Performer
+
+Training Required
+```
+
+Click
+
+↓
+
+```text
+/hr/ai/performance
+```
+
+---
+
+# AI Assistant
+
+Route
+
+```text
+/hr/ai/assistant
+```
+
+Page Layout
+
+Left Panel
+
+```text
+Chat History
+```
+
+Center
+
+```text
+AI Chat Window
+```
+
+Right Panel
+
+```text
+Suggested Questions
+
+Recent Reports
+
+Quick Actions
+```
+
+Example Questions
+
+```text
+Show employees with low attendance
+
+Who deserves promotion?
+
+Generate payroll report
+
+Show top performers
+
+List employees on PIP
+
+Upcoming appraisal reviews
+```
+
+---
+
+Click
+
+Generate Payroll Report
+
+↓
+
+AI
+
+Automatically
+
+```text
+Collects Payroll Data
+
+Creates Report
+
+Shows Summary
+
+Download PDF
+```
+
+---
+
+# AI Employee Insights
+
+Route
+
+```text
+/hr/ai/employee-insights
+```
+
+Cards
+
+```text
+High Performer
+
+Promotion Ready
+
+Resignation Risk
+
+Training Needed
+
+High Absenteeism
+
+Inactive Employee
+```
+
+Click
+
+Promotion Ready
+
+↓
+
+Employee List
+
+Table
+
+```text
+Employee
+
+Department
+
+Current Rating
+
+Experience
+
+Recommended Position
+
+Confidence %
+```
+
+---
+
+Click Employee
+
+↓
+
+Employee AI Profile
+
+---
+
+# AI Employee Profile
+
+Tabs
+
+```text
+Overview
+
+Performance
+
+Attendance
+
+Salary
+
+Projects
+
+Promotion Prediction
+
+Training Suggestion
+
+History
+```
+
+---
+
+Promotion Prediction
+
+Shows
+
+```text
+Current Position
+
+Recommended Position
+
+Confidence
+
+Reason
+
+Expected Promotion Date
+```
+
+---
+
+Training Suggestion
+
+Shows
+
+```text
+Suggested Course
+
+Duration
+
+Priority
+
+Completion %
+```
+
+---
+
+# AI Attendance
+
+Route
+
+```text
+/hr/ai/attendance
+```
+
+Charts
+
+```text
+Late Coming
+
+Absent Prediction
+
+Monthly Trend
+
+Department Comparison
+```
+
+Hover Chart
+
+Shows
+
+```text
+Employee Count
+
+Prediction %
+
+Reason
+```
+
+---
+
+Click
+
+Late Employees
+
+↓
+
+Employee Attendance Details
+
+---
+
+# AI Leave Insights
+
+Route
+
+```text
+/hr/ai/leave
+```
+
+Cards
+
+```text
+Frequent Leave
+
+Medical Leave
+
+Casual Leave
+
+Pending Leave
+```
+
+Click
+
+↓
+
+Leave History
+
+AI Suggestion
+
+```text
+Employee requires attendance counselling.
+```
+
+---
+
+# AI Performance
+
+Route
+
+```text
+/hr/ai/performance
+```
+
+Cards
+
+```text
+Promotion Ready
+
+Training Required
+
+Performance Declining
+
+Outstanding Employees
+```
+
+Click
+
+↓
+
+Performance Details
+
+Charts
+
+```text
+Goal Completion
+
+KPI
+
+Appraisal
+
+Behaviour
+
+Attendance
+```
+
+---
+
+# AI Payroll
+
+Route
+
+```text
+/hr/ai/payroll
+```
+
+Cards
+
+```text
+Salary Errors
+
+Duplicate Payments
+
+Missing Salary
+
+Pending Payroll
+
+Tax Issues
+```
+
+Click
+
+↓
+
+Payroll Details
+
+AI Recommendation
+
+```text
+Verify Employee Bank Account
+```
+
+---
+
+# AI Recruitment
+
+Route
+
+```text
+/hr/ai/recruitment
+```
+
+Top Filters
+
+```text
+Job Position
+
+Experience
+
+Skills
+
+Location
+```
+
+Resume Table
+
+```text
+Candidate
+
+Match %
+
+Experience
+
+Skills
+
+Recommendation
+```
+
+Hover
+
+Buttons
+
+```text
+View Resume
+
+Schedule Interview
+
+Reject
+
+Hire
+```
+
+---
+
+Click Resume
+
+↓
+
+AI Resume Analysis
+
+Shows
+
+```text
+Skills
+
+Strengths
+
+Weakness
+
+Missing Skills
+
+Interview Questions
+
+Overall Match %
+```
+
+---
+
+# AI Reports
+
+Route
+
+```text
+/hr/ai/reports
+```
+
+Cards
+
+```text
+Attendance Report
+
+Payroll Report
+
+Performance Report
+
+Recruitment Report
+
+Attrition Report
+
+Department Report
+```
+
+Click
+
+↓
+
+Generate Report
+
+↓
+
+Loading
+
+↓
+
+Preview
+
+↓
+
+Download
+
+---
+
+# Predictive Analytics
+
+Route
+
+```text
+/hr/ai/predictive
+```
+
+Charts
+
+```text
+Attrition Prediction
+
+Hiring Forecast
+
+Payroll Forecast
+
+Promotion Forecast
+
+Leave Forecast
+```
+
+Hover
+
+Shows
+
+```text
+Current Value
+
+Predicted Value
+
+Confidence
+```
+
+---
+
+# Automation Rules
+
+Route
+
+```text
+/hr/ai/automation
+```
+
+Rules
+
+```text
+Auto Leave Approval
+
+Auto Reminder
+
+Auto Payroll
+
+Auto Attendance Alert
+
+Auto Birthday Wish
+
+Auto Work Anniversary
+
+Auto Appraisal Reminder
+```
+
+Buttons
+
+```text
+Enable
+
+Disable
+
+Edit
+```
+
+---
+
+# Decision Engine
+
+Route
+
+```text
+/hr/ai/decision-engine
+```
+
+Rules
+
+```text
+Promotion Decision
+
+Salary Recommendation
+
+Leave Decision
+
+Recruitment Recommendation
+
+Performance Recommendation
+```
+
+AI
+
+Displays
+
+```text
+Reason
+
+Confidence %
+
+Suggested Action
+```
+
+Manager
+
+Can
+
+```text
+Approve
+
+Reject
+
+Modify
+```
+
+---
+
+# AI Notifications
+
+Cards
+
+```text
+Promotion Alert
+
+Attendance Alert
+
+Payroll Alert
+
+Birthday
+
+Work Anniversary
+
+Training Reminder
+```
+
+Click
+
+↓
+
+Related Module Opens
+
+---
+
+# AI Settings
+
+Contains
+
+```text
+AI Model
+
+Notification Rules
+
+Automation Rules
+
+Prediction Settings
+
+API Keys
+
+Permissions
+```
+
+---
+
+# Floating AI Button
+
+Every HR Page
+
+Bottom Right
+
+```text
+🤖 Ask AI
+```
+
+Click
+
+↓
+
+AI Chat Opens
+
+Ask
+
+```text
+Show low performers
+
+Generate attendance report
+
+Who is eligible for promotion?
+
+Show payroll issues
+
+Upcoming interviews
+```
+
+AI
+
+Automatically
+
+Redirects to related HR page.
+
+---
+
+# Microsoft Teams Integration
+
+AI
+
+Generates
+
+```text
+Daily HR Summary
+
+Attendance Alerts
+
+Payroll Completion
+
+Recruitment Status
+```
+
+Automatically
+
+Posts into
+
+Microsoft Teams.
+
+---
+
+# Email Integration
+
+AI
+
+Automatically Sends
+
+```text
+Interview Reminder
+
+Birthday Wishes
+
+Promotion Letter
+
+Offer Letter
+
+Payroll Completed
+
+Training Reminder
+# Universal Header
+
+Every AI Page
+
+```text
+Search
+
+AI Search
+
+Notifications
+
+Settings
+
+Profile
+# Universal Footer
+
+```text
+AI Version
+
+Model Status
+
+Prediction Accuracy
+
+Last Training Time
+
+Connected Services
+# MongoDB Collections
+
+```text
+aiInsights
+
+aiReports
+
+aiPredictions
+
+automationRules
+
+aiNotifications
+
+resumeAnalysis
+
+decisionEngine
+
+chatHistory
+
+employeePredictions
+# APIs
+
+```javascript
+GET /api/ai/dashboard
+
+GET /api/ai/insights
+
+GET /api/ai/predictions
+
+POST /api/ai/chat
+
+POST /api/ai/report
+
+POST /api/ai/recruitment
+
+POST /api/ai/automation
+
+GET /api/ai/settings
+# Socket Events
+
+```javascript
+aiNotification
+
+reportGenerated
+
+predictionCompleted
+
+resumeAnalyzed
+
+automationExecuted
+
+chatReply
+
+promotionSuggested
+# Complete Enterprise Flow
+
+```text
+Login
+      ↓
+HR Dashboard
+      ↓
+AI Dashboard
+      ↓
+AI Assistant
+      ↓
+Employee Insights
+      ↓
+Attendance Insights
+      ↓
+Performance Insights
+      ↓
+Payroll Insights
+      ↓
+Recruitment AI
+      ↓
+Predictive Analytics
+      ↓
+Decision Engine
+      ↓
+Automation Rules
+      ↓
+AI Reports
+      ↓
+Notifications
+      ↓
+Microsoft Teams / Email
+      ↓
+Back to HR Dashboard
+-------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Lead Profile</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/profile-hub.css" />
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="hub-shell">
+    <div id="sidebar"></div>
+    <main class="hub-page">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Profile Hub</p>
+          <div id="heroRole" class="chip role">TEAM LEAD</div>
+          <h1 id="heroName">Team Lead</h1>
+          <p id="heroTitle"></p>
+          <p id="heroBio" class="hero-text"></p>
+          <div id="heroStatus" class="chip status">Active</div>
+          <div class="hero-actions"><a id="dashboardLink" class="btn btn-primary" href="../dashboard/dashboard.html">Dashboard</a></div>
+        </div>
+        <div id="stats" class="stat-grid"></div>
+      </section>
+      <section class="panel-grid">
+        <section class="panel-card"><div class="section-heading"><div><p class="eyebrow">Profile Sections</p><h2>Lead identity and control</h2></div></div><div id="navCards" class="nav-grid"></div></section>
+        <section class="panel-card"><div class="section-heading"><div><p class="eyebrow">Recent Activity</p><h2>Execution timeline</h2></div></div><div id="timeline" class="timeline-list"></div></section>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../../../assets/js/profile-hub.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

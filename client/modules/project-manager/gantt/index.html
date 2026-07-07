@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gantt Chart – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  
+  <!-- Frappe Gantt -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.6.1/frappe-gantt.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.6.1/frappe-gantt.min.js"></script>
+  <!-- Moment.js for dates -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+  <style>
+    .gantt-container {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      box-shadow: var(--pm-shadow-sm);
+      padding: 20px;
+      overflow-x: auto;
+      min-height: 400px;
+    }
+    
+    .gantt-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--pm-border);
+    }
+    
+    /* Frappe Gantt overrides for premium feel */
+    .gantt .grid-header { fill: #f8fafc; stroke: var(--pm-border); }
+    .gantt .grid-row { fill: #fff; }
+    .gantt .grid-row:nth-child(even) { fill: #f8fafc; }
+    .gantt .row-line { stroke: var(--pm-border); }
+    .gantt .tick { stroke: var(--pm-border); }
+    .gantt .today-highlight { fill: #eff6ff; opacity: 0.5; }
+    .gantt .bar { fill: var(--pm-accent); stroke: var(--pm-accent-dark, #1e40af); rx: 4; ry: 4; }
+    .gantt .bar-progress { fill: #1e3a8a; }
+    .gantt .bar-label { fill: #fff; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; }
+    
+    /* specific custom colors based on progress/status */
+    .gantt .bar-wrapper.completed .bar { fill: #22c55e; stroke: #16a34a; }
+    .gantt .bar-wrapper.completed .bar-progress { fill: #15803d; }
+    
+    .gantt .bar-wrapper.delayed .bar { fill: #ef4444; stroke: #dc2626; }
+    .gantt .bar-wrapper.delayed .bar-progress { fill: #b91c1c; }
+    
+    .gantt-target {
+      overflow: hidden;
+    }
+    
+    .empty-gantt {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--pm-text-muted);
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Gantt Chart</span>
+          </div>
+          <h2 class="pm-page-title">Gantt Chart</h2>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <select id="projectFilter" class="pm-form-input" style="padding:8px 12px;width:auto;" onchange="loadGantt()">
+            <option value="">Select Project</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="gantt-container">
+        <div class="gantt-controls">
+          <button class="pm-btn pm-btn-outline" onclick="changeView('Quarter Day')">Quarter Day</button>
+          <button class="pm-btn pm-btn-outline" onclick="changeView('Half Day')">Half Day</button>
+          <button class="pm-btn pm-btn-outline active" onclick="changeView('Day')">Day</button>
+          <button class="pm-btn pm-btn-outline" onclick="changeView('Week')">Week</button>
+          <button class="pm-btn pm-btn-outline" onclick="changeView('Month')">Month</button>
+        </div>
+        
+        <div id="gantt">
+          <div class="empty-gantt">
+            <i class="fa fa-project-diagram" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i><br>
+            Select a project to view its Gantt Chart
+          </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+</div>
+<script src="/modules/project-manager/pm-shell.js"></script>
+
+<script>
+  let ganttChart = null;
+
+  async function initGanttPage() {
+    try {
+      const pRes = await window.pmShell?.apiFetch('/api/projects?size=100');
+      if (pRes && pRes.data && pRes.data.length > 0) {
+        const pSel = document.getElementById('projectFilter');
+        pRes.data.forEach(p => {
+          pSel.innerHTML += `<option value="${p._id}">${p.projectName || p.name}</option>`;
+        });
+        
+        // Select first by default and load
+        pSel.value = pRes.data[0]._id;
+        loadGantt();
+      }
+    } catch(e) { console.error("Error fetching projects", e); }
+  }
+
+  async function loadGantt() {
+    const projId = document.getElementById('projectFilter').value;
+    if(!projId) return;
+    
+    document.getElementById('gantt').innerHTML = '<div class="empty-gantt"><i class="fa fa-spinner fa-spin"></i> Loading...</div>';
+    
+    try {
+      const headers = { 'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}` };
+      const res = await fetch(`/api/tasks?projectId=${projId}&limit=500`, { headers });
+      const data = await res.json();
+      
+      const tasks = data.data || [];
+      if(tasks.length === 0) {
+        document.getElementById('gantt').innerHTML = '<div class="empty-gantt">No tasks found for this project.</div>';
+        return;
+      }
+      
+      // Format tasks for Frappe Gantt
+      const formattedTasks = tasks.map((t, i) => {
+        // Fallback dates if missing
+        const start = t.startDate || new Date(Date.now() + i * 86400000).toISOString().split('T')[0];
+        let end = t.dueDate || t.endDate;
+        if(!end) end = new Date(new Date(start).getTime() + 3 * 86400000).toISOString().split('T')[0];
+        
+        let progress = 0;
+        if(t.status === 'Completed' || t.status === 'Done') progress = 100;
+        else if(t.status === 'In Progress') progress = 50;
+        
+        let customClass = '';
+        if(progress === 100) customClass = 'completed';
+        else if(new Date(end) < new Date() && progress < 100) customClass = 'delayed';
+        
+        return {
+          id: t._id,
+          name: t.title || 'Task ' + (i+1),
+          start: start,
+          end: end,
+          progress: progress,
+          dependencies: '', // Can be extended if task dependencies are added to model
+          custom_class: customClass
+        };
+      });
+      
+      document.getElementById('gantt').innerHTML = '<svg id="gantt-svg"></svg>';
+      
+      ganttChart = new Gantt("#gantt-svg", formattedTasks, {
+        header_height: 50,
+        column_width: 30,
+        step: 24,
+        view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
+        bar_height: 25,
+        bar_corner_radius: 4,
+        arrow_curve: 5,
+        padding: 18,
+        view_mode: 'Day',
+        date_format: 'YYYY-MM-DD',
+        custom_popup_html: function(task) {
+          const end_date = moment(task.end).format('MMM D');
+          return `
+            <div style="padding:12px; border-radius:6px; background:#1e293b; color:#fff; font-size:12px; font-family:'Inter',sans-serif; min-width:180px;">
+              <div style="font-weight:700; margin-bottom:8px; font-size:14px;">${task.name}</div>
+              <div style="margin-bottom:4px; color:#94a3b8;">Expected by: <span style="color:#fff">${end_date}</span></div>
+              <div style="color:#94a3b8;">Progress: <span style="color:#fff">${task.progress}%</span></div>
+            </div>
+          `;
+        },
+        on_date_change: async function(task, start, end) {
+          try {
+            const headers = { 
+              'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}`,
+              'Content-Type': 'application/json'
+            };
+            await fetch(`/api/tasks/${task.id}`, {
+              method: 'PATCH',
+              headers,
+              body: JSON.stringify({ 
+                startDate: moment(start).format('YYYY-MM-DD'),
+                dueDate: moment(end).format('YYYY-MM-DD')
+              })
+            });
+          } catch(e) { console.error("Failed to update date", e); }
+        }
+      });
+      
+    } catch(err) {
+      console.error("Gantt Error", err);
+      // Fallback for mockup if API fails
+      document.getElementById('gantt').innerHTML = '<svg id="gantt-svg"></svg>';
+      ganttChart = new Gantt("#gantt-svg", [
+        { id: '1', name: 'Design Phase', start: '2026-07-01', end: '2026-07-08', progress: 100, custom_class: 'completed' },
+        { id: '2', name: 'Frontend Dev', start: '2026-07-09', end: '2026-07-16', progress: 40, dependencies: '1' },
+        { id: '3', name: 'Backend Dev', start: '2026-07-11', end: '2026-07-20', progress: 10, dependencies: '1' }
+      ], { view_mode: 'Day' });
+    }
+  }
+
+  function changeView(mode) {
+    if(ganttChart) {
+      ganttChart.change_view_mode(mode);
+      document.querySelectorAll('.gantt-controls .pm-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initGanttPage);
+</script>
+</body>
+</html>

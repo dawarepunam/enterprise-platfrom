@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Department Routing Workspace</title>
+    <link rel="stylesheet" href="/modules/department-routing/dashboard/dashboard.css" />
+  </head>
+  <body>
+    <div class="routing-shell">
+      <aside class="sidebar">
+        <div class="brand-card">
+          <div class="brand-mark">CP</div>
+          <div>
+            <p class="eyebrow">CRM Pro</p>
+            <h1>Department Routing</h1>
+          </div>
+        </div>
+        <label class="menu-search">
+          <span>Search Menu</span>
+          <input id="menuSearch" type="search" placeholder="Search menu..." />
+        </label>
+        <nav class="sidebar-nav">
+          <button class="nav-item" data-section="dashboard" data-route="/department-routing">Dashboard</button>
+          <button class="nav-item" data-section="pending" data-route="/department-routing/pending-routing">Pending Routing</button>
+          <button class="nav-item" data-section="queue" data-route="/department-routing/department-queue">Department Queue</button>
+          <button class="nav-item" data-section="assigned" data-route="/department-routing/assigned-departments">Assigned Departments</button>
+          <button class="nav-item" data-section="priority" data-route="/department-routing/priority-leads">Priority Leads</button>
+          <button class="nav-item" data-section="history" data-route="/department-routing/routing-history">Routing History</button>
+          <button class="nav-item" data-section="reports" data-route="/department-routing/reports">Reports</button>
+          <button class="nav-item" data-section="settings" data-route="/department-routing/settings">Settings</button>
+        </nav>
+        <div class="profile-card" id="profileMeta"></div>
+      </aside>
+
+      <div class="content-shell">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="icon-button mobile-only" id="sidebarToggle" type="button">☰</button>
+            <div class="search-stack">
+              <input id="globalSearch" type="search" placeholder="Search lead, department, requirement, priority..." />
+              <div class="search-panel hidden" id="globalSearchPanel"></div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" id="notificationButton" type="button">🔔</button>
+            <button class="icon-button" id="alertButton" type="button">⚑</button>
+            <button class="icon-button" id="themeButton" type="button">◐</button>
+            <button class="icon-button" id="profileButton" type="button">👤</button>
+          </div>
+        </header>
+
+        <main class="workspace">
+          <section class="workspace-section" data-panel="dashboard">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Department Routing Dashboard</p>
+                <h2>Route verified leads to the right delivery team</h2>
+              </div>
+            </div>
+            <div class="kpi-grid" id="kpiGrid"></div>
+            <div class="main-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="eyebrow">Unrouted Leads</p>
+                    <h3>Pending routing queue</h3>
+                  </div>
+                  <div class="inline-actions"><button class="ghost-button" type="button" data-jump="pending">Pending Leads Table</button></div>
+                </div>
+                <div class="table-tools">
+                  <input id="leadSearch" type="search" placeholder="Search leads..." />
+                  <select id="leadFilter">
+                    <option value="">All Filters</option>
+                    <option value="ai">AI Leads</option>
+                    <option value="website">Website Projects</option>
+                    <option value="hrms">HRMS Projects</option>
+                    <option value="erp">ERP Projects</option>
+                    <option value="mobile">Mobile App Projects</option>
+                    <option value="budget">High Budget</option>
+                    <option value="urgent">Urgent</option>
+                  </select>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Lead</th>
+                        <th>Company</th>
+                        <th>Requirement</th>
+                        <th>Budget</th>
+                        <th>Suggested Dept</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="leadRows"></tbody>
+                  </table>
+                </div>
+                <div class="mobile-card-list" id="leadCards"></div>
+              </article>
+
+              <article class="panel" id="quickViewPanel"></article>
+            </div>
+
+            <div class="split-grid">
+              <article class="panel">
+                <div class="panel-head"><div><p class="eyebrow">Routing Activity</p><h3>Latest routing logs</h3></div></div>
+                <div id="activityList"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head"><div><p class="eyebrow">Department Queue</p><h3>Load by department</h3></div></div>
+                <div id="queuePreview"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="workspace-section" data-panel="pending">
+            <div class="section-head"><div><p class="eyebrow">Pending Routing</p><h2>All unrouted verified leads</h2></div></div>
+            <article class="panel"><div class="table-wrap"><table class="data-table"><thead><tr><th>Lead</th><th>Company</th><th>Requirement</th><th>Budget</th><th>Suggested Dept</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead><tbody id="pendingRows"></tbody></table></div><div class="mobile-card-list" id="pendingCards"></div></article>
+          </section>
+
+          <section class="workspace-section" data-panel="queue">
+            <div class="section-head"><div><p class="eyebrow">Department Queue</p><h2>Department-wise routed queue</h2></div></div>
+            <div class="card-grid" id="departmentQueueCards"></div>
+            <article class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Queue Detail</p><h3 id="queueDetailTitle">Select a department</h3></div></div>
+              <div class="table-wrap"><table class="data-table"><thead><tr><th>Lead</th><th>Budget</th><th>Priority</th><th>Assigned PM</th><th>Deadline</th><th>Status</th></tr></thead><tbody id="queueDetailRows"></tbody></table></div>
+            </article>
+          </section>
+
+          <section class="workspace-section" data-panel="assigned">
+            <div class="section-head"><div><p class="eyebrow">Assigned Departments</p><h2>Department distribution and PM allocation</h2></div></div>
+            <div class="card-grid" id="assignedDepartmentCards"></div>
+          </section>
+
+          <section class="workspace-section" data-panel="priority">
+            <div class="section-head"><div><p class="eyebrow">Priority Leads</p><h2>High and critical routed leads</h2></div></div>
+            <article class="panel"><div class="table-wrap"><table class="data-table"><thead><tr><th>Lead</th><th>Company</th><th>Budget</th><th>Department</th><th>Deadline</th><th>Priority</th></tr></thead><tbody id="priorityRows"></tbody></table></div><div class="mobile-card-list" id="priorityCards"></div></article>
+          </section>
+
+          <section class="workspace-section" data-panel="history">
+            <div class="section-head"><div><p class="eyebrow">Routing History</p><h2>Timeline and audit logs</h2></div></div>
+            <div class="split-grid">
+              <article class="panel"><div id="historyTimeline"></div></article>
+              <article class="panel" id="historyDetailPanel"></article>
+            </div>
+          </section>
+
+          <section class="workspace-section" data-panel="reports">
+            <div class="section-head"><div><p class="eyebrow">Reports</p><h2>Routing analytics and department performance</h2></div></div>
+            <div class="chart-grid">
+              <div class="panel chart-card"><canvas id="distributionChart"></canvas></div>
+              <div class="panel chart-card"><canvas id="speedChart"></canvas></div>
+              <div class="panel chart-card full"><canvas id="loadChart"></canvas></div>
+            </div>
+          </section>
+
+          <section class="workspace-section" data-panel="settings">
+            <div class="section-head"><div><p class="eyebrow">Settings</p><h2>Routing automation preferences</h2></div></div>
+            <article class="panel">
+              <label class="field"><span>Enable AI Suggestions</span><select id="enableAi"><option>Enable</option><option>Disable</option></select></label>
+              <label class="field"><span>Notify Department on Routing</span><select id="notifyDepartment"><option>Enable</option><option>Disable</option></select></label>
+              <label class="field"><span>Email Notifications</span><select id="emailNotifications"><option>Enable</option><option>Disable</option></select></label>
+              <button class="primary-button" type="button" id="saveSettingsButton">Save Changes</button>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <aside class="drawer hidden" id="notificationDrawer"><div class="drawer-head"><h3>Notifications</h3><button class="icon-button" type="button" data-close-drawer="notificationDrawer">✕</button></div><div id="notificationList"></div></aside>
+    <aside class="drawer hidden" id="alertDrawer"><div class="drawer-head"><h3>Department Alerts</h3><button class="icon-button" type="button" data-close-drawer="alertDrawer">✕</button></div><div id="alertList"></div></aside>
+
+    <div class="modal-backdrop hidden" id="modalBackdrop">
+      <div class="modal hidden" id="routeModal">
+        <div class="drawer-head"><h3>Route Lead</h3><button class="icon-button" type="button" data-close-modal>✕</button></div>
+        <div class="summary-card" id="routeLeadSummary"></div>
+        <label class="field"><span>Department</span><select id="routeDepartment"></select></label>
+        <label class="field"><span>Priority</span><select id="routePriority"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></label>
+        <label class="field"><span>Expected Budget</span><input id="routeBudget" type="number" min="0" /></label>
+        <label class="field"><span>Deadline</span><input id="routeDeadline" type="date" /></label>
+        <label class="field"><span>Assign Product Manager</span><select id="routeManager"></select></label>
+        <label class="field"><span>Notes</span><textarea id="routeNotes" rows="4"></textarea></label>
+        <div class="ai-box" id="aiSuggestionBox"></div>
+        <button class="primary-button" type="button" id="saveRouteButton">Route Lead</button>
+      </div>
+    </div>
+
+    <div class="toast-stack" id="toastStack"></div>
+
+    <script src="/assets/vendors/chart.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/assets/js/api.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/socket.js"></script>
+    <script src="/modules/department-routing/dashboard/dashboard.js"></script>
+  </body>
+</html>

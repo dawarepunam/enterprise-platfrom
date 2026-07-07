@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Project Workspace — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/projects/project-workspace.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="breadcrumb mb-8"><a href="/admin/projects">Projects</a><span>/</span><strong id="breadProj">Workspace</strong></div>
+
+  <!-- Project Hero -->
+  <div class="proj-hero mb-24" id="projHero">
+    <div class="proj-hero-left">
+      <div class="proj-hero-icon" id="projIcon">📁</div>
+      <div>
+        <div class="proj-hero-name" id="projName">Loading...</div>
+        <div class="proj-hero-meta" id="projMeta">—</div>
+        <div id="projBadges" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"></div>
+      </div>
+    </div>
+    <div class="proj-hero-right">
+      <div class="proj-kpi"><div class="proj-kpi-val" id="phProgress">0%</div><div class="proj-kpi-label">Progress</div></div>
+      <div class="proj-kpi"><div class="proj-kpi-val" id="phTasks">0</div><div class="proj-kpi-label">Tasks</div></div>
+      <div class="proj-kpi"><div class="proj-kpi-val" id="phTeam">0</div><div class="proj-kpi-label">Team</div></div>
+      <div class="proj-kpi"><div class="proj-kpi-val" id="phDays">0</div><div class="proj-kpi-label">Days Left</div></div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('editProjModal')">✏️ Edit</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-bar">
+    <button class="tab-item active" data-tab="overview">Overview</button>
+    <button class="tab-item" data-tab="tasks">Tasks</button>
+    <button class="tab-item" data-tab="kanban">Kanban</button>
+    <button class="tab-item" data-tab="files">Files</button>
+    <button class="tab-item" data-tab="meetings">Meetings</button>
+    <button class="tab-item" data-tab="chat">Chat</button>
+    <button class="tab-item" data-tab="budget">Budget</button>
+    <button class="tab-item" data-tab="approvals">Approvals</button>
+    <button class="tab-item" data-tab="activity">Activity</button>
+    <button class="tab-item" data-tab="team">Team</button>
+    <button class="tab-item" data-tab="risks">Risks</button>
+  </div>
+
+  <!-- Overview Tab -->
+  <div id="tab-overview" class="tab-content">
+    <div class="grid-2 mb-16">
+      <div class="card"><div class="card-header"><div class="card-title">📋 Project Details</div></div><div class="card-body" id="projDetails"></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">📊 Progress & Health</div><button class="btn btn-primary btn-sm" onclick="openModal('addTaskModal')">+ Add Task</button></div>
+        <div class="card-body" id="projHealth"></div></div>
+    </div>
+    <div class="card mb-16"><div class="card-header"><div class="card-title">👥 Team Members</div></div>
+      <div class="card-body" id="projTeamList" style="display:flex;flex-wrap:wrap;gap:12px;"></div></div>
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">📈 Progress Timeline</div></div><canvas id="progressChart" height="120"></canvas></div>
+  </div>
+
+  <!-- Tasks Tab -->
+  <div id="tab-tasks" class="tab-content hidden">
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="openModal('addTaskModal')">+ Add Task</button>
+      <select class="filter-select" id="taskFilter" onchange="filterTasks()">
+        <option value="">All Status</option><option value="PENDING">Pending</option><option value="IN_PROGRESS">In Progress</option>
+        <option value="REVIEW">Review</option><option value="COMPLETED">Completed</option><option value="BLOCKED">Blocked</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table"><thead><tr><th>Task</th><th>Assignee</th><th>Priority</th><th>Due Date</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="projTasksTable"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Kanban Tab -->
+  <div id="tab-kanban" class="tab-content hidden">
+    <div class="kanban-board" id="kanbanBoard">
+      <div class="kanban-col"><div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#94A3B8"></div>To Do</div><span class="kanban-col-count" id="kc-todo">0</span></div><div class="kanban-col-body" id="kanban-PENDING"></div></div>
+      <div class="kanban-col"><div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#2563EB"></div>In Progress</div><span class="kanban-col-count" id="kc-ip">0</span></div><div class="kanban-col-body" id="kanban-IN_PROGRESS"></div></div>
+      <div class="kanban-col"><div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#F59E0B"></div>Review</div><span class="kanban-col-count" id="kc-rev">0</span></div><div class="kanban-col-body" id="kanban-REVIEW"></div></div>
+      <div class="kanban-col"><div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#22C55E"></div>Done</div><span class="kanban-col-count" id="kc-done">0</span></div><div class="kanban-col-body" id="kanban-COMPLETED"></div></div>
+      <div class="kanban-col"><div class="kanban-col-header"><div class="kanban-col-title"><div class="kanban-col-dot" style="background:#EF4444"></div>Blocked</div><span class="kanban-col-count" id="kc-blk">0</span></div><div class="kanban-col-body" id="kanban-BLOCKED"></div></div>
+    </div>
+  </div>
+
+  <!-- Files Tab -->
+  <div id="tab-files" class="tab-content hidden">
+    <div style="margin-bottom:12px;"><button class="btn btn-primary btn-sm" onclick="document.getElementById('fileUpload').click()">📤 Upload File</button><input type="file" id="fileUpload" style="display:none" onchange="uploadFile(this)"/></div>
+    <div class="grid-auto" id="projFilesList"></div>
+  </div>
+
+  <!-- Meetings Tab -->
+  <div id="tab-meetings" class="tab-content hidden">
+    <div style="margin-bottom:12px;"><button class="btn btn-primary btn-sm" onclick="openModal('addMeetingModal')">+ Schedule Meeting</button></div>
+    <div id="projMeetingsList" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+
+  <!-- Chat Tab -->
+  <div id="tab-chat" class="tab-content hidden">
+    <div class="chat-shell">
+      <div class="chat-main" style="border-radius:var(--r-lg);">
+        <div class="chat-main-header"><strong id="chatProjName">Project Chat</strong><span style="font-size:12px;color:var(--text-4);margin-left:8px;">Team channel</span></div>
+        <div class="chat-messages" id="projChatMessages"></div>
+        <div class="chat-input-bar">
+          <input class="chat-input" id="projChatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendProjChat()"/>
+          <button class="btn btn-primary btn-sm" onclick="sendProjChat()">Send ➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget Tab -->
+  <div id="tab-budget" class="tab-content hidden">
+    <div class="grid-3 mb-16">
+      <div class="kpi-card kpi-card-green"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">💰</div></div><div class="kpi-value" id="budgetTotal">₹0</div><div class="kpi-label">Total Budget</div></div>
+      <div class="kpi-card kpi-card-orange"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">💸</div></div><div class="kpi-value" id="budgetUsed">₹0</div><div class="kpi-label">Used</div></div>
+      <div class="kpi-card kpi-card-blue"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">🏦</div></div><div class="kpi-value" id="budgetLeft">₹0</div><div class="kpi-label">Remaining</div></div>
+    </div>
+    <div class="chart-box"><div class="chart-header"><div class="chart-title">💰 Budget Utilization</div></div><canvas id="budgetChart" height="150"></canvas></div>
+  </div>
+
+  <!-- Approvals Tab -->
+  <div id="tab-approvals" class="tab-content hidden">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Request</th><th>By</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody id="approvalsList"></tbody></table></div>
+  </div>
+
+  <!-- Activity Tab -->
+  <div id="tab-activity" class="tab-content hidden">
+    <div class="card"><div class="card-body"><div class="timeline" id="projTimeline"></div></div></div>
+  </div>
+
+  <!-- Team Tab -->
+  <div id="tab-team" class="tab-content hidden">
+    <div class="table-wrap"><table class="data-table"><thead><tr><th>Member</th><th>Role</th><th>Tasks</th><th>Completed</th><th>Status</th></tr></thead>
+    <tbody id="projTeamTable"></tbody></table></div>
+  </div>
+
+  <!-- Risks Tab -->
+  <div id="tab-risks" class="tab-content hidden">
+    <div style="margin-bottom:12px;"><button class="btn btn-primary btn-sm" onclick="openModal('addRiskModal')">+ Add Risk</button></div>
+    <div id="risksList" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</main>
+
+<!-- Add Task Modal -->
+<div class="modal-overlay hidden" id="addTaskModal">
+  <div class="modal-box">
+    <div class="modal-header"><div class="modal-title">✅ Add Task</div><button class="modal-close" onclick="closeModal('addTaskModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Task Title <span class="required">*</span></label><input class="form-control" id="tTitle" placeholder="Task name" required/></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="tDesc" rows="2"></textarea></div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Assignee</label><select class="form-control" id="tAssignee"><option value="">Select Member</option></select></div>
+        <div class="form-group"><label class="form-label">Priority</label><select class="form-control" id="tPriority"><option value="MEDIUM">Medium</option><option value="HIGH">High</option><option value="LOW">Low</option><option value="CRITICAL">Critical</option></select></div>
+        <div class="form-group"><label class="form-label">Due Date</label><input class="form-control" id="tDue" type="date"/></div>
+        <div class="form-group"><label class="form-label">Estimated Hours</label><input class="form-control" id="tHours" type="number" placeholder="0"/></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addTaskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitTask()">✅ Create Task</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/projects/project-workspace.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Gantt</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Gantt Chart</p>
+                            <h1>Track project timelines, milestones, dependencies, and delays</h1>
+                            <p class="hero-text">This timeline view helps managers move dates, detect schedule pressure, and maintain milestone visibility across all assigned projects.</p>
+                        </div>
+                        <div id="ganttMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+                <section class="manager-panel">
+                    <header><div><p class="eyebrow-line">Timeline Rows</p><h2>Project schedule control</h2></div></header>
+                    <div id="ganttList" class="manager-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="gantt.js"></script>
+</body>
+</html>

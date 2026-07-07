@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Leave</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="leave.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero workflow-hero"><div class="hero-copy"><p class="eyebrow">Leave Management</p><h1>Apply leave and track approvals</h1><p class="hero-text">Your leave request goes to Team Lead and Manager with MongoDB persistence and notification workflow.</p></div></section>
+      <section class="content-grid member-grid">
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Apply Leave</p><h2>New request</h2></div></div>
+          <form id="leaveForm" class="form-grid">
+            <label class="field"><span>Leave Type</span><select id="leaveType"><option>Casual Leave</option><option>Sick Leave</option><option>Paid Leave</option><option>Unpaid Leave</option></select></label>
+            <label class="field"><span>From</span><input id="leaveFromDate" type="date" required /></label>
+            <label class="field"><span>To</span><input id="leaveToDate" type="date" required /></label>
+            <label class="field field-wide"><span>Reason</span><textarea id="leaveReason" rows="4" required></textarea></label>
+            <div class="btn-row field-wide"><button class="btn btn-primary" type="submit">Apply Leave</button></div>
+          </form>
+        </article>
+        <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">History</p><h2>My leave summary</h2></div></div><div id="leaveCards" class="stack-list"></div></article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script><script src="../../../assets/js/auth.js"></script><script src="../../../assets/js/theme.js"></script><script src="../../../assets/js/notifications.js"></script><script src="../../../assets/js/role-workspace.js"></script><script src="../member-workflow.js"></script><script src="leave.js"></script>
+</body>
+</html>

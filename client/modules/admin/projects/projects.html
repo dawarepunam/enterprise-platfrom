@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Projects — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/projects/projects.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">📁 Projects</div>
+      <div class="page-subtitle">Track all projects across departments</div>
+    </div>
+    <div class="page-top-actions">
+      <div class="view-toggle">
+        <button class="view-btn active" id="cardViewBtn" onclick="setView('card')">⊞ Cards</button>
+        <button class="view-btn" id="listViewBtn" onclick="setView('list')">☰ List</button>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('addProjectModal')">+ New Project</button>
+    </div>
+  </div>
+
+  <!-- Status Filter Tabs -->
+  <div class="proj-status-tabs mb-16">
+    <button class="proj-tab active" data-status="" onclick="setStatus(this,'')">All <span class="tab-count" id="cnt-all">0</span></button>
+    <button class="proj-tab" data-status="IN_PROGRESS" onclick="setStatus(this,'IN_PROGRESS')">🔵 Active <span class="tab-count" id="cnt-active">0</span></button>
+    <button class="proj-tab" data-status="COMPLETED" onclick="setStatus(this,'COMPLETED')">✅ Completed <span class="tab-count" id="cnt-completed">0</span></button>
+    <button class="proj-tab" data-status="DELAYED" onclick="setStatus(this,'DELAYED')">🔴 Delayed <span class="tab-count" id="cnt-delayed">0</span></button>
+    <button class="proj-tab" data-status="DRAFT" onclick="setStatus(this,'DRAFT')">📝 Draft <span class="tab-count" id="cnt-draft">0</span></button>
+    <button class="proj-tab" data-status="ON_HOLD" onclick="setStatus(this,'ON_HOLD')">⏸️ On Hold <span class="tab-count" id="cnt-hold">0</span></button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar card mb-16" style="border-radius:var(--r-lg);">
+    <select class="filter-select" id="filterDept" onchange="applyFilters()"><option value="">All Departments</option></select>
+    <select class="filter-select" id="filterPM" onchange="applyFilters()"><option value="">All PMs</option></select>
+    <input type="search" class="form-control" id="projSearch" placeholder="Search projects..." style="height:34px;width:220px" oninput="applyFilters()"/>
+    <button class="btn btn-ghost btn-sm" onclick="clearFilters()">Clear</button>
+  </div>
+
+  <!-- Cards View -->
+  <div class="grid-auto" id="projectsGrid"></div>
+
+  <!-- List View (hidden by default) -->
+  <div class="table-wrap hidden" id="projectsList">
+    <table class="data-table">
+      <thead><tr><th>Project</th><th>Department</th><th>PM</th><th>Client</th><th>Progress</th><th>Budget</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody id="projectsListBody"></tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Add Project Modal -->
+<div class="modal-overlay hidden" id="addProjectModal">
+  <div class="modal-box modal-xl">
+    <div class="modal-header">
+      <div class="modal-title">📁 Create New Project</div>
+      <button class="modal-close" onclick="closeModal('addProjectModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group span-2"><label class="form-label">Project Name <span class="required">*</span></label><input class="form-control" id="pName" placeholder="e.g. Website Redesign" required/></div>
+        <div class="form-group span-2"><label class="form-label">Description</label><textarea class="form-control" id="pDesc" rows="2" placeholder="Brief project description..."></textarea></div>
+        <div class="form-group"><label class="form-label">Department <span class="required">*</span></label><select class="form-control" id="pDept" required><option value="">Select Department</option></select></div>
+        <div class="form-group"><label class="form-label">Project Manager <span class="required">*</span></label><select class="form-control" id="pPM" required><option value="">Select PM</option></select></div>
+        <div class="form-group"><label class="form-label">Client</label><select class="form-control" id="pClient"><option value="">Select Client</option></select></div>
+        <div class="form-group"><label class="form-label">Budget (₹)</label><input class="form-control" id="pBudget" type="number" placeholder="0"/></div>
+        <div class="form-group"><label class="form-label">Start Date <span class="required">*</span></label><input class="form-control" id="pStart" type="date" required/></div>
+        <div class="form-group"><label class="form-label">Deadline <span class="required">*</span></label><input class="form-control" id="pEnd" type="date" required/></div>
+        <div class="form-group"><label class="form-label">Priority</label>
+          <select class="form-control" id="pPriority"><option value="Medium">Medium</option><option value="High">High</option><option value="Low">Low</option><option value="Critical">Critical</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Status</label>
+          <select class="form-control" id="pStatus"><option value="Draft">Draft</option><option value="Active">Active</option><option value="Planning">Planning</option><option value="Assigned">Assigned</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addProjectModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitProject()">✅ Create Project</button>
+    </div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/projects/projects.js"></script>
+</body>
+</html>

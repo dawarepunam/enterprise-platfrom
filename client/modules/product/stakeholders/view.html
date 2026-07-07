@@ -1,0 +1,23 @@
+<div class="pm-stakeholders" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  <div class="pm-toolbar" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <span class="pm-eyebrow" id="stContext" style="cursor:pointer;" onclick="window.App.navigate('/product-manager/workspace')">← Back to Workspace</span>
+      <h2>Stakeholder Management</h2>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn primary" data-action="addStakeholder" style="background:#4F46E5; color:white; border:none;">+ Add Stakeholder</button>
+    </div>
+  </div>
+
+  <div class="pm-grid" style="flex:1;">
+    <div class="pm-col-12 pm-card" style="display:flex; flex-direction:column;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="font-size:1.125rem;">Total Stakeholders: <span id="stTotalCount">0</span></h3>
+      </div>
+      
+      <div id="stakeholdersListContainer" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1.5rem; overflow-y:auto; flex:1; align-content:start;">
+        <div style="text-align:center; color:var(--pm-text-muted); padding:2rem; grid-column:1/-1;">Loading stakeholders...</div>
+      </div>
+    </div>
+  </div>
+</div>

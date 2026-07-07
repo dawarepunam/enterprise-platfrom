@@ -1,0 +1,100 @@
+<!-- 
+  JMKC Enterprise CRM - Global Header Component
+  Phase 1 Implementation
+-->
+<header class="global-header">
+  <div class="header-left">
+    <!-- Sidebar Toggle (Mobile/Tablet) -->
+    <button class="header-icon-btn d-md-none" id="sidebarToggle" aria-label="Toggle Sidebar">
+      ☰
+    </button>
+    
+    <!-- Logo -->
+    <div class="header-logo" style="display: flex; align-items: center; gap: 10px; margin-right: 20px; font-weight: 700; font-size: 1.2rem; color: var(--accent-color);">
+      <span>JMKC CRM</span>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="header-search-wrapper" id="headerSearchWrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="header-search-input" id="headerSearchInput" placeholder="Search projects, tasks, employees..." readonly>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <!-- Team Chat -->
+    <button class="header-icon-btn" title="Team Chat">💬</button>
+
+    <!-- MS Integrations -->
+    <div class="ms-integrations d-none d-md-flex">
+      <button class="header-icon-btn" title="Microsoft Teams">👥</button>
+      <button class="header-icon-btn" title="Outlook">📧</button>
+      <button class="header-icon-btn" title="OneDrive">☁</button>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="position: relative;">
+      <button class="header-icon-btn" id="quickActionsBtn" title="Quick Actions">⚡</button>
+      <div class="popup-dropdown" id="quickActionsPopup">
+        <a href="#" class="popup-item" data-action="leave">Apply Leave</a>
+        <a href="#" class="popup-item" data-action="daily-update">Daily Update</a>
+        <a href="#" class="popup-item" data-action="punch">Punch Attendance</a>
+        <a href="#" class="popup-item" data-action="chat">Open Chat</a>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <button class="header-icon-btn" id="notificationsBtn" title="Notifications">
+      🔔
+      <span class="notification-badge realtime-glow" id="notificationCount">3</span>
+    </button>
+
+    <!-- Calendar -->
+    <button class="header-icon-btn d-none d-md-flex" title="Calendar">📅</button>
+
+    <!-- Theme Toggle -->
+    <button class="header-icon-btn" id="themeToggleBtn" title="Toggle Theme">🌙</button>
+
+    <!-- Profile -->
+    <div style="position: relative;">
+      <div class="header-profile" id="profileBtn">
+        <div class="profile-avatar" id="headerAvatar">EM</div>
+      </div>
+      <div class="popup-dropdown" id="profilePopup">
+        <a href="#" class="popup-item">My Profile</a>
+        <a href="#" class="popup-item">Settings</a>
+        <a href="#" class="popup-item" onclick="window.logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Search Modal -->
+<div class="modal-overlay" id="searchOverlay"></div>
+<div class="search-modal" id="searchModal">
+  <div class="search-modal-input-wrapper">
+    <input type="text" class="search-modal-input" id="searchModalInput" placeholder="Start typing to search..." autocomplete="off">
+  </div>
+  <div class="search-results" id="searchResults">
+    <!-- Default Empty State for Search -->
+    <div class="empty-state">
+      <p style="color: var(--text-secondary); text-align: center;">Recent Searches</p>
+      <!-- Suggestions will be populated via JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="notificationsDrawer">
+  <div class="drawer-header">
+    <h3>Notifications</h3>
+    <button class="header-icon-btn" id="closeDrawerBtn">✕</button>
+  </div>
+  <div class="drawer-content" id="notificationsList">
+    <!-- Populated via JS -->
+    <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--text-secondary);">
+      No new notifications.
+    </div>
+  </div>
+</div>

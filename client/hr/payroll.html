@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Payroll</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/hr/hr-shell.css" />
+  <link rel="stylesheet" href="/css/hr/payroll.css" />
+</head>
+<body class="hr-body" data-page="payroll">
+  <div class="hr-shell">
+    <aside class="hr-sidebar" id="hrSidebar"></aside>
+    <div class="hr-main">
+      <header class="hr-topbar" id="hrNavbar"></header>
+      <main class="hr-content">
+        <section class="hr-page-header" data-aos="fade-up">
+          <div>
+            <div class="hr-pill">Payroll Center</div>
+            <h1 class="hr-page-title">Processed salaries, net pay, and reminder actions from one screen.</h1>
+          </div>
+        </section>
+        <section class="hr-metric-grid" id="payrollCards"></section>
+        <section class="hr-grid-2">
+          <article class="hr-panel-card" data-aos="fade-up">
+            <div class="hr-card-head">
+              <strong>Payroll Trend</strong>
+              <span class="hr-pill">ApexCharts</span>
+            </div>
+            <div id="payrollTrendChart"></div>
+          </article>
+          <article class="hr-panel-card" data-aos="fade-up" data-aos-delay="60">
+            <div class="hr-card-head">
+              <strong>Reminder Desk</strong>
+              <div class="hr-meta">Use Outlook-linked reminders for follow-ups</div>
+            </div>
+            <div class="hr-list" id="payrollReminderList"></div>
+          </article>
+        </section>
+        <article class="hr-panel-card mt-4" data-aos="fade-up">
+          <div class="hr-card-head">
+            <strong>Payroll Records</strong>
+          </div>
+          <div class="hr-table-wrap">
+            <table class="hr-table">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Month</th>
+                  <th>Department</th>
+                  <th>Net Salary</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="payrollTableBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
+  <aside class="hr-floating-panel hidden" id="hrFloatingPanel"></aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/socket.js"></script>
+  <script src="/js/hr/hr-shell.js"></script>
+  <script src="/js/hr/payroll.js"></script>
+</body>
+</html>

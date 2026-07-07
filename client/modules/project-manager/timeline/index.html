@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Timeline – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  
+  <!-- vis-timeline -->
+  <link href="https://unpkg.com/vis-timeline@7.7.2/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="https://unpkg.com/vis-timeline@7.7.2/standalone/umd/vis-timeline-graph2d.min.js"></script>
+
+  <style>
+    .timeline-container {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      box-shadow: var(--pm-shadow-sm);
+      padding: 20px;
+    }
+    
+    .timeline-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: flex-end;
+    }
+    
+    /* vis-timeline Overrides for premium look */
+    .vis-timeline {
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius-sm);
+      font-family: 'Inter', sans-serif;
+    }
+    .vis-panel.vis-background, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis-right {
+      border-color: var(--pm-border);
+    }
+    .vis-time-axis .vis-text {
+      color: var(--pm-text-muted);
+      font-weight: 500;
+      font-size: 11px;
+    }
+    .vis-time-axis .vis-grid.vis-minor { border-color: rgba(0,0,0,0.03); }
+    .vis-time-axis .vis-grid.vis-major { border-color: rgba(0,0,0,0.08); }
+    
+    .vis-item {
+      border-color: transparent;
+      background-color: transparent;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+    }
+    .vis-item.vis-selected {
+      border-color: #000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    .vis-item-content {
+      padding: 6px 12px;
+    }
+    
+    /* Custom item colors based on type */
+    .item-project { background-color: #3b82f6; }
+    .item-milestone { background-color: #8b5cf6; }
+    .item-deadline { background-color: #ef4444; }
+    
+    /* Tooltip */
+    .vis-tooltip {
+      font-family: 'Inter', sans-serif;
+      border: 1px solid var(--pm-border);
+      border-radius: 6px;
+      background-color: #1e293b;
+      color: #fff;
+      padding: 12px;
+      box-shadow: var(--pm-shadow-lg);
+    }
+    
+    #visualization {
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Timeline</span>
+          </div>
+          <h2 class="pm-page-title">Project Master Timeline</h2>
+        </div>
+      </div>
+      
+      <div class="timeline-container">
+        <div class="timeline-controls">
+          <button class="pm-btn pm-btn-outline" onclick="timeline.fit()"><i class="fa fa-compress-arrows-alt"></i> Fit All</button>
+          <button class="pm-btn pm-btn-outline" onclick="timeline.zoomIn(0.2)"><i class="fa fa-search-plus"></i> Zoom In</button>
+          <button class="pm-btn pm-btn-outline" onclick="timeline.zoomOut(0.2)"><i class="fa fa-search-minus"></i> Zoom Out</button>
+          <button class="pm-btn pm-btn-outline" onclick="timeline.moveTo(new Date())"><i class="fa fa-dot-circle"></i> Today</button>
+        </div>
+        <div id="visualization"></div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+<script src="/modules/project-manager/pm-shell.js"></script>
+
+<script>
+  let timeline;
+
+  async function initTimeline() {
+    let projects = [];
+    try {
+      const pRes = await window.pmShell?.apiFetch('/api/projects?size=100');
+      if (pRes && pRes.data) projects = pRes.data;
+    } catch(e) { console.error("Error fetching projects", e); }
+    
+    // Create datasets
+    const groups = new vis.DataSet();
+    const items = new vis.DataSet();
+    
+    if (projects.length === 0) {
+      // Mockup data if no API response
+      groups.add([
+        { id: '1', content: '<b>Website Redesign</b>' },
+        { id: '2', content: '<b>Mobile App</b>' }
+      ]);
+      
+      items.add([
+        { id: 1, group: '1', content: 'Design Phase', start: '2026-06-15', end: '2026-07-01', className: 'item-project' },
+        { id: 2, group: '1', content: 'Beta Launch', start: '2026-07-15', type: 'point', className: 'item-milestone' },
+        { id: 3, group: '2', content: 'Backend API', start: '2026-06-20', end: '2026-07-10', className: 'item-project' },
+        { id: 4, group: '2', content: 'App Store Submission', start: '2026-07-25', type: 'point', className: 'item-deadline' }
+      ]);
+    } else {
+      projects.forEach((p, idx) => {
+        groups.add({ id: p._id, content: `<b>${p.projectName || p.name}</b>` });
+        
+        const start = p.startDate || new Date().toISOString().split('T')[0];
+        let end = p.endDate;
+        if(!end) end = new Date(new Date(start).getTime() + 14 * 86400000).toISOString().split('T')[0];
+        
+        items.add({
+          id: p._id + '-main',
+          group: p._id,
+          content: 'Project Duration',
+          start: start,
+          end: end,
+          className: 'item-project',
+          title: `Client: ${p.clientName || 'Internal'}<br>Status: ${p.status}`
+        });
+        
+        // Add random milestone for visualization richness
+        const midTime = new Date(start).getTime() + (new Date(end).getTime() - new Date(start).getTime()) / 2;
+        items.add({
+          id: p._id + '-ms',
+          group: p._id,
+          content: 'Review Milestone',
+          start: new Date(midTime).toISOString().split('T')[0],
+          type: 'point',
+          className: 'item-milestone'
+        });
+      });
+    }
+
+    const container = document.getElementById('visualization');
+    const options = {
+      stack: true,
+      maxHeight: 500,
+      minHeight: 400,
+      start: new Date(new Date().setDate(new Date().getDate() - 7)),
+      end: new Date(new Date().setDate(new Date().getDate() + 21)),
+      tooltip: {
+        followMouse: true,
+        overflowMethod: 'cap'
+      }
+    };
+
+    timeline = new vis.Timeline(container, items, groups, options);
+  }
+
+  document.addEventListener('DOMContentLoaded', initTimeline);
+</script>
+</body>
+</html>

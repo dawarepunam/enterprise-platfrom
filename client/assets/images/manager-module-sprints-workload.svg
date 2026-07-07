@@ -1,0 +1,63 @@
+<svg width="1600" height="920" viewBox="0 0 1600 920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="920" rx="30" fill="#050816"/>
+  <text x="40" y="60" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="34" font-weight="700">Sprint Planning + Team Workload</text>
+  <text x="40" y="92" fill="#93A9CD" font-family="Arial, sans-serif" font-size="18">Manager sees sprint progress, velocity, burndown, capacity, and overloaded users in one place.</text>
+
+  <rect x="34" y="128" width="706" height="754" rx="26" fill="#081225" stroke="#6D4AFF" stroke-opacity="0.5"/>
+  <text x="62" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Sprint Module</text>
+  <rect x="62" y="196" width="650" height="124" rx="22" fill="#0B1730"/>
+  <text x="88" y="232" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="24">Sprint 2 - Active</text>
+  <text x="88" y="266" fill="#8EA6CD" font-family="Arial, sans-serif" font-size="18">Goal: Complete student, fees, attendance and HR modules by sprint close.</text>
+  <text x="88" y="296" fill="#55C6FF" font-family="Arial, sans-serif" font-size="18">Create Sprint -> set goal -> attach sprint tasks -> track velocity</text>
+
+  <rect x="62" y="344" width="304" height="238" rx="22" fill="#0B1730"/>
+  <text x="88" y="380" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Sprint Stats</text>
+  <text x="88" y="420" fill="#D8E6FF" font-family="Arial, sans-serif" font-size="18">Total Tasks: 32</text>
+  <text x="88" y="454" fill="#36E0A1" font-family="Arial, sans-serif" font-size="18">Completed: 18</text>
+  <text x="88" y="488" fill="#55C6FF" font-family="Arial, sans-serif" font-size="18">In Progress: 10</text>
+  <text x="88" y="522" fill="#F7C948" font-family="Arial, sans-serif" font-size="18">Remaining: 4</text>
+  <text x="88" y="556" fill="#FF7E8D" font-family="Arial, sans-serif" font-size="18">Risk: 2 blocked tasks</text>
+
+  <rect x="390" y="344" width="322" height="238" rx="22" fill="#0B1730"/>
+  <text x="416" y="380" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Burndown Chart</text>
+  <path d="M432 430H676" stroke="#324765" stroke-width="2"/>
+  <path d="M432 470H676" stroke="#324765" stroke-width="2"/>
+  <path d="M432 510H676" stroke="#324765" stroke-width="2"/>
+  <path d="M432 550H676" stroke="#324765" stroke-width="2"/>
+  <path d="M444 414 C488 420 520 442 554 460 C590 480 620 520 664 542" stroke="#06B6D4" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="444" cy="414" r="6" fill="#06B6D4"/><circle cx="554" cy="460" r="6" fill="#06B6D4"/><circle cx="664" cy="542" r="6" fill="#F59E0B"/>
+  <text x="416" y="572" fill="#8EA6CD" font-family="Arial, sans-serif" font-size="16">Expected Completion: 25 May 2026</text>
+
+  <rect x="62" y="614" width="650" height="230" rx="22" fill="#0B1730"/>
+  <text x="88" y="650" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Sprint Click Flow</text>
+  <text x="88" y="690" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Sprint Create button -> opens sprint setup popup</text>
+  <text x="88" y="722" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Task list -> open tasks page filtered by sprint</text>
+  <text x="88" y="754" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Burndown chart -> opens reports / sprint analytics</text>
+  <text x="88" y="786" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Velocity metric -> used in next sprint planning</text>
+
+  <rect x="770" y="128" width="796" height="754" rx="26" fill="#081225" stroke="#183259"/>
+  <text x="798" y="170" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="28" font-weight="700">Team Workload View</text>
+  <rect x="798" y="196" width="740" height="78" rx="18" fill="#0D1B33"/>
+  <text x="824" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Member</text>
+  <text x="1030" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Role</text>
+  <text x="1170" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Pending Tasks</text>
+  <text x="1360" y="226" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Workload</text>
+  <g font-family="Arial, sans-serif" font-size="18">
+    <rect x="798" y="292" width="740" height="74" rx="18" fill="#0B1730"/>
+    <text x="824" y="336" fill="#D8E6FF">Ankit Sharma</text><text x="1030" y="336" fill="#8EA6CD">Developer</text><text x="1208" y="336" fill="#D8E6FF">12</text>
+    <rect x="1330" y="320" width="150" height="14" rx="7" fill="#2A3347"/><rect x="1330" y="320" width="128" height="14" rx="7" fill="#EF4444"/><text x="1492" y="336" fill="#FF7E8D">85%</text>
+    <rect x="798" y="382" width="740" height="74" rx="18" fill="#0B1730"/>
+    <text x="824" y="426" fill="#D8E6FF">Sneha Iyer</text><text x="1030" y="426" fill="#8EA6CD">Developer</text><text x="1208" y="426" fill="#D8E6FF">6</text>
+    <rect x="1330" y="410" width="150" height="14" rx="7" fill="#2A3347"/><rect x="1330" y="410" width="70" height="14" rx="7" fill="#22C55E"/><text x="1492" y="426" fill="#36E0A1">45%</text>
+    <rect x="798" y="472" width="740" height="74" rx="18" fill="#0B1730"/>
+    <text x="824" y="516" fill="#D8E6FF">Rahul Jadhav</text><text x="1030" y="516" fill="#8EA6CD">QA Tester</text><text x="1208" y="516" fill="#D8E6FF">10</text>
+    <rect x="1330" y="500" width="150" height="14" rx="7" fill="#2A3347"/><rect x="1330" y="500" width="112" height="14" rx="7" fill="#F59E0B"/><text x="1492" y="516" fill="#F7C948">75%</text>
+  </g>
+  <rect x="798" y="578" width="740" height="266" rx="22" fill="#0B1730"/>
+  <text x="824" y="614" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="22">Manager Actions</text>
+  <text x="824" y="654" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Team workload screen -> see overloaded users, free resources, and capacity gaps</text>
+  <text x="824" y="688" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Member click -> open member profile or workload detail</text>
+  <text x="824" y="722" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Rebalance action -> shift member to another module or project</text>
+  <text x="824" y="756" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Hold action -> mark member on hold with reason</text>
+  <text x="824" y="790" fill="#9FB4D8" font-family="Arial, sans-serif" font-size="18">Reports click -> open performance, velocity, and completion analytics</text>
+</svg>

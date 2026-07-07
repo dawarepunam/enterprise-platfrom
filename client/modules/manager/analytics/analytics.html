@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Analytics</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Performance Dashboard</p>
+                            <h1>Measure delivery, quality, communication, and workload per employee</h1>
+                            <p class="hero-text">Track task completion, on-time delivery, attendance, response quality, chat activity, meeting participation, workload, and promotion-readiness from one board.</p>
+                        </div>
+                        <div id="analyticsMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+
+                <section class="manager-panel">
+                    <header>
+                        <div>
+                            <p class="eyebrow-line">Employee Metrics</p>
+                            <h2>Productivity and people decisions</h2>
+                        </div>
+                    </header>
+                    <div class="table-wrap">
+                        <table class="manager-table">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Completion</th>
+                                    <th>On-Time</th>
+                                    <th>Quality</th>
+                                    <th>Attendance</th>
+                                    <th>Chat</th>
+                                    <th>Meetings</th>
+                                    <th>Workload</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analyticsTable"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="hr-designations-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Designations</h2>
+    <div style="display:flex; gap:1rem;">
+      <button class="primary-btn">+ Add Designation</button>
+    </div>
+  </div>
+
+  <!-- Grid of Designations -->
+  <div id="hrDesignationsGrid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1.5rem; flex:1; overflow-y:auto; padding-bottom:1rem;">
+    <!-- Loading skeleton -->
+    <div class="hr-skeleton" style="height:120px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:120px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:120px; border-radius:var(--hr-radius);"></div>
+    <div class="hr-skeleton" style="height:120px; border-radius:var(--hr-radius);"></div>
+  </div>
+
+</div>
+
+<script src="/modules/hr/designations/script.js"></script>

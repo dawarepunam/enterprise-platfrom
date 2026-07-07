@@ -1,0 +1,42 @@
+const mongoose = require("mongoose");
+
+const leadSchema = new mongoose.Schema(
+  {
+    campaignId: { type: mongoose.Schema.Types.ObjectId, ref: "Campaign", default: null },
+    campaignName: { type: String, trim: true, default: "" },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", default: null },
+    projectName: { type: String, trim: true, default: "" },
+    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    owner: { type: String, trim: true, default: "" },
+    ownerEmail: { type: String, trim: true, default: "" },
+    assignedSalesId: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
+    assignedSalesExecutive: { type: String, trim: true, default: "" },
+    assignedSalesEmail: { type: String, trim: true, default: "" },
+    fullName: { type: String, trim: true, default: "" },
+    contact: { type: String, trim: true, default: "" },
+    company: { type: String, trim: true, default: "" },
+    email: { type: String, trim: true, default: "" },
+    phone: { type: String, trim: true, default: "" },
+    source: { type: String, trim: true, default: "Manual" },
+    adPlatform: { type: String, trim: true, default: "" },
+    status: { type: String, trim: true, default: "New" },
+    callStatus: { type: String, trim: true, default: "" },
+    quality: { type: String, trim: true, default: "Cold" },
+    leadScore: { type: Number, default: 0 },
+    serviceInterested: { type: String, trim: true, default: "" },
+    requirement: { type: String, trim: true, default: "" },
+    message: { type: String, trim: true, default: "" },
+    notes: { type: String, trim: true, default: "" },
+    city: { type: String, trim: true, default: "" },
+    priority: { type: String, trim: true, default: "Medium" },
+    probability: { type: Number, default: 0 },
+    expectedBudget: { type: Number, default: 0 },
+    value: { type: Number, default: 0 },
+    nextFollowUpAt: { type: Date, default: null },
+    lastContactedAt: { type: Date, default: null },
+    proofs: [{ type: String, trim: true }],
+  },
+  { timestamps: true },
+);
+
+module.exports = mongoose.models.Lead || mongoose.model("Lead", leadSchema);

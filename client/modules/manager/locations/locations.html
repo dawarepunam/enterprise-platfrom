@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Locations</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Live Locations</p>
+                            <h1>Share team or client visit locations with map-ready history</h1>
+                            <p class="hero-text">Browser geolocation API can capture coordinates, while manual address entry provides a fallback for desktop or demo flows.</p>
+                        </div>
+                        <div id="locationMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Share Location</p><h2>Manual or geolocation</h2></div></header>
+                        <form id="locationForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Project</span><select id="locationProjectId"></select></div>
+                                <div class="manager-field"><span>Shared By</span><input id="locationSharedBy" type="text" /></div>
+                            </div>
+                            <div class="manager-field"><span>Address</span><input id="locationAddress" type="text" placeholder="Client site, city, state" required /></div>
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Latitude</span><input id="locationLat" type="number" step="0.0001" value="19.9975" /></div>
+                                <div class="manager-field"><span>Longitude</span><input id="locationLng" type="number" step="0.0001" value="73.7898" /></div>
+                            </div>
+                            <div class="manager-field"><span>Note</span><textarea id="locationNote" placeholder="Why this location was shared"></textarea></div>
+                            <div class="manager-button-row">
+                                <button class="btn btn-primary" type="submit">Save Location</button>
+                                <button class="btn ghost-btn" type="button" id="detectLocationBtn">Use Browser Location</button>
+                            </div>
+                        </form>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Preview</p><h2>Mini map placeholder</h2></div></header>
+                        <div class="manager-mini-map">Mini map preview area. In production, embed Google Maps or OpenStreetMap using the saved coordinates.</div>
+                    </article>
+                </section>
+
+                <section class="manager-panel">
+                    <header><div><p class="eyebrow-line">History</p><h2>Shared locations</h2></div></header>
+                    <div id="locationList" class="manager-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="locations.js"></script>
+</body>
+</html>

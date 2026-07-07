@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Manager Dashboard</title>
+  <link rel="stylesheet" href="/modules/common/style.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <link rel="stylesheet" href="/modules/project-manager/dashboard/style.css" />
+  <script type="module" src="/modules/common/utils.js"></script>
+  <script type="module" src="/modules/common/socket.js"></script>
+  <script type="module" src="/modules/project-manager/dashboard/app.js" defer></script>
+</head>
+<body>
+  <div id="header-container"></div>
+  <div id="sidebar-container"></div>
+  <main class="main-content fade-in" id="main-content">
+    <h1>Welcome, Project Manager</h1>
+    <section class="card tooltip" data-tooltip="Active projects count">
+      <h2>Active Projects</h2>
+      <p>5</p>
+    </section>
+    <section class="card tooltip" data-tooltip="Pending tasks count">
+      <h2>Pending Tasks</h2>
+      <p>12</p>
+    </section>
+    <!-- Add more dashboard widgets as needed -->
+  </main>
+  <div id="footer-container"></div>
+</body>
+</html>

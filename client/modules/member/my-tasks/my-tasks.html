@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Tasks</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+  <link rel="stylesheet" href="my-tasks.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero task-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">My Tasks</p>
+          <h1>Move every assigned task from to-do to review without leaving your project flow</h1>
+          <p class="hero-text">Start work, run a timer, open the linked project workspace, and push each subtask forward with clear status and deadline visibility.</p>
+          <div id="taskHeroChips" class="hero-badges"></div>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Open Tasks</span><strong id="taskOpenCount">0</strong></article>
+          <article class="signal-card"><span>In Review</span><strong id="taskReviewCount">0</strong></article>
+          <article class="signal-card accent-card"><span>Running Timer</span><strong id="taskTimerState">00:00:00</strong><small>Current tracked work session</small></article>
+        </div>
+      </section>
+
+      <section class="workspace-panel">
+        <div class="section-heading"><div><p class="eyebrow">Assigned Subtasks</p><h2>Production work queue</h2></div></div>
+        <div id="memberTaskBoard" class="task-column-grid"></div>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="my-tasks.js"></script>
+</body>
+</html>

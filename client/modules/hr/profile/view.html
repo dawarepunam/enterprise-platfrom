@@ -1,0 +1,189 @@
+<div class="hr-profile-view" style="display:flex; gap:1.5rem; height:100%;">
+  
+  <!-- Back Button (Floating or Top Left) -->
+  <div style="position:absolute; top:-3rem; left:0;">
+    <button onclick="window.App.navigate('/hr/employees')" style="background:transparent; border:none; cursor:pointer; color:var(--hr-primary); font-weight:500;">
+      ← Back to Directory
+    </button>
+  </div>
+
+  <!-- Left Column: Basic Info (25%) -->
+  <div class="hr-card" style="width:25%; display:flex; flex-direction:column; align-items:center; text-align:center;">
+    <img id="profilePhoto" src="https://ui-avatars.com/api/?name=Loading&background=random" style="width:120px; height:120px; border-radius:50%; margin-bottom:1rem; border:4px solid #E2E8F0;" />
+    
+    <h2 id="profileName" style="margin:0; font-size:1.5rem;">Loading...</h2>
+    <p id="profileDesignation" style="color:var(--hr-text-muted); margin:0.5rem 0;">-</p>
+    <span id="profileStatus" style="background:#D1FAE5; color:#065F46; padding:4px 12px; border-radius:12px; font-size:0.75rem; margin-bottom:1.5rem;">Active</span>
+    
+    <div style="width:100%; border-top:1px solid var(--hr-border); margin-top:1rem; padding-top:1rem; text-align:left;">
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.75rem; text-transform:uppercase; margin-bottom:0.25rem;">Employee ID</div>
+        <div id="profileId" style="font-weight:500;">-</div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.75rem; text-transform:uppercase; margin-bottom:0.25rem;">Department</div>
+        <div id="profileDept" style="font-weight:500;">-</div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.75rem; text-transform:uppercase; margin-bottom:0.25rem;">Email</div>
+        <div id="profileEmail" style="font-weight:500;">-</div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.75rem; text-transform:uppercase; margin-bottom:0.25rem;">Phone</div>
+        <div id="profilePhone" style="font-weight:500;">-</div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="color:var(--hr-text-muted); font-size:0.75rem; text-transform:uppercase; margin-bottom:0.25rem;">Joining Date</div>
+        <div id="profileJoinDate" style="font-weight:500;">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center Column: Detailed Tabs (50%) -->
+  <div class="hr-card" style="width:50%; display:flex; flex-direction:column; padding:0;">
+    <!-- Tabs Header -->
+    <div style="display:flex; border-bottom:1px solid var(--hr-border); padding:0 1.5rem; background:#F8FAFC; border-radius:var(--hr-radius) var(--hr-radius) 0 0;">
+      <div class="hr-profile-tab active" onclick="window.UI.switchProfileTab('about')" style="padding:1rem 1.5rem; cursor:pointer; color:var(--hr-primary); border-bottom:2px solid var(--hr-primary); font-weight:500;">About</div>
+      <div class="hr-profile-tab" onclick="window.UI.switchProfileTab('experience')" style="padding:1rem 1.5rem; cursor:pointer; color:var(--hr-text-muted);">Experience</div>
+      <div class="hr-profile-tab" onclick="window.UI.switchProfileTab('education')" style="padding:1rem 1.5rem; cursor:pointer; color:var(--hr-text-muted);">Education</div>
+      <div class="hr-profile-tab" onclick="window.UI.switchProfileTab('documents')" style="padding:1rem 1.5rem; cursor:pointer; color:var(--hr-text-muted);">Documents</div>
+    </div>
+
+    <!-- Tabs Content -->
+    <div id="profile-tab-about" class="hr-profile-pane" style="padding:1.5rem; overflow-y:auto;">
+      <h3>Personal Information</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem;">
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Date of Birth</div>
+          <div>15 Aug 1995</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Gender</div>
+          <div>Male</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Blood Group</div>
+          <div>O+</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Marital Status</div>
+          <div>Single</div>
+        </div>
+      </div>
+
+      <h3>Address</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Current Address</div>
+          <div style="line-height:1.5;">123, Tech Park Road,<br>Hinjewadi Phase 1,<br>Pune - 411057</div>
+        </div>
+        <div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Permanent Address</div>
+          <div style="line-height:1.5;">Same as current address</div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="profile-tab-experience" class="hr-profile-pane hidden" style="padding:1.5rem; overflow-y:auto;">
+      <h3>Work Experience</h3>
+      <div style="border-left:2px solid var(--hr-border); padding-left:1rem; margin-left:0.5rem; position:relative;">
+        <div style="position:absolute; left:-7px; top:0; width:12px; height:12px; border-radius:50%; background:var(--hr-primary);"></div>
+        <strong style="display:block; margin-bottom:0.25rem;">Software Engineer - JMKC Group</strong>
+        <span style="color:var(--hr-text-muted); font-size:0.875rem;">May 2026 - Present</span>
+        <p style="font-size:0.875rem; color:#475569;">Working on the enterprise platform core modules.</p>
+      </div>
+      <div style="border-left:2px solid var(--hr-border); padding-left:1rem; margin-left:0.5rem; margin-top:1.5rem; position:relative;">
+        <div style="position:absolute; left:-7px; top:0; width:12px; height:12px; border-radius:50%; background:#CBD5E1;"></div>
+        <strong style="display:block; margin-bottom:0.25rem;">Junior Developer - Tech Solutions</strong>
+        <span style="color:var(--hr-text-muted); font-size:0.875rem;">Jan 2024 - April 2026</span>
+        <p style="font-size:0.875rem; color:#475569;">Developed backend APIs using Node.js and Express.</p>
+      </div>
+    </div>
+
+    <div id="profile-tab-education" class="hr-profile-pane hidden" style="padding:1.5rem; overflow-y:auto;">
+      <h3>Education</h3>
+      <div class="hr-card" style="margin-bottom:1rem; box-shadow:none; border:1px solid var(--hr-border);">
+        <strong>B.Tech in Computer Science</strong>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Pune University • 2019 - 2023</div>
+      </div>
+    </div>
+
+    <div id="profile-tab-documents" class="hr-profile-pane hidden" style="padding:1.5rem; overflow-y:auto;">
+      <h3>Documents</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>Aadhar Card</strong>
+            <div style="color:var(--hr-status-active); font-size:0.75rem;">Verified</div>
+          </div>
+          <button style="background:transparent; border:none; cursor:pointer;">👁️</button>
+        </div>
+        <div class="hr-card" style="box-shadow:none; border:1px solid var(--hr-border); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>PAN Card</strong>
+            <div style="color:var(--hr-status-active); font-size:0.75rem;">Verified</div>
+          </div>
+          <button style="background:transparent; border:none; cursor:pointer;">👁️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: Stats & Manager (25%) -->
+  <div style="width:25%; display:flex; flex-direction:column; gap:1.5rem;">
+    <!-- Manager Info -->
+    <div class="hr-card">
+      <h3 style="margin-top:0;">Reporting Manager</h3>
+      <div style="display:flex; align-items:center; gap:1rem; margin-top:1rem;">
+        <img src="https://ui-avatars.com/api/?name=Amit+Verma&background=random" style="width:48px; height:48px; border-radius:50%;" />
+        <div>
+          <div style="font-weight:600;">Amit Verma</div>
+          <div style="color:var(--hr-text-muted); font-size:0.875rem;">Project Manager</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attendance Stats -->
+    <div class="hr-card">
+      <h3 style="margin-top:0;">Attendance (This Month)</h3>
+      <div style="display:flex; justify-content:center; align-items:center; margin:2rem 0;">
+        <!-- Simple CSS Gauge Mock -->
+        <div style="width:120px; height:120px; border-radius:50%; border:10px solid #E2E8F0; border-top-color:#10B981; border-right-color:#10B981; display:flex; align-items:center; justify-content:center; transform:rotate(-45deg);">
+          <div style="transform:rotate(45deg); text-align:center;">
+            <span style="font-size:1.5rem; font-weight:700; color:#1E293B;">92%</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.875rem;">
+        <span style="color:var(--hr-text-muted);">Present: 22</span>
+        <span style="color:var(--hr-text-muted);">Absent: 2</span>
+      </div>
+    </div>
+
+    <!-- Leaves -->
+    <div class="hr-card">
+      <h3 style="margin-top:0;">Leaves</h3>
+      <div style="margin-bottom:1rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+          <span style="font-size:0.875rem; font-weight:500;">Casual Leaves</span>
+          <span style="font-size:0.875rem; color:var(--hr-text-muted);">4/12</span>
+        </div>
+        <div style="width:100%; height:8px; background:#E2E8F0; border-radius:4px; overflow:hidden;">
+          <div style="width:33%; height:100%; background:var(--hr-primary);"></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+          <span style="font-size:0.875rem; font-weight:500;">Sick Leaves</span>
+          <span style="font-size:0.875rem; color:var(--hr-text-muted);">2/6</span>
+        </div>
+        <div style="width:100%; height:8px; background:#E2E8F0; border-radius:4px; overflow:hidden;">
+          <div style="width:33%; height:100%; background:#F59E0B;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/modules/hr/profile/script.js"></script>

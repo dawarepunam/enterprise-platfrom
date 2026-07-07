@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Profile Hub</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile.css" />
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <div class="layout-shell">
+        <div id="sidebar"></div>
+
+        <main class="profile-page">
+            <section class="hero-card">
+                <div class="hero-summary">
+                    <div class="hero-avatar-wrap">
+                        <img id="profileImg" class="hero-avatar" src="https://via.placeholder.com/140x140.png?text=A" alt="Admin Avatar" />
+                        <label class="avatar-upload">
+                            <input type="file" id="uploadImg" accept="image/*" />
+                            Update Photo
+                        </label>
+                    </div>
+
+                    <div class="hero-copy">
+                        <div class="hero-badges">
+                            <span class="role-chip">ADMIN</span>
+                            <span id="activityStatus" class="status-chip">Active Now</span>
+                            <span id="systemHealth" class="health-chip">System Health: Stable</span>
+                        </div>
+                        <h1 id="heroName">System Owner</h1>
+                        <p id="heroTitle" class="hero-title">Enterprise Command Center</p>
+                        <p id="heroMeta" class="hero-meta">Last login: --</p>
+
+                        <div class="hero-actions">
+                            <a class="btn btn-primary" href="../settings/settings.html">Open Settings</a>
+                            <a class="btn secondary-btn" href="../dashboard/dashboard.html">Go To Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-highlights">
+                    <div class="highlight-card">
+                        <span class="highlight-label">Managed Departments</span>
+                        <strong id="departmentCount">0</strong>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-label">Active Managers</span>
+                        <strong id="managerCount">0</strong>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-label">Pending Approvals</span>
+                        <strong id="approvalCount">0</strong>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-label">Security Incidents</span>
+                        <strong id="securityCount">0</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-grid section-grid-wide">
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Admin Snapshot</p>
+                            <h2>Operational overview</h2>
+                        </div>
+                        <a class="text-link" href="overview.html">View full overview</a>
+                    </div>
+
+                    <div class="stat-grid">
+                        <article class="stat-tile">
+                            <span>Total Projects</span>
+                            <strong id="projectsStat">0</strong>
+                            <small>Across all departments</small>
+                        </article>
+                        <article class="stat-tile">
+                            <span>Total Employees</span>
+                            <strong id="employeesStat">0</strong>
+                            <small>Managers, leads and members</small>
+                        </article>
+                        <article class="stat-tile">
+                            <span>Revenue Tracked</span>
+                            <strong id="revenueStat">INR 0</strong>
+                            <small>Approved quotations and deals</small>
+                        </article>
+                        <article class="stat-tile">
+                            <span>Productivity Score</span>
+                            <strong id="productivityStat">0%</strong>
+                            <small>AI-assisted organization health</small>
+                        </article>
+                        <article class="stat-tile">
+                            <span>Attendance Rate</span>
+                            <strong id="attendanceStat">0%</strong>
+                            <small>Live attendance and timesheet discipline</small>
+                        </article>
+                        <article class="stat-tile">
+                            <span>Lead Conversion</span>
+                            <strong id="conversionStat">0%</strong>
+                            <small>CRM to revenue pipeline efficiency</small>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Quick Actions</p>
+                            <h2>Jump into core modules</h2>
+                        </div>
+                    </div>
+
+                    <div class="quick-action-grid">
+                        <a class="action-tile" href="../projects/projects.html">
+                            <strong>Create or review projects</strong>
+                            <span>Project creation, budget, deadline and manager assignment.</span>
+                        </a>
+                        <a class="action-tile" href="../users/users.html">
+                            <strong>Manage people and roles</strong>
+                            <span>Create managers, team leads, members and client accounts.</span>
+                        </a>
+                        <a class="action-tile" href="../departments/departments.html">
+                            <strong>Control departments</strong>
+                            <span>Structure business units and map ownership clearly.</span>
+                        </a>
+                        <a class="action-tile" href="../quotations/quotations.html">
+                            <strong>Approve quotations</strong>
+                            <span>Track approvals, revenue and client-facing commercial docs.</span>
+                        </a>
+                        <a class="action-tile" href="../analytics/analytics.html">
+                            <strong>Check analytics and ROI</strong>
+                            <span>Monitor conversion, marketing ROI and productivity trends.</span>
+                        </a>
+                        <a class="action-tile" href="../audit-logs/audit-logs.html">
+                            <strong>Inspect audit trail</strong>
+                            <span>Review system changes, login events and sensitive actions.</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-grid">
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Enterprise Modules</p>
+                            <h2>Master system coverage</h2>
+                        </div>
+                    </div>
+                    <div id="moduleMatrix" class="module-grid"></div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Hierarchy</p>
+                            <h2>Organization chain of command</h2>
+                        </div>
+                    </div>
+                    <div id="hierarchyFlow" class="hierarchy-flow"></div>
+                </div>
+            </section>
+
+            <section class="panel-card">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Profile Workflow</p>
+                        <h2>Role settings with proper page redirects</h2>
+                    </div>
+                </div>
+
+                <div class="profile-nav-grid">
+                    <a class="profile-nav-card" href="overview.html">
+                        <strong>Overview</strong>
+                        <span>High-level identity, security health and admin KPIs.</span>
+                    </a>
+                    <a class="profile-nav-card" href="personal-info.html">
+                        <strong>Personal Information</strong>
+                        <span>Name, contact details, designation, language and bio.</span>
+                    </a>
+                    <a class="profile-nav-card" href="security.html">
+                        <strong>Security</strong>
+                        <span>Password flow, 2FA, login alerts and trusted sessions.</span>
+                    </a>
+                    <a class="profile-nav-card" href="privacy.html">
+                        <strong>Privacy</strong>
+                        <span>Visibility, activity logging and data request preferences.</span>
+                    </a>
+                    <a class="profile-nav-card" href="notifications.html">
+                        <strong>Notifications</strong>
+                        <span>Email, SMS and critical admin alert preferences.</span>
+                    </a>
+                    <a class="profile-nav-card" href="devices.html">
+                        <strong>Active Devices</strong>
+                        <span>Trusted devices, session health and access revocation.</span>
+                    </a>
+                    <a class="profile-nav-card" href="activity-log.html">
+                        <strong>Activity Log</strong>
+                        <span>Recent sensitive actions and operational timeline.</span>
+                    </a>
+                    <a class="profile-nav-card" href="../settings/settings.html">
+                        <strong>System Settings</strong>
+                        <span>SMTP, integrations, backup policy and enterprise controls.</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="section-grid">
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Responsibility Map</p>
+                            <h2>Admin ownership areas</h2>
+                        </div>
+                    </div>
+
+                    <ul id="responsibilityList" class="bullet-list"></ul>
+                </div>
+
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Automation</p>
+                            <h2>Workflow orchestration</h2>
+                        </div>
+                    </div>
+
+                    <div id="automationFlow" class="automation-list"></div>
+                </div>
+            </section>
+
+            <section class="section-grid">
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Recent Activity</p>
+                            <h2>Monitoring timeline</h2>
+                        </div>
+                        <a class="text-link" href="activity-log.html">Open full log</a>
+                    </div>
+
+                    <div id="recentActivity" class="timeline-list"></div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Security Posture</p>
+                            <h2>Privacy and device controls</h2>
+                        </div>
+                    </div>
+
+                    <div id="securitySummary" class="security-grid"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile.js"></script>
+</body>
+
+</html>

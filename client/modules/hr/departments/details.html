@@ -1,0 +1,84 @@
+<div class="hr-department-details" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <!-- Back Button -->
+  <div style="position:absolute; top:-3rem; left:0;">
+    <button onclick="window.App.navigate('/hr/departments')" style="background:transparent; border:none; cursor:pointer; color:var(--hr-primary); font-weight:500;">
+      ← Back to Departments
+    </button>
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 id="deptTitle" style="margin:0;">Loading...</h2>
+    <button class="hr-icon-btn" style="background:white; border:1px solid var(--hr-border); border-radius:8px; padding:0.5rem 1rem; font-size:0.875rem;">Edit Department</button>
+  </div>
+
+  <!-- Top Cards -->
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5rem;">
+    <div class="hr-card" style="display:flex; align-items:center; gap:1rem;">
+      <div style="font-size:2rem;">👥</div>
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Total Employees</div>
+        <div id="deptEmpCount" style="font-size:1.5rem; font-weight:700;">-</div>
+      </div>
+    </div>
+    <div class="hr-card" style="display:flex; align-items:center; gap:1rem;">
+      <div style="font-size:2rem;">👔</div>
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Manager</div>
+        <div id="deptManager" style="font-size:1.25rem; font-weight:600;">-</div>
+      </div>
+    </div>
+    <div class="hr-card" style="display:flex; align-items:center; gap:1rem;">
+      <div style="font-size:2rem;">📈</div>
+      <div>
+        <div style="color:var(--hr-text-muted); font-size:0.875rem;">Performance</div>
+        <div id="deptPerformance" style="font-size:1.5rem; font-weight:700; color:#10B981;">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manager Info & Table -->
+  <div style="display:flex; gap:1.5rem; flex:1; overflow:hidden;">
+    
+    <!-- Left: Manager Info -->
+    <div class="hr-card" style="width:300px; display:flex; flex-direction:column; align-items:center; text-align:center;">
+      <h3 style="margin-top:0; width:100%; text-align:left; border-bottom:1px solid var(--hr-border); padding-bottom:1rem; margin-bottom:1rem;">Department Head</h3>
+      
+      <img id="deptManagerPhoto" src="" style="width:80px; height:80px; border-radius:50%; margin-bottom:1rem;" />
+      <div id="deptManagerName" style="font-weight:600; font-size:1.2rem;">-</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem; margin-bottom:1.5rem;">Manager</div>
+      
+      <div style="width:100%; text-align:left; font-size:0.875rem;">
+        <div style="margin-bottom:0.5rem;"><span style="color:var(--hr-text-muted);">Email:</span> <span id="deptManagerEmail">-</span></div>
+        <div><span style="color:var(--hr-text-muted);">Phone:</span> <span id="deptManagerPhone">-</span></div>
+      </div>
+    </div>
+
+    <!-- Right: Employee Table -->
+    <div class="hr-card" style="flex:1; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3 style="margin:0;">Employees</h3>
+        <input type="text" placeholder="Search employees..." style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px; width:250px;" />
+      </div>
+      
+      <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--hr-border);">
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Name</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Designation</th>
+            <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+          </tr>
+        </thead>
+        <tbody id="deptEmployeeTable">
+          <!-- Rows injected by script -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Keep the script inclusion so router can execute it -->
+<script src="/modules/hr/departments/script.js"></script>

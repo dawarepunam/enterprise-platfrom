@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin - Quotations Management</title>
+
+        <link rel="stylesheet" href="/modules/admin/quotations/../../../assets/css/global.css" />
+        <link rel="stylesheet" href="/modules/admin/quotations/quotations.css" />
+    </head>
+
+    <body>
+        <div class="page-wrapper">
+
+            <!-- Header -->
+            <header class="page-header">
+                <h1>Quotation Management</h1>
+                <p>Create, review and track all client quotations.</p>
+            </header>
+
+            <!-- Filters -->
+            <section class="filter-section card">
+                <input type="text" id="searchInput"
+                    placeholder="Search by quotation number or client..." />
+
+                <select id="statusFilter">
+                    <option value>All Status</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Sent">Sent</option>
+                    <option value="Viewed">Viewed</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Expired">Expired</option>
+                </select>
+
+                <button id="refreshBtn" class="btn-primary">
+                    Refresh
+                </button>
+            </section>
+
+            <!-- Summary Cards -->
+            <section class="summary-grid">
+                <div class="summary-card">
+                    <h3 id="totalQuotes">0</h3>
+                    <p>Total Quotations</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3 id="draftQuotes">0</h3>
+                    <p>Draft</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3 id="approvedQuotes">0</h3>
+                    <p>Approved</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3 id="rejectedQuotes">0</h3>
+                    <p>Rejected</p>
+                </div>
+            </section>
+
+            <!-- Quotations Table -->
+            <section class="table-section card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Quotation No</th>
+                                <th>Client Name</th>
+                                <th>Issue Date</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Total Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="quotationsTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    Loading quotations...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+        <script src="/modules/admin/quotations/../../../assets/js/api.js"></script>
+        <script src="/modules/admin/quotations/../../../assets/js/auth.js"></script>
+        <script src="/modules/admin/quotations/quotations.js"></script>
+    </body>
+
+</html>

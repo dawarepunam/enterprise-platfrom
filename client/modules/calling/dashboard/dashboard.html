@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calling Module – Enterprise CRM</title>
+  <link rel="stylesheet" href="/modules/calling/dashboard/dashboard.css" />
+</head>
+<body>
+<div class="calling-app">
+
+  <!-- ===================== TOPBAR ===================== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand-logo">
+        <div class="brand-mark">JM</div>
+        <h1>Enterprise CRM</h1>
+      </div>
+
+      <button class="icon-btn" id="sidebarToggle" title="Toggle Sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="module-chip">📞 Calling Module</div>
+
+      <div class="search-box">
+        <input id="globalSearch" type="search" placeholder="Search leads, name, phone…" />
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="icon-btn" id="notificationBtn" title="Notifications">
+        🔔<span class="badge" id="notifBadge">8</span>
+      </button>
+      <button class="icon-btn" title="Headset">🎧</button>
+      <button class="icon-btn" title="Apps">⚏</button>
+      <button class="profile-btn" id="profileBtn">
+        <div class="avatar-circle" id="topAvatar">RP</div>
+        <span id="topProfileName">Rahul Patil ▼</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-body">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="user-card">
+        <div class="avatar-circle" id="sidebarAvatar">RP</div>
+        <div class="user-meta">
+          <strong id="sidebarUserName">Rahul Patil</strong>
+          <small>Calling Executive</small>
+          <div class="online-dot">Online</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <button class="nav-item active" data-section="dashboard">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+        <button class="nav-item" data-section="my-calls">
+          <span class="nav-icon">📞</span>
+          <span class="nav-label">My Calls</span>
+        </button>
+        <button class="nav-item" data-section="lead-queue">
+          <span class="nav-icon">👥</span>
+          <span class="nav-label">Lead Queue</span>
+          <span class="nav-badge" id="navBadgeQueue">24</span>
+        </button>
+        <button class="nav-item" data-section="follow-ups">
+          <span class="nav-icon">⏰</span>
+          <span class="nav-label">Follow-ups</span>
+          <span class="nav-badge orange" id="navBadgeFollowup">15</span>
+        </button>
+        <button class="nav-item" data-section="pipeline">
+          <span class="nav-icon">🗂️</span>
+          <span class="nav-label">Pipeline Board</span>
+        </button>
+        <button class="nav-item" data-section="history">
+          <span class="nav-icon">⏱️</span>
+          <span class="nav-label">Call History</span>
+        </button>
+        <button class="nav-item" data-section="performance">
+          <span class="nav-icon">📈</span>
+          <span class="nav-label">My Performance</span>
+        </button>
+        <button class="nav-item" data-section="team">
+          <span class="nav-icon">🫂</span>
+          <span class="nav-label">Team View</span>
+        </button>
+        <button class="nav-item" data-section="reports">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Reports</span>
+        </button>
+        <button class="nav-item" data-section="notifications">
+          <span class="nav-icon">🔔</span>
+          <span class="nav-label">Notifications</span>
+          <span class="nav-badge" id="navBadgeNotif">8</span>
+        </button>
+        <button class="nav-item" data-section="sales-handover">
+          <span class="nav-icon">🤝</span>
+          <span class="nav-label">Sales Handover</span>
+        </button>
+        <button class="nav-item" data-section="lost-leads">
+          <span class="nav-icon">🗑️</span>
+          <span class="nav-label">Lost Leads</span>
+        </button>
+        <button class="nav-item" data-section="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <div class="target-widget">
+        <p class="eyebrow">Today's Target</p>
+        <div class="target-row">
+          <span>🎯 Calls</span>
+          <span><b id="targetDone">18</b> / <span id="targetGoal">50</span></span>
+        </div>
+        <div class="progress-bar">
+          <div class="fill" id="targetFill" style="width: 36%"></div>
+        </div>
+        <div class="progress-pct" id="targetPct">36% achieved</div>
+      </div>
+    </aside>
+
+    <!-- ===================== WORKSPACE ===================== -->
+    <main class="workspace" id="workspace">
+
+      <!-- =========== DASHBOARD =========== -->
+      <section class="workspace-section active" data-panel="dashboard">
+
+        <!-- KPI Row -->
+        <div class="kpi-grid">
+          <article class="kpi-card blue">
+            <div class="kpi-icon">👥</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Total Assigned</div>
+              <div class="kpi-value" id="kpiAssigned">128</div>
+              <div class="kpi-trend up">↑ 18 Today</div>
+            </div>
+          </article>
+          <article class="kpi-card red">
+            <div class="kpi-icon">📵</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Pending Calls</div>
+              <div class="kpi-value" id="kpiPending">42</div>
+              <div class="kpi-trend up">↑ 5 Today</div>
+            </div>
+          </article>
+          <article class="kpi-card green">
+            <div class="kpi-icon">📞</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Connected Calls</div>
+              <div class="kpi-value" id="kpiConnected">36</div>
+              <div class="kpi-trend up">↑ 12 Today</div>
+            </div>
+          </article>
+          <article class="kpi-card orange">
+            <div class="kpi-icon">📅</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Follow-ups Due</div>
+              <div class="kpi-value" id="kpiFollowups">15</div>
+              <div class="kpi-trend up">↑ 7 Today</div>
+            </div>
+          </article>
+          <article class="kpi-card teal">
+            <div class="kpi-icon">✅</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Converted</div>
+              <div class="kpi-value" id="kpiConverted">19</div>
+              <div class="kpi-trend up">↑ 6 Today</div>
+            </div>
+          </article>
+          <article class="kpi-card purple">
+            <div class="kpi-icon">📈</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Success Rate</div>
+              <div class="kpi-value" id="kpiSuccess">68%</div>
+              <div class="kpi-trend up">↑ 9% vs Yesterday</div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+          <div class="panel">
+            <div class="panel-head"><h3>Call Status Distribution</h3></div>
+            <div class="chart-area"><canvas id="statusChart"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Daily Calls Trend</h3>
+              <select class="btn-secondary" style="padding:4px 8px;font-size:12px;"><option>This Week</option><option>This Month</option></select>
+            </div>
+            <div class="chart-area"><canvas id="trendChart"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Conversion Funnel</h3></div>
+            <div class="chart-area"><canvas id="funnelChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Main Split Area -->
+        <div class="dashboard-split">
+
+          <!-- Left Column -->
+          <div class="main-col">
+            <!-- Leads Table -->
+            <div class="panel">
+              <div class="leads-tabs">
+                <button class="tab-btn active" data-tab="all">My Leads</button>
+                <button class="tab-btn" data-tab="hot">Hot Leads <span class="nav-badge" style="position:static;margin-left:4px">5</span></button>
+                <button class="tab-btn" data-tab="not-called">Not Called <span class="nav-badge" style="position:static;margin-left:4px">42</span></button>
+                <button class="tab-btn" data-tab="interested">Interested <span class="nav-badge green" style="position:static;margin-left:4px">23</span></button>
+                <button class="tab-btn" data-tab="follow-up">Follow-up <span class="nav-badge orange" style="position:static;margin-left:4px">15</span></button>
+                <button class="tab-btn" data-tab="converted">Converted <span class="nav-badge green" style="position:static;margin-left:4px">19</span></button>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Lead Details</th>
+                      <th>Company</th>
+                      <th>Phone</th>
+                      <th>Status</th>
+                      <th>Next Action</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashLeadsBody">
+                    <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px">Loading leads…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Bottom Widgets -->
+            <div class="bottom-widgets">
+              <!-- Active Call -->
+              <div class="panel active-call-card">
+                <div class="panel-head">
+                  <h3>Active Call</h3>
+                  <span class="call-status-chip" id="callStatusChip">Connected 02:34</span>
+                </div>
+                <div class="panel-body">
+                  <div class="caller-row">
+                    <div class="caller-avatar" id="callerAvatar">RS</div>
+                    <div class="caller-info">
+                      <h4 id="activeCallName">Rahul Sharma</h4>
+                      <p id="activeCallCompany">ABC Pvt Ltd</p>
+                      <p id="activeCallPhone">📞 +91 9823456789</p>
+                    </div>
+                  </div>
+                  <div class="audio-wave" id="audioWave">
+                    <div class="wave-bar" style="animation-delay:0s;height:8px"></div>
+                    <div class="wave-bar" style="animation-delay:0.1s"></div>
+                    <div class="wave-bar" style="animation-delay:0.2s;height:20px"></div>
+                    <div class="wave-bar" style="animation-delay:0.3s"></div>
+                    <div class="wave-bar" style="animation-delay:0.4s;height:14px"></div>
+                    <div class="wave-bar" style="animation-delay:0.5s"></div>
+                    <div class="wave-bar" style="animation-delay:0.6s;height:24px"></div>
+                    <div class="wave-bar" style="animation-delay:0.7s"></div>
+                    <div class="wave-bar" style="animation-delay:0.8s;height:10px"></div>
+                    <div class="wave-bar" style="animation-delay:0.9s"></div>
+                    <div class="wave-bar" style="animation-delay:1.0s;height:18px"></div>
+                    <div class="wave-bar" style="animation-delay:1.1s"></div>
+                  </div>
+                  <div class="call-controls">
+                    <button class="ctrl-btn" title="Mute">🎤<small>Mute</small></button>
+                    <button class="ctrl-btn" title="Hold">⏸<small>Hold</small></button>
+                    <button class="ctrl-btn" title="Keypad">🔢<small>Keypad</small></button>
+                    <button class="ctrl-btn danger" id="endCallBtn" title="End Call">📵<small>End Call</small></button>
+                    <button class="ctrl-btn" title="Record">⏺<small>Record</small></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="panel">
+                <div class="panel-head"><h3>Quick Actions</h3></div>
+                <div class="panel-body">
+                  <div class="quick-actions-grid">
+                    <button class="qa-btn">📞<small>Call Now</small></button>
+                    <button class="qa-btn">💬<small>WhatsApp</small></button>
+                    <button class="qa-btn">📝<small>Add Note</small></button>
+                    <button class="qa-btn">📅<small>Schedule</small></button>
+                    <button class="qa-btn">✔️<small>Mark Status</small></button>
+                    <button class="qa-btn">🤝<small>Handover</small></button>
+                  </div>
+                  <div class="outcomes-label">Call Outcomes (Select after call)</div>
+                  <div class="outcomes-grid">
+                    <button class="outcome-btn interested" data-outcome="Interested">☑ Interested</button>
+                    <button class="outcome-btn not-interested" data-outcome="Not Interested">☒ Not Interested</button>
+                    <button class="outcome-btn callback" data-outcome="Call Back Later">↩ Callback</button>
+                    <button class="outcome-btn" data-outcome="Busy">⏱ Busy</button>
+                    <button class="outcome-btn" data-outcome="Not Picked">⍜ No Response</button>
+                    <button class="outcome-btn" data-outcome="Wrong Number">✕ Wrong No.</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <aside class="right-col">
+            <!-- Today's Follow-ups -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>📅 Today's Follow-ups</h3>
+                <button class="btn-text">View All (15)</button>
+              </div>
+              <div class="panel-body" id="todayFollowupsPanel">
+                <div class="followup-item">
+                  <div class="followup-time">11:00 AM</div>
+                  <div class="followup-info">
+                    <strong>Vikas Enterprises</strong>
+                    <small>+91 9823456789</small>
+                  </div>
+                  <button class="act-btn" title="Call">📞</button>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-time">12:30 PM</div>
+                  <div class="followup-info">
+                    <strong>Neha Industries</strong>
+                    <small>+91 9765432108</small>
+                  </div>
+                  <button class="act-btn" title="WhatsApp">💬</button>
+                </div>
+                <div class="followup-item">
+                  <div class="followup-time">02:00 PM</div>
+                  <div class="followup-info">
+                    <strong>TechNova Solutions</strong>
+                    <small>+91 9898765432</small>
+                  </div>
+                  <button class="act-btn" title="Call">📞</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>⏱️ Recent Activity</h3>
+                <button class="btn-text">View All</button>
+              </div>
+              <div class="panel-body" id="activityPanel">
+                <div class="timeline-item">
+                  <div class="tl-dot blue"></div>
+                  <div class="tl-content"><strong>Lead Assigned</strong><small>ABC Pvt Ltd</small></div>
+                  <span class="tl-time">10:20 AM</span>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot green"></div>
+                  <div class="tl-content"><strong>Call Connected</strong><small>Rahul Sharma</small></div>
+                  <span class="tl-time">09:45 AM</span>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot purple"></div>
+                  <div class="tl-content"><strong>Follow-up Scheduled</strong><small>Neha Industries</small></div>
+                  <span class="tl-time">09:15 AM</span>
+                </div>
+                <div class="timeline-item">
+                  <div class="tl-dot teal"></div>
+                  <div class="tl-content"><strong>Lead Converted</strong><small>PQR Solutions</small></div>
+                  <span class="tl-time">08:30 AM</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>🔔 Notifications</h3>
+                <span class="nav-badge">Unread 8</span>
+              </div>
+              <div class="panel-body">
+                <div class="alert-item">
+                  <div class="alert-icon-wrap yellow">⚠️</div>
+                  <div class="alert-content"><strong>New Lead Assigned</strong><small>You have 3 new leads</small></div>
+                  <span class="alert-time">Just now</span>
+                </div>
+                <div class="alert-item">
+                  <div class="alert-icon-wrap red">🔥</div>
+                  <div class="alert-content"><strong>Hot Lead Received</strong><small>Rahul Sharma (Score 92)</small></div>
+                  <span class="alert-time">5 min ago</span>
+                </div>
+                <div class="alert-item">
+                  <div class="alert-icon-wrap orange">⏰</div>
+                  <div class="alert-content"><strong>Follow-up Overdue</strong><small>2 leads pending</small></div>
+                  <span class="alert-time">15 min ago</span>
+                </div>
+                <div class="alert-item">
+                  <div class="alert-icon-wrap green">✅</div>
+                  <div class="alert-content"><strong>Conversion Achieved</strong><small>PQR Solutions</small></div>
+                  <span class="alert-time">30 min ago</span>
+                </div>
+                <button class="btn-text" style="display:block;text-align:center;margin-top:8px">View All Notifications</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- =========== SHARED TABLE VIEW =========== -->
+      <section class="workspace-section" data-panel="table-view">
+        <div class="view-header">
+          <h2 class="view-title" id="viewTitle">Lead Queue</h2>
+          <div class="toolbar">
+            <input id="sharedSearch" type="search" placeholder="Search by name, phone, company…" />
+            <select id="sharedStatusFilter">
+              <option value="">All Status</option>
+              <option value="Not Called">Not Called</option>
+              <option value="Attempted">Attempted</option>
+              <option value="Connected">Connected</option>
+              <option value="Interested">Interested</option>
+              <option value="Follow-up">Follow-up</option>
+              <option value="Lost">Lost</option>
+              <option value="Converted">Converted</option>
+            </select>
+            <select id="sharedPriorityFilter">
+              <option value="">All Priority</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <button class="btn-primary" id="applySharedFilter">🔍 Filter</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="table-wrap" style="max-height:calc(100vh - 240px)">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="selectAllShared" /></th>
+                  <th>Lead Details</th>
+                  <th>Company</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Lead Score</th>
+                  <th>Next Action</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="sharedLeadsBody">
+                <tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:20px">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========== PIPELINE KANBAN =========== -->
+      <section class="workspace-section" data-panel="pipeline">
+        <div class="view-header">
+          <h2 class="view-title">Pipeline Board</h2>
+        </div>
+        <div class="kanban-board" id="kanbanBoard">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- =========== PERFORMANCE =========== -->
+      <section class="workspace-section" data-panel="performance">
+        <h2 class="view-title">My Performance</h2>
+        <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+          <article class="kpi-card blue">
+            <div class="kpi-icon">📞</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Total Calls Made</div>
+              <div class="kpi-value" id="perfTotalCalls">0</div>
+              <div class="kpi-trend up">This Month</div>
+            </div>
+          </article>
+          <article class="kpi-card green">
+            <div class="kpi-icon">✅</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Connected Calls</div>
+              <div class="kpi-value" id="perfConnected">0</div>
+              <div class="kpi-trend up">Connected</div>
+            </div>
+          </article>
+          <article class="kpi-card purple">
+            <div class="kpi-icon">📈</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Conversion Rate</div>
+              <div class="kpi-value" id="perfConvRate">0%</div>
+              <div class="kpi-trend up">vs last month</div>
+            </div>
+          </article>
+          <article class="kpi-card orange">
+            <div class="kpi-icon">⏱️</div>
+            <div class="kpi-data">
+              <div class="kpi-label">Avg Call Duration</div>
+              <div class="kpi-value" id="perfAvgDur">0:00</div>
+              <div class="kpi-trend up">per call</div>
+            </div>
+          </article>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Call History</h3></div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Date</th><th>Lead Name</th><th>Company</th><th>Duration</th><th>Status</th><th>Notes</th></tr>
+              </thead>
+              <tbody id="perfCallHistBody">
+                <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px">No data</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Generic placeholder for other sections -->
+      <section class="workspace-section" data-panel="generic">
+        <h2 class="view-title" id="genericTitle">Section</h2>
+        <div class="panel">
+          <div class="section-placeholder">
+            <div class="icon" id="genericIcon">📄</div>
+            <h3 id="genericHeading">Coming Soon</h3>
+            <p id="genericDesc">This section is currently being loaded. Your data will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===== CALL LOG MODAL ===== -->
+<div class="modal-overlay hidden" id="logCallModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>📋 Log Call Outcome</h3>
+      <button class="icon-btn" id="closeLogCallModal">✕</button>
+    </div>
+    <form class="modal-body" id="logCallForm">
+      <input type="hidden" id="logLeadId" />
+      <div class="form-field">
+        <label class="form-label">Call Status *</label>
+        <select class="form-input" id="logStatus" required>
+          <option value="">Select outcome…</option>
+          <option value="Interested">✅ Interested</option>
+          <option value="Very Interested">🔥 Very Interested</option>
+          <option value="Not Interested">❌ Not Interested</option>
+          <option value="Call Back Later">↩ Call Back Later</option>
+          <option value="Wrong Number">✕ Wrong Number</option>
+          <option value="Busy">⏱ Busy</option>
+          <option value="Not Picked">⍜ Not Picked</option>
+          <option value="Deal Closed">🏆 Deal Closed</option>
+        </select>
+      </div>
+      <div class="form-field" id="followUpField" style="display:none">
+        <label class="form-label">Next Follow-up Date & Time</label>
+        <input type="datetime-local" class="form-input" id="logFollowUp" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Customer Requirement</label>
+        <input type="text" class="form-input" id="logRequirement" placeholder="ERP, CRM, Website…" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Notes *</label>
+        <textarea class="form-input" id="logNotes" rows="3" placeholder="Enter call notes…" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary btn-block">💾 Save Call Log</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== TOAST STACK ===== -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- Scripts -->
+<script src="/assets/vendors/chart.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script src="/assets/js/socket.js"></script>
+<script src="/modules/calling/dashboard/dashboard.js"></script>
+</body>
+</html>

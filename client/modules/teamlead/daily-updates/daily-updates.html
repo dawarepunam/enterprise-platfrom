@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lead Daily Updates</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="daily-updates.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page">
+      <section class="workspace-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Daily Sync</p>
+          <h1>Capture blockers, approvals and progress for manager visibility</h1>
+          <p class="hero-text">Team lead can summarize completed work, pending risks, blockers and resource needs before sending a daily status update to the manager.</p>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Lead Notes</p><h2>Today’s review summary</h2></div></div>
+          <div id="updatesList" class="stack-list"></div>
+        </article>
+        <article class="workspace-panel">
+          <div class="section-heading"><div><p class="eyebrow">Send Update</p><h2>Manager status note</h2></div></div>
+          <form id="leadUpdateForm" class="form-grid">
+            <label class="field field-wide">
+              <span>Completed Work</span>
+              <textarea id="completedWork" rows="3" placeholder="What was completed today?"></textarea>
+            </label>
+            <label class="field field-wide">
+              <span>Blockers / Risks</span>
+              <textarea id="blockers" rows="3" placeholder="Any technical blockers, dependency issues or delays?"></textarea>
+            </label>
+            <label class="field field-wide">
+              <span>Resource Need</span>
+              <textarea id="resourceNeed" rows="3" placeholder="Need another member, more time, or manager support?"></textarea>
+            </label>
+            <div class="btn-row field-wide">
+              <button type="submit" class="btn btn-primary">Send Status To Manager</button>
+            </div>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="daily-updates.js"></script>
+</body>
+</html>

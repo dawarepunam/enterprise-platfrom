@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documents – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .folder-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px; margin-bottom:24px; }
+    .folder-card { background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius); padding:16px; cursor:pointer; transition:var(--pm-transition); display:flex; align-items:center; gap:12px; }
+    .folder-card:hover { border-color:var(--pm-accent); box-shadow:var(--pm-shadow-sm); transform:translateY(-2px); }
+    .folder-icon { font-size:32px; color:#fbbf24; }
+    .folder-name { font-size:14px; font-weight:700; margin-bottom:2px; }
+    .folder-count { font-size:11px; color:var(--pm-text-muted); }
+
+    .file-table { width:100%; border-collapse:collapse; }
+    .file-table th { text-align:left; padding:12px 16px; border-bottom:2px solid var(--pm-border); font-size:12px; color:var(--pm-text-muted); font-weight:600; }
+    .file-table td { padding:12px 16px; border-bottom:1px solid var(--pm-border); font-size:13px; }
+    .file-table tr:hover { background:var(--pm-bg); }
+    .file-icon { width:28px; display:inline-block; text-align:center; font-size:16px; }
+    
+    .file-actions { opacity:0; transition:opacity .2s; }
+    .file-table tr:hover .file-actions { opacity:1; }
+    .file-action-btn { background:none; border:none; color:var(--pm-text-muted); cursor:pointer; padding:4px 8px; border-radius:4px; }
+    .file-action-btn:hover { background:var(--pm-card); color:var(--pm-accent); }
+    .file-action-btn.danger:hover { color:var(--red); }
+
+    /* Drag and Drop Zone */
+    .upload-zone { border:2px dashed var(--pm-border); border-radius:var(--pm-radius); padding:40px; text-align:center; background:var(--pm-bg); cursor:pointer; transition:var(--pm-transition); }
+    .upload-zone:hover, .upload-zone.dragover { border-color:var(--pm-accent); background:var(--pm-accent-light); }
+    .upload-icon { font-size:48px; color:var(--pm-accent); margin-bottom:16px; }
+    .upload-text { font-size:16px; font-weight:600; margin-bottom:8px; }
+    .upload-sub { font-size:12px; color:var(--pm-text-muted); }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb"><i class="fa fa-home"></i><a href="/project-manager/dashboard">Dashboard</a><i class="fa fa-chevron-right"></i><span>Documents</span></div>
+          <h1 class="pm-page-title" style="margin-top:4px">Project Documents</h1>
+          <div class="pm-page-subtitle">Manage files, requirements, and assets</div>
+        </div>
+        <div class="flex gap-8">
+          <button class="pm-btn pm-btn-outline pm-btn-sm" onclick="window.open('https://onedrive.live.com','_blank')">
+            <i class="fa fa-cloud" style="color:#0078d4"></i> Sync OneDrive
+          </button>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="openModal('modal-upload')">
+            <i class="fa fa-upload"></i> Upload File
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div style="display:flex; gap:12px; margin-bottom:24px;">
+        <div style="flex:1; background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius-sm); padding:8px 16px; display:flex; align-items:center; gap:8px;">
+          <i class="fa fa-search" style="color:var(--pm-text-muted)"></i>
+          <input type="text" id="docSearch" placeholder="Search files and folders..." style="border:none; background:transparent; outline:none; width:100%; font-size:14px;" oninput="filterDocs()" />
+        </div>
+        <select class="pm-form-input" style="width:auto; padding:8px 16px;" id="docProjectFilter" onchange="filterDocs()">
+          <option value="">All Projects</option>
+        </select>
+      </div>
+
+      <!-- Folders -->
+      <h3 style="font-size:16px; font-weight:700; margin-bottom:16px; color:var(--pm-text);">Folders</h3>
+      <div class="folder-grid" id="folderGrid">
+        <div class="folder-card" onclick="openFolder('Requirement Docs')">
+          <i class="fa fa-folder folder-icon"></i>
+          <div><div class="folder-name">Requirement Docs</div><div class="folder-count" id="count-Requirement Docs">0 Files</div></div>
+        </div>
+        <div class="folder-card" onclick="openFolder('Testing Docs')">
+          <i class="fa fa-folder folder-icon"></i>
+          <div><div class="folder-name">Testing Docs</div><div class="folder-count" id="count-Testing Docs">0 Files</div></div>
+        </div>
+        <div class="folder-card" onclick="openFolder('Release Docs')">
+          <i class="fa fa-folder folder-icon"></i>
+          <div><div class="folder-name">Release Docs</div><div class="folder-count" id="count-Release Docs">0 Files</div></div>
+        </div>
+        <div class="folder-card" onclick="openFolder('Project Assets')">
+          <i class="fa fa-folder folder-icon"></i>
+          <div><div class="folder-name">Project Assets</div><div class="folder-count" id="count-Project Assets">0 Files</div></div>
+        </div>
+      </div>
+
+      <!-- Recent Files -->
+      <div class="pm-card" style="padding:0; overflow:hidden;">
+        <div style="padding:16px 20px; border-bottom:1px solid var(--pm-border); display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:16px;" id="tableTitle">Recent Files</strong>
+          <button class="pm-btn pm-btn-outline pm-btn-sm" id="btnBackToRoot" style="display:none;" onclick="backToRoot()"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+        
+        <!-- Employee Profile Header (Hidden by default) -->
+        <div id="employeeProfileHeader" style="display:none; padding:20px; background:var(--pm-bg); border-bottom:1px solid var(--pm-border); align-items:center; gap:16px;">
+          <div id="empAvatar" style="width:60px; height:60px; border-radius:50%; background:var(--pm-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700;"></div>
+          <div>
+            <h2 id="empName" style="font-size:18px; font-weight:700; margin-bottom:4px;">Employee Name</h2>
+            <div style="color:var(--pm-text-muted); font-size:13px;"><i class="fa fa-briefcase"></i> <span id="empRole">Role</span> &nbsp;&bull;&nbsp; <i class="fa fa-file-upload"></i> <span id="empDocCount">0</span> Documents Uploaded</div>
+          </div>
+        </div>
+
+        <table class="file-table" id="fileTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Project</th>
+              <th>Uploaded By</th>
+              <th>Date</th>
+              <th>Size</th>
+              <th style="width:80px"></th>
+            </tr>
+          </thead>
+          <tbody id="fileListBody">
+            <!-- Dynamically rendered -->
+          </tbody>
+        </table>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="pm-modal-overlay" id="modal-upload">
+  <div class="pm-modal" style="max-width:500px">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-cloud-upload-alt" style="color:var(--pm-accent)"></i> Upload Document</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-upload')"><i class="fa fa-times"></i></div>
+    </div>
+    
+    <div class="pm-form-group">
+      <label class="pm-form-label">Select Project</label>
+      <select class="pm-form-input" id="uploadProjectSel">
+        <option value="">General (No Project)</option>
+      </select>
+    </div>
+    
+    <div class="pm-form-group">
+      <label class="pm-form-label">Folder</label>
+      <select class="pm-form-input" id="uploadFolderSel">
+        <option value="Requirement Docs">Requirement Docs</option>
+        <option value="Testing Docs">Testing Docs</option>
+        <option value="Release Docs">Release Docs</option>
+        <option value="Project Assets">Project Assets</option>
+      </select>
+    </div>
+
+    <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+      <i class="fa fa-cloud-upload-alt upload-icon"></i>
+      <div class="upload-text">Click or drag file to this area to upload</div>
+      <div class="upload-sub">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files.</div>
+      <input type="file" id="fileInput" style="display:none" multiple onchange="handleFileSelect(event)">
+    </div>
+    
+    <div id="selectedFilesList" style="margin-top:16px;"></div>
+
+    <div class="flex gap-8" style="justify-content:flex-end;margin-top:24px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-upload')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" onclick="simulateUpload()"><i class="fa fa-upload"></i> Upload Files</button>
+    </div>
+  </div>
+</div>
+
+<div class="pm-modal-overlay" id="modal-logout">
+  <div class="pm-modal" style="max-width:360px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px">Confirm Logout</h3>
+    <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-logout')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="performLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let selectedFiles = [];
+  let allDocs = [];
+  let allProjects = [];
+
+  async function loadProjects() {
+    try {
+      const res = await apiFetch('/api/manager/projects?size=500').catch(() => apiFetch('/api/projects?size=50'));
+      allProjects = res.data || [];
+      const filterSel = document.getElementById('docProjectFilter');
+      const uploadSel = document.getElementById('uploadProjectSel');
+      const opts = allProjects.map(p => `<option value="${p._id}">${p.projectName||p.name}</option>`).join('');
+      if(filterSel) filterSel.innerHTML += opts;
+      if(uploadSel) uploadSel.innerHTML += opts;
+    } catch(e) { console.error('Failed to load projects for dropdowns', e); }
+  }
+
+  let currentView = 'ROOT'; // 'ROOT', 'FOLDER', 'EMPLOYEE'
+  let activeFilter = null;
+  const getProjectName = projectId => allProjects.find(p => String(p._id) === String(projectId))?.projectName || allProjects.find(p => String(p._id) === String(projectId))?.name || 'General';
+  const formatSize = bytes => !bytes ? '—' : (bytes/1024/1024 < 1 ? Math.round(bytes/1024) + ' KB' : (bytes/1024/1024).toFixed(2) + ' MB');
+  const iconFor = name => {
+    const ext = String(name || '').split('.').pop().toLowerCase();
+    if(ext === 'pdf') return ['fa-file-pdf', '#dc2626'];
+    if(['doc','docx'].includes(ext)) return ['fa-file-word', '#2563eb'];
+    if(['xls','xlsx','csv'].includes(ext)) return ['fa-file-excel', '#16a34a'];
+    if(['png','jpg','jpeg','gif','svg','webp'].includes(ext)) return ['fa-file-image', '#a855f7'];
+    return ['fa-file', '#64748b'];
+  };
+  const normalizeDoc = file => {
+    const [icon, color] = iconFor(file.name || file.title);
+    return {
+      id: file._id || file.id || file.url,
+      name: file.name || file.title || 'Unnamed file',
+      projectId: String(file.projectId || ''),
+      project: file.projectName || getProjectName(file.projectId),
+      uploader: file.uploadedByName || file.uploadedBy?.name || 'Unknown',
+      role: file.uploadedBy?.role || file.metadata?.role || 'Employee',
+      folder: file.metadata?.folder || file.folder || 'Project Assets',
+      size: formatSize(file.size || file.fileSize),
+      date: new Date(file.createdAt || Date.now()),
+      icon,
+      color,
+      url: file.url || file.filePath || file.oneDriveShareUrl || '#',
+    };
+  };
+
+  async function loadDocuments() {
+    const tbody = document.getElementById('fileListBody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--pm-text-muted);"><i class="fa fa-spinner fa-spin"></i> Loading documents...</td></tr>';
+    try {
+      const projectIds = allProjects.map(p => p._id).filter(Boolean);
+      const responses = await Promise.all(projectIds.map(id =>
+        apiFetch('/api/manager/files/' + id).catch(() => ({ data: { files: [] } }))
+      ));
+      allDocs = responses.flatMap(res => res.data?.files || []).map(normalizeDoc);
+      updateFolderCounts();
+      renderDocs(allDocs);
+    } catch(e) {
+      allDocs = [];
+      renderDocs([]);
+      pmToast('Failed to load documents', 'error');
+    }
+  }
+
+  function renderDocs(files) {
+    const tbody = document.getElementById('fileListBody');
+    if (!files.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--pm-text-muted);">No documents found.</td></tr>';
+      return;
+    }
+    
+    // Sort by newest first
+    files = [...files].sort((a,b) => b.date - a.date);
+
+    tbody.innerHTML = files.map(f => {
+      const dateStr = f.date.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+      return `
+        <tr>
+          <td><span class="file-icon" style="color:${f.color}"><i class="fa ${f.icon}"></i></span> <strong>${f.name}</strong></td>
+          <td>${f.project}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="openEmployee('${f.uploader}', '${f.role}')">
+              <div style="width:24px;height:24px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--pm-text);">${f.uploader.split(' ').map(n=>n[0]).join('')}</div>
+              <span style="font-weight:600;color:var(--pm-accent);">${f.uploader}</span>
+            </div>
+          </td>
+          <td style="font-size:12px">${dateStr}</td>
+          <td>${f.size}</td>
+          <td>
+            <div class="file-actions">
+              <button class="file-action-btn" title="Download" onclick="window.open('${f.url}', '_blank')"><i class="fa fa-download"></i></button>
+              <button class="file-action-btn danger" title="Delete"><i class="fa fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function updateFolderCounts() {
+    ['Requirement Docs', 'Testing Docs', 'Release Docs', 'Project Assets'].forEach(f => {
+      const el = document.getElementById('count-' + f);
+      if(el) {
+        const count = allDocs.filter(d => d.folder === f).length;
+        el.innerText = count + ' Files';
+      }
+    });
+  }
+
+  function backToRoot() {
+    currentView = 'ROOT';
+    activeFilter = null;
+    document.getElementById('tableTitle').innerText = 'Recent Files';
+    document.getElementById('btnBackToRoot').style.display = 'none';
+    document.getElementById('folderGrid').style.display = 'grid';
+    document.getElementById('employeeProfileHeader').style.display = 'none';
+    document.querySelector('h3').style.display = 'block'; // Folders title
+    renderDocs(allDocs);
+  }
+
+  function openFolder(folderName) {
+    currentView = 'FOLDER';
+    activeFilter = folderName;
+    document.getElementById('tableTitle').innerText = 'Folder: ' + folderName;
+    document.getElementById('btnBackToRoot').style.display = 'inline-block';
+    document.getElementById('folderGrid').style.display = 'none';
+    document.getElementById('employeeProfileHeader').style.display = 'none';
+    document.querySelector('h3').style.display = 'none'; 
+    renderDocs(allDocs.filter(d => d.folder === folderName));
+  }
+
+  function openEmployee(empName, role) {
+    currentView = 'EMPLOYEE';
+    activeFilter = empName;
+    document.getElementById('tableTitle').innerText = 'Document History';
+    document.getElementById('btnBackToRoot').style.display = 'inline-block';
+    document.getElementById('folderGrid').style.display = 'none';
+    document.querySelector('h3').style.display = 'none'; 
+    
+    // Setup employee profile header
+    const header = document.getElementById('employeeProfileHeader');
+    header.style.display = 'flex';
+    document.getElementById('empName').innerText = empName;
+    document.getElementById('empRole').innerText = role;
+    document.getElementById('empAvatar').innerText = empName.split(' ').map(n=>n[0]).join('');
+    
+    const empDocs = allDocs.filter(d => d.uploader === empName);
+    document.getElementById('empDocCount').innerText = empDocs.length;
+    
+    renderDocs(empDocs);
+  }
+
+  function filterDocs() {
+    const q = document.getElementById('docSearch').value.toLowerCase();
+    const p = document.getElementById('docProjectFilter').value;
+    
+    let filtered = allDocs;
+    if (currentView === 'FOLDER') filtered = filtered.filter(d => d.folder === activeFilter);
+    if (currentView === 'EMPLOYEE') filtered = filtered.filter(d => d.uploader === activeFilter);
+    
+    if (q) filtered = filtered.filter(d => d.name.toLowerCase().includes(q) || d.uploader.toLowerCase().includes(q));
+    if (p) filtered = filtered.filter(d => d.projectId === p);
+    
+    renderDocs(filtered);
+  }
+
+  // Drag and Drop
+  const dropZone = document.getElementById('dropZone');
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, preventDefaults, false);
+  });
+  function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+  });
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+  });
+  dropZone.addEventListener('drop', (e) => {
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    handleFiles(files);
+  });
+
+  function handleFileSelect(e) { handleFiles(e.target.files); }
+  
+  function handleFiles(files) {
+    selectedFiles = [...files];
+    const list = document.getElementById('selectedFilesList');
+    if(selectedFiles.length === 0) { list.innerHTML = ''; return; }
+    
+    list.innerHTML = selectedFiles.map(f => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--pm-bg);border-radius:6px;margin-bottom:8px;font-size:12.5px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i class="fa fa-file"></i> <strong>${f.name}</strong>
+        </div>
+        <span style="color:var(--pm-text-muted)">${(f.size/1024/1024).toFixed(2)} MB</span>
+      </div>
+    `).join('');
+  }
+
+  async function simulateUpload() {
+    if(selectedFiles.length === 0) { pmToast('Please select files first', 'warning'); return; }
+    const btn = document.querySelector('#modal-upload .pm-btn-primary');
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Uploading...';
+    btn.disabled = true;
+    try {
+      const selProject = document.getElementById('uploadProjectSel').value;
+      const selFolder = document.getElementById('uploadFolderSel').value || 'Requirement Docs';
+      for (const file of selectedFiles) {
+        const fd = new FormData();
+        fd.append('file', file);
+        if (selProject) fd.append('projectId', selProject);
+        fd.append('folder', selFolder);
+        fd.append('module', 'project-documents');
+        await API.upload('/files/upload', fd);
+      }
+      pmToast(`Successfully uploaded ${selectedFiles.length} file(s)`, 'success');
+      closeModal('modal-upload');
+      document.getElementById('selectedFilesList').innerHTML = '';
+      document.getElementById('fileInput').value = '';
+      selectedFiles = [];
+      await loadDocuments();
+    } catch(e) {
+      pmToast(e.message || 'Upload failed', 'error');
+    } finally {
+      btn.innerHTML = '<i class="fa fa-upload"></i> Upload Files';
+      btn.disabled = false;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await loadProjects();
+    await loadDocuments();
+  });
+</script>
+</body>
+</html>

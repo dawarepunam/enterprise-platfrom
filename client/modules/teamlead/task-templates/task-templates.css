@@ -1,0 +1,5 @@
+.template-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}

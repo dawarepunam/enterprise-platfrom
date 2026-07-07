@@ -1,0 +1,32 @@
+<div class="pm-change-requests">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Version Control</span>
+      <h2>Change Request Management</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Manage scope variations post-freeze.</p>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn primary" data-action="addCR">+ Create Change Request</button>
+    </div>
+  </div>
+
+  <div class="pm-card">
+    <div class="pm-table-wrapper">
+      <table class="pm-table pm-interactive-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Budget Impact</th>
+            <th>Timeline Impact</th>
+            <th>Requested By</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="crTableBody">
+          <tr><td colspan="6" style="text-align: center;">Loading Change Requests...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

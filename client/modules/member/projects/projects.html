@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Projects</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="../member-experience.css" />
+  <link rel="stylesheet" href="projects.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout">
+    <div id="sidebar"></div>
+    <main class="workspace-page member-shell">
+      <section class="workspace-hero member-hero-pro">
+        <div class="hero-copy">
+          <p class="eyebrow">My Projects</p>
+          <h1>Every assigned project opens as one connected workspace</h1>
+          <p class="hero-text">Open the project board, continue from previous chat history, review deadlines, and jump straight into your tasks without losing context.</p>
+          <div id="projectHeroChips" class="hero-badges"></div>
+        </div>
+        <div class="hero-side">
+          <article class="signal-card"><span>Projects</span><strong id="assignedProjectCount">0</strong></article>
+          <article class="signal-card"><span>Open Subtasks</span><strong id="projectOpenSubtasks">0</strong></article>
+          <article class="signal-card accent-card"><span>Rooms Ready</span><strong id="projectRoomsReady">0</strong><small>Instant collaboration access</small></article>
+        </div>
+      </section>
+
+      <section class="workspace-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Assigned Projects</p>
+            <h2>Project cards with task and workspace status</h2>
+          </div>
+        </div>
+        <div id="projectCardGrid" class="project-grid"></div>
+      </section>
+    </main>
+  </div>
+  <script src="../../../assets/js/api.js"></script>
+  <script src="../../../assets/js/auth.js"></script>
+  <script src="../../../assets/js/theme.js"></script>
+  <script src="../../../assets/js/notifications.js"></script>
+  <script src="../../../assets/js/enterprise-data.js"></script>
+  <script src="../../../assets/js/role-workspace.js"></script>
+  <script src="../member-workflow.js"></script>
+  <script src="projects.js"></script>
+</body>
+</html>

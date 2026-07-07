@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Dashboard - JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* ===== EMPLOYEE DASHBOARD STYLES ===== */
+    :root {
+      --emp-bg: #f4f7fe;
+      --emp-card: #ffffff;
+      --emp-text: #2b3674;
+      --emp-muted: #a3aed1;
+      --emp-border: #e2e8f0;
+      --emp-shadow: 0 4px 24px rgba(112,144,176,0.12);
+      --emp-shadow-hov: 0 8px 30px rgba(112,144,176,0.22);
+      --emp-radius: 18px;
+      --cp: #4318FF;
+      --co: #FFB547;
+      --cg: #05CD99;
+      --cb: #3965FF;
+      --ct: #00B5D8;
+      --cr: #EE5D50;
+    }
+
+    /* Override pm-main to allow grid children */
+    .pm-main {
+      background: var(--emp-bg) !important;
+      display: block !important;
+    }
+
+    /* ── EMPLOYEE CONTENT WRAPPER ── */
+    #emp-dash {
+      display: block;
+      width: 100%;
+    }
+
+    /* ── TOP HEADER ── */
+    .ed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--emp-card);
+      padding: 20px 28px;
+      border-radius: var(--emp-radius);
+      box-shadow: var(--emp-shadow);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .ed-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ed-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cp), var(--cb));
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .ed-greeting { font-size: 22px; font-weight: 800; color: var(--emp-text); margin: 0 0 2px; }
+    .ed-role     { font-size: 13px; color: var(--emp-muted); font-weight: 500; margin: 0; }
+    .ed-empid    { font-size: 11px; color: var(--emp-muted); margin-top: 2px; }
+
+    .ed-stats {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .ed-stat-box {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ed-stat-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .ed-stat-icon.blue   { background: rgba(57,101,255,0.12); color: var(--cb); }
+    .ed-stat-icon.green  { background: rgba(5,205,153,0.12); color: var(--cg); }
+    .ed-stat-lbl  { font-size: 11px; color: var(--emp-muted); font-weight: 600; line-height: 1; }
+    .ed-stat-val  { font-size: 18px; font-weight: 800; color: var(--emp-text); margin-top: 2px; }
+    .ed-stat-sub  { font-size: 10px; color: var(--emp-muted); }
+    .ed-online {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(5,205,153,0.12); color: var(--cg);
+      padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    }
+    .ed-online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cg); }
+
+    /* ── KPI ROW ── */
+    .ed-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .kc {
+      background: var(--emp-card);
+      border-radius: 16px;
+      padding: 16px 14px;
+      box-shadow: var(--emp-shadow);
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      text-decoration: none;
+      color: var(--emp-text);
+    }
+    .kc:hover { transform: translateY(-5px); box-shadow: var(--emp-shadow-hov); color: var(--emp-text); }
+    .kc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .kc-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .kc-icon.p { background: rgba(67,24,255,0.1); color: var(--cp); }
+    .kc-icon.o { background: rgba(255,181,71,0.1); color: var(--co); }
+    .kc-icon.g { background: rgba(5,205,153,0.1); color: var(--cg); }
+    .kc-icon.b { background: rgba(57,101,255,0.1); color: var(--cb); }
+    .kc-icon.t { background: rgba(0,181,216,0.1); color: var(--ct); }
+    .kc-icon.r { background: rgba(238,93,80,0.1); color: var(--cr); }
+    .kc-label { font-size: 11px; color: var(--emp-muted); font-weight: 600; line-height: 1.3; }
+    .kc-val   { font-size: 26px; font-weight: 800; color: var(--emp-text); margin-bottom: 4px; line-height: 1; }
+    .kc-sub   { font-size: 10px; color: var(--emp-muted); display: flex; justify-content: space-between; align-items: center; }
+    .kc-sub i { font-size: 9px; }
+
+    /* ── PANELS GRID ── */
+    .ed-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .ep {
+      background: var(--emp-card);
+      border-radius: var(--emp-radius);
+      padding: 24px;
+      box-shadow: var(--emp-shadow);
+      display: flex; flex-direction: column;
+    }
+    .ep-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .ep-title { font-size: 17px; font-weight: 700; color: var(--emp-text); margin: 0; }
+    .ep-link  { font-size: 12px; color: var(--cb); font-weight: 600; text-decoration: none; cursor: pointer; }
+    .ep-link:hover { text-decoration: underline; }
+    .ep-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+    .ep-badge.red { background: rgba(238,93,80,0.12); color: var(--cr); }
+
+    /* Priority Task */
+    .pt-title { font-size: 17px; font-weight: 700; color: var(--emp-text); margin-bottom: 6px; }
+    .pt-desc  { font-size: 12px; color: var(--emp-muted); line-height: 1.6; margin-bottom: 16px; }
+    .pt-meta  { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; margin-bottom: 20px; }
+    .pt-list  { display: flex; flex-direction: column; gap: 10px; }
+    .pt-row   { display: flex; justify-content: space-between; font-size: 12px; }
+    .pt-lbl   { color: var(--emp-muted); font-weight: 500; }
+    .pt-val   { color: var(--emp-text); font-weight: 600; }
+    .pt-badge { font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    .pt-badge.blue { background: rgba(57,101,255,0.1); color: var(--cb); }
+    .pt-badge.red  { background: rgba(238,93,80,0.1); color: var(--cr); }
+
+    /* Circular progress */
+    .cp-ring {
+      position: relative; width: 80px; height: 80px;
+      border-radius: 50%;
+      background: conic-gradient(var(--cg) calc(var(--pct,72) * 1%), #e2e8f0 0deg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cp-ring::before {
+      content: "";
+      position: absolute; width: 64px; height: 64px;
+      background: var(--emp-card); border-radius: 50%;
+    }
+    .cp-val { position: relative; font-size: 16px; font-weight: 800; color: var(--emp-text); }
+
+    .pt-actions { display: flex; gap: 10px; margin-top: auto; }
+    .btn-s, .btn-o {
+      flex: 1; padding: 9px 6px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      text-align: center; transition: .2s;
+      white-space: nowrap;
+    }
+    .btn-s { background: var(--cb); color: #fff; border: none; }
+    .btn-s:hover { background: #274ccf; }
+    .btn-o { background: transparent; color: var(--cb); border: 1.5px solid var(--cb); }
+    .btn-o:hover { background: rgba(57,101,255,0.06); }
+
+    /* Timeline */
+    .tl { display: flex; flex-direction: column; gap: 14px; }
+    .tl-row {
+      display: flex; align-items: center; gap: 12px;
+      position: relative;
+    }
+    .tl-row::after {
+      content: "";
+      position: absolute; left: 3.5px; top: 18px; bottom: -14px;
+      width: 1px; background: var(--emp-border);
+    }
+    .tl-row:last-child::after { display: none; }
+    .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emp-border); z-index: 1; flex-shrink: 0; }
+    .tl-dot.g { background: var(--cg); }
+    .tl-dot.b { background: var(--cb); }
+    .tl-dot.o { background: var(--co); }
+    .tl-dot.r { background: var(--cr); }
+    .tl-time { font-size: 11px; font-weight: 600; color: var(--emp-muted); width: 56px; flex-shrink: 0; }
+    .tl-box {
+      flex: 1; display: flex; align-items: center; justify-content: space-between;
+      background: var(--emp-bg); padding: 9px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; color: var(--emp-text);
+    }
+    .tl-acts { display: flex; gap: 6px; align-items: center; }
+    .tl-btn  {
+      background: #fff; border: 1px solid var(--cb); color: var(--cb);
+      padding: 3px 9px; border-radius: 4px; font-size: 10px; font-weight: 700; cursor: pointer;
+    }
+    .tl-ico  { color: #5b5ea6; font-size: 14px; cursor: pointer; }
+
+    /* Activity */
+    .act-list { display: flex; flex-direction: column; gap: 14px; }
+    .act-row  { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+    .act-row:hover .act-t { color: var(--cb); }
+    .act-ico  {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+    }
+    .act-ico.b { background: rgba(57,101,255,0.1); color: var(--cb); }
+    .act-ico.g { background: rgba(5,205,153,0.1); color: var(--cg); }
+    .act-ico.o { background: rgba(255,181,71,0.1); color: var(--co); }
+    .act-ico.p { background: rgba(67,24,255,0.1); color: var(--cp); }
+    .act-ico.r { background: rgba(238,93,80,0.1); color: var(--cr); }
+    .act-t    { font-size: 12px; font-weight: 600; color: var(--emp-text); margin-bottom: 2px; transition: color .2s; }
+    .act-s    { font-size: 10px; color: var(--emp-muted); }
+    .act-time { font-size: 10px; color: var(--emp-muted); white-space: nowrap; margin-left: auto; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1400px) {
+      .ed-kpi-row { grid-template-columns: repeat(4, 1fr); }
+      .ed-panels  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 1024px) {
+      .ed-kpi-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .ed-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .ed-panels  { grid-template-columns: 1fr; }
+      .ed-header  { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .ed-kpi-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div id="emp-dash">
+
+        <!-- ══ TOP HEADER ══ -->
+        <div class="ed-header">
+          <div class="ed-profile">
+            <div class="ed-avatar" id="empAvatarCircle">RD</div>
+            <div>
+              <div class="ed-greeting">Good Morning, <span id="empGreetName">Rahul</span>! 👋</div>
+              <div class="ed-role" id="empRoleDisplay">Software Developer &bull; IT Department</div>
+              <div class="ed-empid" id="empIdDisplay">Employee ID: EMP10045 &bull; Reporting to: Priya Mehta</div>
+            </div>
+          </div>
+
+          <div class="ed-stats">
+            <!-- Date & Clock -->
+            <div class="ed-stat-box">
+              <div class="ed-stat-icon blue"><i class="fa fa-calendar"></i></div>
+              <div>
+                <div class="ed-stat-lbl" id="liveDate">Tuesday, 1 July 2026</div>
+                <div class="ed-stat-val" id="liveClock">09:46 AM</div>
+              </div>
+            </div>
+
+            <div style="width:1px; height:40px; background:var(--emp-border);"></div>
+
+            <!-- Working Since -->
+            <div class="ed-stat-box">
+              <div class="ed-stat-icon green"><i class="fa fa-stopwatch"></i></div>
+              <div>
+                <div class="ed-stat-lbl">Working Since</div>
+                <div class="ed-stat-val" id="workTimer">03h 41m</div>
+                <div class="ed-stat-sub" id="checkInLbl">Started at 09:05 AM</div>
+              </div>
+            </div>
+
+            <div style="width:1px; height:40px; background:var(--emp-border);"></div>
+
+            <!-- Online Status -->
+            <div class="ed-online">
+              <div class="ed-online-dot"></div>
+              Working &bull; Online
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ KPI CARDS ══ -->
+        <div class="ed-kpi-row">
+          <a href="/employee/projects" class="kc">
+            <div class="kc-top"><div class="kc-icon p"><i class="fa fa-briefcase"></i></div><div class="kc-label">Assigned Projects</div></div>
+            <div class="kc-val" id="kv1">5</div>
+            <div class="kc-sub"><span id="ks1">2 Active &bull; 2 Completed</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/tasks" class="kc">
+            <div class="kc-top"><div class="kc-icon o"><i class="fa fa-list-check"></i></div><div class="kc-label">Pending Tasks</div></div>
+            <div class="kc-val" id="kv2">12</div>
+            <div class="kc-sub"><span id="ks2">High 3 &bull; Medium 5</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/tasks?filter=completed" class="kc">
+            <div class="kc-top"><div class="kc-icon g"><i class="fa fa-check-circle"></i></div><div class="kc-label">Completed Tasks</div></div>
+            <div class="kc-val" id="kv3">48</div>
+            <div class="kc-sub"><span id="ks3">This Week 8 &bull; Month 31</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/attendance" class="kc">
+            <div class="kc-top"><div class="kc-icon b"><i class="fa fa-clock"></i></div><div class="kc-label">Today's Hours</div></div>
+            <div class="kc-val" id="kv4">6h 35m</div>
+            <div class="kc-sub"><span id="ks4">Check-in 09:05 AM</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/attendance" class="kc">
+            <div class="kc-top"><div class="kc-icon t"><i class="fa fa-user-check"></i></div><div class="kc-label">Attendance</div></div>
+            <div class="kc-val" id="kv5">97%</div>
+            <div class="kc-sub"><span id="ks5">Present 22 &bull; Absent 1</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/leave" class="kc">
+            <div class="kc-top"><div class="kc-icon r"><i class="fa fa-calendar-alt"></i></div><div class="kc-label">Leave Balance</div></div>
+            <div class="kc-val" id="kv6">8</div>
+            <div class="kc-sub"><span id="ks6">Casual 3 &bull; Sick 2</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+          <a href="/employee/goals-kpi" class="kc">
+            <div class="kc-top"><div class="kc-icon p"><i class="fa fa-trophy"></i></div><div class="kc-label">Performance Score</div></div>
+            <div class="kc-val" id="kv7">91/100</div>
+            <div class="kc-sub"><span id="ks7">Excellent! Keep it up!</span><i class="fa fa-chevron-right"></i></div>
+          </a>
+        </div>
+
+        <!-- ══ THREE-PANEL SECTION ══ -->
+        <div class="ed-panels">
+
+          <!-- TODAY'S PRIORITY -->
+          <div class="ep">
+            <div class="ep-head">
+              <h2 class="ep-title">Today's Priority</h2>
+              <span class="ep-badge red">High Priority</span>
+            </div>
+            <div class="pt-title" id="priTitle">Finish CRM Dashboard</div>
+            <div class="pt-desc" id="priDesc">Complete the analytics dashboard as per the latest requirements shared by the client.</div>
+            <div class="pt-meta">
+              <div class="pt-list">
+                <div class="pt-row"><span class="pt-lbl">Deadline</span><span class="pt-val" id="priDead">Today, 11:59 PM</span></div>
+                <div class="pt-row"><span class="pt-lbl">Est. Hours</span><span class="pt-val" id="priEst">4h 00m</span></div>
+                <div class="pt-row"><span class="pt-lbl">Project</span><span class="pt-val" id="priProj">CRM Project</span></div>
+                <div class="pt-row"><span class="pt-lbl">Status</span><span class="pt-badge blue">In Progress</span></div>
+              </div>
+              <div class="cp-ring" style="--pct:72">
+                <span class="cp-val">72%</span>
+              </div>
+            </div>
+            <div class="pt-actions">
+              <button class="btn-s" onclick="location='/employee/tasks'">Open Task</button>
+              <button class="btn-o" id="btnDashTimer" onclick="toggleDashTimer(this)"><i class="fa fa-play"></i> Timer</button>
+              <button class="btn-o" onclick="document.getElementById('dashUpload').click()">Upload</button>
+              <input type="file" id="dashUpload" style="display:none" onchange="if(this.files.length) { showToast('File Uploaded', 'File uploaded successfully!', 'success'); this.value=''; }">
+            </div>
+          </div>
+
+          <!-- TODAY'S SCHEDULE -->
+          <div class="ep">
+            <div class="ep-head">
+              <h2 class="ep-title">Today's Schedule</h2>
+              <a class="ep-link" href="/employee/meetings">View Calendar</a>
+            </div>
+            <div class="tl" id="schedTL">
+              <!-- filled by JS -->
+            </div>
+          </div>
+
+          <!-- RECENT ACTIVITY -->
+          <div class="ep">
+            <div class="ep-head">
+              <h2 class="ep-title">Recent Activity</h2>
+              <a class="ep-link" href="/employee/daily-updates">View All</a>
+            </div>
+            <div class="act-list" id="actList">
+              <!-- filled by JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script>
+  // ── LIVE CLOCK ──────────────────────────────────────────────
+  (function liveClock() {
+    const dateEl  = document.getElementById('liveDate');
+    const clockEl = document.getElementById('liveClock');
+    const update  = () => {
+      const now   = new Date();
+      dateEl.textContent  = now.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+      clockEl.textContent = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+    };
+    update(); setInterval(update, 1000);
+  })();
+
+  // ── USER INFO ───────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const u = (() => { try { return JSON.parse(localStorage.getItem('user') || localStorage.getItem('jmkc_user') || 'null'); } catch { return null; } })();
+    if (u) {
+      const firstName = (u.firstName || u.name || 'Rahul').split(' ')[0];
+      document.getElementById('empGreetName').textContent  = firstName;
+      const initials = (u.name || firstName).split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+      document.getElementById('empAvatarCircle').textContent = initials;
+      document.getElementById('empRoleDisplay').textContent  = `${u.designation || u.role || 'Employee'} • ${u.department || 'IT Department'}`;
+      document.getElementById('empIdDisplay').textContent    = `Employee ID: ${u.employeeId || u.id || 'EMP10045'} • Reporting to: ${u.reportingManager || 'Manager'}`;
+    }
+
+    // ── GREETING based on hour ──
+    const hr = new Date().getHours();
+    const gEl = document.querySelector('.ed-greeting');
+    if (gEl) {
+      const greet = hr < 12 ? 'Good Morning' : hr < 17 ? 'Good Afternoon' : 'Good Evening';
+      gEl.innerHTML = greet + ', <span id="empGreetName">' + (u ? (u.firstName || u.name || 'Rahul').split(' ')[0] : 'Rahul') + '</span>! ' + (hr < 12 ? '👋' : hr < 17 ? '😊' : '🌙');
+    }
+
+    // ── SCHEDULE ──
+    const schedule = [
+      { time: '09:00 AM', text: 'Check-in',        dot: 'g' },
+      { time: '11:00 AM', text: 'Sprint Meeting',   dot: 'b', btn: true },
+      { time: '01:00 PM', text: 'Lunch Break',      dot: 'o' },
+      { time: '02:30 PM', text: 'Client Demo',      dot: 'b', btn: true },
+      { time: '05:30 PM', text: 'Task Review',      dot: 'o' },
+      { time: '06:30 PM', text: 'Check-out',        dot: 'r' },
+    ];
+    document.getElementById('schedTL').innerHTML = schedule.map(s => `
+      <div class="tl-row">
+        <div class="tl-dot ${s.dot}"></div>
+        <div class="tl-time">${s.time}</div>
+        <div class="tl-box">
+          <span>${s.text}</span>
+          ${s.btn ? `<div class="tl-acts"><button class="tl-btn" onclick="window.open('https://teams.microsoft.com','_blank')">Join</button><i class="fa fa-video tl-ico"></i></div>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // ── ACTIVITY ──
+    const acts = [
+      { ico:'b', icon:'fa-clipboard-check', t:'Task "API Integration" assigned to you',  s:'By Priya Mehta',       time:'10 min ago', link:'/employee/tasks' },
+      { ico:'g', icon:'fa-file-alt',        t:'Daily update submitted for CRM Project',   s:'',                     time:'10:15 AM',   link:'/employee/daily-updates' },
+      { ico:'o', icon:'fa-calendar-check',  t:'Leave request approved',                   s:'Casual Leave - 2 July', time:'Yesterday', link:'/employee/leave' },
+      { ico:'p', icon:'fa-file-archive',    t:'Design Files.zip uploaded in CRM',         s:'',                     time:'Yesterday',  link:'/employee/files' },
+      { ico:'b', icon:'fa-calendar-plus',   t:'Sprint Meeting scheduled',                 s:'Today at 11:00 AM',    time:'Yesterday',  link:'/employee/meetings' },
+    ];
+    document.getElementById('actList').innerHTML = acts.map(a => `
+      <div class="act-row" onclick="location='${a.link}'">
+        <div class="act-ico ${a.ico}"><i class="fa ${a.icon}"></i></div>
+        <div style="flex:1">
+          <div class="act-t">${a.t}</div>
+          ${a.s ? `<div class="act-s">${a.s}</div>` : ''}
+        </div>
+        <div class="act-time">${a.time}</div>
+      </div>
+    `).join('');
+  });
+
+  function showToast(title, msg, type = 'info') {
+    const colors = { success: '#10b981', error: '#ef4444', info: '#3965FF' };
+    const t = document.createElement('div');
+    t.innerHTML = `<strong>${title}</strong><br><span style="font-size:11px;opacity:0.9">${msg}</span>`;
+    t.style.cssText = `position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
+      background:var(--emp-card);border-left:4px solid ${colors[type] || colors.info};
+      border-radius:10px;padding:12px 16px;font-size:13px;
+      color:var(--emp-text);box-shadow:0 8px 24px rgba(0,0,0,0.2);
+      animation:popupIn 0.2s ease;`;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+
+  function toggleDashTimer(btn) {
+    if (btn.innerHTML.includes('fa-play')) {
+      btn.innerHTML = '<i class="fa fa-pause"></i> Pause';
+      btn.style.background = 'rgba(57,101,255,0.1)';
+      showToast('Timer Started', 'Time tracking for this task has started.', 'success');
+    } else {
+      btn.innerHTML = '<i class="fa fa-play"></i> Timer';
+      btn.style.background = 'transparent';
+      showToast('Timer Paused', 'Time tracking paused.', 'info');
+    }
+  }
+</script>
+</body>
+</html>

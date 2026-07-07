@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruitment ATS | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+  <style>
+    .job-card { background: var(--white); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; transition: var(--transition); cursor: pointer; }
+    .job-card:hover { transform: translateY(-5px); box-shadow: var(--glass-shadow); border-color: var(--primary-blue); }
+    .job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+    .job-title { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: var(--dark-navy); margin-bottom: 5px; }
+    .job-meta { display: flex; gap: 15px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
+    .job-meta i { color: var(--primary-blue); margin-right: 5px; }
+    .job-stats { display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 15px; }
+    .stat-box { text-align: center; }
+    .stat-box h4 { font-size: 1.2rem; color: var(--dark-navy); }
+    .stat-box p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+    .popup-overlay.active { display: flex; }
+    .popup-content { background: var(--white); width: 650px; max-width: 95%; border-radius: 12px; box-shadow: var(--glass-shadow); padding: 25px; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+    .popup-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-family: inherit; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; transition: var(--transition); }
+    .btn-primary { background: var(--primary-blue); color: var(--white); }
+    .btn-primary:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kpi-cards" style="margin-bottom: 25px;">
+          <div class="glass-card kpi-card">
+            <div class="card-icon blue"><i class="fas fa-briefcase"></i></div>
+            <div class="card-info"><h3>Open Jobs</h3><h2>12</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon green"><i class="fas fa-users"></i></div>
+            <div class="card-info"><h3>Total Candidates</h3><h2>450</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon orange"><i class="fas fa-calendar-check"></i></div>
+            <div class="card-info"><h3>Interviews</h3><h2>24</h2></div>
+          </div>
+          <div class="glass-card kpi-card">
+            <div class="card-icon red"><i class="fas fa-handshake"></i></div>
+            <div class="card-info"><h3>Offers Made</h3><h2>5</h2></div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;" id="jobsGrid">
+          <!-- Populated by JS -->
+        </div>
+
+      </div>
+
+      <!-- Add Job Popup -->
+      <div class="popup-overlay" id="jobPopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <h3>Post New Job</h3>
+            <button class="popup-close" id="closeJobBtn">&times;</button>
+          </div>
+          <form id="jobForm">
+            <div class="form-group"><label>Job Title</label><input type="text" id="jobTitle" required></div>
+            <div style="display:flex; gap:15px;">
+              <div class="form-group" style="flex:1;"><label>Department</label><select id="jobDept"><option>Engineering</option><option>Sales</option><option>Human Resources</option><option>Finance</option></select></div>
+              <div class="form-group" style="flex:1;"><label>Location</label><input type="text" id="jobLoc" value="New York, NY" required></div>
+            </div>
+            <div class="form-group"><label>Description</label><textarea id="jobDesc" required></textarea></div>
+            <div style="text-align: right;"><button type="submit" class="btn btn-primary">Publish Job</button></div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>

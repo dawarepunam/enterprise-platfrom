@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Tickets</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="../manager-workspace.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <div class="manager-shell">
+                <section class="manager-hero">
+                    <div class="manager-hero-grid">
+                        <div>
+                            <p class="eyebrow-line">Internal Tickets</p>
+                            <h1>Manage blockers, access requests, and technical issues</h1>
+                            <p class="hero-text">Members can raise blocker, access, technical, or resource tickets and managers can use this board for quick intervention.</p>
+                        </div>
+                        <div id="ticketMetrics" class="hero-kpis"></div>
+                    </div>
+                </section>
+                <section class="manager-grid-2">
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">New Ticket</p><h2>Create request</h2></div></header>
+                        <form id="ticketForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Raised By</span><select id="ticketRaisedBy"></select></div>
+                                <div class="manager-field"><span>Type</span><select id="ticketType"><option>Blocker</option><option>Access Request</option><option>Technical Issue</option><option>Resource Request</option></select></div>
+                            </div>
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Project</span><select id="ticketProject"></select></div>
+                                <div class="manager-field"><span>Priority</span><select id="ticketPriority"><option>Low</option><option>Medium</option><option>High</option></select></div>
+                            </div>
+                            <div class="manager-field"><span>Title</span><input id="ticketTitle" type="text" required /></div>
+                            <div class="manager-button-row"><button class="btn btn-primary" type="submit">Raise Ticket</button></div>
+                        </form>
+                    </article>
+                    <article class="manager-panel">
+                        <header><div><p class="eyebrow-line">Mood Check</p><h2>Team health pulse</h2></div></header>
+                        <form id="moodForm" class="manager-form">
+                            <div class="manager-form-grid two">
+                                <div class="manager-field"><span>Member</span><select id="moodMember"></select></div>
+                                <div class="manager-field"><span>Mood</span><select id="moodValue"><option>Happy</option><option>Neutral</option><option>Stressed</option></select></div>
+                            </div>
+                            <div class="manager-field"><span>Note</span><textarea id="moodNote"></textarea></div>
+                            <div class="manager-button-row"><button class="btn btn-primary" type="submit">Save Mood</button></div>
+                        </form>
+                        <div id="moodList" class="manager-list" style="margin-top:1rem;"></div>
+                    </article>
+                </section>
+                <section class="manager-panel">
+                    <header><div><p class="eyebrow-line">Ticket Queue</p><h2>Open and in-review issues</h2></div></header>
+                    <div id="ticketList" class="manager-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="../manager-hub.js"></script>
+    <script src="tickets.js"></script>
+</body>
+</html>

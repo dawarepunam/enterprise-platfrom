@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Timesheets</title>
+  <link rel="stylesheet" href="../../../assets/css/global.css" />
+  <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+  <link rel="stylesheet" href="timesheets.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="workspace-layout"><div id="sidebar"></div><main class="workspace-page">
+    <section class="workspace-hero workflow-hero"><div class="hero-copy"><p class="eyebrow">Timesheets</p><h1>Submit daily or weekly work hours</h1><p class="hero-text">Timesheets route to Team Lead and Manager with permanent MongoDB storage.</p></div></section>
+    <section class="content-grid member-grid">
+      <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">Submit Hours</p><h2>New timesheet</h2></div></div>
+        <form id="timesheetForm" class="form-grid">
+          <label class="field"><span>Task Name</span><input id="timesheetTask" type="text" required /></label>
+          <label class="field"><span>Date</span><input id="timesheetDate" type="date" required /></label>
+          <label class="field"><span>Hours</span><input id="timesheetHours" type="number" min="0" step="0.5" required /></label>
+          <label class="field field-wide"><span>Description</span><textarea id="timesheetDescription" rows="4" required></textarea></label>
+          <div class="btn-row field-wide"><button class="btn btn-primary" type="submit">Submit Timesheet</button></div>
+        </form>
+      </article>
+      <article class="workspace-panel"><div class="section-heading"><div><p class="eyebrow">History</p><h2>Submitted timesheets</h2></div></div><div id="timesheetCards" class="stack-list"></div></article>
+    </section>
+  </main></div>
+  <script src="../../../assets/js/api.js"></script><script src="../../../assets/js/auth.js"></script><script src="../../../assets/js/theme.js"></script><script src="../../../assets/js/notifications.js"></script><script src="../../../assets/js/role-workspace.js"></script><script src="../member-workflow.js"></script><script src="timesheets.js"></script>
+</body>
+</html>

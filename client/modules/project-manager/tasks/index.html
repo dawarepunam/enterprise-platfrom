@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasks – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* ── View tabs ─── */
+    .view-tabs{display:flex;gap:4px;background:var(--pm-bg);border:1px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:4px;}
+    .view-tab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;color:var(--pm-text-muted);cursor:pointer;transition:var(--pm-transition);display:flex;align-items:center;gap:5px;}
+    .view-tab.active{background:var(--pm-card);color:var(--pm-accent);box-shadow:var(--pm-shadow-sm);}
+
+    /* ── Kanban Board ─── */
+    .kanban-board{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;overflow-x:auto;padding-bottom:8px;}
+    .kanban-col{background:var(--pm-bg);border-radius:var(--pm-radius);padding:12px;min-height:500px;min-width:220px;}
+    .kanban-col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;}
+    .kanban-col-title{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;}
+    .kanban-col-dot{width:10px;height:10px;border-radius:50%;}
+    .kanban-col-count{font-size:11px;color:var(--pm-text-muted);background:var(--pm-card);border:1px solid var(--pm-border);border-radius:99px;padding:1px 7px;}
+
+    /* ── Task Card ─── */
+    .task-card{background:var(--pm-card);border:1px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:14px;margin-bottom:8px;cursor:pointer;transition:var(--pm-transition);position:relative;overflow:hidden;}
+    .task-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+    .task-card.CRITICAL::before{background:#7c3aed;}
+    .task-card.HIGH::before{background:var(--red);}
+    .task-card.MEDIUM::before{background:var(--orange);}
+    .task-card.LOW::before{background:var(--green);}
+    .task-card:hover{box-shadow:var(--pm-shadow);border-color:var(--pm-accent);transform:translateY(-1px);}
+    .task-card-title{font-size:12.5px;font-weight:700;margin-bottom:6px;line-height:1.4;}
+    .task-card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+    .task-card-footer{display:flex;align-items:center;justify-content:space-between;}
+    .task-assignee{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--pm-text-muted);}
+    .task-due{font-size:11px;display:flex;align-items:center;gap:3px;}
+    .task-due.overdue{color:var(--red);font-weight:700;}
+    .task-due.soon{color:var(--orange);font-weight:600;}
+    .task-due.ok{color:var(--pm-text-muted);}
+
+    /* ── List view table ─── */
+    .task-list-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid var(--pm-border);transition:var(--pm-transition);cursor:pointer;gap:12px;}
+    .task-list-row:hover{background:var(--pm-bg);}
+    .task-list-row:last-child{border:none;}
+    .task-list-check{width:18px;height:18px;border:2px solid var(--pm-border);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:var(--pm-transition);}
+    .task-list-check.done{background:var(--green);border-color:var(--green);color:#fff;}
+    .task-list-title{flex:1;font-size:13px;font-weight:600;}
+    .task-list-title.done-title{text-decoration:line-through;color:var(--pm-text-muted);}
+
+    /* ── Filter bar ─── */
+    .pm-filter-select{padding:7px 12px;border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);font-size:12.5px;background:var(--pm-card);color:var(--pm-text);cursor:pointer;transition:var(--pm-transition);}
+    .pm-filter-select:focus{border-color:var(--pm-accent);}
+
+    /* ── Add task area ─── */
+    .kanban-add-btn{width:100%;padding:8px;border:1.5px dashed var(--pm-border);background:transparent;border-radius:var(--pm-radius-sm);font-size:12px;color:var(--pm-text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:var(--pm-transition);margin-top:4px;}
+    .kanban-add-btn:hover{border-color:var(--pm-accent);color:var(--pm-accent);background:var(--pm-accent-light);}
+
+    #listViewContent,#boardViewContent{display:none;}
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+
+      <!-- Page Header -->
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb"><i class="fa fa-home"></i><a href="/project-manager/dashboard">Dashboard</a><i class="fa fa-chevron-right"></i><span>Tasks</span></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
+            <button class="pm-btn pm-btn-outline pm-btn-sm" onclick="history.back()" style="padding:4px 8px"><i class="fa fa-arrow-left"></i></button>
+            <h1 class="pm-page-title" style="margin:0">Tasks Management</h1>
+          </div>
+          <div class="pm-page-subtitle" id="taskSubtitle">Loading tasks...</div>
+        </div>
+        <div class="flex gap-8 flex-center">
+          <div class="view-tabs">
+            <div class="view-tab active" id="tab-kanban" onclick="switchView('kanban')"><i class="fa fa-columns"></i> Kanban</div>
+            <div class="view-tab" id="tab-list"   onclick="switchView('list')"><i class="fa fa-list"></i> List</div>
+            <div class="view-tab" id="tab-board"  onclick="switchView('board')"><i class="fa fa-th-large"></i> Board</div>
+          </div>
+          <button class="pm-btn pm-btn-primary pm-btn-sm" onclick="openModal('modal-create-task')">
+            <i class="fa fa-plus"></i> New Task
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--pm-card);border:1.5px solid var(--pm-border);border-radius:var(--pm-radius-sm);padding:7px 12px;min-width:220px">
+          <i class="fa fa-search" style="color:var(--pm-text-muted)"></i>
+          <input type="text" placeholder="Search tasks..." id="taskSearch" oninput="filterTasks()" style="border:none;background:transparent;font-size:12.5px;color:var(--pm-text);flex:1;outline:none" />
+        </div>
+        <select class="pm-filter-select" id="filterProject" onchange="filterTasks()"><option value="">All Projects</option></select>
+        <select class="pm-filter-select" id="filterPriority" onchange="filterTasks()">
+          <option value="">All Priority</option>
+          <option value="Critical">Critical</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <select class="pm-filter-select" id="filterAssignee" onchange="filterTasks()"><option value="">All Assignees</option></select>
+        <span class="pm-badge info" id="taskCount" style="margin-left:auto">0 Tasks</span>
+      </div>
+
+      <!-- KPI Strip -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
+        <div class="pm-card" style="padding:14px;text-align:center;cursor:pointer" onclick="filterByStatus('TODO')">
+          <div style="font-size:22px;font-weight:800;color:var(--pm-text-muted)" id="strip-todo">0</div>
+          <div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">To Do</div>
+        </div>
+        <div class="pm-card" style="padding:14px;text-align:center;cursor:pointer;border-top:3px solid var(--blue)" onclick="filterByStatus('IN_PROGRESS')">
+          <div style="font-size:22px;font-weight:800;color:var(--blue)" id="strip-progress">0</div>
+          <div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">In Progress</div>
+        </div>
+        <div class="pm-card" style="padding:14px;text-align:center;cursor:pointer;border-top:3px solid var(--orange)" onclick="filterByStatus('REVIEW')">
+          <div style="font-size:22px;font-weight:800;color:var(--orange)" id="strip-review">0</div>
+          <div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">In Review</div>
+        </div>
+        <div class="pm-card" style="padding:14px;text-align:center;cursor:pointer;border-top:3px solid var(--green)" onclick="filterByStatus('COMPLETED')">
+          <div style="font-size:22px;font-weight:800;color:var(--green)" id="strip-done">0</div>
+          <div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">Completed</div>
+        </div>
+        <div class="pm-card" style="padding:14px;text-align:center;cursor:pointer;border-top:3px solid var(--red)" onclick="filterByStatus('OVERDUE')">
+          <div style="font-size:22px;font-weight:800;color:var(--red)" id="strip-overdue">0</div>
+          <div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">Overdue</div>
+        </div>
+      </div>
+
+      <!-- KANBAN VIEW (Sprint Board) -->
+      <div id="kanbanViewContent">
+        <div class="kanban-board">
+          <!-- BACKLOG -->
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title"><div class="kanban-col-dot" style="background:#94a3b8"></div> Backlog</div>
+              <span class="kanban-col-count" id="cnt-BACKLOG">0</span>
+            </div>
+            <div id="col-BACKLOG"></div>
+            <button class="kanban-add-btn" onclick="openCreateTask('BACKLOG')"><i class="fa fa-plus"></i> Add Task</button>
+          </div>
+          <!-- TODO -->
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title"><div class="kanban-col-dot" style="background:var(--pm-text-muted)"></div> To Do</div>
+              <span class="kanban-col-count" id="cnt-TODO">0</span>
+            </div>
+            <div id="col-TODO"></div>
+            <button class="kanban-add-btn" onclick="openCreateTask('TODO')"><i class="fa fa-plus"></i> Add Task</button>
+          </div>
+          <!-- IN_PROGRESS -->
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title"><div class="kanban-col-dot" style="background:var(--blue)"></div> In Progress</div>
+              <span class="kanban-col-count" id="cnt-IN_PROGRESS">0</span>
+            </div>
+            <div id="col-IN_PROGRESS"></div>
+            <button class="kanban-add-btn" onclick="openCreateTask('IN_PROGRESS')"><i class="fa fa-plus"></i> Add Task</button>
+          </div>
+          <!-- REVIEW -->
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title"><div class="kanban-col-dot" style="background:var(--orange)"></div> Review</div>
+              <span class="kanban-col-count" id="cnt-REVIEW">0</span>
+            </div>
+            <div id="col-REVIEW"></div>
+            <button class="kanban-add-btn" onclick="openCreateTask('REVIEW')"><i class="fa fa-plus"></i> Add Task</button>
+          </div>
+          <!-- COMPLETED -->
+          <div class="kanban-col">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title"><div class="kanban-col-dot" style="background:var(--green)"></div> Done</div>
+              <span class="kanban-col-count" id="cnt-COMPLETED">0</span>
+            </div>
+            <div id="col-COMPLETED"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIST VIEW -->
+      <div id="listViewContent">
+        <div class="pm-card" style="padding:0;overflow:hidden">
+          <table class="pm-table" id="taskListTable">
+            <thead>
+              <tr>
+                <th style="width:32px"></th>
+                <th>Task</th>
+                <th>Project</th>
+                <th>Assignee</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="taskListBody">
+              <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--pm-text-muted)"><i class="fa fa-spinner fa-spin"></i> Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BOARD VIEW (2x2 grid) -->
+      <div id="boardViewContent">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="pm-card" style="padding:0;overflow:hidden">
+            <div style="padding:12px 16px;font-weight:700;font-size:13px;border-bottom:1px solid var(--pm-border);display:flex;align-items:center;gap:6px"><div style="width:10px;height:10px;border-radius:50%;background:var(--pm-text-muted)"></div>Pending</div>
+            <div id="board-pending" style="max-height:400px;overflow-y:auto"></div>
+          </div>
+          <div class="pm-card" style="padding:0;overflow:hidden">
+            <div style="padding:12px 16px;font-weight:700;font-size:13px;border-bottom:1px solid var(--pm-border);display:flex;align-items:center;gap:6px"><div style="width:10px;height:10px;border-radius:50%;background:var(--blue)"></div>In Progress</div>
+            <div id="board-progress" style="max-height:400px;overflow-y:auto"></div>
+          </div>
+          <div class="pm-card" style="padding:0;overflow:hidden">
+            <div style="padding:12px 16px;font-weight:700;font-size:13px;border-bottom:1px solid var(--pm-border);display:flex;align-items:center;gap:6px"><div style="width:10px;height:10px;border-radius:50%;background:var(--orange)"></div>Review</div>
+            <div id="board-review" style="max-height:400px;overflow-y:auto"></div>
+          </div>
+          <div class="pm-card" style="padding:0;overflow:hidden">
+            <div style="padding:12px 16px;font-weight:700;font-size:13px;border-bottom:1px solid var(--pm-border);display:flex;align-items:center;gap:6px"><div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>Completed</div>
+            <div id="board-done" style="max-height:400px;overflow-y:auto"></div>
+          </div>
+        </div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+
+<!-- Create Task Modal -->
+<div class="pm-modal-overlay" id="modal-create-task">
+  <div class="pm-modal" style="max-width:540px">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-plus-circle" style="color:var(--pm-accent)"></i> Create New Task</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-create-task')"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="formCreateTask" onsubmit="submitCreateTask(event)">
+      <input type="hidden" id="taskInitStatus" name="status" value="To Do" />
+      <div class="pm-form-group">
+        <label class="pm-form-label">Task Title *</label>
+        <input type="text" class="pm-form-input" name="title" placeholder="Enter task title" required />
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Description</label>
+        <textarea class="pm-form-input" name="description" rows="3" placeholder="Task description..." style="resize:vertical"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pm-form-group">
+          <label class="pm-form-label">Project *</label>
+          <select class="pm-form-input" name="projectId" id="taskProject" required>
+            <option value="">Select Project</option>
+          </select>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">Assign To *</label>
+          <select class="pm-form-input" name="assigneeId" id="taskAssignee" required>
+            <option value="">Select Employee</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="pm-form-group">
+          <label class="pm-form-label">Priority</label>
+          <select class="pm-form-input" name="priority">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">Due Date</label>
+          <input type="date" class="pm-form-input" name="deadline" />
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">Estimated Hours</label>
+          <input type="number" class="pm-form-input" name="estimatedHours" placeholder="8" min="1" />
+        </div>
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Attachment URL</label>
+        <input type="text" class="pm-form-input" name="attachmentUrl" placeholder="https://..." />
+      </div>
+      <div class="flex gap-8" style="justify-content:flex-end;margin-top:20px">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeModal('modal-create-task')">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary" id="submitTaskBtn">
+          <i class="fa fa-save"></i> Create Task & Notify
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Task Detail Modal -->
+<div class="pm-modal-overlay" id="modal-task-detail">
+  <div class="pm-modal" style="max-width:560px">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title" id="detailTaskTitle">Task Details</div>
+      <div class="pm-modal-close" onclick="closeModal('modal-task-detail')"><i class="fa fa-times"></i></div>
+    </div>
+    <div id="taskDetailContent"></div>
+  </div>
+</div>
+
+<!-- Logout -->
+<div class="pm-modal-overlay" id="modal-logout">
+  <div class="pm-modal" style="max-width:360px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+    <h3 style="font-weight:700;margin-bottom:8px">Confirm Logout?</h3>
+    <div class="flex gap-8" style="justify-content:center;margin-top:16px">
+      <button class="pm-btn pm-btn-outline" onclick="closeModal('modal-logout')">Cancel</button>
+      <button class="pm-btn pm-btn-primary" style="background:var(--red)" onclick="performLogout()"><i class="fa fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+</div>
+<div class="pm-toast-container" id="pmToastContainer"></div>
+
+<script src="/assets/js/api.js"></script>
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+let allTasks=[], allProjects=[], allEmployees=[], currentView='kanban', activeStatusFilter='';
+const colors=['#3b82f6','#22c55e','#f97316','#a855f7','#ef4444','#06b6d4'];
+const statusCols={TODO:'col-TODO',IN_PROGRESS:'col-IN_PROGRESS',REVIEW:'col-REVIEW',COMPLETED:'col-COMPLETED',BACKLOG:'col-BACKLOG'};
+const prioColor={'Critical':'var(--purple)','High':'var(--red)','Medium':'var(--orange)','Low':'var(--green)'};
+const prioClass={'Critical':'purple','High':'danger','Medium':'orange','Low':'success'};
+const statusClass={'To Do':'neutral','In Progress':'info','Review':'warning','Completed':'success','Planning':'neutral'};
+
+const normalizeStatus = s => {
+  if (['To Do', 'Planning', 'Pending', 'Assigned'].includes(s)) return 'TODO';
+  if (['In Progress', 'Active'].includes(s)) return 'IN_PROGRESS';
+  if (['Review', 'In Review', 'Submitted for Review'].includes(s)) return 'REVIEW';
+  if (['Completed', 'Done', 'Approved'].includes(s)) return 'COMPLETED';
+  return 'BACKLOG';
+};
+const statusToApi = s => ({
+  BACKLOG: 'Planning',
+  TODO: 'To Do',
+  IN_PROGRESS: 'In Progress',
+  REVIEW: 'Review',
+  COMPLETED: 'Completed',
+})[s] || s || 'To Do';
+const idOf = value => String(value?._id || value?.id || value || '');
+
+function switchView(v){
+  currentView=v;
+  ['kanban','list','board'].forEach(x=>{
+    document.getElementById(`${x}ViewContent`).style.display=x===v?'block':'none';
+    document.getElementById(`tab-${x}`)?.classList.toggle('active',x===v);
+  });
+  renderTasks(filteredTasks());
+}
+window.switchView=switchView;
+
+function filterByStatus(s){ activeStatusFilter=activeStatusFilter===s?'':s; renderTasks(filteredTasks()); }
+window.filterByStatus=filterByStatus;
+
+function filteredTasks(){
+  const q=(document.getElementById('taskSearch')?.value||'').toLowerCase();
+  const proj=document.getElementById('filterProject')?.value||'';
+  const prio=document.getElementById('filterPriority')?.value||'';
+  const assignee=document.getElementById('filterAssignee')?.value||'';
+  const now=new Date();
+  return allTasks.filter(t=>{
+    const title=(t.title||'').toLowerCase();
+    if(q&&!title.includes(q)) return false;
+    if(proj&&idOf(t.projectId)!==proj) return false;
+    if(prio&&t.priority!==prio) return false;
+    if(assignee&&idOf(t.assigneeId)!==assignee&&!((t.assigneeIds||[]).map(idOf).includes(assignee))) return false;
+    if(activeStatusFilter==='OVERDUE') return normalizeStatus(t.status)!=='COMPLETED'&&t.deadline&&new Date(t.deadline)<now;
+    if(activeStatusFilter&&activeStatusFilter!=='OVERDUE'&&normalizeStatus(t.status)!==activeStatusFilter) return false;
+    return true;
+  });
+}
+window.filterTasks=()=>renderTasks(filteredTasks());
+
+function dueStyle(task){
+  if(!task.deadline||task.status==='COMPLETED') return {cls:'ok',txt:task.deadline?new Date(task.deadline).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'No due date'};
+  const due=new Date(task.deadline), now=new Date(), diff=(due-now)/(1000*60*60*24);
+  const txt=due.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+  if(diff<0) return {cls:'overdue',txt:`⚠️ ${txt}`};
+  if(diff<=3) return {cls:'soon',txt:`⏰ ${txt}`};
+  return {cls:'ok',txt};
+}
+
+function taskCardHTML(t){
+  const {cls,txt}=dueStyle(t);
+  const aName=t.assignee||'Unassigned';
+  const aInit=aName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  const aColor=colors[aName.charCodeAt(0)%colors.length];
+  return `<div class="task-card ${t.priority||'MEDIUM'}" onclick="showTaskDetail('${t._id}')">
+    <div class="task-card-title">${t.title||'Untitled Task'}</div>
+    <div class="task-card-meta">
+      <span class="pm-badge ${prioClass[t.priority]||'warning'}" style="font-size:10px">${t.priority||'MEDIUM'}</span>
+      ${t.projectName?`<span class="pm-badge neutral" style="font-size:10px">${t.projectName}</span>`:''}
+    </div>
+    <div class="task-card-footer">
+      <div class="task-assignee">
+        <div style="width:22px;height:22px;border-radius:50%;background:${aColor};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff">${aInit}</div>
+        <span>${aName.split(' ')[0]}</span>
+      </div>
+      <span class="task-due ${cls}"><i class="fa fa-calendar-alt"></i>${txt}</span>
+    </div>
+  </div>`;
+}
+
+function taskListRowHTML(t){
+  const {cls,txt}=dueStyle(t);
+  const aName=t.assignee||'—';
+  const projName=t.projectName||'—';
+  const done=t.status==='Completed' || t.status==='Done';
+  return `<tr onclick="showTaskDetail('${t._id}')" style="cursor:pointer">
+    <td>
+      <div class="task-list-check ${done?'done':''}" onclick="event.stopPropagation();toggleTaskDone('${t._id}','${done?'To Do':'Completed'}')">${done?'<i class="fa fa-check" style="font-size:10px"></i>':''}</div>
+    </td>
+    <td><div class="task-list-title ${done?'done-title':''}"><strong>${t.title||'—'}</strong></div><div style="font-size:11px;color:var(--pm-text-muted);margin-top:2px">${t.description?.slice(0,50)||''}</div></td>
+    <td><span style="font-size:12px">${projName}</span></td>
+    <td><span style="font-size:12px">${aName}</span></td>
+    <td><span class="pm-badge ${prioClass[t.priority]||'neutral'}" style="font-size:10px">${t.priority||'—'}</span></td>
+    <td><span class="pm-badge ${statusClass[t.status]||'neutral'}" style="font-size:10px">${(t.status||'—').replace('_',' ')}</span></td>
+    <td><span class="task-due ${cls}" style="font-size:11px"><i class="fa fa-calendar-alt"></i>${txt}</span></td>
+    <td><button class="pm-btn pm-btn-outline pm-btn-sm" onclick="event.stopPropagation();showTaskDetail('${t._id}')"><i class="fa fa-eye"></i></button></td>
+  </tr>`;
+}
+
+function renderTasks(tasks){
+  document.getElementById('taskCount').textContent=`${tasks.length} Tasks`;
+  if(currentView==='kanban') renderKanban(tasks);
+  else if(currentView==='list') renderList(tasks);
+  else renderBoard(tasks);
+}
+
+function renderKanban(tasks){
+  const cols={BACKLOG:[],TODO:[],IN_PROGRESS:[],REVIEW:[],COMPLETED:[]};
+  tasks.forEach(t=>{ const s=normalizeStatus(t.status); if(!cols[s])cols[s]=[]; cols[s].push(t); });
+  Object.entries(cols).forEach(([s,items])=>{
+    const el=document.getElementById(`col-${s}`); if(!el) return;
+    el.innerHTML=items.map(taskCardHTML).join('')||'<div style="text-align:center;padding:20px;color:var(--pm-text-muted);font-size:12px;opacity:.6"><i class="fa fa-inbox"></i></div>';
+    const cnt=document.getElementById(`cnt-${s}`); if(cnt) cnt.textContent=items.length;
+  });
+}
+
+function renderList(tasks){
+  const el=document.getElementById('taskListBody'); if(!el) return;
+  if(!tasks.length){
+    el.innerHTML='<tr><td colspan="8"><div class="pm-empty-state"><i class="fa fa-tasks"></i><p>No tasks found. Create your first task!</p><button class="pm-btn pm-btn-primary pm-btn-sm" style="margin-top:12px" onclick="openCreateTask()"><i class="fa fa-plus"></i> New Task</button></div></td></tr>';
+    return;
+  }
+  el.innerHTML=tasks.map(taskListRowHTML).join('');
+}
+
+function renderBoard(tasks){
+  const buckets={pending:tasks.filter(t=>normalizeStatus(t.status)==='TODO'||normalizeStatus(t.status)==='BACKLOG'),progress:tasks.filter(t=>normalizeStatus(t.status)==='IN_PROGRESS'),review:tasks.filter(t=>normalizeStatus(t.status)==='REVIEW'),done:tasks.filter(t=>normalizeStatus(t.status)==='COMPLETED')};
+  Object.entries(buckets).forEach(([key,items])=>{
+    const el=document.getElementById(`board-${key}`); if(!el) return;
+    el.innerHTML=items.map(t=>`<div class="task-list-row" onclick="showTaskDetail('${t._id}')">
+      <div class="task-list-title">${t.title||'—'}</div>
+      <span class="pm-badge ${prioClass[t.priority]||'neutral'}" style="font-size:10px;margin-left:auto">${t.priority||'—'}</span>
+    </div>`).join('')||'<div style="text-align:center;padding:20px;color:var(--pm-text-muted);font-size:12px">Empty</div>';
+  });
+}
+
+// Task Detail
+function showTaskDetail(id){
+  window.location = '/project-manager/tasks/' + id;
+}
+window.showTaskDetail=showTaskDetail;
+
+async function updateTaskStatus(id){
+  const status=document.getElementById('changeStatusSel')?.value;
+  try{
+    await apiFetch(`/api/manager/tasks/${id}`,{method:'PUT',body:JSON.stringify({status})});
+    closeModal('modal-task-detail'); pmToast('Task status updated!','success'); loadTasks();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+window.updateTaskStatus=updateTaskStatus;
+
+async function toggleTaskDone(id,newStatus){
+  try{
+    const task = allTasks.find(t => String(t._id) === String(id)) || {};
+    await apiFetch(`/api/manager/tasks/${id}`,{method:'PUT',body:JSON.stringify({...task,status:newStatus})});
+    pmToast(newStatus==='Completed'?'Task completed!':'Task reopened','success'); loadTasks();
+  }catch(e){ pmToast(e.message||'Failed','error'); }
+}
+window.toggleTaskDone=toggleTaskDone;
+
+function openCreateTask(status='To Do'){
+  document.getElementById('taskInitStatus').value=statusToApi(status);
+  openModal('modal-create-task');
+}
+window.openCreateTask=openCreateTask;
+
+function buildTaskPayload(form) {
+  const data = Object.fromEntries(new FormData(form));
+  const project = allProjects.find(p => String(p._id) === String(data.projectId));
+  const employee = allEmployees.find(u => String(u._id) === String(data.assigneeId));
+  return {
+    ...data,
+    status: statusToApi(data.status),
+    projectName: project?.projectName || project?.name || '',
+    assignee: employee?.name || '',
+    assigneeEmail: employee?.email || '',
+    estimatedHours: Number(data.estimatedHours || 0),
+    attachments: data.attachmentUrl ? [{ name: 'Attachment', url: data.attachmentUrl }] : [],
+  };
+}
+
+async function submitCreateTask(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitTaskBtn');
+  btn.disabled=true; btn.innerHTML='<i class="fa fa-spinner fa-spin"></i> Creating...';
+  try{
+    const data=buildTaskPayload(e.target);
+    await apiFetch('/api/manager/tasks',{method:'POST',body:JSON.stringify(data)});
+    closeModal('modal-create-task'); e.target.reset(); pmToast('Task created and employee notified!','success'); loadTasks();
+  }catch(err){ pmToast(err.message||'Failed to create task','error'); }
+  finally{ btn.disabled=false; btn.innerHTML='<i class="fa fa-save"></i> Create Task & Notify'; }
+}
+window.submitCreateTask=submitCreateTask;
+
+function updateStrip(tasks){
+  const now=new Date();
+  document.getElementById('strip-todo').textContent=tasks.filter(t=>normalizeStatus(t.status)==='TODO').length;
+  document.getElementById('strip-progress').textContent=tasks.filter(t=>normalizeStatus(t.status)==='IN_PROGRESS').length;
+  document.getElementById('strip-review').textContent=tasks.filter(t=>normalizeStatus(t.status)==='REVIEW').length;
+  document.getElementById('strip-done').textContent=tasks.filter(t=>normalizeStatus(t.status)==='COMPLETED').length;
+  document.getElementById('strip-overdue').textContent=tasks.filter(t=>normalizeStatus(t.status)!=='COMPLETED'&&t.deadline&&new Date(t.deadline)<now).length;
+}
+
+async function loadDropdownData(){
+  // Load projects from API
+  try{
+    const pRes = await apiFetch('/api/manager/projects?size=500').catch(() => apiFetch('/api/projects?size=500'));
+    allProjects = pRes.data || [];
+    const ps = document.getElementById('filterProject');
+    const tp = document.getElementById('taskProject');
+    const projOpts = '<option value="">All Projects</option>' + allProjects.map(p=>`<option value="${p._id}">${p.projectName||p.name||'Unnamed'}</option>`).join('');
+    if(ps) ps.innerHTML = projOpts;
+    if(tp) tp.innerHTML = projOpts.replace('All Projects','Select Project');
+    // Preselect project from URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    const projParam = urlParams.get('project');
+    if(projParam && tp) tp.value = projParam;
+  } catch(e){ console.warn('Projects load error:', e); }
+
+  // Load employees from API
+  try{
+    let uRes;
+    try {
+      uRes = await apiFetch('/api/manager/members?size=500');
+    } catch(err) {
+      // Fallback for PROJECT_MANAGER if /api/users fails
+      uRes = await apiFetch('/api/users?size=500');
+    }
+    allEmployees = uRes.data || [];
+    const ae = document.getElementById('filterAssignee');
+    const ta = document.getElementById('taskAssignee');
+    const empOpts = allEmployees.map(u=>`<option value="${u._id}">${u.name}${u.department?' ('+u.department+')':''}</option>`).join('');
+    if(ae) ae.innerHTML = '<option value="">All Assignees</option>' + empOpts;
+    if(ta) ta.innerHTML = '<option value="">Select Employee</option>' + empOpts;
+  } catch(e){ console.warn('Employees load error:', e); }
+}
+
+async function loadTasks(){
+  try{
+    const res=await apiFetch('/api/manager/tasks?size=500');
+    allTasks=res.data||[];
+    document.getElementById('taskSubtitle').textContent=`${allTasks.length} total tasks`;
+    document.getElementById('taskCount').textContent=`${allTasks.length} Tasks`;
+    updateStrip(allTasks);
+
+    const params = new URLSearchParams(window.location.search);
+    // Switch to list view if URL has ?status=pending or ?project=...
+    if (params.get('status') === 'pending' || params.get('project')) {
+      currentView = 'list';
+      ['kanban','list','board'].forEach(x=>{
+        document.getElementById(`${x}ViewContent`).style.display=x==='list'?'block':'none';
+        document.getElementById(`tab-${x}`)?.classList.toggle('active',x==='list');
+      });
+    }
+
+    renderTasks(filteredTasks());
+  }catch(e){
+    pmToast('Failed to load tasks: '+e.message,'error');
+    document.getElementById('col-TODO').innerHTML='<div class="pm-empty-state"><i class="fa fa-exclamation-circle"></i><p>Failed to load</p></div>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await Promise.all([loadDropdownData(), loadTasks()]);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Team (MSS) - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .mss-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: start; }
+        .mss-card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-gray); padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 24px; }
+        .mss-card-header { font-size: 1.1rem; font-weight: 600; color: var(--dark-navy); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gray); padding-bottom: 12px; }
+        
+        .team-member { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--border-gray); }
+        .team-member:last-child { border-bottom: none; }
+        .tm-info { display: flex; align-items: center; gap: 12px; }
+        .tm-info img { width: 40px; height: 40px; border-radius: 50%; }
+        .tm-name { font-weight: 600; color: var(--dark-navy); }
+        .tm-role { font-size: .8rem; color: var(--text-gray); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu"><li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back</span></a></li></ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>My Team (MSS)</span> > Team Dashboard</div>
+                </div>
+                <div class="header-right"><div class="user-profile"><img src="https://ui-avatars.com/api/?name=Engineering+Manager&background=2563EB&color=fff"></div></div>
+            </header>
+
+            <h1 style="font-size:1.5rem; margin-bottom:24px;">Team Dashboard</h1>
+
+            <div class="mss-grid">
+                <div>
+                    <!-- Team Overview -->
+                    <div class="mss-card">
+                        <div class="mss-card-header">Direct Reports (6) <button class="btn btn-outline btn-sm"><i class="fa-solid fa-users"></i> View All</button></div>
+                        <div class="team-member">
+                            <div class="tm-info">
+                                <img src="https://ui-avatars.com/api/?name=Aisha+Khan">
+                                <div><div class="tm-name">Aisha Khan</div><div class="tm-role">Sr. Frontend Developer</div></div>
+                            </div>
+                            <div><span class="badge badge-success">Present</span></div>
+                        </div>
+                        <div class="team-member">
+                            <div class="tm-info">
+                                <img src="https://ui-avatars.com/api/?name=Rahul+Sharma">
+                                <div><div class="tm-name">Rahul Sharma</div><div class="tm-role">Backend Developer</div></div>
+                            </div>
+                            <div><span class="badge badge-warning">On Leave (Sick)</span></div>
+                        </div>
+                        <div class="team-member">
+                            <div class="tm-info">
+                                <img src="https://ui-avatars.com/api/?name=Sneha+Joshi">
+                                <div><div class="tm-name">Sneha Joshi</div><div class="tm-role">QA Engineer</div></div>
+                            </div>
+                            <div><span class="badge badge-success">Present</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Team Performance -->
+                    <div class="mss-card">
+                        <div class="mss-card-header">Team OKRs Progress <a href="goals.html" style="font-size:.85rem; color:var(--primary-blue); font-weight:500;">Go to Goals</a></div>
+                        <div style="margin-bottom:16px;">
+                            <div style="display:flex; justify-content:space-between; font-size:.9rem; font-weight:600; margin-bottom:6px;"><span>Deliver Platform V2</span><span>85%</span></div>
+                            <div style="background:var(--bg-color); height:8px; border-radius:4px; overflow:hidden;"><div style="background:var(--success-green); width:85%; height:100%;"></div></div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; font-size:.9rem; font-weight:600; margin-bottom:6px;"><span>Zero Sev-1 Bugs</span><span>40%</span></div>
+                            <div style="background:var(--bg-color); height:8px; border-radius:4px; overflow:hidden;"><div style="background:var(--warning-orange); width:40%; height:100%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- Pending Actions Widget -->
+                    <div class="mss-card" style="border-top:4px solid var(--danger-red);">
+                        <div class="mss-card-header">Action Required</div>
+                        <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:var(--radius-md); padding:12px; margin-bottom:12px; display:flex; gap:12px; align-items:center;">
+                            <i class="fa-solid fa-calendar-minus" style="color:var(--danger-red); font-size:1.5rem;"></i>
+                            <div style="flex:1;">
+                                <div style="font-weight:600; font-size:.9rem; color:var(--dark-navy);">3 Leave Requests</div>
+                                <div style="font-size:.8rem; color:var(--text-gray);">Pending your approval</div>
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="window.location.href='approvals.html'">Review</button>
+                        </div>
+                        <div style="background:#fffbeb; border:1px solid #fde047; border-radius:var(--radius-md); padding:12px; display:flex; gap:12px; align-items:center;">
+                            <i class="fa-solid fa-indian-rupee-sign" style="color:#d97706; font-size:1.5rem;"></i>
+                            <div style="flex:1;">
+                                <div style="font-weight:600; font-size:.9rem; color:var(--dark-navy);">1 Expense Claim</div>
+                                <div style="font-size:.8rem; color:var(--text-gray);">Needs attention</div>
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="window.location.href='approvals.html'">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

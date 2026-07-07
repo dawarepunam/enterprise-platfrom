@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+    .pg-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+
+    .r-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
+    
+    /* Config Card */
+    .cfg-card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); }
+    .cfg-title { font-size: 16px; font-weight: 800; color: #2b3674; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .cfg-title i { color: #3965FF; }
+
+    .form-grp { margin-bottom: 16px; }
+    .form-lbl { display: block; font-size: 12px; font-weight: 600; color: #2b3674; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .rc-select { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #f4f7fe; transition: .2s; }
+    .rc-select:focus { border-color: #3965FF; }
+    .rc-input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 13px; outline: none; background: #f4f7fe; }
+    .rc-custom-dates { display: flex; gap: 12px; margin-top: 12px; }
+    .btn-generate { width: 100%; margin-top: 20px; background: #3965FF; color: #fff; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: .2s; }
+    .btn-generate:hover { background: #274ccf; }
+
+    /* Preview Card */
+    .prev-card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); }
+    .prev-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid #f0f4ff; padding-bottom: 16px; }
+    .rp-title { font-size: 18px; font-weight: 800; color: #2b3674; margin: 0; }
+    .rp-status { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; background: rgba(163,174,209,0.12); color: #a3aed1; }
+    .rp-content { min-height: 300px; color: #5d6d8a; font-size: 14px; line-height: 1.6; }
+
+    @media (max-width: 900px) { .r-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-chart-bar" style="color:#3965FF;margin-right:8px;"></i>Reports</h1>
+          <p>Generate custom work summaries and export them as PDF.</p>
+        </div>
+      </div>
+
+      <div class="r-layout">
+        <div class="cfg-card">
+          <div class="cfg-title"><i class="fa fa-sliders-h"></i> Configure Report</div>
+
+          <div class="form-grp">
+            <label class="form-lbl">Report Type</label>
+            <select class="rc-select" id="repType">
+              <option value="attendance">Attendance Summary</option>
+              <option value="tasks">Task Completion</option>
+              <option value="performance">Performance Overview</option>
+              <option value="leave">Leave History</option>
+            </select>
+          </div>
+
+          <div class="form-grp">
+            <label class="form-lbl">Date Range</label>
+            <select class="rc-select" id="repRange">
+              <option value="7">Last 7 Days</option>
+              <option value="30">Last 30 Days</option>
+              <option value="90">Last 3 Months</option>
+              <option value="custom">Custom Range</option>
+            </select>
+          </div>
+
+          <div class="rc-custom-dates" id="repCustomDates" style="display:none">
+            <div class="form-grp" style="flex:1;margin-bottom:0;"><label class="form-lbl">From</label><input type="date" class="rc-input" id="repStart"/></div>
+            <div class="form-grp" style="flex:1;margin-bottom:0;"><label class="form-lbl">To</label><input type="date" class="rc-input" id="repEnd"/></div>
+          </div>
+
+          <button class="btn-generate" id="btnGenerate"><i class="fa fa-magic"></i> Generate Report</button>
+        </div>
+
+        <div class="prev-card">
+          <div class="prev-hdr">
+            <h3 class="rp-title" id="previewTitle">Report Preview</h3>
+            <span class="rp-status" id="previewStatus">Awaiting generation</span>
+          </div>
+          <div class="rp-content" id="reportContent">
+            <div style="text-align:center;padding:60px 20px;color:#a3aed1;">
+              <i class="fa fa-chart-bar fa-3x" style="opacity:0.5;margin-bottom:16px;display:block;"></i>
+              Configure the report on the left and click "Generate Report" to see a preview here.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/reports/app.js"></script>
+</body>
+</html>

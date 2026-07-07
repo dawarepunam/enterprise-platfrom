@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Project Managers — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+  <link rel="stylesheet" href="/modules/admin/project-managers/project-managers.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">🎯 Project Managers</div>
+      <div class="page-subtitle">Monitor all project managers, their performance and workload</div>
+    </div>
+    <div class="page-top-actions">
+      <select class="filter-select" id="filterDept" onchange="filterPMs()"><option value="">All Departments</option></select>
+      <select class="filter-select" id="filterStatus" onchange="filterPMs()">
+        <option value="">All Status</option><option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option>
+      </select>
+      <input type="search" class="form-control" id="pmSearch" placeholder="Search PMs..." style="height:36px;width:200px;" oninput="filterPMs()"/>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="kpi-grid mb-24" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi-card kpi-card-blue" onclick="window.filterByStat('all')" style="cursor:pointer; transition: 0.2s;" id="kpi-all"><div class="kpi-top"><div class="kpi-icon kpi-icon-blue">🎯</div></div><div class="kpi-value" id="statPMs">—</div><div class="kpi-label">Total PMs</div></div>
+    <div class="kpi-card kpi-card-green" onclick="window.filterByStat('active')" style="cursor:pointer; transition: 0.2s;" id="kpi-active"><div class="kpi-top"><div class="kpi-icon kpi-icon-green">📁</div></div><div class="kpi-value" id="statActiveProj">—</div><div class="kpi-label">Active Projects</div></div>
+    <div class="kpi-card kpi-card-orange" onclick="window.filterByStat('completed')" style="cursor:pointer; transition: 0.2s;" id="kpi-completed"><div class="kpi-top"><div class="kpi-icon kpi-icon-orange">✅</div></div><div class="kpi-value" id="statCompleted">—</div><div class="kpi-label">Completed</div></div>
+    <div class="kpi-card kpi-card-red" onclick="window.filterByStat('delayed')" style="cursor:pointer; transition: 0.2s;" id="kpi-delayed"><div class="kpi-top"><div class="kpi-icon kpi-icon-red">⏰</div></div><div class="kpi-value" id="statDelayed">—</div><div class="kpi-label">Delayed</div></div>
+  </div>
+
+  <!-- PM Cards Grid -->
+  <div class="grid-auto" id="pmCardsGrid">
+    <div class="card" style="padding:40px;text-align:center;grid-column:1/-1;">
+      <div class="loader-spinner" style="margin:0 auto;"></div>
+    </div>
+  </div>
+</main>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/project-managers/project-managers.js"></script>
+</body>
+</html>

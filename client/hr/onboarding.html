@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .onboarding-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+        }
+
+        /* Joiner Card */
+        .joiner-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        .joiner-card img {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border-gray);
+            margin-bottom: 16px;
+        }
+        .joiner-name { font-size: 1.2rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 4px; }
+        .joiner-role { font-size: .9rem; color: var(--text-gray); margin-bottom: 16px; }
+
+        .overall-progress {
+            background: var(--bg-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-gray);
+        }
+        .op-label { display: flex; justify-content: space-between; font-size: .85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; }
+        .op-bar { background: #e2e8f0; border-radius: 8px; height: 10px; overflow: hidden; }
+        .op-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--primary-blue), #60a5fa);
+            transition: width .8s ease;
+        }
+        .joiner-info-list { text-align: left; margin-top: 20px; border-top: 1px solid var(--border-gray); padding-top: 16px; }
+        .ji-row { display: flex; justify-content: space-between; font-size: .88rem; padding: 6px 0; border-bottom: 1px dashed var(--border-gray); }
+        .ji-row label { color: var(--text-gray); }
+
+        /* Checklist */
+        .checklist-section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .checklist-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .checklist-header h3 { font-size: 1.1rem; }
+
+        .checklist-group { padding: 20px 24px; border-bottom: 1px solid var(--border-gray); }
+        .checklist-group:last-child { border-bottom: none; }
+        .cg-title {
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--dark-navy);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cg-title i { color: var(--primary-blue); }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+        .checklist-item:hover { background: var(--bg-color); }
+
+        .checklist-item input[type="checkbox"] {
+            width: 18px; height: 18px;
+            accent-color: var(--primary-blue);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .ci-label { flex: 1; font-size: .9rem; color: var(--text-dark); }
+        .ci-label.done { text-decoration: line-through; color: var(--text-gray); }
+        .ci-assignee { font-size: .8rem; color: var(--text-gray); background: var(--bg-color); padding: 2px 10px; border-radius: 20px; }
+        .ci-due { font-size: .78rem; color: var(--text-gray); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span>People</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-calendar-check"></i><span>Workforce</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="attendance.html" class="submenu-item">Attendance</a>
+                            <a href="leaves.html" class="submenu-item">Leaves</a>
+                            <a href="shifts.html" class="submenu-item">Shift Management</a>
+                            <a href="holidays.html" class="submenu-item">Holiday Calendar</a>
+                            <a href="ess.html" class="submenu-item">ESS Requests</a>
+                            <a href="overtime-compoff.html" class="submenu-item">Overtime & Comp-Off</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item"><i class="fa-solid fa-indian-rupee-sign"></i><span>Payroll</span><i class="fa-solid fa-chevron-down chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="run-payroll.html" class="submenu-item">Run Payroll</a>
+                            <a href="salary-structures.html" class="submenu-item">Salary Structures</a>
+                            <a href="payslips.html" class="submenu-item">Payslips</a>
+                            <a href="claims.html" class="submenu-item">Claims / Expenses</a>
+                        </div>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active"><i class="fa-solid fa-briefcase"></i><span>Recruitment</span><i class="fa-solid fa-chevron-up chevron" style="margin-left:auto;font-size:.8rem;"></i></a>
+                        <div class="submenu">
+                            <a href="jobs.html" class="submenu-item">Job Postings</a>
+                            <a href="applications.html" class="submenu-item">Applications Pipeline</a>
+                            <a href="interviews.html" class="submenu-item">Interviews</a>
+                            <a href="offers.html" class="submenu-item">Offer Letters</a>
+                            <a href="onboarding.html" class="submenu-item active">Onboarding</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <button class="btn btn-outline" id="backBtn" style="padding:4px 10px;font-size:.8rem;"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                    <div class="breadcrumb"><span>Recruitment</span> > Onboarding</div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div>
+                </div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Onboarding Checklist</h1>
+                <div style="display:flex; gap:12px;">
+                    <select class="form-control" style="width:220px;">
+                        <option>Aisha Khan — Jul 1 Joiner</option>
+                        <option>Meera Pillai — Jul 15 Joiner</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="onboarding-layout">
+                <!-- Left: Joiner Info -->
+                <div>
+                    <div class="joiner-card">
+                        <img src="https://ui-avatars.com/api/?name=Aisha+Khan&background=random" alt="Aisha Khan">
+                        <div class="joiner-name">Aisha Khan</div>
+                        <div class="joiner-role">Senior Frontend Developer</div>
+                        <span class="badge badge-success">Joining: 01 Jul 2026</span>
+
+                        <div class="overall-progress" style="margin-top:20px;">
+                            <div class="op-label"><span>Checklist Progress</span><span id="progressPct">65%</span></div>
+                            <div class="op-bar"><div class="op-fill" id="progressFill" style="width:65%;"></div></div>
+                        </div>
+
+                        <div class="joiner-info-list">
+                            <div class="ji-row"><label>Employee ID</label><span>EMP146</span></div>
+                            <div class="ji-row"><label>Department</label><span>Development</span></div>
+                            <div class="ji-row"><label>Manager</label><span>Rahul Sharma</span></div>
+                            <div class="ji-row"><label>CTC</label><span>₹ 12 LPA</span></div>
+                        </div>
+
+                        <button class="btn btn-primary" style="width:100%;margin-top:20px;" onclick="showToast('Welcome Kit email sent to Aisha!','success')">
+                            <i class="fa-solid fa-envelope-open-text"></i> Send Welcome Kit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Checklist -->
+                <div class="checklist-section">
+                    <div class="checklist-header">
+                        <h3>Onboarding Tasks</h3>
+                        <span style="font-size:.85rem;color:var(--text-gray);">13 / 20 completed</span>
+                    </div>
+
+                    <!-- Group 1 -->
+                    <div class="checklist-group">
+                        <div class="cg-title"><i class="fa-solid fa-file-signature"></i> Pre-Joining Documents</div>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Collect Aadhar Card</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Collect PAN Card</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Sign Offer Letter</span>
+                            <span class="ci-assignee">Candidate</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Educational Certificates verified</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Background Check initiated</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                    </div>
+
+                    <!-- Group 2 -->
+                    <div class="checklist-group">
+                        <div class="cg-title"><i class="fa-solid fa-laptop"></i> IT & Access Setup</div>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Official Email created</span>
+                            <span class="ci-assignee">IT</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Laptop assigned (AST-012)</span>
+                            <span class="ci-assignee">IT</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">HRMS portal access granted</span>
+                            <span class="ci-assignee">IT</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Slack & project tool access</span>
+                            <span class="ci-assignee">IT</span>
+                        </label>
+                    </div>
+
+                    <!-- Group 3 -->
+                    <div class="checklist-group">
+                        <div class="cg-title"><i class="fa-solid fa-handshake"></i> Orientation & Training</div>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Office tour completed</span>
+                            <span class="ci-assignee">Admin</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">HR policy briefing done</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Team introduction meeting</span>
+                            <span class="ci-assignee">Manager</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Role-specific training scheduled</span>
+                            <span class="ci-assignee">Manager</span>
+                        </label>
+                    </div>
+
+                    <!-- Group 4 -->
+                    <div class="checklist-group">
+                        <div class="cg-title"><i class="fa-solid fa-coins"></i> Payroll Setup</div>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked onchange="updateProgress()">
+                            <span class="ci-label done">Bank account details collected</span>
+                            <span class="ci-assignee">HR</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">Added to payroll system</span>
+                            <span class="ci-assignee">Finance</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" onchange="updateProgress()">
+                            <span class="ci-label">PF / UAN registration</span>
+                            <span class="ci-assignee">Finance</span>
+                        </label>
+                    </div>
+
+                    <div style="padding:20px 24px; border-top:1px solid var(--border-gray);">
+                        <button class="btn btn-primary" style="width:100%;" onclick="showToast('Onboarding marked complete! Employee added to directory.','success')">
+                            <i class="fa-solid fa-check-double"></i> Mark Onboarding Complete
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status"><i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0</div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        function updateProgress() {
+            const all = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const checked = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked');
+            const pct = Math.round((checked.length / all.length) * 100);
+            
+            document.getElementById('progressPct').textContent = pct + '%';
+            document.getElementById('progressFill').style.width = pct + '%';
+
+            // Update strikethrough
+            all.forEach(cb => {
+                const label = cb.nextElementSibling;
+                if (cb.checked) label.classList.add('done');
+                else label.classList.remove('done');
+            });
+        }
+    </script>
+</body>
+</html>

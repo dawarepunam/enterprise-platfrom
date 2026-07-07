@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Updates – Project Manager | JMKC CRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+    <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+    <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+
+    <style>
+        .du-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            height: calc(100vh - 160px);
+        }
+        
+        .du-sidebar {
+            background: var(--pm-card);
+            border: 1px solid var(--pm-border);
+            border-radius: var(--pm-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            box-shadow: var(--pm-shadow-sm);
+        }
+        
+        .du-list-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--pm-text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .emp-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        
+        .emp-item:hover {
+            background: var(--pm-bg);
+        }
+        
+        .emp-item.active {
+            background: var(--pm-accent-light);
+            border-color: var(--pm-accent);
+        }
+        
+        .emp-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--pm-accent);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .emp-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .emp-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--pm-text);
+        }
+        
+        .emp-role {
+            font-size: 11px;
+            color: var(--pm-text-muted);
+        }
+        /* Details Area */
+        
+        .du-content {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .update-card {
+            background: #fff;
+            border: 1px solid var(--pm-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+        
+        .update-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--pm-border);
+        }
+        
+        .update-project {
+            font-weight: 700;
+            font-size: 13.5px;
+            color: var(--pm-accent);
+        }
+        
+        .update-date {
+            font-size: 11.5px;
+            color: var(--pm-text-muted);
+        }
+        
+        .blocker-alert {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .update-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--pm-border);
+        }
+        
+        .clickable-emp {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+        
+        .clickable-emp:hover {
+            background: var(--pm-bg);
+        }
+        
+        @media (max-width: 900px) {
+            .pm-page-header {
+                align-items: flex-start;
+                gap: 14px;
+            }
+            #feedFilters {
+                align-items: stretch !important;
+            }
+            #feedFilters .pm-header-search,
+            #feedFilters select,
+            #duCountLabel {
+                width: 100%;
+                max-width: none !important;
+                margin-left: 0 !important;
+            }
+            .update-meta {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .update-meta>div:last-child {
+                margin-left: 0 !important;
+                text-align: left !important;
+            }
+        }
+        
+        @media (max-width: 560px) {
+            .employee-profile-header,
+            #employeeProfileHeader {
+                align-items: flex-start !important;
+                flex-direction: column;
+            }
+            .update-card {
+                padding: 14px;
+            }
+            .du-content {
+                max-height: none !important;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="pm-shell">
+      <div id="pm-sidebar-root"></div>
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div id="pm-header-root"></div>
+        <main class="pm-main">
+          <!-- PM Standard Back Button -->
+
+          <div class="pm-page-header" style="justify-content:space-between">
+            <div>
+              <div class="pm-breadcrumb">
+                <i class="fa fa-home"></i>
+                <a href="/project-manager/dashboard">Dashboard</a>
+                <i class="fa fa-chevron-right"></i>
+                <span>Daily Updates</span>
+              </div>
+              <h2 class="pm-page-title" id="pageTitle">Team Updates Feed</h2>
+            </div>
+            <button class="pm-btn pm-btn-outline" id="btnBackToFeed"
+              style="display:none;" onclick="viewFeed()">
+              <i class="fa fa-arrow-left"></i> Back to All Updates
+            </button>
+          </div>
+
+          <div id="feedFilters"
+            style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px;background:var(--pm-card);border:1px solid var(--pm-border);border-radius:var(--pm-radius);padding:14px 16px;box-shadow:var(--pm-shadow-sm);">
+            <div class="pm-header-search"
+              style="margin:0;box-shadow:none;border:1px solid var(--pm-border);max-width:340px;">
+              <i class="fa fa-search"></i>
+              <input type="text" id="duSearch"
+                placeholder="Search employee, project, task..."
+                oninput="renderFeed()" />
+            </div>
+            <select id="duDeptFilter" class="pm-form-select"
+              onchange="renderFeed()" style="min-width:180px;">
+              <option value>All Departments</option>
+            </select>
+            <select id="duSortFilter" class="pm-form-select"
+              onchange="renderFeed()" style="min-width:150px;">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="completion">Highest Progress</option>
+            </select>
+            <span id="duCountLabel"
+              style="margin-left:auto;font-size:12px;font-weight:700;color:var(--pm-text-muted);">0
+              updates</span>
+          </div>
+
+          <!-- Employee Profile Header (Hidden initially) -->
+          <div id="employeeProfileHeader"
+            style="display:none; padding:24px; background:var(--pm-card); border:1px solid var(--pm-border); border-radius:var(--pm-radius); margin-bottom:20px; align-items:center; gap:16px; box-shadow:var(--pm-shadow-sm);">
+            <div id="empAvatar"
+              style="width:70px; height:70px; border-radius:50%; background:var(--pm-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:700;"></div>
+            <div>
+              <h2 id="empName"
+                style="font-size:20px; font-weight:700; margin-bottom:6px;">Employee
+                Name
+              </h2>
+              <div style="color:var(--pm-text-muted); font-size:14px;"><i
+                  class="fa fa-briefcase"></i> <span id="empRole">Role</span>
+                &nbsp;&bull;&nbsp; <i class="fa fa-clipboard-check"></i> <span
+                  id="empUpdateCount">0</span> Updates Submitted</div>
+            </div>
+          </div>
+
+          <!-- Main Content Feed -->
+          <div class="du-content" id="updatesContent"
+            style="height: auto; max-height: calc(100vh - 200px);">
+            <div
+              style="text-align:center; padding: 40px; color: var(--pm-text-muted);">
+              <i class="fa fa-spinner fa-spin" style="font-size:32px;"></i>
+              <p style="margin-top:12px;">Loading updates...</p>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <script src="/modules/project-manager/pm-shell.js"></script>
+    <script>
+        let employees = [];
+        let dailyUpdates = [];
+        let selectedEmpId = null;
+
+        function getInitials(name) {
+            if (!name) return "U";
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        async function initDailyUpdates() {
+            try {
+                const uRes = await window.pmShell ? .apiFetch('/api/users?limit=500').catch(() => ({
+                    data: []
+                }));
+                const dRes = await window.pmShell ? .apiFetch('/api/manager/daily-updates').catch(() => ({
+                    data: []
+                }));
+
+                employees = uRes ? .data || [];
+                dailyUpdates = dRes ? .data || [];
+                dailyUpdates.forEach(update => {
+                    const id = String(update.memberId || update.userId ? ._id || update.userId || '');
+                    const name = update.memberName || update.employee || update.author || update.userName || '';
+                    const exists = employees.some(emp => (id && String(emp._id) === id) || (name && String(emp.name || '').toLowerCase() === String(name).toLowerCase()));
+                    if (!exists && (id || name)) {
+                        employees.push({
+                            _id: id || name,
+                            name: name || 'Unknown Employee',
+                            role: update.memberRole || update.role || 'Contributor',
+                            department: update.memberDepartment || update.department || ''
+                        });
+                    }
+                });
+                refreshDepartmentFilter();
+
+            } catch (err) {
+                console.warn("API load failed.", err);
+            }
+
+            // Check URL hash for routing
+            window.addEventListener('hashchange', handleRoute);
+            handleRoute();
+        }
+
+        function handleRoute() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#employee=')) {
+                const empId = hash.split('=')[1];
+                viewEmployee(empId);
+            } else {
+                renderFeed();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function renderFeed() {
+            document.getElementById('pageTitle').innerText = 'Team Updates Feed';
+            document.getElementById('btnBackToFeed').style.display = 'none';
+            document.getElementById('employeeProfileHeader').style.display = 'none';
+            document.getElementById('feedFilters').style.display = 'flex';
+
+            const sortedUpdates = getFilteredUpdates();
+            renderUpdatesList(sortedUpdates, true);
+        }
+
+        function viewEmployee(id) {
+            if (window.location.hash !== `#employee=${id}`) {
+                window.location.hash = `#employee=${id}`;
+                return; // handleRoute will catch this
+            }
+
+            const emp = employees.find(e => String(e._id) === String(id));
+            if (!emp) return;
+
+            document.getElementById('pageTitle').innerText = 'Employee Update History';
+            document.getElementById('btnBackToFeed').style.display = 'inline-flex';
+            document.getElementById('feedFilters').style.display = 'none';
+
+            const header = document.getElementById('employeeProfileHeader');
+            header.style.display = 'flex';
+            document.getElementById('empAvatar').innerText = getInitials(emp.name);
+            document.getElementById('empName').innerText = emp.name;
+            document.getElementById('empRole').innerText = [emp.role || emp.designation || 'Contributor', emp.department].filter(Boolean).join(' • ');
+
+            const empUpdates = dailyUpdates.filter(u =>
+                String(u.memberId || u.userId ? ._id || u.userId || '') === String(id) ||
+                String(u.employee || u.author || u.memberName || '').toLowerCase() === String(emp.name || '').toLowerCase()
+            );
+
+            document.getElementById('empUpdateCount').innerText = empUpdates.length;
+
+            const sortedUpdates = empUpdates.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
+            renderUpdatesList(sortedUpdates, false);
+        }
+
+        function viewFeed() {
+            window.location.hash = '';
+        }
+
+        function escapeHtml(value) {
+            return String(value ? ? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function getUpdateText(update, keys) {
+            for (const key of keys) {
+                const value = update ? .[key];
+                if (typeof value === 'string' && value.trim()) return value.trim();
+                if (Array.isArray(value) && value.length) return String(value[0]).trim();
+            }
+            return '';
+        }
+
+        function getAttachmentItems(attachments) {
+            if (!attachments) return [];
+            if (Array.isArray(attachments)) {
+                return attachments.flatMap((item) => {
+                    if (!item) return [];
+                    if (typeof item === 'string') return [{
+                        name: 'Attachment',
+                        url: item
+                    }];
+                    const url = item.url || item.link || item.href || item.fileUrl || item.path || item.downloadUrl || '';
+                    const name = item.name || item.filename || item.fileName || item.title || 'Attachment';
+                    return url ? [{
+                        name,
+                        url
+                    }] : [];
+                });
+            }
+            if (typeof attachments === 'string') return [{
+                name: 'Attachment',
+                url: attachments
+            }];
+            return [];
+        }
+
+        function getAttachmentHtml(attachments) {
+            const items = getAttachmentItems(attachments);
+            if (!items.length) return '';
+            return `<div style="margin-top:10px;padding:10px 12px;border:1px solid var(--pm-border);border-radius:10px;background:var(--pm-bg)">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--pm-text-muted);margin-bottom:8px">Attachments</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${items.map(item => `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--pm-border);font-size:12px;color:var(--pm-accent);text-decoration:none"><i class="fa fa-paperclip"></i> ${escapeHtml(item.name)}</a>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  function renderUpdatesList(updates, showEmployeeContext) {
+    const container = document.getElementById('updatesContent');
+    const countLabel = document.getElementById('duCountLabel');
+    if (countLabel && showEmployeeContext) countLabel.textContent = `${updates.length} update${updates.length === 1 ? '' : 's'}`;
+    
+    if(updates.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding: 60px 40px; color: var(--pm-text-muted); margin: auto;">
+          <i class="fa fa-inbox" style="font-size:48px; margin-bottom:16px; opacity:0.3;"></i>
+          <p style="font-size:16px;">No daily updates found.</p>
+          <p style="font-size:12px;margin-top:6px;">When an employee submits an update, it will appear here automatically.</p>
+        </div>
+      `;
+      return;
+    }
+    
+    let html = '<div style="display:flex; flex-direction:column; gap:16px; max-width:800px; margin:0 auto; width:100%">';
+    
+    updates.forEach(u => {
+      const empObj = getEmployeeForUpdate(u);
+      const empName = u.employee || u.author || empObj?.name || 'Unknown Employee';
+      const empId = empObj ? empObj._id : null;
+      const role = empObj ? [empObj.role || empObj.designation || 'Contributor', empObj.department].filter(Boolean).join(' • ') : 'Contributor';
+      const workText = getUpdateText(u, ['todayWork','work','description','summary','note']);
+      const blockersText = getUpdateText(u, ['blockers','issues','blocker']);
+      const tomorrowText = getUpdateText(u, ['tomorrowPlan','tomorrow','nextPlan']);
+      const hoursText = u.hoursWorked || u.hoursLogged || u.hours || '';
+      
+      const empContextHtml = showEmployeeContext ? `
+        <div class="update-meta">
+          <div class="clickable-emp" onclick="${empId ? `viewEmployee('${empId}')` : ''}">
+            <div class="emp-avatar">${getInitials(empName)}</div>
+            <div>
+              <div style="font-weight:700; font-size:14px; color:var(--pm-text); line-height:1.2">${escapeHtml(empName)}</div>
+              <div style="font-size:11.5px; color:var(--pm-text-muted);">${escapeHtml(role)}</div>
+            </div>
+          </div>
+          <div style="margin-left:auto; text-align:right">
+            <div class="update-date"><i class="fa-regular fa-clock"></i> ${new Date(u.date || u.createdAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'})}</div>
+          </div>
+        </div>
+      ` : `
+        <div class="update-card-header" style="border:none; padding:0; margin-bottom:12px;">
+           <span class="update-date" style="margin-left:auto;"><i class="fa-regular fa-clock"></i> ${new Date(u.date || u.createdAt).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'})}</span>
+        </div>
+      `;
+      
+      html += `
+        <div class="update-card">
+          ${empContextHtml}
+          
+          <div style="margin-bottom:12px;">
+            <span style="font-size:11px; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; color:var(--pm-text-muted); margin-bottom:4px; display:block;">Project</span>
+            <span class="update-project"><i class="fa fa-folder-open"></i> ${escapeHtml(u.projectName || 'General / Unassigned')}</span>
+          </div>
+          
+          <div style="background:var(--pm-bg); padding:16px; border-radius:8px; border:1px solid var(--pm-border);">
+            <div style="font-weight:600; font-size:14px; margin-bottom:12px; color:var(--pm-text)">${escapeHtml(u.taskTitle || 'General Task Update')}</div>
+            
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+              <span style="font-size:12px; font-weight:600; color:var(--pm-text)">Progress</span>
+              <span style="font-size:12px; font-weight:700; color:${u.completion >= 100 ? 'var(--green)' : 'var(--pm-accent)'}">${u.completion || 0}%</span>
+            </div>
+            <div class="alloc-bar" style="margin:0; width:100%; height:6px;">
+              <div class="alloc-fill" style="width:${u.completion || 0}%; background:${u.completion >= 100 ? 'var(--green)' : 'var(--pm-accent)'};"></div>
+            </div>
+          </div>
+
+          ${workText ? `<div style="margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--pm-bg);border:1px solid var(--pm-border)"><div style="font-size:11px;text-transform:uppercase;font-weight:700;letter-spacing:0.04em;color:var(--pm-text-muted);margin-bottom:4px">Today's Work</div><div style="font-size:13px;color:var(--pm-text);white-space:pre-wrap">${escapeHtml(workText)}</div></div>` : ''}
+          ${blockersText ? `<div class="blocker-alert"><i class="fa fa-exclamation-triangle"></i><span><strong>Blocker:</strong> ${escapeHtml(blockersText)}</span></div>` : ''}
+          ${tomorrowText ? `<div style="margin-top:10px;padding:10px 12px;border-radius:8px;background:#f8fafc;border:1px solid var(--pm-border)"><strong>Plan</strong> • ${escapeHtml(tomorrowText)}</div>` : ''}
+          ${hoursText ? `<div style="margin-top:10px;font-size:12px;color:var(--pm-text-muted)"><i class="fa fa-clock"></i> ${escapeHtml(hoursText)}h logged</div>` : ''}
+          ${getAttachmentHtml(u.attachments)}
+          ${u._id ? `<div style="margin-top:10px"><a href="/employee/daily-updates/detail?id=${u._id}" target="_blank" rel="noopener noreferrer" style="font-size:12px;color:var(--pm-accent);font-weight:600;text-decoration:none"><i class="fa fa-arrow-up-right-from-square"></i> View full detail</a></div>` : ''}
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function getEmployeeForUpdate(update) {
+    const updateUserId = String(update.userId?._id || update.userId || '');
+    const updateName = String(update.employee || update.author || update.userName || '').toLowerCase();
+    const updateEmail = String(update.email || update.employeeEmail || '').toLowerCase();
+    return employees.find(e =>
+      String(e._id) === updateUserId ||
+      String(e.name || '').toLowerCase() === updateName ||
+      (updateEmail && String(e.email || '').toLowerCase() === updateEmail)
+    ) || null;
+  }
+
+  function refreshDepartmentFilter() {
+    const select = document.getElementById('duDeptFilter');
+    if (!select) return;
+    const departments = [...new Set(employees.map(e => e.department).filter(Boolean))].sort();
+    select.innerHTML = '<option value="">All Departments</option>' + departments.map(d => `<option value="${d}">${d}</option>`).join('');
+  }
+
+  function getFilteredUpdates() {
+    const q = (document.getElementById('duSearch')?.value || '').toLowerCase().trim();
+    const dept = document.getElementById('duDeptFilter')?.value || '';
+    const sort = document.getElementById('duSortFilter')?.value || 'newest';
+
+    const filtered = dailyUpdates.filter(update => {
+      const emp = getEmployeeForUpdate(update);
+      const employeeName = update.employee || update.author || emp?.name || 'Unknown Employee';
+      const haystack = [
+        employeeName,
+        emp?.department,
+        emp?.role,
+        update.projectName,
+        update.taskTitle,
+        update.description,
+        update.blockers,
+        update.note
+      ].join(' ').toLowerCase();
+      const matchesSearch = !q || haystack.includes(q);
+      const matchesDept = !dept || emp?.department === dept;
+      return matchesSearch && matchesDept;
+    });
+
+    filtered.sort((a, b) => {
+      if (sort === 'oldest') return new Date(a.date || a.createdAt) - new Date(b.date || b.createdAt);
+      if (sort === 'completion') return Number(b.completion || 0) - Number(a.completion || 0);
+      return new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt);
+    });
+    return filtered;
+  }
+
+  document.addEventListener('DOMContentLoaded', initDailyUpdates);
+    </script>
+  </body>
+
+</html>

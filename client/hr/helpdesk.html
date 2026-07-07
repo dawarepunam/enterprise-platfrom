@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk - Enterprise HRMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar placeholder -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-building" style="color:var(--primary-blue)"></i><h2>JMKC HR</h2></div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu"><li><a href="dashboard.html" class="menu-item"><i class="fa-solid fa-arrow-left"></i><span>Back</span></a></li></ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;"><i class="fa-solid fa-bars"></i></button>
+                    <div class="breadcrumb"><span>Engagement</span> > IT & HR Helpdesk</div>
+                </div>
+                <div class="header-right"><div class="user-profile"><img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile"></div></div>
+            </header>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h1 style="font-size:1.5rem;">Helpdesk Tickets</h1>
+                <button class="btn btn-primary" onclick="openModal('ticketModal')"><i class="fa-solid fa-plus"></i> Raise Ticket</button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:24px;">
+                <div style="background:var(--white); padding:20px; border-radius:var(--radius-lg); border:1px solid var(--border-gray); border-top:4px solid var(--primary-blue);">
+                    <div style="color:var(--text-gray); font-size:.85rem; margin-bottom:8px;">Total Open</div>
+                    <div style="font-size:1.8rem; font-weight:700; color:var(--dark-navy);">12</div>
+                </div>
+                <div style="background:var(--white); padding:20px; border-radius:var(--radius-lg); border:1px solid var(--border-gray); border-top:4px solid var(--danger-red);">
+                    <div style="color:var(--text-gray); font-size:.85rem; margin-bottom:8px;">High Priority</div>
+                    <div style="font-size:1.8rem; font-weight:700; color:var(--danger-red);">3</div>
+                </div>
+                <div style="background:var(--white); padding:20px; border-radius:var(--radius-lg); border:1px solid var(--border-gray); border-top:4px solid var(--success-green);">
+                    <div style="color:var(--text-gray); font-size:.85rem; margin-bottom:8px;">Resolved (This Week)</div>
+                    <div style="font-size:1.8rem; font-weight:700; color:var(--success-green);">28</div>
+                </div>
+                <div style="background:var(--white); padding:20px; border-radius:var(--radius-lg); border:1px solid var(--border-gray); border-top:4px solid var(--warning-orange);">
+                    <div style="color:var(--text-gray); font-size:.85rem; margin-bottom:8px;">Pending Approvals</div>
+                    <div style="font-size:1.8rem; font-weight:700; color:var(--warning-orange);">5</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Recent Tickets</h3>
+                    <div class="table-actions">
+                        <select class="form-control" style="width:auto;padding:6px 12px;"><option>All Departments</option><option>IT Support</option><option>HR Support</option><option>Admin / Facilities</option></select>
+                        <select class="form-control" style="width:auto;padding:6px 12px;"><option>Open</option><option>In Progress</option><option>Resolved</option></select>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Subject</th>
+                            <th>Raised By</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-family:monospace; font-weight:600;">#TCK-8902</td>
+                            <td style="font-weight:500;">Laptop screen flickering</td>
+                            <td>Rahul Sharma</td>
+                            <td>IT Support</td>
+                            <td><span class="badge badge-danger">High</span></td>
+                            <td><span class="badge badge-warning">In Progress</span></td>
+                            <td><button class="btn btn-outline btn-sm" onclick="showToast('Opening ticket thread...','info')">View</button></td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:monospace; font-weight:600;">#TCK-8901</td>
+                            <td style="font-weight:500;">Discrepancy in May Salary Slip</td>
+                            <td>Priya Patel</td>
+                            <td>HR / Payroll</td>
+                            <td><span class="badge badge-warning">Medium</span></td>
+                            <td><span style="background:rgba(37,99,235,.1); color:var(--primary-blue); padding:4px 10px; border-radius:20px; font-size:.8rem;">Open</span></td>
+                            <td><button class="btn btn-outline btn-sm">View</button></td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:monospace; font-weight:600;">#TCK-8895</td>
+                            <td style="font-weight:500;">Require ergonomic chair</td>
+                            <td>Amit Verma</td>
+                            <td>Admin</td>
+                            <td><span style="color:var(--text-gray); font-size:.9rem;">Low</span></td>
+                            <td><span class="badge badge-success">Resolved</span></td>
+                            <td><button class="btn btn-outline btn-sm">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Ticket Modal -->
+    <div class="modal-overlay" id="ticketModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header"><h3>Raise New Ticket</h3><button class="modal-close"><i class="fa-solid fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-control"><option>IT Support (Hardware/Software)</option><option>HR / Payroll Query</option><option>Admin / Facility Request</option></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <select class="form-control"><option>Low</option><option>Medium</option><option>High</option></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-control" placeholder="Short description of the issue">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Details</label>
+                    <textarea class="form-control" rows="4" placeholder="Explain the issue in detail..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('ticketModal');showToast('Ticket created successfully!','success')">Submit Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<div class="pm-freeze">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Milestone</span>
+      <h2>Requirement Freeze & Project Creation</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Lock the requirement version and convert it into an actionable Project.</p>
+    </div>
+  </div>
+
+  <div class="pm-card" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 3rem 2rem;">
+    <div id="freezeStatePending">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">❄️</div>
+      <h3>Freeze Requirement</h3>
+      <p style="margin-bottom: 2rem; color: var(--pm-text-muted);">This action will lock all features, budgets, timelines and scope. You will not be able to edit this requirement without a Change Request.</p>
+      <button class="pm-btn primary" data-action="executeFreeze" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Freeze Requirement Now</button>
+    </div>
+
+    <div id="freezeStateFrozen" class="hidden">
+      <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--pm-secondary);">✅</div>
+      <h3 style="color: var(--pm-secondary);">Requirement is Frozen</h3>
+      <p style="margin-bottom: 2rem; color: var(--pm-text-muted);">The scope is version-locked. You can now generate the Project entity.</p>
+      <button class="pm-btn primary" data-action="generateProject" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Generate Project</button>
+    </div>
+
+    <div id="freezeStateProject" class="hidden">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+      <h3 style="color: var(--pm-primary);">Project Successfully Created!</h3>
+      <p style="margin-bottom: 2rem; color: var(--pm-text-muted);">The project has been generated in the Project Manager module.</p>
+      <button class="pm-btn" data-action="goToAssignment" style="font-size: 1.1rem; padding: 0.75rem 2rem;">Assign Project Manager</button>
+    </div>
+  </div>
+</div>

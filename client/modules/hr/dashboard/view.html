@@ -1,0 +1,168 @@
+<div class="hr-dashboard" style="display:flex; flex-direction:column; gap:1.5rem;">
+  
+  <!-- Top Banner -->
+  <div class="hr-card" style="background: linear-gradient(135deg, #E0E7FF 0%, #F8FAFC 100%);">
+    <h2 style="margin-top:0; color:var(--hr-text-main);">Good Morning HR Manager 👋</h2>
+    <div style="display:flex; gap:2rem; margin-top:1rem;">
+      <div style="font-weight:600; color:var(--hr-primary);">Today</div>
+      <div style="color:var(--hr-text-muted);"><strong>4</strong> New Employees</div>
+      <div style="color:var(--hr-text-muted);"><strong>3</strong> Leave Requests</div>
+      <div style="color:var(--hr-text-muted);"><strong>2</strong> Birthdays</div>
+      <div style="color:var(--hr-text-muted);"><strong>1</strong> Promotion Due</div>
+    </div>
+  </div>
+
+  <!-- KPI Cards Grid (2x4) -->
+  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1.5rem;">
+    <!-- Card 1 -->
+    <div class="hr-card hoverable" style="cursor:pointer;" onclick="window.App.navigate('/hr/employees')">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">👥</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">245</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Total Employees</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 2 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">🟢</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">212</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Active Employees</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 3 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">🔴</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">18</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Inactive Employees</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 4 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">✨</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">12</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">New Joiners</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 5 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">📄</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">28</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Documents Pending</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 6 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">💻</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">198</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Assets Assigned</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 7 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">🏢</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">8</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Departments</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+    <!-- Card 8 -->
+    <div class="hr-card hoverable">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+        <span style="font-size:1.5rem;">👔</span>
+      </div>
+      <div style="font-size:2rem; font-weight:700;">32</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">Managers</div>
+      <div style="margin-top:1rem; font-size:0.875rem; color:var(--hr-primary);">View Details →</div>
+    </div>
+  </div>
+
+  <!-- Departments Horizontal Scroll -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem;">
+    <h3 style="margin:0;">Departments</h3>
+    <a href="javascript:void(0)" onclick="window.App.navigate('/hr/departments')" style="color:var(--hr-primary); text-decoration:none; font-size:0.875rem;">View All</a>
+  </div>
+  <div style="display:flex; gap:1rem; overflow-x:auto; padding-bottom:1rem;" id="hrDeptCards">
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=hr')">
+      <div style="color:var(--hr-primary); font-weight:600; margin-bottom:0.5rem;">HR</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">25 Employees</div>
+    </div>
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=marketing')">
+      <div style="color:#8B5CF6; font-weight:600; margin-bottom:0.5rem;">Marketing</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">18 Employees</div>
+    </div>
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=sales')">
+      <div style="color:#10B981; font-weight:600; margin-bottom:0.5rem;">Sales</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">35 Employees</div>
+    </div>
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=calling')">
+      <div style="color:#F59E0B; font-weight:600; margin-bottom:0.5rem;">Calling</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">22 Employees</div>
+    </div>
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=development')">
+      <div style="color:#EC4899; font-weight:600; margin-bottom:0.5rem;">Development</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">48 Employees</div>
+    </div>
+    <div class="hr-card hoverable" style="min-width:200px; cursor:pointer;" onclick="window.App.navigate('/hr/employees?department=finance')">
+      <div style="color:#14B8A6; font-weight:600; margin-bottom:0.5rem;">Finance</div>
+      <div style="color:var(--hr-text-muted); font-size:0.875rem;">20 Employees</div>
+    </div>
+  </div>
+
+  <!-- Recent Employees Table -->
+  <div class="hr-card" style="margin-top:1rem;">
+    <h3 style="margin-top:0; margin-bottom:1.5rem;">Recent Employees</h3>
+    <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Photo</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Name</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Department</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Designation</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Joining Date</th>
+          <th style="padding:1rem 0; color:var(--hr-text-muted); font-weight:500;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Mock Data for visual structure -->
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <td style="padding:1rem 0;"><img src="https://ui-avatars.com/api/?name=Rahul+Sharma&background=random" style="width:36px; height:36px; border-radius:50%;" /></td>
+          <td><strong>Rahul Sharma</strong><br><small style="color:var(--hr-text-muted);">EMP001</small></td>
+          <td>Development</td>
+          <td>Developer</td>
+          <td>10 May 2026</td>
+          <td><span style="background:#D1FAE5; color:#065F46; padding:4px 8px; border-radius:12px; font-size:0.75rem;">Active</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--hr-border);">
+          <td style="padding:1rem 0;"><img src="https://ui-avatars.com/api/?name=Priya+Mehta&background=random" style="width:36px; height:36px; border-radius:50%;" /></td>
+          <td><strong>Priya Mehta</strong><br><small style="color:var(--hr-text-muted);">EMP002</small></td>
+          <td>Marketing</td>
+          <td>Executive</td>
+          <td>12 May 2026</td>
+          <td><span style="background:#D1FAE5; color:#065F46; padding:4px 8px; border-radius:12px; font-size:0.75rem;">Active</span></td>
+        </tr>
+        <tr>
+          <td style="padding:1rem 0;"><img src="https://ui-avatars.com/api/?name=Amit+Verma&background=random" style="width:36px; height:36px; border-radius:50%;" /></td>
+          <td><strong>Amit Verma</strong><br><small style="color:var(--hr-text-muted);">EMP003</small></td>
+          <td>Sales</td>
+          <td>Sales Executive</td>
+          <td>14 May 2026</td>
+          <td><span style="background:#D1FAE5; color:#065F46; padding:4px 8px; border-radius:12px; font-size:0.75rem;">Active</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="/modules/hr/dashboard/script.js"></script>

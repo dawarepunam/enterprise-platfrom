@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unauthorized Access</title>
+  <link rel="stylesheet" href="../assets/css/global.css" />
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#fff7ed,#fff);font-family:var(--font);color:#0f172a}
+    .card{width:min(640px,calc(100vw - 32px));padding:40px;border-radius:28px;background:#fff;border:1px solid rgba(148,163,184,.18);box-shadow:0 24px 50px rgba(15,23,42,.08)}
+    h1,p{margin:0} p{margin-top:12px;color:#64748b;line-height:1.7}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+  </style>
+</head>
+<body>
+  <section class="card">
+    <p class="eyebrow">Access Restricted</p>
+    <h1>You do not have permission to open this module</h1>
+    <p>Your current role is not allowed to access the requested route. Return to your dashboard or log in with an authorized account.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/index.html">Go Home</a>
+      <a class="btn secondary-btn" href="/login.html">Switch Account</a>
+    </div>
+  </section>
+</body>
+</html>

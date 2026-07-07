@@ -1,0 +1,41 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="34" fill="#EEF6FF"/>
+  <rect x="86" y="92" width="466" height="704" rx="30" fill="#FFFFFF" stroke="#D7E5F7"/>
+  <rect x="130" y="214" width="378" height="582" rx="18" fill="#DCEBFF"/>
+  <rect x="166" y="254" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="246" y="254" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="326" y="254" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="406" y="254" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="166" y="358" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="246" y="358" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="326" y="358" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="406" y="358" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="166" y="462" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="246" y="462" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="326" y="462" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="406" y="462" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="166" y="566" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="246" y="566" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="326" y="566" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="406" y="566" width="58" height="70" rx="8" fill="#FFFFFF"/>
+  <rect x="250" y="672" width="138" height="124" rx="16" fill="#2563EB"/>
+  <text x="160" y="162" fill="#EF4444" font-family="Arial, sans-serif" font-size="44" font-weight="800">J</text>
+  <text x="188" y="162" fill="#F59E0B" font-family="Arial, sans-serif" font-size="44" font-weight="800">M</text>
+  <text x="228" y="162" fill="#10B981" font-family="Arial, sans-serif" font-size="44" font-weight="800">K</text>
+  <text x="260" y="162" fill="#2563EB" font-family="Arial, sans-serif" font-size="44" font-weight="800">C</text>
+  <text x="326" y="162" fill="#0F172A" font-family="Arial, sans-serif" font-size="34" font-weight="700">CRM</text>
+  <rect x="650" y="138" width="360" height="126" rx="22" fill="#FFFFFF" stroke="#D7E5F7"/>
+  <rect x="690" y="174" width="54" height="54" rx="14" fill="#EEF2FF"/>
+  <path d="M704 207h26M704 193h26" stroke="#2563EB" stroke-width="6" stroke-linecap="round"/>
+  <text x="770" y="194" fill="#0F172A" font-family="Arial, sans-serif" font-size="25" font-weight="700">Enterprise CRM</text>
+  <text x="770" y="228" fill="#64748B" font-family="Arial, sans-serif" font-size="19">Secure admin workspace</text>
+  <rect x="620" y="322" width="430" height="340" rx="28" fill="#FFFFFF" stroke="#D7E5F7"/>
+  <rect x="664" y="372" width="342" height="42" rx="10" fill="#EFF6FF"/>
+  <rect x="664" y="442" width="342" height="42" rx="10" fill="#EFF6FF"/>
+  <rect x="664" y="512" width="204" height="42" rx="10" fill="#EFF6FF"/>
+  <rect x="664" y="582" width="152" height="42" rx="10" fill="#2563EB"/>
+  <circle cx="968" cy="584" r="30" fill="#DCFCE7"/>
+  <path d="M954 584l10 10 20-24" stroke="#16A34A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="724" y="714" width="260" height="62" rx="18" fill="#FFFFFF" stroke="#D7E5F7"/>
+  <text x="776" y="753" fill="#2563EB" font-family="Arial, sans-serif" font-size="22" font-weight="700">Login Securely</text>
+</svg>

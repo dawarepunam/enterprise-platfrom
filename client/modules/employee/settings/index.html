@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    /* ── Shell ── */
+    .pm-main {
+      background: #f4f7fe !important;
+      display: flex !important;
+      flex-direction: column !important;
+      min-height: calc(100vh - 72px) !important;
+    }
+    .settings-page-wrap {
+      flex: 1;
+      padding: 32px 36px;
+    }
+
+    /* ── Page Header ── */
+    .pg-hdr { margin-bottom: 32px; }
+    .pg-hdr h1 { font-size: 26px; font-weight: 800; color: #2b3674; margin: 0 0 6px; display: flex; align-items: center; gap: 10px; }
+    .pg-hdr p  { font-size: 14px; color: #a3aed1; margin: 0; }
+
+    /* ── Layout ── */
+    .settings-layout { display: flex; gap: 28px; align-items: flex-start; }
+
+    /* ── Left Nav ── */
+    .settings-nav {
+      width: 240px; flex-shrink: 0;
+      background: #fff; border-radius: 20px; padding: 16px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1); position: sticky; top: 20px;
+    }
+    .nav-section { margin-bottom: 8px; }
+    .nav-section-title { font-size: 10px; font-weight: 700; color: #a3aed1; text-transform: uppercase; letter-spacing: 1px; padding: 8px 12px 4px; }
+    .tab-btn {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      padding: 12px 14px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+      background: transparent; color: #5d6d8a; border: none; text-align: left; transition: .2s;
+    }
+    .tab-btn i { width: 18px; text-align: center; opacity: 0.7; }
+    .tab-btn:hover { background: #f4f7fe; color: #2b3674; }
+    .tab-btn.active { background: #3965FF; color: #fff; box-shadow: 0 4px 16px rgba(57,101,255,0.25); }
+    .tab-btn.active i { opacity: 1; }
+
+    /* ── Content Area ── */
+    .settings-content { flex: 1; min-width: 0; }
+    .tab-panel { display: none; animation: fadeIn 0.2s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Cards ── */
+    .set-card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 4px 24px rgba(112,144,176,0.08); margin-bottom: 24px; }
+    .sc-hdr { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 1px solid #f0f4ff; padding-bottom: 18px; }
+    .sc-title { font-size: 18px; font-weight: 800; color: #2b3674; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; }
+    .sc-title i { color: #3965FF; font-size: 16px; }
+    .sc-desc { font-size: 13px; color: #a3aed1; margin: 0; }
+
+    /* ── Avatar Upload ── */
+    .avatar-section { display: flex; align-items: center; gap: 24px; padding: 20px; background: #f8fafc; border-radius: 16px; margin-bottom: 24px; }
+    .av-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #3965FF, #4318FF); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 6px 20px rgba(57,101,255,0.3); flex-shrink: 0; }
+    .av-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; font-size: 20px; }
+    .av-circle:hover .av-overlay { display: flex; }
+    .av-info h4 { font-size: 15px; font-weight: 700; color: #2b3674; margin: 0 0 4px; }
+    .av-info p { font-size: 12px; color: #a3aed1; margin: 0 0 12px; }
+    .btn-av { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: .2s; }
+    .btn-av-change { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .btn-av-change:hover { background: #3965FF; color: #fff; }
+
+    /* ── Form Elements ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: #2b3674; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-control {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 14px;
+      outline: none; background: #f8fafc; color: #2b3674; transition: .2s;
+    }
+    .form-control:focus { border-color: #3965FF; background: #fff; box-shadow: 0 0 0 3px rgba(57,101,255,0.1); }
+    .form-control:disabled { background: #f0f4ff; color: #a3aed1; cursor: not-allowed; }
+    .form-hint { font-size: 11px; color: #a3aed1; margin-top: 4px; }
+
+    /* ── Toggle ── */
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #f0f4ff; }
+    .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .toggle-info h4 { font-size: 14px; font-weight: 700; color: #2b3674; margin: 0 0 3px; }
+    .toggle-info p { font-size: 12px; color: #a3aed1; margin: 0; }
+    .toggle-switch { position: relative; width: 48px; height: 26px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; background: #e2e8f0; border-radius: 26px; transition: .3s; }
+    .toggle-slider::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .3s; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+    .toggle-switch input:checked + .toggle-slider { background: #3965FF; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+    /* ── Danger Zone ── */
+    .danger-zone { background: rgba(238,93,80,0.04); border: 1.5px solid rgba(238,93,80,0.2); border-radius: 16px; padding: 20px; }
+    .dz-row { display: flex; justify-content: space-between; align-items: center; }
+    .dz-info h4 { font-size: 14px; font-weight: 700; color: #EE5D50; margin: 0 0 3px; }
+    .dz-info p { font-size: 12px; color: #a3aed1; margin: 0; }
+    .btn-danger { background: rgba(238,93,80,0.1); color: #EE5D50; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1.5px solid rgba(238,93,80,0.3); cursor: pointer; transition: .2s; }
+    .btn-danger:hover { background: #EE5D50; color: #fff; }
+
+    /* ── Buttons ── */
+    .btn-save {
+      background: #3965FF; color: #fff; padding: 13px 28px; border-radius: 12px;
+      font-size: 14px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: .2s;
+    }
+    .btn-save:hover { background: #274ccf; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(57,101,255,0.3); }
+    .btn-ghost { background: #f4f7fe; color: #5d6d8a; padding: 13px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; transition: .2s; }
+    .btn-ghost:hover { background: #e2e8f0; }
+    .btn-row { display: flex; gap: 12px; padding-top: 20px; border-top: 1px solid #f0f4ff; }
+
+    /* ── Security Items ── */
+    .security-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .badge-enabled { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .badge-disabled { background: rgba(163,174,209,0.12); color: #a3aed1; }
+
+    .qr-box { padding: 24px; background: #f8fafc; border: 1.5px dashed #e2e8f0; border-radius: 16px; text-align: center; margin-top: 16px; }
+    .qr-box img { width: 160px; height: 160px; margin-bottom: 12px; border-radius: 8px; }
+
+    /* ── Notification Preferences ── */
+    .notif-card { background: #f8fafc; border: 1px solid #f0f4ff; border-radius: 14px; padding: 4px 0; }
+
+    /* ── Appearance ── */
+    .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+    .theme-opt { border: 2px solid #e2e8f0; border-radius: 14px; padding: 16px; text-align: center; cursor: pointer; transition: .2s; }
+    .theme-opt:hover { border-color: #3965FF; }
+    .theme-opt.selected { border-color: #3965FF; background: rgba(57,101,255,0.05); }
+    .theme-opt .th-icon { font-size: 24px; margin-bottom: 8px; }
+    .theme-opt .th-name { font-size: 13px; font-weight: 700; color: #2b3674; }
+
+    /* ── Footer ── */
+    .settings-footer {
+      background: #fff; border-top: 1px solid #f0f4ff; margin-top: auto;
+      padding: 20px 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .sf-left { font-size: 13px; color: #a3aed1; display: flex; align-items: center; gap: 8px; }
+    .sf-right { display: flex; gap: 20px; }
+    .sf-link { font-size: 13px; color: #a3aed1; text-decoration: none; font-weight: 500; transition: .2s; }
+    .sf-link:hover { color: #3965FF; }
+    .sf-version { font-size: 12px; color: #a3aed1; background: #f4f7fe; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 100px; right: 24px; background: #2b3674; color: #fff;
+      padding: 14px 22px; border-radius: 14px; font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 30px rgba(43,54,116,0.25);
+      z-index: 9999; transform: translateY(20px); opacity: 0; transition: .3s; pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success i { color: #05CD99; }
+    .toast.error i { color: #EE5D50; }
+
+    @media (max-width: 900px) {
+      .settings-layout { flex-direction: column; }
+      .settings-nav { width: 100%; position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+      .nav-section { display: contents; }
+      .nav-section-title { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .theme-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;min-height:100vh;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="settings-page-wrap">
+
+        <!-- Page Header -->
+        <div class="pg-hdr">
+          <h1><i class="fa fa-cog" style="color:#3965FF;"></i> Settings</h1>
+          <p>Manage your personal information, security, notifications, and appearance.</p>
+        </div>
+
+        <div class="settings-layout">
+
+          <!-- ── Left Navigation ── -->
+          <div class="settings-nav">
+            <div class="nav-section">
+              <div class="nav-section-title">Account</div>
+              <button class="tab-btn active" data-tab="profile"><i class="fa fa-user-circle"></i> Profile</button>
+              <button class="tab-btn" data-tab="security"><i class="fa fa-shield-alt"></i> Security</button>
+              <button class="tab-btn" data-tab="password"><i class="fa fa-key"></i> Password</button>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Preferences</div>
+              <button class="tab-btn" data-tab="notifications"><i class="fa fa-bell"></i> Notifications</button>
+              <button class="tab-btn" data-tab="appearance"><i class="fa fa-palette"></i> Appearance</button>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Danger</div>
+              <button class="tab-btn" data-tab="danger" style="color:#EE5D50;"><i class="fa fa-exclamation-triangle" style="color:#EE5D50;"></i> Danger Zone</button>
+            </div>
+          </div>
+
+          <!-- ── Right Content ── -->
+          <div class="settings-content">
+
+            <!-- ══ PROFILE TAB ══ -->
+            <section id="tab-profile" class="tab-panel active">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-user-edit"></i> Profile Information</h3>
+                    <p class="sc-desc">Your public profile information visible to teammates.</p>
+                  </div>
+                </div>
+
+                <div class="avatar-section">
+                  <div class="av-circle" id="profileAvatar" onclick="document.getElementById('avatarInput').click()">
+                    PD
+                    <div class="av-overlay"><i class="fa fa-camera" style="color:#fff;"></i></div>
+                  </div>
+                  <div class="av-info">
+                    <h4>Profile Photo</h4>
+                    <p>JPG, PNG or GIF. Max size 2MB.</p>
+                    <button class="btn-av btn-av-change" onclick="document.getElementById('avatarInput').click()"><i class="fa fa-upload"></i> Upload Photo</button>
+                  </div>
+                  <input type="file" id="avatarInput" style="display:none" accept="image/*"/>
+                </div>
+
+                <form id="profileForm">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label" for="profileName">Full Name</label>
+                      <input type="text" id="profileName" class="form-control" placeholder="e.g. Poonam Daware"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="profileEmail">Email Address</label>
+                      <input type="email" id="profileEmail" class="form-control" placeholder="your@email.com"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Job Title</label>
+                      <input type="text" id="profileJobTitle" class="form-control" placeholder="e.g. Software Developer" disabled/>
+                      <div class="form-hint">Managed by your HR administrator</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Department</label>
+                      <input type="text" id="profileDept" class="form-control" placeholder="e.g. Engineering" disabled/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Phone Number</label>
+                      <input type="tel" id="profilePhone" class="form-control" placeholder="+91 XXXXX XXXXX"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Location</label>
+                      <input type="text" id="profileLocation" class="form-control" placeholder="e.g. Pune, India"/>
+                    </div>
+                    <div class="form-group full">
+                      <label class="form-label">Bio</label>
+                      <textarea id="profileBio" class="form-control" rows="3" placeholder="Tell your team about yourself..." style="resize:vertical;"></textarea>
+                    </div>
+                  </div>
+                  <div class="btn-row">
+                    <button type="button" class="btn-ghost">Discard</button>
+                    <button type="submit" class="btn-save"><i class="fa fa-save"></i> Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <!-- ══ SECURITY TAB ══ -->
+            <section id="tab-security" class="tab-panel">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-shield-alt"></i> Two-Factor Authentication</h3>
+                    <p class="sc-desc">Add an extra layer of security to your account using 2FA.</p>
+                  </div>
+                  <span class="security-badge badge-disabled" id="2faBadge">Disabled</span>
+                </div>
+
+                <div style="padding:20px;background:#f8fafc;border-radius:14px;margin-bottom:20px;">
+                  <p style="font-size:14px;color:#5d6d8a;line-height:1.6;margin:0 0 16px;" id="2faStatus">Loading status...</p>
+                  <button class="btn-save" id="toggle2faBtn" style="display:inline-flex;"><i class="fa fa-lock"></i> Enable 2FA</button>
+                </div>
+
+                <div id="qrCodeContainer" class="qr-box" style="display:none;">
+                  <p style="font-size:14px;font-weight:700;color:#2b3674;margin-bottom:16px;"><i class="fa fa-qrcode"></i> Scan this QR with your authenticator app</p>
+                  <img id="qrCodeImg" src="" alt="2FA QR Code"/>
+                  <br>
+                  <button class="btn-save" id="confirm2faBtn" style="display:inline-flex;margin-top:12px;"><i class="fa fa-check"></i> I've scanned the code</button>
+                </div>
+              </div>
+
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-history"></i> Login Activity</h3>
+                    <p class="sc-desc">Recent account login events for security monitoring.</p>
+                  </div>
+                </div>
+                <div id="loginActivity" style="font-size:14px;color:#5d6d8a;">
+                  <div style="text-align:center;padding:20px;color:#a3aed1;"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ══ PASSWORD TAB ══ -->
+            <section id="tab-password" class="tab-panel">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-key"></i> Change Password</h3>
+                    <p class="sc-desc">Choose a strong password with at least 8 characters.</p>
+                  </div>
+                </div>
+
+                <form id="passwordForm" style="max-width:480px;">
+                  <div class="form-group">
+                    <label class="form-label" for="currentPwd">Current Password</label>
+                    <input type="password" id="currentPwd" class="form-control" placeholder="Enter your current password"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="newPwd">New Password</label>
+                    <input type="password" id="newPwd" class="form-control" placeholder="Minimum 8 characters"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="confirmPwd">Confirm New Password</label>
+                    <input type="password" id="confirmPwd" class="form-control" placeholder="Re-enter new password"/>
+                  </div>
+
+                  <!-- Strength indicator -->
+                  <div style="margin-bottom:20px;">
+                    <div style="display:flex;gap:6px;margin-bottom:6px;">
+                      <div class="pwd-bar" style="flex:1;height:4px;border-radius:4px;background:#f0f4ff;" id="pwdBar1"></div>
+                      <div class="pwd-bar" style="flex:1;height:4px;border-radius:4px;background:#f0f4ff;" id="pwdBar2"></div>
+                      <div class="pwd-bar" style="flex:1;height:4px;border-radius:4px;background:#f0f4ff;" id="pwdBar3"></div>
+                      <div class="pwd-bar" style="flex:1;height:4px;border-radius:4px;background:#f0f4ff;" id="pwdBar4"></div>
+                    </div>
+                    <span id="pwdStrengthLabel" style="font-size:11px;color:#a3aed1;font-weight:600;"></span>
+                  </div>
+
+                  <div class="btn-row">
+                    <button type="submit" class="btn-save"><i class="fa fa-lock"></i> Update Password</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+
+            <!-- ══ NOTIFICATIONS TAB ══ -->
+            <section id="tab-notifications" class="tab-panel">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-bell"></i> Notification Preferences</h3>
+                    <p class="sc-desc">Choose how you want to be notified about activity.</p>
+                  </div>
+                </div>
+
+                <div style="margin-bottom:24px;">
+                  <h4 style="font-size:13px;font-weight:700;color:#a3aed1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">Email Notifications</h4>
+                  <div class="notif-card">
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>New Task Assignment</h4><p>When a task is assigned to you</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifTaskEmail" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Task Status Updates</h4><p>When a task you own changes status</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifTaskStatus" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Leave Approval / Rejection</h4><p>Decision on your leave requests</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifLeave" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Meeting Reminders</h4><p>30 minutes before a scheduled meeting</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifMeeting"/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>New Announcements</h4><p>Company-wide or team announcements</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifAnnouncement" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 style="font-size:13px;font-weight:700;color:#a3aed1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">In-App Notifications</h4>
+                  <div class="notif-card">
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Push Notifications</h4><p>Instant alerts inside the app</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifPush" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Sound Alerts</h4><p>Play a sound for new messages</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifSound"/><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="toggle-row">
+                      <div class="toggle-info"><h4>Daily Digest Email</h4><p>A daily summary of all your activity</p></div>
+                      <label class="toggle-switch"><input type="checkbox" id="notifDigest" checked/><span class="toggle-slider"></span></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="btn-row" style="margin-top:24px;">
+                  <button class="btn-save" id="btnSaveNotifications"><i class="fa fa-save"></i> Save Preferences</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- ══ APPEARANCE TAB ══ -->
+            <section id="tab-appearance" class="tab-panel">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title"><i class="fa fa-palette"></i> Appearance</h3>
+                    <p class="sc-desc">Customize the look and feel of your workspace.</p>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Theme</label>
+                  <div class="theme-grid" id="themeGrid">
+                    <div class="theme-opt selected" data-theme="light">
+                      <div class="th-icon">☀️</div>
+                      <div class="th-name">Light</div>
+                    </div>
+                    <div class="theme-opt" data-theme="dark">
+                      <div class="th-icon">🌙</div>
+                      <div class="th-name">Dark</div>
+                    </div>
+                    <div class="theme-opt" data-theme="system">
+                      <div class="th-icon">💻</div>
+                      <div class="th-name">System</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Language</label>
+                  <select id="prefLanguage" class="form-control">
+                    <option value="en">English</option>
+                    <option value="mr">Marathi</option>
+                    <option value="hi">Hindi</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Date Format</label>
+                  <select id="prefDateFormat" class="form-control">
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Time Zone</label>
+                  <select id="prefTimezone" class="form-control">
+                    <option value="Asia/Kolkata">Asia/Kolkata (IST +5:30)</option>
+                    <option value="UTC">UTC</option>
+                  </select>
+                </div>
+
+                <div class="btn-row">
+                  <button class="btn-save" id="btnSaveAppearance"><i class="fa fa-save"></i> Save Appearance</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- ══ DANGER ZONE TAB ══ -->
+            <section id="tab-danger" class="tab-panel">
+              <div class="set-card">
+                <div class="sc-hdr">
+                  <div>
+                    <h3 class="sc-title" style="color:#EE5D50;"><i class="fa fa-exclamation-triangle" style="color:#EE5D50;"></i> Danger Zone</h3>
+                    <p class="sc-desc">Irreversible actions. Proceed with caution.</p>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div class="danger-zone">
+                    <div class="dz-row">
+                      <div class="dz-info">
+                        <h4>Export My Data</h4>
+                        <p>Download all your data as a JSON archive.</p>
+                      </div>
+                      <button class="btn-danger" id="btnExportData"><i class="fa fa-download"></i> Export Data</button>
+                    </div>
+                  </div>
+
+                  <div class="danger-zone">
+                    <div class="dz-row">
+                      <div class="dz-info">
+                        <h4>Deactivate Account</h4>
+                        <p>Temporarily disable your account. Contact HR to reactivate.</p>
+                      </div>
+                      <button class="btn-danger"><i class="fa fa-pause-circle"></i> Deactivate</button>
+                    </div>
+                  </div>
+
+                  <div class="danger-zone" style="border-color:rgba(238,93,80,0.5);background:rgba(238,93,80,0.06);">
+                    <div class="dz-row">
+                      <div class="dz-info">
+                        <h4>Delete Account</h4>
+                        <p>Permanently delete your account. This cannot be undone.</p>
+                      </div>
+                      <button class="btn-danger" style="background:#EE5D50;color:#fff;border-color:#EE5D50;"><i class="fa fa-trash"></i> Delete Account</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+          </div><!-- /settings-content -->
+        </div><!-- /settings-layout -->
+      </div><!-- /settings-page-wrap -->
+
+      <!-- ── Professional Footer ── -->
+      <footer class="settings-footer">
+        <div class="sf-left">
+          <img src="/logo.png" alt="JMKC" style="height:20px;" onerror="this.style.display='none'" />
+          © 2026 JMKC Enterprise Platform. All rights reserved.
+          <span class="sf-version">v1.0.0</span>
+        </div>
+        <div class="sf-right">
+          <a href="#" class="sf-link">Privacy Policy</a>
+          <a href="#" class="sf-link">Terms of Use</a>
+          <a href="#" class="sf-link">Help Center</a>
+          <a href="#" class="sf-link">Contact Support</a>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" style="display:none;">
+  <i class="fa fa-check-circle"></i>
+  <span id="toastMsg">Saved successfully</span>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script>
+  const token = localStorage.getItem('token');
+  if (!token) location.href = '/login';
+  window.apiFetch = (url, opts = {}) => fetch(url, { ...opts, headers: { 'Authorization': `Bearer ${token}`, ...opts.headers } });
+
+  // ── Tab Switching ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      document.getElementById('tab-' + target).classList.add('active');
+      if (target === 'profile') loadProfile();
+      if (target === 'security') load2FAStatus();
+    });
+  });
+
+  // ── Toast Helper ──
+  function showToast(msg, type = 'success') {
+    const toast = document.getElementById('toast');
+    const msgEl = document.getElementById('toastMsg');
+    toast.style.display = 'flex';
+    toast.className = 'toast ' + type;
+    msgEl.textContent = msg;
+    toast.querySelector('i').className = type === 'success' ? 'fa fa-check-circle' : 'fa fa-times-circle';
+    // Force reflow
+    void toast.offsetWidth;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.style.display = 'none', 300);
+    }, 3500);
+  }
+
+  // ── Load Profile ──
+  async function loadProfile() {
+    try {
+      const res = await window.apiFetch('/api/settings/profile');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.name) document.getElementById('profileName').value = data.name;
+      if (data.email) document.getElementById('profileEmail').value = data.email;
+      if (data.jobTitle) document.getElementById('profileJobTitle').value = data.jobTitle;
+      if (data.department) document.getElementById('profileDept').value = data.department;
+      if (data.phone) document.getElementById('profilePhone').value = data.phone;
+      if (data.location) document.getElementById('profileLocation').value = data.location;
+      if (data.bio) document.getElementById('profileBio').value = data.bio;
+      // Avatar initials or photo
+      if (data.profilePhoto) {
+        document.getElementById('profileAvatar').style.backgroundImage = `url(${data.profilePhoto})`;
+        document.getElementById('profileAvatar').style.backgroundSize = 'cover';
+        document.getElementById('profileAvatar').style.backgroundPosition = 'center';
+        document.getElementById('profileAvatar').childNodes[0].textContent = '';
+      } else if (data.name) {
+        const parts = data.name.split(' ');
+        document.getElementById('profileAvatar').childNodes[0].textContent = (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
+      }
+    } catch (e) { console.error(e); }
+  }
+
+  // ── Avatar Upload ──
+  document.getElementById('avatarInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('avatar', file);
+    
+    showToast('Uploading photo...', 'success');
+    try {
+      const token = window.getToken();
+      const res = await fetch('/api/settings/avatar', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+      
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      
+      if (data.profilePhoto) {
+        document.getElementById('profileAvatar').style.backgroundImage = `url(${data.profilePhoto})`;
+        document.getElementById('profileAvatar').style.backgroundSize = 'cover';
+        document.getElementById('profileAvatar').style.backgroundPosition = 'center';
+        document.getElementById('profileAvatar').childNodes[0].textContent = '';
+        showToast('Profile photo updated successfully!');
+      }
+    } catch (err) {
+      showToast('Failed to upload photo', 'error');
+    }
+  });
+
+  // ── Save Profile ──
+  document.getElementById('profileForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+    try {
+      const res = await window.apiFetch('/api/settings/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('profileName').value.trim(),
+          email: document.getElementById('profileEmail').value.trim(),
+          phone: document.getElementById('profilePhone').value.trim(),
+          location: document.getElementById('profileLocation').value.trim(),
+          bio: document.getElementById('profileBio').value.trim()
+        })
+      });
+      if (!res.ok) throw new Error('Update failed');
+      const payload = await res.json();
+      const updatedUser = payload.data || {};
+      const currentUser = JSON.parse(localStorage.getItem('user') || localStorage.getItem('jmkc_user') || '{}');
+      const nextUser = { ...currentUser, ...updatedUser };
+      localStorage.setItem('user', JSON.stringify(nextUser));
+      localStorage.setItem('jmkc_user', JSON.stringify(nextUser));
+      if (document.getElementById('sidebarUserName')) document.getElementById('sidebarUserName').textContent = nextUser.name || 'Employee';
+      if (document.getElementById('sidebarUserDept')) document.getElementById('sidebarUserDept').textContent = nextUser.department || 'Department';
+      if (document.getElementById('headerUserName')) document.getElementById('headerUserName').textContent = (nextUser.name || 'Employee').split(' ')[0];
+      showToast('Profile saved successfully!');
+    } catch (err) {
+      showToast('Failed to save profile', 'error');
+    } finally {
+      btn.innerHTML = '<i class="fa fa-save"></i> Save Changes';
+    }
+  });
+
+  // ── 2FA ──
+  async function load2FAStatus() {
+    try {
+      const res = await window.apiFetch('/api/settings/2fa');
+      if (!res.ok) return;
+      const { enabled } = await res.json();
+      const badge = document.getElementById('2faBadge');
+      const status = document.getElementById('2faStatus');
+      const btn = document.getElementById('toggle2faBtn');
+      if (enabled) {
+        status.textContent = 'Two-Factor Authentication is currently ENABLED on your account. Your account is protected.';
+        btn.innerHTML = '<i class="fa fa-lock-open"></i> Disable 2FA';
+        badge.textContent = 'Enabled';
+        badge.className = 'security-badge badge-enabled';
+      } else {
+        status.textContent = 'Two-Factor Authentication is currently DISABLED. We strongly recommend enabling it for account security.';
+        btn.innerHTML = '<i class="fa fa-lock"></i> Enable 2FA';
+        badge.textContent = 'Disabled';
+        badge.className = 'security-badge badge-disabled';
+      }
+    } catch (e) { console.error(e); }
+  }
+
+  document.getElementById('toggle2faBtn').addEventListener('click', async () => {
+    try {
+      const res = await window.apiFetch('/api/settings/2fa', { method: 'POST' });
+      if (!res.ok) throw new Error('Toggle failed');
+      const data = await res.json();
+      if (data.qrCode) {
+        document.getElementById('qrCodeImg').src = data.qrCode;
+        document.getElementById('qrCodeContainer').style.display = 'block';
+      } else {
+        document.getElementById('qrCodeContainer').style.display = 'none';
+        showToast('2FA disabled successfully');
+      }
+      await load2FAStatus();
+    } catch (err) { showToast('Failed to toggle 2FA', 'error'); }
+  });
+
+  document.getElementById('confirm2faBtn').addEventListener('click', async () => {
+    try {
+      const res = await window.apiFetch('/api/settings/2fa/confirm', { method: 'POST' });
+      if (!res.ok) throw new Error('Verification failed');
+      document.getElementById('qrCodeContainer').style.display = 'none';
+      showToast('2FA enabled successfully! 🎉');
+      await load2FAStatus();
+    } catch (err) { showToast('2FA verification failed', 'error'); }
+  });
+
+  // ── Password ──
+  document.getElementById('passwordForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const newPwd = document.getElementById('newPwd').value;
+    const confirmPwd = document.getElementById('confirmPwd').value;
+    if (newPwd !== confirmPwd) { showToast('Passwords do not match', 'error'); return; }
+    try {
+      const res = await window.apiFetch('/api/settings/password', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentPwd: document.getElementById('currentPwd').value, newPwd })
+      });
+      if (!res.ok) throw new Error('Failed');
+      showToast('Password updated successfully!');
+      e.target.reset();
+      updateStrength('');
+    } catch (err) { showToast('Password change failed', 'error'); }
+  });
+
+  // Password strength
+  function updateStrength(val) {
+    const bars = ['pwdBar1','pwdBar2','pwdBar3','pwdBar4'];
+    const label = document.getElementById('pwdStrengthLabel');
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const colors = ['#EE5D50','#FFB547','#3965FF','#05CD99'];
+    const labels = ['','Weak','Fair','Good','Strong'];
+    bars.forEach((id, i) => {
+      document.getElementById(id).style.background = i < score ? colors[score-1] : '#f0f4ff';
+    });
+    label.textContent = val ? labels[score] : '';
+    label.style.color = colors[score-1] || '#a3aed1';
+  }
+  document.getElementById('newPwd').addEventListener('input', e => updateStrength(e.target.value));
+
+  // ── Theme selector ──
+  document.querySelectorAll('.theme-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.theme-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // ── Save Appearance ──
+  document.getElementById('btnSaveAppearance').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.btn-save');
+    const original = btn.innerHTML;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+    try {
+      const theme = document.querySelector('.theme-opt.selected').getAttribute('data-theme');
+      const lang = document.getElementById('prefLanguage').value;
+      const dateFormat = document.getElementById('prefDateFormat').value;
+      const res = await window.apiFetch('/api/settings/preferences', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme, language: lang, dateFormat })
+      });
+      if (!res.ok) throw new Error('Failed to save appearance');
+      showToast('Appearance preferences saved!');
+    } catch (err) {
+      showToast('Failed to save appearance', 'error');
+    } finally {
+      btn.innerHTML = original;
+    }
+  });
+
+  // ── Save Notifications ──
+  document.getElementById('btnSaveNotifications').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.btn-save');
+    const original = btn.innerHTML;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+    try {
+      const notifTaskEmail = document.getElementById('notifTaskEmail').checked;
+      const notifTaskStatus = document.getElementById('notifTaskStatus').checked;
+      const notifLeave = document.getElementById('notifLeave').checked;
+      const notifPush = document.getElementById('notifPush').checked;
+      
+      const res = await window.apiFetch('/api/settings/preferences', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          notifTaskEmail, notifTaskStatus, notifLeave, notifPush
+        })
+      });
+      if (!res.ok) throw new Error('Failed to save notifications');
+      showToast('Notification preferences saved!');
+    } catch (err) {
+      showToast('Failed to save notifications', 'error');
+    } finally {
+      btn.innerHTML = original;
+    }
+  });
+
+  // ── Export Data ──
+  document.getElementById('btnExportData').addEventListener('click', () => {
+    showToast('Your data export has been queued. You will receive an email.');
+  });
+
+  // ── Login Activity ──
+  async function loadLoginActivity() {
+    const el = document.getElementById('loginActivity');
+    if (!el) return;
+    try {
+      const res = await window.apiFetch('/api/settings/sessions');
+      if (!res.ok) throw new Error();
+      const sessions = await res.json();
+      if (!Array.isArray(sessions) || sessions.length === 0) {
+        el.innerHTML = '<p style="color:#a3aed1;font-size:13px;">No recent login activity found.</p>';
+        return;
+      }
+      el.innerHTML = sessions.map(s => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0f4ff;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:10px;background:#f4f7fe;display:flex;align-items:center;justify-content:center;color:#5d6d8a;font-size:16px;">
+              <i class="fa fa-${s.device?.includes('Mobile') ? 'mobile-alt' : 'laptop'}"></i>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#2b3674;">${s.device || 'Unknown Device'}</div>
+              <div style="font-size:12px;color:#a3aed1;">${s.ip || ''} · ${s.lastActive ? new Date(s.lastActive).toLocaleString() : 'Unknown time'}</div>
+            </div>
+          </div>
+          <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:rgba(5,205,153,0.1);color:#05CD99;">${s.current ? 'Current' : 'Active'}</span>
+        </div>`).join('');
+    } catch (e) {
+      el.innerHTML = '<p style="color:#a3aed1;font-size:13px;">Login history not available.</p>';
+    }
+  }
+
+  // Init
+  loadProfile();
+  loadLoginActivity();
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Directory - Enterprise HRMS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        .filter-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            background: var(--white);
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-gray);
+        }
+        
+        .filter-group {
+            flex: 1;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-gray);
+            font-family: var(--font-body);
+            background: var(--bg-color);
+        }
+        
+        .drawer-tabs {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid var(--border-gray);
+            margin-bottom: 20px;
+        }
+        
+        .drawer-tab {
+            padding: 10px 0;
+            color: var(--text-gray);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition-fast);
+        }
+        
+        .drawer-tab.active, .drawer-tab:hover {
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+        
+        .profile-overview {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .profile-overview img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 3px solid var(--border-gray);
+        }
+        
+        .profile-overview h3 {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        
+        .profile-overview p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: var(--bg-color);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .stat-card .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 4px;
+        }
+        
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+        
+        /* Stepper Modal */
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-gray);
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            padding: 0 10px;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border-gray);
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+        .step.active .step-circle {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+        .step-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+        .step.active .step-label {
+            color: var(--primary-blue);
+        }
+        .step-content { display: none; }
+        .step-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-building text-primary" style="color:var(--primary-blue)"></i>
+                <h2>JMKC HR</h2>
+            </div>
+            <div class="sidebar-menu-wrapper">
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard.html" class="menu-item">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="expanded">
+                        <a href="#" class="menu-item active">
+                            <i class="fa-solid fa-users"></i>
+                            <span>People</span>
+                            <i class="fa-solid fa-chevron-up chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="employees.html" class="submenu-item active">Employee Directory</a>
+                            <a href="departments.html" class="submenu-item">Departments</a>
+                            <a href="designations.html" class="submenu-item">Designations</a>
+                            <a href="documents.html" class="submenu-item">Documents</a>
+                            <a href="assets.html" class="submenu-item">Assets</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Workforce</span>
+                            <i class="fa-solid fa-chevron-down chevron" style="margin-left:auto; font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="submenu">
+                            <a href="#" class="submenu-item">Attendance</a>
+                            <a href="#" class="submenu-item">Leaves</a>
+                            <a href="#" class="submenu-item">Shifts</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="action-btn" id="sidebarToggle" style="border:none;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <button class="btn btn-outline" id="backBtn" style="padding: 4px 10px; font-size: 0.8rem;">
+                        <i class="fa-solid fa-arrow-left"></i> Back
+                    </button>
+                    <div class="breadcrumb">
+                        <span>People</span> > Employee Directory
+                    </div>
+                </div>
+                
+                <div class="header-center">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="globalSearch" placeholder="Search Employee...">
+                        <span class="search-shortcut">Ctrl+K</span>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=HR+Manager&background=2563EB&color=fff" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h1 style="font-size: 1.5rem;">Employee Directory</h1>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-outline"><i class="fa-solid fa-file-import"></i> Import</button>
+                    <button class="btn btn-outline"><i class="fa-solid fa-file-export"></i> Export Excel</button>
+                    <button class="btn btn-primary" onclick="openModal('addEmployeeModal')"><i class="fa-solid fa-plus"></i> Add Employee</button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <select class="filter-select">
+                        <option value="">All Departments</option>
+                        <option value="hr">HR</option>
+                        <option value="it">Development</option>
+                        <option value="sales">Sales</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select class="filter-select">
+                        <option value="">All Designations</option>
+                        <option value="manager">Manager</option>
+                        <option value="dev">Developer</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select class="filter-select">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="notice">Notice Period</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select class="filter-select">
+                        <option value="">All Locations</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="pune">Pune</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Role / Designation</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="empTableBody">
+                        <tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-gray);"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading employees from database...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div>© 2026 JMKC Group India</div>
+                <div class="server-status">
+                    <i class="fa-solid fa-circle"></i> Server Status: Connected | Version 1.0 | Last Backup: 02:00 AM
+                </div>
+                <div>Created By Punam</div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Right Drawer -->
+    <div class="drawer-overlay" id="employeeDrawer">
+        <div class="drawer" onclick="event.stopPropagation()">
+            <div class="drawer-header">
+                <h3 style="font-size: 1.2rem;">Employee Details</h3>
+                <button class="drawer-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="drawer-body">
+                <div class="profile-overview">
+                    <img id="drawerEmpAvatar" src="https://ui-avatars.com/api/?name=Employee&background=2563EB&color=fff">
+                    <h3 id="drawerEmpName">Employee Name</h3>
+                    <p id="drawerEmpMeta">EMP000 | Designation</p>
+                    <button class="btn btn-primary" style="margin-top: 12px; width: 100%; justify-content: center" onclick="window.location.href='employee-profile.html'">View Full Profile</button>
+                </div>
+                
+                <div class="drawer-tabs">
+                    <div class="drawer-tab active">Overview</div>
+                    <div class="drawer-tab">Documents</div>
+                    <div class="drawer-tab">Assets</div>
+                    <div class="drawer-tab">Timeline</div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="value">98%</div>
+                        <div class="label">Attendance</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">12</div>
+                        <div class="label">Leave Balance</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <div id="drawerEmpEmail" style="padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border-gray);">--</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Department</label>
+                    <div id="drawerEmpDept" style="padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border-gray);">--</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal (Stepper) -->
+    <div class="modal-overlay" id="addEmployeeModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Add New Employee</h3>
+                <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="stepper">
+                    <div class="step active" id="step1-indicator">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Personal</div>
+                    </div>
+                    <div class="step" id="step2-indicator">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Employment</div>
+                    </div>
+                    <div class="step" id="step3-indicator">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Documents</div>
+                    </div>
+                </div>
+
+                <div class="step-content active" id="step1">
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" id="empName" class="form-control" placeholder="Enter full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" id="empEmail" class="form-control" placeholder="Work email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="text" id="empPhone" class="form-control" placeholder="Phone number">
+                    </div>
+                </div>
+                
+                <div class="step-content" id="step2">
+                    <div class="form-group">
+                        <label class="form-label">Role *</label>
+                        <select id="empRole" class="form-control">
+                            <option value="">-- Select Role --</option>
+                            <option value="HR">HR</option>
+                            <option value="PROJECT_MANAGER">Project Manager</option>
+                            <option value="PRODUCT_MANAGER">Product Manager</option>
+                            <option value="MEMBER">Employee</option>
+                            <option value="MARKETING">Marketing</option>
+                            <option value="SALES">Sales</option>
+                            <option value="CALLING">Calling Team</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Designation</label>
+                        <input type="text" id="empDesignation" class="form-control" placeholder="E.g. Frontend Developer">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Joining Date</label>
+                        <input type="date" id="empJoiningDate" class="form-control">
+                    </div>
+                    <p style="font-size:.8rem; color:var(--text-gray); margin-top:4px;"><i class="fa-solid fa-info-circle"></i> Default password will be <strong>JMKC@2026</strong>. Employee must change on first login.</p>
+                </div>
+
+                <div class="step-content" id="step3">
+                    <div class="form-group">
+                        <label class="form-label">Aadhar Card</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">PAN Card</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Passport Photo</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="prevBtn" style="display:none;" onclick="changeStep(-1)">Back</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">Next</button>
+                <button class="btn btn-primary" id="submitBtn" style="display:none;" onclick="submitForm()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/layout.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/hr-api.js"></script>
+    <script>
+        // ── Stepper logic ────────────────────────────────────────
+        let currentStep = 1;
+        
+        function changeStep(dir) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            
+            currentStep += dir;
+            
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+            
+            if(currentStep === 1) {
+                document.getElementById('prevBtn').style.display = 'none';
+            } else {
+                document.getElementById('prevBtn').style.display = 'inline-flex';
+            }
+            
+            if(currentStep === 3) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'inline-flex';
+            } else {
+                document.getElementById('nextBtn').style.display = 'inline-flex';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+        
+        // ── Add Employee (real API call) ─────────────────────────
+        async function submitForm() {
+            const name = document.getElementById('empName').value.trim();
+            const email = document.getElementById('empEmail').value.trim();
+            const phone = document.getElementById('empPhone').value.trim();
+            const role = document.getElementById('empRole').value;
+            const designation = document.getElementById('empDesignation').value.trim();
+            const joiningDate = document.getElementById('empJoiningDate').value;
+
+            if (!name || !email || !role) {
+                showToast('Please fill all required fields.', 'error');
+                changeStep(-2);
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+
+            try {
+                await HR_API.addEmployee({ name, email, phone, role, designation, joiningDate, password: 'JMKC@2026' });
+                closeModal('addEmployeeModal');
+                showToast(`✅ ${name} added successfully!`, 'success');
+                setTimeout(() => loadEmployees(), 800);
+            } catch (err) {
+                showToast('Error: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Submit';
+                currentStep = 1;
+            }
+        }
+
+        // ── Load Employees from Backend ───────────────────────────
+        async function loadEmployees() {
+            const tbody = document.getElementById('empTableBody');
+            if (!tbody) return;
+
+            try {
+                const res = await HR_API.getEmployees();
+                const employees = res.data || res.users || res || [];
+
+                if (!Array.isArray(employees) || employees.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--text-gray);">No employees found. Add your first employee!</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = employees.map(emp => {
+                    const name = emp.name || 'Unknown';
+                    const empId = emp.employeeId || '#' + (emp._id?.slice(-6)?.toUpperCase() || '--');
+                    const dept = emp.department?.name || emp.department || '--';
+                    const role = emp.designation || emp.role || '--';
+                    const status = emp.isActive !== false ? 'Active' : 'Inactive';
+                    const statusBadge = status === 'Active' ? 'badge-success' : 'badge-danger';
+                    const avatar = HR_API.getAvatarUrl(name);
+
+                    return `
+                    <tr style="cursor:pointer;" onclick="viewEmployee('${emp._id}', '${name}', '${dept}', '${role}', '${emp.email || ''}', '${empId}')">
+                        <td><img src="${avatar}" class="employee-avatar"></td>
+                        <td style="font-family:monospace; color:var(--text-gray);">${empId}</td>
+                        <td style="font-weight:500; color:var(--dark-navy);">${name}</td>
+                        <td>${dept}</td>
+                        <td>${role}</td>
+                        <td><span class="badge ${statusBadge}">${status}</span></td>
+                        <td>
+                            <div class="row-actions">
+                                <button class="action-btn" title="View" onclick="event.stopPropagation(); viewEmployee('${emp._id}','${name}','${dept}','${role}','${emp.email || ''}','${empId}')"><i class="fa-solid fa-eye"></i></button>
+                                <button class="action-btn" title="Edit" onclick="event.stopPropagation();"><i class="fa-solid fa-pen"></i></button>
+                            </div>
+                        </td>
+                    </tr>`;
+                }).join('');
+
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--danger-red);"><i class="fa-solid fa-triangle-exclamation"></i> Could not load employees: ${err.message}</td></tr>`;
+            }
+        }
+
+        // ── View Employee in Drawer ───────────────────────────────
+        function viewEmployee(id, name, dept, role, email, empId) {
+            document.getElementById('drawerEmpName').textContent = name;
+            document.getElementById('drawerEmpMeta').textContent = `${empId} | ${role}`;
+            document.getElementById('drawerEmpAvatar').src = HR_API.getAvatarUrl(name);
+            document.getElementById('drawerEmpEmail').textContent = email || '--';
+            document.getElementById('drawerEmpDept').textContent = dept || '--';
+            openDrawer('employeeDrawer');
+        }
+
+        // ── Global Search filter ──────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEmployees();
+
+            const search = document.getElementById('globalSearch');
+            if (search) {
+                search.addEventListener('input', () => {
+                    const q = search.value.toLowerCase();
+                    document.querySelectorAll('#empTableBody tr').forEach(row => {
+                        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

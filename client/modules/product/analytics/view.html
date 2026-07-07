@@ -1,0 +1,93 @@
+<div class="pm-analytics">
+  <div class="pm-toolbar">
+    <div>
+      <span class="pm-eyebrow">Reports</span>
+      <h2>Requirement Analytics</h2>
+      <p style="color:var(--pm-text-muted); font-size: 0.875rem;">Live insights into budget, risks, and timeline metrics.</p>
+    </div>
+    <div class="pm-actions">
+      <button class="pm-btn" data-action="exportPDF">Export PDF</button>
+      <button class="pm-btn primary" data-action="exportExcel">Export Excel</button>
+    </div>
+  </div>
+
+  <div class="pm-grid">
+    <div class="pm-col-6">
+      <div class="pm-card pm-clickable-chart" onclick="window.App.handleAction('drilldown', 'budget')">
+        <h3>Budget Allocation Report</h3>
+        <p style="font-size:0.75rem; color:var(--pm-text-muted); margin-bottom: 1rem;">Click to drill down</p>
+        <div id="budgetChartContainer" style="height: 200px; display: flex; align-items: flex-end; gap: 10px; padding-top: 20px; border-bottom: 1px solid var(--pm-border);">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="pm-col-6">
+      <div class="pm-card pm-clickable-chart" onclick="window.App.handleAction('drilldown', 'risk')">
+        <h3>Risk Heatmap Report</h3>
+        <p style="font-size:0.75rem; color:var(--pm-text-muted); margin-bottom: 1rem;">Click to drill down</p>
+        <div id="riskChartContainer" style="height: 200px; display: flex; align-items: flex-end; gap: 10px; padding-top: 20px; border-bottom: 1px solid var(--pm-border);">
+           <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="pm-col-12">
+      <div class="pm-card pm-clickable-chart" onclick="window.App.handleAction('drilldown', 'timeline')">
+        <h3>Timeline & Resource Utilization</h3>
+        <p style="font-size:0.75rem; color:var(--pm-text-muted); margin-bottom: 1rem;">Click to drill down</p>
+        <div style="display:flex; justify-content: space-around; padding: 2rem 0;">
+          <div style="text-align:center;">
+            <div style="font-size:2rem; font-weight:bold; color:var(--pm-primary);" id="statTotalFeatures">0</div>
+            <div>Total Features</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:2rem; font-weight:bold; color:var(--pm-accent);" id="statTotalHours">0</div>
+            <div>Estimated Hours</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:2rem; font-weight:bold; color:var(--pm-secondary);" id="statTotalResources">0</div>
+            <div>Resources Allocated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.pm-clickable-chart {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pm-clickable-chart:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pm-shadow-md);
+  border-color: var(--pm-primary);
+}
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+.chart-bar {
+  width: 100%;
+  max-width: 40px;
+  background-color: var(--pm-primary);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.5s ease;
+  min-height: 5px;
+}
+.chart-label {
+  font-size: 0.65rem;
+  margin-top: 0.5rem;
+  color: var(--pm-text-muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+</style>

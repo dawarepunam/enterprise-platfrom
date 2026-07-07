@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Personal Information</title>
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/global.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/../../../assets/css/forms.css" />
+    <link rel="stylesheet" href="/modules/admin/profile/profile-section.css" />
+</head>
+
+<body data-page="personal-info">
+    <div id="navbar"></div>
+
+    <div class="section-shell">
+        <div id="sidebar"></div>
+
+        <main class="section-page">
+            <section class="section-card">
+                <div class="section-header">
+                    <div>
+                        <p class="eyebrow">Profile Settings</p>
+                        <h1>Personal Information</h1>
+                        <p class="muted">Maintain role identity, contact information and communication preferences.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn ghost-btn" href="profile.html">Back to Profile Hub</a>
+                        <button class="btn btn-primary" data-save="personal-info">Save Changes</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-card">
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input id="name" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input id="phone" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Designation</label>
+                        <input id="title" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input id="department" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="language">Preferred Language</label>
+                        <input id="language" type="text" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="timezone">Timezone</label>
+                        <input id="timezone" type="text" />
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="bio">Executive Bio</label>
+                        <textarea id="bio"></textarea>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/modules/admin/profile/../../../assets/js/api.js"></script>
+    <script src="/modules/admin/profile/../../../assets/js/auth.js"></script>
+    <script src="/modules/admin/profile/profile-section.js"></script>
+</body>
+
+</html>

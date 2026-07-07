@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Board – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  
+  <style>
+    /* Premium Kanban Styling */
+    .kanban-board {
+      display: flex;
+      gap: 20px;
+      padding: 10px 0;
+      overflow-x: auto;
+      height: calc(100vh - 180px);
+      align-items: flex-start;
+    }
+    
+    .kanban-column {
+      background: var(--pm-bg);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      min-width: 320px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      max-height: 100%;
+      box-shadow: var(--pm-shadow-sm);
+    }
+    
+    .kanban-column-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--pm-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border-radius: var(--pm-radius) var(--pm-radius) 0 0;
+    }
+    
+    .kanban-column-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--pm-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .kanban-badge {
+      background: var(--pm-accent-light);
+      color: var(--pm-accent);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    .kanban-tasks {
+      padding: 16px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 150px; /* Important for empty drop zones */
+    }
+    
+    .kanban-card {
+      background: #fff;
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius-sm);
+      padding: 16px;
+      cursor: grab;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .kanban-card:hover {
+      box-shadow: var(--pm-shadow);
+      border-color: var(--pm-accent);
+      transform: translateY(-2px);
+    }
+    
+    .kanban-card:active {
+      cursor: grabbing;
+    }
+    
+    .kanban-card-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--pm-text);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    
+    .kanban-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+    }
+    
+    .kanban-card-prio {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .prio-high { background: #fee2e2; color: #dc2626; }
+    .prio-medium { background: #fef9c3; color: #ca8a04; }
+    .prio-low { background: #dcfce7; color: #16a34a; }
+    
+    .kanban-card-assignee {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--pm-accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px var(--pm-border);
+    }
+    
+    /* SortableJS Ghost style */
+    .sortable-ghost {
+      opacity: 0.4;
+      background: var(--pm-accent-light) !important;
+      border: 1px dashed var(--pm-accent) !important;
+    }
+    
+    .sortable-drag {
+      cursor: grabbing !important;
+      box-shadow: var(--pm-shadow-lg) !important;
+      transform: rotate(3deg);
+    }
+    
+    /* Column Colors */
+    .col-todo .kanban-column-title i { color: #64748b; }
+    .col-progress .kanban-column-title i { color: #3b82f6; }
+    .col-review .kanban-column-title i { color: #a855f7; }
+    .col-done .kanban-column-title i { color: #22c55e; }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Kanban Board</span>
+          </div>
+          <h2 class="pm-page-title">Kanban Board</h2>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <select id="projectFilter" class="pm-form-input" style="padding:8px 12px;width:auto;" onchange="loadKanbanTasks()">
+            <option value="">All Projects</option>
+          </select>
+          <button class="pm-btn pm-btn-primary" onclick="window.location='/project-manager/tasks'"><i class="fa-solid fa-plus"></i> New Task</button>
+        </div>
+      </div>
+      
+      <!-- Kanban Board Layout -->
+      <div class="kanban-board" id="kanbanBoard">
+      
+        <!-- Todo -->
+        <div class="kanban-column col-todo">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title"><i class="fa-regular fa-circle"></i> To Do</div>
+            <div class="kanban-badge" id="count-todo">0</div>
+          </div>
+          <div class="kanban-tasks" id="col-todo" data-status="To Do"></div>
+        </div>
+        
+        <!-- In Progress -->
+        <div class="kanban-column col-progress">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title"><i class="fa-solid fa-spinner fa-spin-pulse"></i> In Progress</div>
+            <div class="kanban-badge" id="count-progress">0</div>
+          </div>
+          <div class="kanban-tasks" id="col-progress" data-status="In Progress"></div>
+        </div>
+        
+        <!-- In Review -->
+        <div class="kanban-column col-review">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title"><i class="fa-regular fa-eye"></i> In Review</div>
+            <div class="kanban-badge" id="count-review">0</div>
+          </div>
+          <div class="kanban-tasks" id="col-review" data-status="In Review"></div>
+        </div>
+        
+        <!-- Done -->
+        <div class="kanban-column col-done">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title"><i class="fa-regular fa-check-circle"></i> Done</div>
+            <div class="kanban-badge" id="count-done">0</div>
+          </div>
+          <div class="kanban-tasks" id="col-done" data-status="Completed"></div>
+        </div>
+        
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+<script src="/modules/project-manager/pm-shell.js"></script>
+
+<script>
+  let allTasks = [];
+  let sortables = [];
+
+  function getInitials(name) {
+    if(!name) return "U";
+    return name.split(' ').map(n=>n[0]).join('').toUpperCase().substring(0,2);
+  }
+  
+  function getPrioClass(prio) {
+    const p = String(prio).toLowerCase();
+    if(p.includes('high') || p.includes('critical')) return 'prio-high';
+    if(p.includes('low')) return 'prio-low';
+    return 'prio-medium';
+  }
+
+  async function initKanban() {
+    // 1. Fetch Projects for filter
+    try {
+      const pRes = await window.pmShell?.apiFetch('/api/projects?size=100');
+      if (pRes && pRes.data) {
+        const pSel = document.getElementById('projectFilter');
+        pRes.data.forEach(p => {
+          pSel.innerHTML += `<option value="${p._id}">${p.projectName || p.name}</option>`;
+        });
+      }
+    } catch(e) { console.error("Error fetching projects", e); }
+
+    // 2. Load Tasks
+    await loadKanbanTasks();
+    
+    // 3. Init SortableJS
+    initSortable();
+  }
+
+  async function loadKanbanTasks() {
+    const projId = document.getElementById('projectFilter').value;
+    let url = '/api/tasks?limit=500';
+    if(projId) url += `&projectId=${projId}`;
+    
+    try {
+      // Use the shell's auth fetch if available, else standard fetch
+      const headers = { 'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}` };
+      const res = await fetch(url, { headers });
+      const data = await res.json();
+      allTasks = data.data || [];
+      renderKanban();
+    } catch(err) {
+      console.error("Failed to load tasks", err);
+    }
+  }
+
+  function renderKanban() {
+    const cols = {
+      'To Do': document.getElementById('col-todo'),
+      'In Progress': document.getElementById('col-progress'),
+      'In Review': document.getElementById('col-review'),
+      'Completed': document.getElementById('col-done')
+    };
+    
+    const counts = { 'To Do': 0, 'In Progress': 0, 'In Review': 0, 'Completed': 0 };
+
+    // Clear columns
+    Object.values(cols).forEach(col => col.innerHTML = '');
+
+    allTasks.forEach(task => {
+      let status = task.status || 'To Do';
+      // Normalize statuses
+      if(status === 'Pending') status = 'To Do';
+      if(status === 'Done') status = 'Completed';
+      
+      const col = cols[status] || cols['To Do']; // Fallback
+      if(cols[status]) counts[status]++;
+      else counts['To Do']++;
+      
+      const assigneeName = task.assigneeName || task.assignee?.name || 'Unassigned';
+      
+      const card = document.createElement('div');
+      card.className = 'kanban-card';
+      card.dataset.id = task._id;
+      
+      card.innerHTML = `
+        <div class="kanban-card-title">${task.title || 'Untitled Task'}</div>
+        <div style="font-size: 11px; color: var(--pm-text-muted); margin-bottom: 8px;">
+          <i class="fa fa-folder" style="margin-right:4px;"></i> ${task.projectName || 'General'}
+        </div>
+        <div class="kanban-card-meta">
+          <span class="kanban-card-prio ${getPrioClass(task.priority)}">${task.priority || 'MEDIUM'}</span>
+          <div class="kanban-card-assignee" title="${assigneeName}">
+            ${getInitials(assigneeName)}
+          </div>
+        </div>
+      `;
+      
+      // Double click to open task
+      card.ondblclick = () => { window.location.href = `/project-manager/tasks/${task._id}`; };
+      
+      col.appendChild(card);
+    });
+    
+    // Update Counts
+    document.getElementById('count-todo').textContent = counts['To Do'];
+    document.getElementById('count-progress').textContent = counts['In Progress'];
+    document.getElementById('count-review').textContent = counts['In Review'];
+    document.getElementById('count-done').textContent = counts['Completed'];
+  }
+
+  function initSortable() {
+    const containers = [
+      document.getElementById('col-todo'),
+      document.getElementById('col-progress'),
+      document.getElementById('col-review'),
+      document.getElementById('col-done')
+    ];
+    
+    containers.forEach(container => {
+      sortables.push(new Sortable(container, {
+        group: 'kanban',
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        onEnd: async function (evt) {
+          const itemEl = evt.item;
+          const taskId = itemEl.dataset.id;
+          const newStatus = evt.to.dataset.status;
+          const oldStatus = evt.from.dataset.status;
+          
+          if(newStatus !== oldStatus) {
+            // Optimistically update counts
+            const oldCountEl = document.getElementById(`count-${evt.from.id.split('-')[1]}`);
+            const newCountEl = document.getElementById(`count-${evt.to.id.split('-')[1]}`);
+            oldCountEl.textContent = parseInt(oldCountEl.textContent) - 1;
+            newCountEl.textContent = parseInt(newCountEl.textContent) + 1;
+            
+            // API Call
+            try {
+              const headers = { 
+                'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}`,
+                'Content-Type': 'application/json'
+              };
+              await fetch(`/api/tasks/${taskId}`, {
+                method: 'PATCH',
+                headers,
+                body: JSON.stringify({ status: newStatus })
+              });
+              
+              // Update local state
+              const taskIndex = allTasks.findIndex(t => t._id === taskId);
+              if(taskIndex > -1) allTasks[taskIndex].status = newStatus;
+              
+            } catch(e) {
+              console.error("Failed to update status", e);
+              // Revert
+              renderKanban(); 
+            }
+          }
+        },
+      }));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initKanban);
+</script>
+</body>
+</html>

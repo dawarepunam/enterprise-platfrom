@@ -1,0 +1,22 @@
+@import url("../../../assets/css/role-workspace.css");
+
+.attendance-hero {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(37, 99, 235, 0.9));
+  color: #eff6ff;
+}
+
+.attendance-hero .hero-text,
+.attendance-hero .eyebrow,
+.attendance-hero h1 {
+  color: inherit;
+}
+
+.member-grid {
+  grid-template-columns: 1fr 0.9fr;
+}
+
+@media (max-width: 1100px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+}

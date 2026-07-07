@@ -1,0 +1,131 @@
+<!-- 
+  JMKC Enterprise CRM - Sidebar Component
+  Phase 2 Implementation
+-->
+<aside class="global-sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Dashboard</div>
+      <a href="/modules/employee/dashboard/index.html" class="sidebar-link active" id="nav-dashboard">
+        <span class="sidebar-icon">📊</span>
+        <span class="sidebar-text">Overview</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Workspace</div>
+      <a href="/employee/my-work" class="sidebar-link" id="nav-my-work">
+        <span class="sidebar-icon">💼</span>
+        <span class="sidebar-text">My Work</span>
+      </a>
+      <a href="/employee/projects" class="sidebar-link" id="nav-projects">
+        <span class="sidebar-icon">🏢</span>
+        <span class="sidebar-text">Projects</span>
+      </a>
+      <a href="/employee/tasks" class="sidebar-link" id="nav-tasks">
+        <span class="sidebar-icon">✅</span>
+        <span class="sidebar-text">Tasks</span>
+      </a>
+      <a href="/employee/sprint" class="sidebar-link" id="nav-sprint">
+        <span class="sidebar-icon">🏃</span>
+        <span class="sidebar-text">Sprint Board</span>
+      </a>
+      <a href="/employee/kanban" class="sidebar-link" id="nav-kanban">
+        <span class="sidebar-icon">📋</span>
+        <span class="sidebar-text">Kanban Board</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Collaboration</div>
+      <a href="/employee/meetings" class="sidebar-link" id="nav-meetings">
+        <span class="sidebar-icon">🤝</span>
+        <span class="sidebar-text">Meetings</span>
+      </a>
+      <a href="/employee/chat" class="sidebar-link" id="nav-chat">
+        <span class="sidebar-icon">💬</span>
+        <span class="sidebar-text">Chat</span>
+      </a>
+      <a href="/employee/files" class="sidebar-link" id="nav-files">
+        <span class="sidebar-icon">📁</span>
+        <span class="sidebar-text">Files</span>
+      </a>
+      <a href="/employee/documents" class="sidebar-link" id="nav-documents">
+        <span class="sidebar-icon">📄</span>
+        <span class="sidebar-text">Documents</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Employee</div>
+      <a href="/employee/attendance" class="sidebar-link" id="nav-attendance">
+        <span class="sidebar-icon">⏱️</span>
+        <span class="sidebar-text">Attendance</span>
+      </a>
+      <a href="/employee/leave" class="sidebar-link" id="nav-leave">
+        <span class="sidebar-icon">🌴</span>
+        <span class="sidebar-text">Leave</span>
+      </a>
+      <a href="/employee/daily-updates" class="sidebar-link" id="nav-updates">
+        <span class="sidebar-icon">📝</span>
+        <span class="sidebar-text">Daily Updates</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Analytics</div>
+      <a href="/employee/performance" class="sidebar-link" id="nav-performance">
+        <span class="sidebar-icon">📈</span>
+        <span class="sidebar-text">Performance</span>
+      </a>
+      <a href="/employee/reports" class="sidebar-link" id="nav-reports">
+        <span class="sidebar-icon">📊</span>
+        <span class="sidebar-text">Reports</span>
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Account</div>
+      <a href="/employee/notifications" class="sidebar-link" id="nav-notifications">
+        <span class="sidebar-icon">🔔</span>
+        <span class="sidebar-text">Notifications</span>
+      </a>
+      <a href="/employee/activity-feed" class="sidebar-link" id="nav-activity-feed">
+        <span class="sidebar-icon">⚡</span>
+        <span class="sidebar-text">Activity Feed</span>
+      </a>
+      <a href="/employee/profile" class="sidebar-link" id="nav-profile">
+        <span class="sidebar-icon">👤</span>
+        <span class="sidebar-text">Profile</span>
+      </a>
+      <a href="/employee/settings" class="sidebar-link" id="nav-settings">
+        <span class="sidebar-icon">⚙️</span>
+        <span class="sidebar-text">Settings</span>
+      </a>
+    </div>
+
+  </nav>
+</aside>
+
+<!-- Sidebar Overlay for Mobile -->
+<div class="drawer-overlay" id="sidebarOverlay"></div>
+
+<script>
+  // Mobile sidebar logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    if (sidebarToggle && sidebar && sidebarOverlay) {
+      const toggleSidebar = () => {
+        sidebar.classList.toggle('mobile-open');
+        sidebarOverlay.classList.toggle('active');
+      };
+
+      sidebarToggle.addEventListener('click', toggleSidebar);
+      sidebarOverlay.addEventListener('click', toggleSidebar);
+    }
+  });
+</script>

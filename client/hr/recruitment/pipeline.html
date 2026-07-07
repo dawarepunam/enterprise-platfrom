@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline Kanban | HRMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/hr/payroll/css/common.css">
+  <style>
+    .kanban-board { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; min-height: calc(100vh - 200px); }
+    .kanban-column { background: #e2e8f0; border-radius: 8px; width: 300px; min-width: 300px; display: flex; flex-direction: column; padding: 10px; }
+    .column-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 5px; }
+    .column-title { font-weight: 600; color: var(--dark-navy); text-transform: uppercase; font-size: 0.85rem; }
+    .column-count { background: var(--white); color: var(--text-muted); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+    .kanban-cards { flex: 1; min-height: 50px; }
+    
+    .k-card { background: var(--white); border-radius: 8px; padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: grab; transition: var(--transition); border-left: 4px solid var(--primary-blue); }
+    .k-card:active { cursor: grabbing; }
+    .k-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .k-card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
+    .k-card-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+    .k-card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+    .k-card-rating { color: #fbbf24; }
+    
+    /* Drag and drop classes */
+    .dragging { opacity: 0.5; }
+    .drag-over { background: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+
+    <main class="main-content">
+      
+
+      <div class="content-area animate-fade-in">
+        <div class="kanban-board">
+          
+          <div class="kanban-column" id="col-applied" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-header"><span class="column-title">Applied</span><span class="column-count">0</span></div>
+            <div class="kanban-cards" data-stage="Applied"></div>
+          </div>
+
+          <div class="kanban-column" id="col-screening" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-header"><span class="column-title">Phone Screen</span><span class="column-count">0</span></div>
+            <div class="kanban-cards" data-stage="Phone Screen"></div>
+          </div>
+
+          <div class="kanban-column" id="col-interview" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-header"><span class="column-title">Interview</span><span class="column-count">0</span></div>
+            <div class="kanban-cards" data-stage="Interview"></div>
+          </div>
+
+          <div class="kanban-column" id="col-offer" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-header"><span class="column-title">Offer</span><span class="column-count">0</span></div>
+            <div class="kanban-cards" data-stage="Offer"></div>
+          </div>
+
+          <div class="kanban-column" id="col-hired" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="column-header"><span class="column-title">Hired</span><span class="column-count">0</span></div>
+            <div class="kanban-cards" data-stage="Hired"></div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/hr/payroll/js/common.js"></script>
+  <script src="./js/pipeline.js"></script>
+</body>
+</html>

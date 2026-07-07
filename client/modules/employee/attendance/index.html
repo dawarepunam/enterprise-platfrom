@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+    .live-clock {
+      font-size: 22px; font-weight: 800; color: #3965FF;
+      background: #fff; padding: 10px 20px; border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1); font-family: monospace;
+    }
+
+    /* ── KPI Strip ── */
+    .kpi-strip {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+    .kpi-c {
+      background: #fff; border-radius: 16px; padding: 18px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1); display: flex; align-items: center; gap: 14px;
+    }
+    .kpi-ico {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .kpi-ico.b { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .kpi-ico.g { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .kpi-ico.o { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .kpi-ico.r { background: rgba(238,93,80,0.1); color: #EE5D50; }
+    .kpi-ico.p { background: rgba(67,24,255,0.1); color: #4318FF; }
+    .kpi-v { font-size: 22px; font-weight: 800; color: #2b3674; }
+    .kpi-l { font-size: 11px; color: #a3aed1; font-weight: 500; margin-top: 2px; }
+    .kpi-c.clickable { cursor: pointer; transition: transform .15s, box-shadow .15s; }
+    .kpi-c.clickable:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(112,144,176,0.18); }
+    .kpi-badge { font-size: 9px; background: #3965FF; color: #fff; border-radius: 4px; padding: 1px 5px; margin-top: 3px; letter-spacing: 0.3px; display: inline-block; }
+
+    /* ── Main Grid ── */
+    .main-grid {
+      display: grid; grid-template-columns: 300px 1fr 320px;
+      gap: 24px; align-items: start;
+    }
+
+    /* ── Punch Card ── */
+    .punch-card {
+      background: #fff; border-radius: 20px; padding: 24px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1); text-align: center;
+    }
+    .punch-date { font-size: 18px; font-weight: 800; color: #2b3674; }
+    .punch-day { font-size: 13px; color: #a3aed1; margin-bottom: 24px; }
+    
+    .punch-ring-wrap { position: relative; width: 160px; height: 160px; margin: 0 auto 24px; }
+    .punch-ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .punch-ring-inner {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .punch-ring-status { font-size: 12px; font-weight: 700; color: #05CD99; margin-bottom: 4px; text-transform: uppercase; }
+    .punch-ring-elapsed { font-size: 24px; font-weight: 800; color: #2b3674; font-family: monospace; }
+    
+    .punch-times { display: flex; justify-content: space-between; margin-bottom: 24px; background: #f4f7fe; border-radius: 12px; padding: 12px; }
+    .punch-time-item { text-align: center; flex: 1; }
+    .pt-label { font-size: 11px; color: #a3aed1; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+    .pt-value { font-size: 15px; font-weight: 700; color: #2b3674; }
+    .punch-divider { display: flex; align-items: center; color: #a3aed1; font-size: 12px; padding: 0 8px; }
+
+    .punch-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .punch-btn {
+      padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700;
+      border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: .2s;
+    }
+    .punch-btn i { font-size: 20px; }
+    .punch-in-btn { background: #3965FF; color: #fff; }
+    .punch-in-btn:hover:not(:disabled) { background: #274ccf; }
+    .punch-out-btn { background: rgba(238,93,80,0.1); color: #EE5D50; }
+    .punch-out-btn:hover:not(:disabled) { background: rgba(238,93,80,0.2); }
+    .punch-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .break-btn {
+      width: 100%; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 700;
+      background: #FFB547; color: #fff; border: none; cursor: pointer; margin-bottom: 16px; transition: .2s;
+    }
+    .break-btn:hover { background: #e09e3f; }
+
+    .today-summary { text-align: left; background: #f0f4ff; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .today-summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+    .today-summary-row:last-child { margin-bottom: 0; }
+    .ts-label { color: #5d6d8a; font-weight: 500; }
+    .ts-value { color: #2b3674; font-weight: 700; }
+
+    .work-note-input {
+      width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif; font-size: 13px; resize: vertical; outline: none; transition: border-color .2s;
+      background: #f4f7fe;
+    }
+    .work-note-input:focus { border-color: #3965FF; }
+
+    /* ── Main Layout ── */
+    .main-grid { display: grid; grid-template-columns: 320px 1fr 340px; gap: 24px; align-items: stretch; }
+    .card-box {
+      background: #fff; border-radius: 20px; padding: 24px;
+      box-shadow: 0 4px 24px rgba(112,144,176,0.1);
+      display: flex; flex-direction: column;
+    }
+    .card-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .card-title { font-size: 16px; font-weight: 800; color: #2b3674; display: flex; align-items: center; gap: 8px; }   .cal-nav { display: flex; align-items: center; gap: 12px; }
+    .cal-nav-btn {
+      width: 28px; height: 28px; border-radius: 8px; border: 1px solid #e2e8f0;
+      background: #fff; color: #2b3674; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;
+    }
+    .cal-nav-btn:hover { background: #f4f7fe; }
+    
+    .cal-month-label { font-size: 13px; font-weight: 700; color: #2b3674; min-width: 110px; text-align: center; }
+    
+    .calendar-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: auto repeat(6, 1fr); gap: 6px; text-align: center; flex: 1;
+    }
+    .cal-dh { font-size: 10px; font-weight: 600; color: #a3aed1; margin-bottom: 4px; padding: 4px 0; }
+    .cal-cell {
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; cursor: default; background: #f8fafc; border: 1px solid transparent; transition: .15s;
+      color: #2b3674; min-height: 36px;
+    }
+    .cal-cell.clickable { cursor: pointer; }
+    .cal-cell.clickable:hover { border-color: #3965FF; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(57,101,255,0.1); }
+    .cal-cell.empty { background: transparent; cursor: default; }
+    .cal-cell.empty:hover { border-color: transparent; transform: none; }
+    .cal-cell.present { background: rgba(5,205,153,0.15); color: #05CD99; }
+    .cal-cell.absent  { background: rgba(238,93,80,0.12); color: #EE5D50; }
+    .cal-cell.late    { background: rgba(255,181,71,0.12); color: #FFB547; }
+    .cal-cell.holiday { background: rgba(163,174,209,0.12); color: #a3aed1; }
+
+    /* History Table */
+    .filter-select-sm {
+      padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12px; outline: none;
+    }
+    .att-table { width: 100%; border-collapse: collapse; }
+    .att-table th { padding: 12px 16px; font-size: 11px; font-weight: 600; color: #a3aed1; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    .att-table td { padding: 16px; border-bottom: 1px solid #f0f4ff; font-size: 13px; color: #2b3674; }
+    .att-table tr:hover { background: #f8fafc; }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .bg-g { background: rgba(5,205,153,0.12); color: #05CD99; }
+    .bg-r { background: rgba(238,93,80,0.12); color: #EE5D50; }
+    .bg-o { background: rgba(255,181,71,0.12); color: #FFB547; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(43,54,116,0.4); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal-box {
+      background: #fff; border-radius: 20px; padding: 24px; width: 400px; max-width: 90%;
+      box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative;
+    }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #a3aed1; cursor: pointer; }
+    .modal-close:hover { color: #2b3674; }
+    .modal-title { font-size: 18px; font-weight: 800; color: #2b3674; margin-bottom: 16px; }
+
+    /* Responsive */
+    @media (max-width: 1200px) { .main-grid { grid-template-columns: 300px 1fr; } #calendarCard { grid-column: 1 / -1; } }
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-clock" style="color:#3965FF;margin-right:8px;"></i>Attendance</h1>
+          <p id="attSubtitle">Track your daily punch-in/out and attendance history.</p>
+        </div>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi-c clickable" id="kpiCardPresent" title="Click to view Present days" onclick="filterHistory('present')">
+          <div class="kpi-ico g"><i class="fa fa-check-circle"></i></div>
+          <div><div class="kpi-v" id="kpiPresent">—</div><div class="kpi-l">Present Days</div><span class="kpi-badge">↓ Filter</span></div>
+        </div>
+        <div class="kpi-c clickable" id="kpiCardAbsent" title="Click to view Absent days" onclick="filterHistory('absent')">
+          <div class="kpi-ico r"><i class="fa fa-times-circle"></i></div>
+          <div><div class="kpi-v" id="kpiAbsent">—</div><div class="kpi-l">Absent Days</div><span class="kpi-badge">↓ Filter</span></div>
+        </div>
+        <div class="kpi-c clickable" id="kpiCardLate" title="Click to view Late days" onclick="filterHistory('late')">
+          <div class="kpi-ico o"><i class="fa fa-exclamation-triangle"></i></div>
+          <div><div class="kpi-v" id="kpiLate">—</div><div class="kpi-l">Late Arrivals</div><span class="kpi-badge">↓ Filter</span></div>
+        </div>
+        <div class="kpi-c clickable" id="kpiCardHours" title="Click to view history" onclick="filterHistory('all')">
+          <div class="kpi-ico b"><i class="fa fa-business-time"></i></div>
+          <div><div class="kpi-v" id="kpiHours">—</div><div class="kpi-l">Total Work Hours</div><span class="kpi-badge">↓ Filter</span></div>
+        </div>
+        <div class="kpi-c">
+          <div class="kpi-ico p"><i class="fa fa-percentage"></i></div>
+          <div><div class="kpi-v" id="kpiRate">—</div><div class="kpi-l">Attendance %</div></div>
+        </div>
+      </div>
+
+      <div class="main-grid">
+        <!-- LEFT: Punch Card -->
+        <div class="punch-card">
+          <div class="punch-date" id="punchDate"></div>
+          <div class="punch-day" id="punchDay"></div>
+
+          <div class="punch-ring-wrap">
+            <svg viewBox="0 0 120 120" class="punch-ring-svg">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#f0f4ff" stroke-width="8"/>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="url(#ringGrad)" stroke-width="8"
+                stroke-dasharray="326.7" stroke-dashoffset="326.7" stroke-linecap="round" id="punchRing"/>
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#3965FF"/>
+                  <stop offset="100%" stop-color="#05CD99"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="punch-ring-inner">
+              <div class="punch-ring-status" id="punchStatus" style="color:#a3aed1;">Not Punched In</div>
+              <div class="punch-ring-elapsed" id="punchElapsed">00:00:00</div>
+            </div>
+          </div>
+
+          <div class="punch-times">
+            <div class="punch-time-item">
+              <div class="pt-label">Punch In</div>
+              <div class="pt-value" id="punchInTime">—</div>
+            </div>
+            <div class="punch-divider"><i class="fa fa-arrow-right"></i></div>
+            <div class="punch-time-item">
+              <div class="pt-label">Punch Out</div>
+              <div class="pt-value" id="punchOutTime">—</div>
+            </div>
+          </div>
+
+          <div class="punch-actions">
+            <button class="punch-btn punch-in-btn" id="btnPunchIn">
+              <i class="fa fa-sign-in-alt"></i> Punch In
+            </button>
+            <button class="punch-btn punch-out-btn" id="btnPunchOut" disabled>
+              <i class="fa fa-sign-out-alt"></i> Punch Out
+            </button>
+          </div>
+
+          <button class="break-btn" id="btnBreak" style="display:none">
+            <i class="fa fa-coffee"></i> Start Break
+          </button>
+
+          <div class="today-summary" id="todaySummary" style="display:none">
+            <div class="today-summary-row"><span class="ts-label">Working Hours</span><span class="ts-value" id="tsHours">—</span></div>
+            <div class="today-summary-row"><span class="ts-label">Break Time</span><span class="ts-value" id="tsBreak">—</span></div>
+            <div class="today-summary-row"><span class="ts-label">Status</span><span class="ts-value" id="tsStatus">—</span></div>
+          </div>
+
+          <div class="work-note-wrap" id="workNoteWrap" style="display:none;margin-top:16px;">
+            <textarea class="work-note-input" id="workNote" placeholder="Add a note for today's work (optional)..." rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- MIDDLE: History -->
+        <div class="card-box" id="historyCard">
+          <div class="card-hdr" style="gap:12px; flex-wrap:wrap;">
+            <div class="card-title" style="margin-right:auto;">Recent History</div>
+            <select class="filter-select-sm" id="historyDateFilter">
+              <option value="7">Last 7 Days</option>
+              <option value="30" selected>Last 30 Days</option>
+              <option value="365">Last 1 Year</option>
+            </select>
+            <select class="filter-select-sm" id="historyFilter">
+              <option value="all">All Status</option>
+              <option value="present">Present</option>
+              <option value="absent">Absent</option>
+              <option value="late">Late</option>
+            </select>
+          </div>
+          <div style="flex: 1; overflow-y:auto; overflow-x:auto; min-height: 0;">
+            <table class="att-table" id="attTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Punch In</th>
+                  <th>Punch Out</th>
+                  <th>Total Hrs</th>
+                </tr>
+              </thead>
+              <tbody id="attTableBody">
+                <tr><td colspan="5" style="text-align:center;"><i class="fa fa-spinner fa-spin" style="color:#3965FF;"></i></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT: Calendar -->
+        <div class="card-box" id="calendarCard">
+          <div class="card-hdr">
+            <div class="card-title">Calendar</div>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" id="calPrev"><i class="fa fa-chevron-left"></i></button>
+              <div class="cal-month-label" id="calMonthLabel"></div>
+              <button class="cal-nav-btn" id="calNext"><i class="fa fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid">
+            <!-- Calendar renders here -->
+          </div>
+        </div><!-- /calendarCard -->
+
+      </div><!-- /main-grid -->
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="dayModal" style="display:none;">
+  <div class="modal-box">
+    <i class="fa fa-times modal-close" onclick="document.getElementById('dayModal').style.display='none'"></i>
+    <div class="modal-title" id="dayModalTitle">Attendance Detail</div>
+    <div id="dayModalContent" style="font-size:14px;color:#5d6d8a;line-height:1.6;"></div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/attendance/app.js"></script>
+<script>
+// ── Debug helper: show red banner if no token found ──
+(function() {
+  var t = localStorage.getItem('token') || localStorage.getItem('jmkc_token') || sessionStorage.getItem('token') || '';
+  if (!t) {
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#EE5D50;color:#fff;padding:14px 24px;font-size:14px;font-weight:700;text-align:center;';
+    banner.innerHTML = '⚠️ You are NOT logged in! Please <a href="/login" style="color:#fff;text-decoration:underline;">Login here</a> to use Attendance features.';
+    document.body.appendChild(banner);
+  }
+})();
+</script>
+</body>
+</html>

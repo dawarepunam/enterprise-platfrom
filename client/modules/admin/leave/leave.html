@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Leaves — JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css"/>
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css"/>
+</head>
+<body class="admin-body">
+<main class="admin-content">
+  <div class="page-top">
+    <div class="page-top-left">
+      <div class="page-title">🌿 Leave Management</div>
+      <div class="page-subtitle">Manage and approve employee leave requests</div>
+    </div>
+    <div class="page-top-actions">
+      <button class="btn btn-outline btn-sm" onclick="exportLeaves()">📤 Export</button>
+    </div>
+  </div>
+
+  <!-- Status Cards -->
+  <div class="kpi-grid mb-24" style="grid-template-columns:repeat(5,1fr)">
+    <div class="kpi-card kpi-card-blue" onclick="setLeaveStatus(this,'')" style="cursor:pointer" id="cardAll">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-blue">🌿</div></div>
+      <div class="kpi-value" id="lc-all">0</div><div class="kpi-label">All Leaves</div>
+    </div>
+    <div class="kpi-card kpi-card-orange" onclick="setLeaveStatus(this,'PENDING')" style="cursor:pointer" id="cardPending">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-orange">⏳</div></div>
+      <div class="kpi-value" id="lc-pending">0</div><div class="kpi-label">Pending</div>
+    </div>
+    <div class="kpi-card kpi-card-green" onclick="setLeaveStatus(this,'APPROVED')" style="cursor:pointer" id="cardApproved">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-green">✅</div></div>
+      <div class="kpi-value" id="lc-approved">0</div><div class="kpi-label">Approved</div>
+    </div>
+    <div class="kpi-card kpi-card-red" onclick="setLeaveStatus(this,'REJECTED')" style="cursor:pointer" id="cardRejected">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-red">❌</div></div>
+      <div class="kpi-value" id="lc-rejected">0</div><div class="kpi-label">Rejected</div>
+    </div>
+    <div class="kpi-card kpi-card-gray" onclick="setLeaveStatus(this,'CANCELLED')" style="cursor:pointer" id="cardCancelled">
+      <div class="kpi-top"><div class="kpi-icon kpi-icon-gray">🚫</div></div>
+      <div class="kpi-value" id="lc-cancelled">0</div><div class="kpi-label">Cancelled</div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="table-topbar">
+      <div><span class="table-topbar-title">Leave Requests</span><span class="table-topbar-count" id="leaveCount"></span></div>
+      <div class="filter-bar" style="border:none;padding:0;flex:1;margin-left:16px;">
+        <select class="filter-select" id="filterLeaveType" onchange="applyLeaveFilters()">
+          <option value="">All Types</option><option value="CASUAL">Casual</option><option value="SICK">Sick</option><option value="ANNUAL">Annual</option><option value="MATERNITY">Maternity</option><option value="PATERNITY">Paternity</option><option value="UNPAID">Unpaid</option>
+        </select>
+        <select class="filter-select" id="filterLeaveDept" onchange="applyLeaveFilters()"><option value="">All Departments</option></select>
+      </div>
+      <div class="table-search"><span class="table-search-icon">🔍</span><input class="table-search-input" id="leaveSearch" placeholder="Search employee..." oninput="applyLeaveFilters()"/></div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Reason</th><th>Applied</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="leaveTableBody"><tr><td colspan="9" style="text-align:center;padding:40px"><div class="loader-spinner" style="margin:0 auto"></div></td></tr></tbody>
+      </table>
+    </div>
+    <div class="table-pagination"><span class="pagination-info" id="leavePageInfo">Showing 0 of 0</span><div class="pagination-buttons" id="leavePageBtns"></div></div>
+  </div>
+</main>
+
+<!-- Leave Detail Modal -->
+<div class="modal-overlay hidden" id="leaveDetailModal">
+  <div class="modal-box">
+    <div class="modal-header"><div class="modal-title">🌿 Leave Request Details</div><button class="modal-close" onclick="closeModal('leaveDetailModal')">✕</button></div>
+    <div class="modal-body" id="leaveDetailBody"></div>
+    <div class="modal-footer" id="leaveDetailFooter"></div>
+  </div>
+</div>
+
+<script src="/modules/admin/_shared/admin-api.js"></script>
+<script src="/modules/admin/_shared/admin-layout.js"></script>
+<script src="/modules/admin/leave/leave.js"></script>
+</body>
+</html>

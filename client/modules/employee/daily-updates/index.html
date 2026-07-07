@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Updates - Employee | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <style>
+    .pm-main { background: #f4f7fe !important; display: block !important; }
+
+    /* ── Page Header ── */
+    .pg-hdr {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .pg-hdr-left h1 { font-size: 22px; font-weight: 800; color: #2b3674; margin: 0; }
+    .pg-hdr-left p  { font-size: 13px; color: #a3aed1; margin: 4px 0 0; }
+    
+    .streak-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #FFB547, #f59e0b); color: #fff;
+      padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700;
+      box-shadow: 0 4px 12px rgba(245,158,11,0.2);
+    }
+    .btn-primary {
+      background: #3965FF; color: #fff; padding: 10px 20px; border-radius: 12px;
+      font-size: 14px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: .2s;
+    }
+    .btn-primary:hover { background: #274ccf; }
+
+    /* ── Stats Row ── */
+    .du-stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); display: flex; align-items: center; gap: 16px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(112,144,176,0.18); }
+    .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .stat-icon.blue   { background: rgba(57,101,255,0.1); color: #3965FF; }
+    .stat-icon.orange { background: rgba(255,181,71,0.1); color: #FFB547; }
+    .stat-icon.green  { background: rgba(5,205,153,0.1); color: #05CD99; }
+    .stat-icon.purple { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+    .du-stat-val { font-size: 24px; font-weight: 800; color: #2b3674; margin-bottom: 2px; }
+    .stat-lbl { font-size: 12px; color: #a3aed1; font-weight: 600; }
+
+    /* ── Main Layout ── */
+    .main-grid { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
+    @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } .main-grid > div:first-child { order: 2; } .main-grid > div:last-child { order: 1; } }
+
+    /* ── Form Card ── */
+    .du-form-card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); margin-bottom: 24px; }
+    .form-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f0f4ff; padding-bottom: 16px; }
+    .fh-title { font-size: 18px; font-weight: 800; color: #2b3674; display: flex; align-items: center; gap: 10px; }
+    .fh-title i { color: #3965FF; }
+    .du-date-label { font-size: 13px; font-weight: 600; color: #a3aed1; }
+
+    .form-grp { margin-bottom: 20px; }
+    .form-lbl { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #2b3674; margin-bottom: 8px; }
+    .du-textarea {
+      width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 14px;
+      outline: none; background: #f4f7fe; resize: vertical; transition: .2s; line-height: 1.5; color: #2b3674;
+    }
+    .du-textarea:focus { border-color: #3965FF; background: #fff; }
+    .du-char-count { font-size: 11px; color: #a3aed1; }
+
+    .split-grp { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .du-input { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; background: #f4f7fe; }
+    
+    .du-mood-row { display: flex; gap: 8px; }
+    .mood-btn {
+      flex: 1; padding: 10px 0; border-radius: 10px; border: 1.5px solid transparent; background: #f4f7fe; cursor: pointer;
+      font-size: 20px; transition: .2s; text-align: center;
+    }
+    .mood-btn:hover { background: #e2e8f0; }
+    .mood-btn.active { background: rgba(57,101,255,0.1); border-color: #3965FF; transform: scale(1.05); }
+
+    .du-drop-zone {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      padding: 24px; border: 1.5px dashed #a3aed1; border-radius: 12px; background: #f8fafc; cursor: pointer; transition: .2s;
+    }
+    .du-drop-zone:hover { border-color: #3965FF; background: #f0f4ff; color: #3965FF; }
+    .du-file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+    .btn-row { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f0f4ff; }
+    .btn-draft { background: #f4f7fe; color: #2b3674; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; transition: .2s; }
+    .btn-draft:hover { background: #e2e8f0; }
+    .btn-submit { background: #05CD99; color: #fff; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; transition: .2s; }
+    .btn-submit:hover { background: #04b083; }
+
+    /* ── Today's Banner (if already submitted) ── */
+    .du-today-banner {
+      background: linear-gradient(135deg, #05CD99, #04b083); color: #fff; border-radius: 16px; padding: 24px;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(5,205,153,0.3);
+    }
+    .du-banner-edit { background: rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; backdrop-filter: blur(4px); transition: .2s; }
+    .du-banner-edit:hover { background: #fff; color: #05CD99; }
+
+    /* ── History List ── */
+    .hist-card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: 0 4px 24px rgba(112,144,176,0.1); }
+    .hist-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .hist-title { font-size: 16px; font-weight: 700; color: #2b3674; }
+    .filter-select-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 12px; outline: none; }
+    
+    #duHistoryList { display: flex; flex-direction: column; gap: 16px; max-height: 800px; overflow-y: auto; padding-right: 8px; }
+    #duHistoryList::-webkit-scrollbar { width: 6px; }
+    #duHistoryList::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+    .upd-item {
+      border: 1px solid #f0f4ff; border-radius: 12px; padding: 16px; cursor: pointer; transition: .2s;
+    }
+    .upd-item:hover { border-color: #3965FF; box-shadow: 0 4px 16px rgba(57,101,255,0.08); transform: translateY(-2px); }
+    .upd-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .upd-date { font-size: 14px; font-weight: 700; color: #2b3674; }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .bg-g { background: rgba(5,205,153,0.12); color: #05CD99; }
+    .bg-gray { background: rgba(163,174,209,0.12); color: #5d6d8a; }
+    
+    .upd-desc { font-size: 13px; color: #5d6d8a; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* ── Modal ── */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(43,54,116,0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-box { background: #fff; border-radius: 20px; padding: 28px; width: 600px; max-width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(112,144,176,0.2); position: relative; }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 20px; color: #a3aed1; cursor: pointer; border: none; background: none; }
+    .modal-title { font-size: 20px; font-weight: 800; color: #2b3674; margin-bottom: 20px; }
+
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
+    <div id="pm-header-root"></div>
+
+    <main class="pm-main">
+      <div class="pg-hdr">
+        <div class="pg-hdr-left">
+          <h1><i class="fa fa-calendar-check" style="color:#3965FF;margin-right:8px;"></i>Daily Updates</h1>
+          <p id="duSubtitle">Log your work, blockers, and plan for tomorrow.</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <div class="streak-badge" id="streakBadge" style="display:none;">
+            <i class="fa fa-fire"></i> <span id="streakCount">0</span> Day Streak
+          </div>
+          <button class="btn-primary" id="btnNewUpdate" style="display:none;"><i class="fa fa-plus"></i> New Update</button>
+        </div>
+      </div>
+
+      <div class="du-stats-row" id="duStatsRow">
+        <div class="stat-card" title="Total updates submitted" onclick="window.location.href='/employee/daily-updates?view=all'">
+          <div class="stat-icon blue"><i class="fa fa-file-alt"></i></div>
+          <div><div class="du-stat-val" id="statTotal">—</div><div class="stat-lbl">Total Updates</div></div>
+        </div>
+        <div class="stat-card" title="Submission streak" onclick="window.location.href='/employee/daily-updates?view=all'">
+          <div class="stat-icon orange"><i class="fa fa-fire"></i></div>
+          <div><div class="du-stat-val" id="statStreak">—</div><div class="stat-lbl">Submission Streak</div></div>
+        </div>
+        <div class="stat-card" title="Updates viewed by manager" onclick="window.location.href='/employee/daily-updates?view=viewed'">
+          <div class="stat-icon green"><i class="fa fa-eye"></i></div>
+          <div><div class="du-stat-val" id="statViewed">—</div><div class="stat-lbl">Viewed by Manager</div></div>
+        </div>
+        <div class="stat-card" title="Saved drafts" onclick="window.location.href='/employee/daily-updates?view=drafts'">
+          <div class="stat-icon purple"><i class="fa fa-pencil-alt"></i></div>
+          <div><div class="du-stat-val" id="statDrafts">—</div><div class="stat-lbl">Drafts</div></div>
+        </div>
+      </div>
+
+      <div class="main-grid">
+        
+        <!-- Left: Form or Banner -->
+        <div>
+          <div class="du-today-banner" id="todayBanner" style="display:none">
+            <div>
+              <div style="font-size:18px;font-weight:800;margin-bottom:4px;"><i class="fa fa-check-circle"></i> Update Submitted</div>
+              <div style="font-size:13px;opacity:0.9;">You submitted your update at <span id="bannerTime"></span></div>
+            </div>
+            <button class="du-banner-edit" id="btnEditToday"><i class="fa fa-pen"></i> Edit</button>
+          </div>
+
+          <div class="du-form-card" id="duFormCard">
+            <div class="form-hdr">
+              <div class="fh-title" id="formTitleText"><i class="fa fa-edit"></i> Today's Report</div>
+              <div class="du-date-label" id="duDateLabel"></div>
+            </div>
+
+            <div class="split-grp">
+              <div>
+                <div class="form-lbl">Project</div>
+                <select class="du-input" id="duProject"><option value="">Loading assigned projects...</option></select>
+              </div>
+              <div>
+                <div class="form-lbl">Task</div>
+                <select class="du-input" id="duTask"><option value="">Select a project first</option></select>
+              </div>
+            </div>
+
+            <div class="form-grp">
+              <div class="form-lbl"><span>What did you work on today?</span><span class="du-char-count" id="workCount">0 / 2000</span></div>
+              <textarea class="du-textarea" id="duWork" rows="5" placeholder="• Completed the login API integration&#10;• Fixed bug #142 in dashboard&#10;• Code review for PR #23"></textarea>
+            </div>
+
+            <div class="form-grp">
+              <div class="form-lbl">Any blockers or challenges?</div>
+              <textarea class="du-textarea" id="duBlockers" rows="3" placeholder="No blockers today OR describe issues that need PM attention..."></textarea>
+            </div>
+
+            <div class="form-grp">
+              <div class="form-lbl">What's the plan for tomorrow?</div>
+              <textarea class="du-textarea" id="duTomorrow" rows="4" placeholder="• Will start on the API authentication module&#10;• Sprint planning meeting at 10 AM"></textarea>
+            </div>
+
+            <div class="split-grp">
+              <div>
+                <div class="form-lbl">Hours Worked</div>
+                <input type="number" class="du-input" id="duHours" min="0" max="24" step="0.5" value="8"/>
+              </div>
+              <div>
+                <div class="form-lbl">How was your day?</div>
+                <div class="du-mood-row" id="duMoodRow">
+                  <div class="mood-btn" data-val="1">😞</div>
+                  <div class="mood-btn" data-val="2">😐</div>
+                  <div class="mood-btn active" data-val="3">😊</div>
+                  <div class="mood-btn" data-val="4">🚀</div>
+                </div>
+                <input type="hidden" id="duMood" value="3"/>
+              </div>
+            </div>
+
+            <div class="form-grp">
+              <div class="form-lbl">Attachments</div>
+              <label class="du-drop-zone" for="duFiles" id="duDropZone">
+                <i class="fa fa-cloud-upload-alt" style="font-size:24px;color:#a3aed1;"></i>
+                <div style="font-size:13px;font-weight:600;color:#2b3674;">Click or drag files to upload</div>
+                <div style="font-size:11px;color:#a3aed1;">PDF, DOCX, XLSX, Images (Max 5MB)</div>
+              </label>
+              <input type="file" id="duFiles" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xlsx" style="display:none"/>
+              <div class="du-file-list" id="duFileList"></div>
+            </div>
+
+            <div class="btn-row" style="align-items:center;">
+              <select id="updateStatusSelect" class="du-input" style="width: auto; padding: 10px 16px; margin-right: 12px; border-color: #3965FF; color: #2b3674; font-weight: 700;">
+                <option value="draft">Save as Draft</option>
+                <option value="publish">Publish</option>
+              </select>
+              <button class="btn-submit" id="btnSubmit"><i class="fa fa-paper-plane"></i> Submit Update</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: History -->
+        <div>
+          <div class="hist-card">
+            <div class="hist-hdr">
+              <div class="hist-title"><i class="fa fa-history"></i> History</div>
+              <select class="filter-select-sm" id="duFilter">
+                <option value="7">Last 7 Days</option>
+                <option value="30">Last 30 Days</option>
+                <option value="all">All Time</option>
+              </select>
+            </div>
+            <div id="duHistoryList">
+              <div style="text-align:center;padding:40px;color:#a3aed1;"><i class="fa fa-spinner fa-spin fa-2x"></i></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Details Modal -->
+<div class="modal-overlay" id="detailModal" style="display:none;">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('detailModal').style.display='none'"><i class="fa fa-times"></i></button>
+    <div class="modal-title" id="detailModalTitle">Update Detail</div>
+    <div id="detailModalContent" style="font-size:14px;color:#5d6d8a;line-height:1.6;"></div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/modules/employee/emp-shell.js"></script>
+<script src="/modules/employee/daily-updates/app.js"></script>
+</body>
+</html>

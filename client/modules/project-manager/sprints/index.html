@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint Board – Project Manager | JMKC CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin-layout.css" />
+  <link rel="stylesheet" href="/modules/admin/_shared/admin.css" />
+  <link rel="stylesheet" href="/modules/project-manager/pm-layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+  <style>
+    .sprint-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      min-height: calc(100vh - 160px);
+      align-items: flex-start;
+    }
+
+    /* Active Sprint Area */
+    .active-sprint-area {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      box-shadow: var(--pm-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .sprint-header-top {
+      padding: 24px;
+      border-bottom: 1px solid var(--pm-border);
+      background: linear-gradient(to right, rgba(37,99,235,0.03), transparent);
+    }
+
+    .sprint-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .sprint-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--pm-text);
+      margin-bottom: 6px;
+    }
+
+    .sprint-dates {
+      font-size: 12px;
+      color: var(--pm-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sprint-goal {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--pm-text);
+      background: var(--pm-bg);
+      padding: 12px;
+      border-radius: 6px;
+      border-left: 3px solid var(--pm-accent);
+    }
+
+    /* Progress Bar */
+    .sprint-progress-wrap {
+      margin-top: 20px;
+    }
+    .sprint-progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--pm-text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .sprint-progress-bar {
+      height: 8px;
+      background: var(--pm-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--pm-border);
+    }
+    .sprint-progress-fill {
+      height: 100%;
+      background: var(--pm-accent);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* Sprint Tasks Board inside Active Sprint */
+    .sprint-board {
+      display: flex;
+      flex: 1;
+      overflow-x: auto;
+      padding: 20px;
+      gap: 16px;
+      background: var(--pm-bg);
+    }
+    .sprint-col {
+      flex: 1;
+      min-width: 250px;
+      background: #fff;
+      border: 1px solid var(--pm-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sprint-col-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--pm-border);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--pm-text);
+      background: #fafafa;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+    }
+    .sprint-col-body {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      min-height: 100px;
+    }
+
+    /* Backlog Area */
+    .backlog-area {
+      background: var(--pm-card);
+      border: 1px solid var(--pm-border);
+      border-radius: var(--pm-radius);
+      box-shadow: var(--pm-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .backlog-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--pm-border);
+    }
+    .backlog-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--pm-text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .backlog-list {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background: var(--pm-bg);
+      min-height: 200px;
+    }
+
+    /* Task Card */
+    .task-card {
+      background: #fff;
+      border: 1px solid var(--pm-border);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+      cursor: grab;
+      transition: all 0.2s;
+    }
+    .task-card:hover {
+      border-color: var(--pm-accent);
+      box-shadow: var(--pm-shadow-sm);
+    }
+    .task-card:active { cursor: grabbing; }
+    .task-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--pm-text);
+      margin-bottom: 8px;
+    }
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+    .task-badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .badge-high { background: #fee2e2; color: #dc2626; }
+    .badge-medium { background: #fef9c3; color: #ca8a04; }
+    .badge-low { background: #dcfce7; color: #16a34a; }
+
+    /* Sortable classes */
+    .sortable-ghost { opacity: 0.4; background: var(--pm-accent-light); border: 1px dashed var(--pm-accent); }
+    .sortable-drag { cursor: grabbing !important; box-shadow: var(--pm-shadow-lg) !important; transform: rotate(3deg); }
+
+    /* Modal */
+    .pm-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .pm-modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .pm-modal {
+      background: #fff; width: 450px; max-width: 90%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transform: translateY(20px); transition: transform .3s ease; padding: 24px;
+    }
+    .pm-modal-overlay.active .pm-modal { transform: translateY(0); }
+    .pm-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .pm-modal-title { font-size: 16px; font-weight: 700; color: var(--pm-text); display: flex; align-items: center; gap: 8px; }
+    .pm-modal-close { cursor: pointer; color: var(--pm-text-muted); font-size: 18px; }
+    .pm-form-group { margin-bottom: 16px; }
+    .pm-form-label { display: block; font-size: 12px; font-weight: 600; color: var(--pm-text-muted); margin-bottom: 6px; }
+    .pm-form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--pm-border); border-radius: 6px; font-size: 13px; transition: border-color .2s; }
+    .pm-form-input:focus { border-color: var(--pm-accent); outline: none; box-shadow: 0 0 0 3px var(--pm-accent-light); }
+  </style>
+</head>
+<body>
+<div class="pm-shell">
+  <div id="pm-sidebar-root"></div>
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div id="pm-header-root"></div>
+    <main class="pm-main">
+      <!-- PM Standard Back Button -->
+      
+
+      <div class="pm-page-header">
+        <div>
+          <div class="pm-breadcrumb">
+            <i class="fa fa-home"></i>
+            <a href="/project-manager/dashboard">Dashboard</a>
+            <i class="fa fa-chevron-right"></i>
+            <span>Sprint Board</span>
+          </div>
+          <h2 class="pm-page-title">Sprint Board</h2>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <select id="projectFilter" class="pm-form-input" style="padding:8px 12px;width:auto;" onchange="loadSprintData()">
+            <option value="">All Projects</option>
+          </select>
+          <button class="pm-btn pm-btn-outline" onclick="openSprintModal()"><i class="fa-solid fa-plus"></i> New Sprint</button>
+        </div>
+      </div>
+      
+      <div class="sprint-layout">
+        <!-- Active Sprint Area -->
+        <div class="active-sprint-area">
+          <div class="sprint-header-top">
+            <div class="sprint-title-row">
+              <div>
+                <div class="sprint-name" id="asName">Active Sprint 1</div>
+                <div class="sprint-dates"><i class="fa-regular fa-calendar"></i> <span id="asDates">Oct 1 - Oct 14</span> <span class="badge" style="background:var(--green-light);color:var(--green);font-size:10px;padding:2px 6px;border-radius:4px;margin-left:6px;">ACTIVE</span></div>
+              </div>
+              <button class="pm-btn pm-btn-primary" style="padding: 6px 12px; font-size: 12px;" onclick="completeSprint()">Complete Sprint</button>
+            </div>
+            <div class="sprint-goal" id="asGoal">
+              Goal: Deliver the core MVP features including authentication and dashboard layout.
+            </div>
+            
+            <div class="sprint-progress-wrap">
+              <div class="sprint-progress-header">
+                <span>Sprint Progress</span>
+                <span id="asProgressText">65%</span>
+              </div>
+              <div class="sprint-progress-bar">
+                <div class="sprint-progress-fill" id="asProgressBar" style="width: 65%;"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="sprint-board">
+            <div class="sprint-col">
+              <div class="sprint-col-header">To Do <span id="cTodo">0</span></div>
+              <div class="sprint-col-body" id="col-todo" data-status="To Do"></div>
+            </div>
+            <div class="sprint-col">
+              <div class="sprint-col-header">In Progress <span id="cProg">0</span></div>
+              <div class="sprint-col-body" id="col-prog" data-status="In Progress"></div>
+            </div>
+            <div class="sprint-col">
+              <div class="sprint-col-header">Done <span id="cDone">0</span></div>
+              <div class="sprint-col-body" id="col-done" data-status="Completed"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Backlog Area -->
+        <div class="backlog-area">
+          <div class="backlog-header">
+            <div class="backlog-title">
+              Project Backlog
+              <span style="font-size:12px;color:var(--pm-text-muted);font-weight:500;" id="backlogCount">0 issues</span>
+            </div>
+          </div>
+          <div class="backlog-list" id="col-backlog" data-status="Backlog">
+            <!-- Backlog items -->
+          </div>
+        </div>
+      </div>
+
+      
+    </main>
+  </div>
+</div>
+
+<!-- Create Sprint Modal -->
+<div class="pm-modal-overlay" id="sprintModalOverlay">
+  <div class="pm-modal">
+    <div class="pm-modal-header">
+      <div class="pm-modal-title"><i class="fa fa-bolt" style="color:var(--pm-accent)"></i> Create Sprint</div>
+      <div class="pm-modal-close" onclick="closeSprintModal()"><i class="fa fa-times"></i></div>
+    </div>
+    <form id="sprintForm">
+      <div class="pm-form-group">
+        <label class="pm-form-label">Sprint Name</label>
+        <input type="text" class="pm-form-input" id="spName" required placeholder="e.g. Sprint 2">
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Project</label>
+        <select class="pm-form-input" id="spProject" required>
+          <!-- Populated by JS -->
+        </select>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="pm-form-group">
+          <label class="pm-form-label">Start Date</label>
+          <input type="date" class="pm-form-input" id="spStart" required>
+        </div>
+        <div class="pm-form-group">
+          <label class="pm-form-label">End Date</label>
+          <input type="date" class="pm-form-input" id="spEnd" required>
+        </div>
+      </div>
+      <div class="pm-form-group">
+        <label class="pm-form-label">Sprint Goal</label>
+        <textarea class="pm-form-input" id="spGoal" rows="2" placeholder="What are we trying to achieve?"></textarea>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px;">
+        <button type="button" class="pm-btn pm-btn-outline" onclick="closeSprintModal()">Cancel</button>
+        <button type="submit" class="pm-btn pm-btn-primary">Create Sprint</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/modules/project-manager/pm-shell.js"></script>
+<script>
+  let tasks = [];
+  let sortables = [];
+
+  function getPrioClass(prio) {
+    const p = String(prio).toLowerCase();
+    if(p.includes('high') || p.includes('critical')) return 'badge-high';
+    if(p.includes('low')) return 'badge-low';
+    return 'badge-medium';
+  }
+
+  function createTaskHTML(task) {
+    return `
+      <div class="task-card" data-id="${task._id}">
+        <div class="task-card-title">${task.title || 'Untitled Task'}</div>
+        <div class="task-meta">
+          <span class="task-badge ${getPrioClass(task.priority)}">${task.priority || 'MEDIUM'}</span>
+          <span style="color:var(--pm-text-muted);font-weight:500;">
+            <i class="fa-regular fa-user"></i> ${task.assigneeName || 'Unassigned'}
+          </span>
+        </div>
+      </div>
+    `;
+  }
+
+  async function initSprintBoard() {
+    // 1. Fetch Projects
+    try {
+      const pRes = await window.pmShell?.apiFetch('/api/projects?size=100');
+      if (pRes && pRes.data) {
+        const pSel = document.getElementById('projectFilter');
+        const spSel = document.getElementById('spProject');
+        pRes.data.forEach(p => {
+          const opt = `<option value="${p._id}">${p.projectName || p.name}</option>`;
+          pSel.innerHTML += opt;
+          spSel.innerHTML += opt;
+        });
+      }
+    } catch(e) { console.error("Error fetching projects", e); }
+
+    await loadSprintData();
+    initSortable();
+  }
+
+  async function loadSprintData() {
+    const projId = document.getElementById('projectFilter').value;
+    let url = '/api/tasks?limit=500';
+    if(projId) url += `&projectId=${projId}`;
+    
+    try {
+      const headers = { 'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}` };
+      const res = await fetch(url, { headers });
+      const data = await res.json();
+      tasks = data.data || [];
+      renderSprintBoard();
+    } catch(err) {
+      console.error("Failed to load tasks", err);
+      // Fallback mockup
+      tasks = [
+        { _id: '1', title: 'Design Database Schema', priority: 'HIGH', status: 'Completed', assigneeName: 'Alice' },
+        { _id: '2', title: 'Setup Authentication', priority: 'CRITICAL', status: 'In Progress', assigneeName: 'Bob' },
+        { _id: '3', title: 'Create Dashboard UI', priority: 'MEDIUM', status: 'To Do', assigneeName: 'Charlie' },
+        { _id: '4', title: 'Write API Documentation', priority: 'LOW', status: 'Backlog', assigneeName: 'Alice' },
+        { _id: '5', title: 'Optimize Queries', priority: 'MEDIUM', status: 'Backlog', assigneeName: 'Bob' }
+      ];
+      renderSprintBoard();
+    }
+  }
+
+  function renderSprintBoard() {
+    const cols = {
+      'To Do': document.getElementById('col-todo'),
+      'In Progress': document.getElementById('col-prog'),
+      'Completed': document.getElementById('col-done'),
+      'Backlog': document.getElementById('col-backlog')
+    };
+    
+    const counts = { 'To Do': 0, 'In Progress': 0, 'Completed': 0, 'Backlog': 0 };
+
+    Object.values(cols).forEach(c => c.innerHTML = '');
+
+    tasks.forEach(t => {
+      let status = t.status || 'Backlog';
+      if(status === 'Done') status = 'Completed';
+      if(status === 'Pending') status = 'To Do';
+      
+      const col = cols[status] || cols['Backlog'];
+      if(cols[status]) counts[status]++;
+      else counts['Backlog']++;
+      
+      col.innerHTML += createTaskHTML(t);
+    });
+
+    document.getElementById('cTodo').textContent = counts['To Do'];
+    document.getElementById('cProg').textContent = counts['In Progress'];
+    document.getElementById('cDone').textContent = counts['Completed'];
+    document.getElementById('backlogCount').textContent = `${counts['Backlog']} tasks`;
+
+    // Calculate Sprint Progress (Completed / (Todo+Prog+Done))
+    const totalSprint = counts['To Do'] + counts['In Progress'] + counts['Completed'];
+    let pct = 0;
+    if(totalSprint > 0) {
+      pct = Math.round((counts['Completed'] / totalSprint) * 100);
+    }
+    
+    document.getElementById('asProgressText').textContent = `${pct}%`;
+    document.getElementById('asProgressBar').style.width = `${pct}%`;
+  }
+
+  function initSortable() {
+    const containers = [
+      document.getElementById('col-todo'),
+      document.getElementById('col-prog'),
+      document.getElementById('col-done'),
+      document.getElementById('col-backlog')
+    ];
+    
+    containers.forEach(container => {
+      sortables.push(new Sortable(container, {
+        group: 'sprint',
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        onEnd: async function (evt) {
+          const taskId = evt.item.dataset.id;
+          const newStatus = evt.to.dataset.status;
+          const oldStatus = evt.from.dataset.status;
+          
+          if(newStatus !== oldStatus) {
+            // Optimistic update
+            const taskIndex = tasks.findIndex(t => t._id === taskId);
+            if(taskIndex > -1) {
+              tasks[taskIndex].status = newStatus;
+              renderSprintBoard(); // Re-render to update counts & progress bar instantly
+            }
+            
+            // API
+            try {
+              const headers = { 
+                'Authorization': `Bearer ${window.getToken ? window.getToken() : ''}`,
+                'Content-Type': 'application/json'
+              };
+              await fetch(`/api/tasks/${taskId}`, {
+                method: 'PATCH',
+                headers,
+                body: JSON.stringify({ status: newStatus })
+              });
+            } catch(e) { console.error("Failed", e); }
+          }
+        },
+      }));
+    });
+  }
+
+  function openSprintModal() { document.getElementById('sprintModalOverlay').classList.add('active'); }
+  function closeSprintModal() { document.getElementById('sprintModalOverlay').classList.remove('active'); }
+  function completeSprint() {
+    alert("Sprint completed! In a full implementation, this would close the sprint and move incomplete tasks back to backlog.");
+  }
+
+  document.getElementById('sprintForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('asName').textContent = document.getElementById('spName').value;
+    document.getElementById('asGoal').textContent = `Goal: ${document.getElementById('spGoal').value}`;
+    
+    const start = document.getElementById('spStart').value;
+    const end = document.getElementById('spEnd').value;
+    document.getElementById('asDates').textContent = `${start} to ${end}`;
+    
+    closeSprintModal();
+    e.target.reset();
+  });
+
+  document.addEventListener('DOMContentLoaded', initSprintBoard);
+</script>
+</body>
+</html>

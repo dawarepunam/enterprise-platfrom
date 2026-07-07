@@ -1,0 +1,20 @@
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.work-task-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0.75rem; border-radius: var(--r);
+  background: var(--clr-surface-2); border: 1px solid var(--clr-border);
+  margin-bottom: 0.4rem; cursor: pointer; transition: all var(--t-fast);
+}
+.work-task-item:hover { border-color: var(--clr-primary); transform: translateX(4px); }
+.work-task-check {
+  width: 18px; height: 18px; border-radius: 5px;
+  border: 2px solid var(--clr-surface-3); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.work-task-info { flex: 1; min-width: 0; }
+.work-task-name { font-size: var(--fs-sm); color: var(--clr-text); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.work-task-meta { font-size: var(--fs-xs); color: var(--clr-text-muted); }
+.overdue-item { border-left: 3px solid var(--clr-danger); }
+.overdue-item .work-task-name { color: var(--clr-danger); }
+@media (max-width: 1000px) { .work-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 650px) { .work-grid { grid-template-columns: 1fr; } .work-grid [style*="span 2"] { grid-column: span 1; } }

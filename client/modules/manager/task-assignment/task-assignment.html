@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="../../../assets/images/logo.png" />
+    <title>Manager Task Assignment</title>
+    <link rel="stylesheet" href="../../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../../assets/css/role-workspace.css" />
+    <link rel="stylesheet" href="task-assignment.css" />
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="workspace-layout">
+        <div id="sidebar"></div>
+        <main class="workspace-page">
+            <section class="workspace-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Task Assignment Flow</p>
+                    <h1>Break project scope into manager-owned task assignments</h1>
+                    <p class="hero-text">Choose a project, assign a member, and push tasks into execution with deadline and priority controls. Manager keeps direct ownership of the full task flow.</p>
+                </div>
+                <div class="hero-side">
+                    <article class="signal-card"><span>Total Tasks</span><strong id="taskCount">0</strong></article>
+                    <article class="signal-card"><span>Pending Review</span><strong id="reviewCount">0</strong></article>
+                    <article class="signal-card accent-card"><span>Assigned Today</span><strong id="assignedToday">0</strong><small>New task handoffs created in this workspace</small></article>
+                </div>
+            </section>
+
+            <section class="content-grid assignment-layout">
+                <article class="workspace-panel">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Create Task</p>
+                            <h2>Assign work to lead and member</h2>
+                        </div>
+                    </div>
+                    <form id="taskForm" class="form-grid">
+                        <input type="hidden" id="taskId" />
+                        <label class="field field-wide">
+                            <span>Project</span>
+                            <select id="projectId" required></select>
+                        </label>
+                        <label class="field">
+                            <span>Task Title</span>
+                            <input id="title" type="text" placeholder="Enter task title" required />
+                        </label>
+                        <label class="field">
+                            <span>Department</span>
+                            <input id="department" type="text" placeholder="Department" readonly />
+                        </label>
+                        <label class="field field-wide">
+                            <span>Description</span>
+                            <textarea id="description" rows="4" placeholder="Describe the task goal and output"></textarea>
+                        </label>
+                        <label class="field">
+                            <span>Member</span>
+                            <select id="assignee" required></select>
+                        </label>
+                        <label class="field">
+                            <span>Priority</span>
+                            <select id="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span>Status</span>
+                            <select id="status">
+                                <option value="Planning">Planning</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Active">Active</option>
+                                <option value="In Review">In Review</option>
+                            </select>
+                        </label>
+                        <label class="field">
+                            <span>Deadline</span>
+                            <input id="deadline" type="date" required />
+                        </label>
+                        <label class="field">
+                            <span>Progress %</span>
+                            <input id="progress" type="number" min="0" max="100" value="0" />
+                        </label>
+                        <div class="btn-row field-wide">
+                            <button type="button" class="btn ghost-btn" id="resetTaskForm">Reset</button>
+                            <button type="submit" class="btn btn-primary">Save Task</button>
+                        </div>
+                    </form>
+                </article>
+
+                <article class="workspace-panel">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Assignment Checklist</p>
+                            <h2>Before sending to team</h2>
+                        </div>
+                    </div>
+                    <div class="stack-list">
+                        <article class="list-card"><strong>1. Project selected</strong><span class="status-note">Pick an admin-assigned project first.</span></article>
+                        <article class="list-card"><strong>2. Member assigned</strong><span class="status-note">The member owns execution and updates.</span></article>
+                        <article class="list-card"><strong>3. Manager review path fixed</strong><span class="status-note">Manager keeps tracking, review, and escalation visibility.</span></article>
+                        <article class="list-card"><strong>4. Deadline and priority fixed</strong><span class="status-note">This drives escalation and performance visibility.</span></article>
+                    </div>
+                </article>
+            </section>
+
+            <section class="workspace-panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Task Table</p>
+                        <h2>Assigned tasks for selected project</h2>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="workspace-table">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Member</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../../../assets/js/api.js"></script>
+    <script src="../../../assets/js/auth.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+    <script src="../../../assets/js/notifications.js"></script>
+    <script src="../../../assets/js/enterprise-data.js"></script>
+    <script src="../../../assets/js/role-workspace.js"></script>
+    <script src="task-assignment.js"></script>
+</body>
+</html>

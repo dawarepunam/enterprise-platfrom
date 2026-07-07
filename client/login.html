@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login - JMKC Enterprise CRM</title>
+        <link rel="stylesheet" href="/assets/css/variables.css" />
+        <link rel="stylesheet" href="/assets/css/global.css" />
+        <link rel="stylesheet" href="/assets/css/forms.css" />
+        <link rel="stylesheet" href="/assets/css/auth.css" />
+    </head>
+
+    <body>
+        <main class="auth-page-shell auth-login-shell">
+            <section class="auth-left-panel"
+                aria-label="JMKC CRM welcome panel">
+                <div class="auth-left-background"></div>
+                <div class="auth-left-content">
+                    <div class="auth-brand-line">
+                        <img src="/assets/images/logo.png" alt="JMKC CRM" />
+                        <span><b>JMKC</b> CRM</span>
+                    </div>
+
+                    <div class="auth-copy-block">
+                        <p class="auth-eyebrow">One Platform, All Your Business.
+                        </p>
+                        <h1>Welcome to JMKC CRM</h1>
+                        <p class="auth-lead">Secure access for admin, HR,
+                            employees, managers and clients.</p>
+                    </div>
+
+                    <div class="auth-feature-grid"
+                        aria-label="CRM feature highlights">
+                        <article class="auth-feature-card">
+                            <span class="feature-icon">🏢</span>
+                            <div>
+                                <strong>Project Management</strong>
+                            </div>
+                        </article>
+                        <article class="auth-feature-card">
+                            <span class="feature-icon">👥</span>
+                            <div>
+                                <strong>Employee Management</strong>
+                            </div>
+                        </article>
+                        <article class="auth-feature-card">
+                            <span class="feature-icon">⏱️</span>
+                            <div>
+                                <strong>Attendance Tracking</strong>
+                            </div>
+                        </article>
+                        <article class="auth-feature-card">
+                            <span class="feature-icon">📊</span>
+                            <div>
+                                <strong>Business Analytics</strong>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="auth-left-shapes" aria-hidden="true">
+                    <span class="shape shape-1"></span>
+                    <span class="shape shape-2"></span>
+                    <span class="shape shape-3"></span>
+                    <span class="shape shape-4"></span>
+                </div>
+            </section>
+
+            <section class="auth-right-panel" aria-label="Login panel">
+                <div class="auth-card auth-login-card">
+                    <div class="auth-card-header">
+                        <img src="/assets/images/logo.png" alt="JMKC CRM" />
+                        <div>
+                            <h1>Welcome Back</h1>
+                            <p>Secure Login to JMKC CRM. Select your role and
+                                enter credentials to continue.</p>
+                        </div>
+                    </div>
+
+                    <form id="loginForm" class="auth-form" autocomplete="off">
+                        <div class="form-group auth-input-group">
+                            <label for="loginRole">Select Role</label>
+                            <select id="loginRole" name="loginRole"
+                                autocomplete="off" required>
+                                <option value disabled selected>Select
+                                    Role</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="HR">HR</option>
+                                <option value="MARKETING">Marketing</option>
+                                <option value="PROJECT_MANAGER">Project
+                                    Manager</option>
+                                <option value="MANAGER">Project Manager
+                                    (Legacy)</option>
+                                <option value="PRODUCT_MANAGER">Product
+                                    Manager</option>
+                                <option value="MEMBER">Employee</option>
+                                <option value="CLIENT">Client</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group auth-input-group">
+                            <label for="email">Email</label>
+                            <span class="auth-field-icon">EM</span>
+                            <input type="email" id="email" name="email"
+                                placeholder="Enter your email"
+                                autocomplete="off" autocapitalize="none"
+                                spellcheck="false" required />
+                        </div>
+
+                        <div class="form-group auth-input-group">
+                            <label for="password">Password</label>
+                            <span class="auth-field-icon">PW</span>
+                            <input type="password" id="password" name="password"
+                                placeholder="Enter your password"
+                                autocomplete="new-password" spellcheck="false"
+                                required />
+                            <button class="auth-password-toggle" type="button"
+                                data-toggle-password="password"
+                                aria-label="Show password">Show</button>
+                        </div>
+
+                        <div class="auth-form-row">
+                            <label class="auth-check"><input type="checkbox"
+                                    id="rememberMe" /> Remember Me</label>
+                            <a id="forgotPasswordAnchor"
+                                class="auth-link-animated"
+                                href="/forgot-password.html">Forgot
+                                Password?</a>
+                        </div>
+
+                        <button type="submit" class="auth-submit">Login</button>
+                        <button type="button"
+                            class="auth-secondary-button">Contact Admin</button>
+                    </form>
+
+                    <footer class="auth-footer">Your data is safe and secure
+                        with us.</footer>
+                </div>
+            </section>
+        </main>
+
+        <script>
+        window.addEventListener('load', () => {
+            const emailField = document.getElementById('email');
+            const passwordField = document.getElementById('password');
+            if (emailField) {
+                emailField.value = '';
+                emailField.autocomplete = 'off';
+            }
+            if (passwordField) {
+                passwordField.value = '';
+                passwordField.autocomplete = 'new-password';
+            }
+        });
+    </script>
+        <script src="/assets/js/api.js"></script>
+        <script src="/assets/js/enterprise-data.js"></script>
+        <script src="/assets/js/notifications.js"></script>
+        <script src="/assets/js/auth.js"></script>
+    </body>
+
+</html>

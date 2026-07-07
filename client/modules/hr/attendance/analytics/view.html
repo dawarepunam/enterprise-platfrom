@@ -1,0 +1,63 @@
+<div class="hr-analytics-view" style="display:flex; flex-direction:column; gap:1.5rem; height:100%;">
+  
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">Attendance Analytics</h2>
+    <div style="display:flex; gap:1rem;">
+      <select style="padding:0.5rem; border:1px solid var(--hr-border); border-radius:6px;">
+        <option>This Month</option>
+        <option>Last Month</option>
+        <option>This Quarter</option>
+      </select>
+      <button class="primary-btn" onclick="window.UI.toast('Exporting PDF...', 'info')">Export PDF</button>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5rem;">
+    <!-- Circular KPI 1 -->
+    <div class="hr-card" style="padding:2rem; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div style="color:var(--hr-text-muted); font-size:1rem; margin-bottom:1.5rem;">Overall Present %</div>
+      <div style="width:120px; height:120px; border-radius:50%; border:12px solid #10B981; display:flex; justify-content:center; align-items:center; font-size:2rem; font-weight:700;">
+        85%
+      </div>
+    </div>
+    <!-- Circular KPI 2 -->
+    <div class="hr-card" style="padding:2rem; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div style="color:var(--hr-text-muted); font-size:1rem; margin-bottom:1.5rem;">Overall Late %</div>
+      <div style="width:120px; height:120px; border-radius:50%; border:12px solid #F59E0B; display:flex; justify-content:center; align-items:center; font-size:2rem; font-weight:700;">
+        7%
+      </div>
+    </div>
+    <!-- Circular KPI 3 -->
+    <div class="hr-card" style="padding:2rem; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <div style="color:var(--hr-text-muted); font-size:1rem; margin-bottom:1.5rem;">Overall Absent %</div>
+      <div style="width:120px; height:120px; border-radius:50%; border:12px solid #EF4444; display:flex; justify-content:center; align-items:center; font-size:2rem; font-weight:700;">
+        8%
+      </div>
+    </div>
+  </div>
+
+  <div class="hr-card" style="flex:1; padding:2rem; display:flex; flex-direction:column;">
+    <h3 style="margin-top:0; color:var(--hr-text-muted);">Department Wise Attendance</h3>
+    <div style="flex:1; display:flex; align-items:flex-end; gap:2rem; margin-top:2rem;">
+      <!-- Mock Bar Chart -->
+      <div class="hr-hover-scale" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:0.5rem; cursor:pointer;" onclick="window.UI.toast('Sales: 92%', 'info')">
+        <div style="width:100%; height:92%; background:#3B82F6; border-radius:6px 6px 0 0; transition:height 1s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+        <div style="font-size:0.875rem; color:var(--hr-text-muted);">Sales</div>
+      </div>
+      <div class="hr-hover-scale" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:0.5rem; cursor:pointer;" onclick="window.UI.toast('Marketing: 88%', 'info')">
+        <div style="width:100%; height:88%; background:#3B82F6; border-radius:6px 6px 0 0; transition:height 1s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+        <div style="font-size:0.875rem; color:var(--hr-text-muted);">Marketing</div>
+      </div>
+      <div class="hr-hover-scale" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:0.5rem; cursor:pointer;" onclick="window.UI.toast('Development: 95%', 'info')">
+        <div style="width:100%; height:95%; background:#3B82F6; border-radius:6px 6px 0 0; transition:height 1s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+        <div style="font-size:0.875rem; color:var(--hr-text-muted);">Development</div>
+      </div>
+      <div class="hr-hover-scale" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:0.5rem; cursor:pointer;" onclick="window.UI.toast('HR: 90%', 'info')">
+        <div style="width:100%; height:90%; background:#3B82F6; border-radius:6px 6px 0 0; transition:height 1s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+        <div style="font-size:0.875rem; color:var(--hr-text-muted);">HR</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="/modules/hr/attendance/analytics/script.js"></script>
