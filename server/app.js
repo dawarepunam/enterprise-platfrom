@@ -15,6 +15,10 @@ const path = require("path");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
+app.get(["/", "/index.html"], (req, res) => {
+  res.redirect(302, "/login.html");
+});
+
 // Serve static frontend client
 app.use(express.static(path.join(__dirname, "../client")));
 

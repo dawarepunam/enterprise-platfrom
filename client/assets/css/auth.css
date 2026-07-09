@@ -637,6 +637,9 @@ body {
     display: none;
   }
   .auth-right-panel {
+    flex: none;
+    width: 100%;
+    min-width: 0;
     padding: 32px 28px 48px;
   }
   .auth-card {
@@ -653,17 +656,23 @@ body {
   }
   .auth-page-shell {
     min-height: 100dvh;
+    width: 100%;
     padding: 12px;
     overflow: visible;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
   }
   .auth-right-panel {
+    flex: none;
     width: 100%;
+    max-width: 100%;
     min-height: 100dvh;
     padding: 0;
     align-items: center;
+    justify-content: center;
+    overflow: visible;
   }
   .auth-card {
-    width: 100%;
+    width: min(100%, 430px);
     max-width: 430px;
     padding: 20px;
     border-radius: 18px;
@@ -699,6 +708,7 @@ body {
     height: 48px;
     border-radius: 14px;
     font-size: 14px;
+    min-width: 0;
   }
   .auth-submit,
   .auth-secondary-button {
@@ -721,6 +731,7 @@ body {
   }
   .auth-card {
     padding: 16px;
+    border-radius: 16px;
   }
   .auth-card-header h1 {
     font-size: 23px;

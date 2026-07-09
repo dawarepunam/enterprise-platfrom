@@ -88,7 +88,8 @@
             </button>
           </div>
         </div>
-      </aside>`;
+      </aside>
+      <div class="pm-mobile-overlay" id="pmMobileOverlay" onclick="window.pmShell?.closeSidebar()"></div>`;
   }
 
   // ── Header HTML ───────────────────────────────────────────────
@@ -266,9 +267,20 @@
         #mobileMenuBtn { display: flex !important; }
         .pm-integration-btns { display: none; }
         .pm-integration-btns span { display: none; }
+        .pm-mobile-overlay {
+          display: none;
+          position: fixed;
+          inset: 0;
+          z-index: 150;
+          background: rgba(15, 23, 42, 0.42);
+        }
+        .pm-mobile-overlay.active {
+          display: block;
+        }
       }
       @media (min-width: 769px) {
         #mobileMenuBtn { display: none !important; }
+        .pm-mobile-overlay { display: none !important; }
       }
     `;
     document.head.appendChild(style);
@@ -333,7 +345,15 @@
 
   // ── Toggle sidebar (mobile) ───────────────────────────────────
   function toggleSidebar() {
-    document.getElementById('pmSidebar')?.classList.toggle('open');
+    const sidebar = document.getElementById('pmSidebar');
+    const overlay = document.getElementById('pmMobileOverlay');
+    sidebar?.classList.toggle('open');
+    overlay?.classList.toggle('active', sidebar?.classList.contains('open'));
+  }
+
+  function closeSidebar() {
+    document.getElementById('pmSidebar')?.classList.remove('open');
+    document.getElementById('pmMobileOverlay')?.classList.remove('active');
   }
 
   // ── Logout ────────────────────────────────────────────────────
@@ -525,7 +545,7 @@
   window.closeModal = function (id) { document.getElementById(id)?.classList.remove('open'); };
 
   // ── Expose shell API ──────────────────────────────────────────
-  window.pmShell = { toggleSidebar, confirmLogout, performLogout, loadNotifications, apiFetch };
+  window.pmShell = { toggleSidebar, closeSidebar, confirmLogout, performLogout, loadNotifications, apiFetch };
 
   // ── Auto-inject Footer + Back Button ────────────────────────
   function injectFooterAndBackBtn() {
