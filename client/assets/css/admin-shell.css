@@ -180,6 +180,8 @@ body.sidebar-collapsed .generated-layout {
   .generated-page {
     grid-column: 1;
     padding: 16px;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .enterprise-navbar-search {
@@ -188,5 +190,43 @@ body.sidebar-collapsed .generated-layout {
 
   .navbar-meta {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body.sidebar-dimmed::before {
+    z-index: 840;
+  }
+
+  .main-content,
+  .dashboard-page,
+  .enterprise-page,
+  .generated-page {
+    padding: 14px;
+  }
+
+  .page-header,
+  .section-header,
+  .card-header,
+  .toolbar,
+  .actions-row {
+    gap: 12px;
+  }
+
+  .metric-grid,
+  .stats-grid,
+  .dashboard-grid,
+  .module-grid,
+  .content-grid,
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .table-responsive,
+  .data-table-wrap,
+  .admin-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

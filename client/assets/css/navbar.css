@@ -392,6 +392,8 @@
 @media (max-width: 768px) {
   .navbar {
     padding: 0 14px;
+    gap: 10px;
+    overflow: hidden;
   }
 
   .navbar-brand {
@@ -399,7 +401,7 @@
   }
 
   .navbar-right {
-    gap: 10px;
+    gap: 8px;
   }
 
   .navbar-language,
@@ -417,5 +419,29 @@
     width: 44px;
     padding: 0;
     justify-content: center;
+  }
+
+  .btn-icon {
+    min-width: 40px;
+    width: 40px;
+    padding: 0;
+  }
+
+  .icon-label,
+  .profile-menu-trigger .profile-name {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar-brand {
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-avatar {
+    width: 36px;
+    height: 36px;
   }
 }

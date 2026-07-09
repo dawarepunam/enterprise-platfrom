@@ -13,7 +13,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-right: 1px solid var(--glass-border);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.24s ease;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 999;
@@ -42,11 +42,13 @@
 }
 @media (max-width: 768px) {
   .global-sidebar {
-    left: -260px; /* Hidden by default on mobile */
+    left: 0;
+    transform: translateX(-100%);
     width: 260px;
+    z-index: 900;
   }
   .global-sidebar.mobile-open {
-    left: 0;
+    transform: translateX(0);
   }
 }
 
@@ -158,5 +160,7 @@
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
+    width: 100%;
+    overflow-x: hidden;
   }
 }

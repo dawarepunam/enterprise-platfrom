@@ -739,3 +739,99 @@ ul, ol { list-style: none; }
 .ml-auto { margin-left: auto; }
 
 .pm-page-footer { margin-top: auto !important; }
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .pm-shell {
+    display: block;
+    min-width: 0;
+  }
+
+  .pm-sidebar {
+    width: min(280px, 86vw);
+    transform: translateX(-100%);
+    box-shadow: 24px 0 60px rgba(15, 23, 42, 0.32);
+  }
+
+  .pm-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .pm-sidebar-collapse-btn {
+    display: none !important;
+  }
+
+  .pm-header {
+    left: 0 !important;
+    height: 60px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .pm-header-search {
+    display: none;
+  }
+
+  .pm-header-actions {
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .pm-header-divider,
+  .pm-profile-name,
+  .pm-profile-btn .fa-chevron-down {
+    display: none !important;
+  }
+
+  .pm-profile-btn {
+    padding: 4px;
+    border-radius: 12px;
+  }
+
+  .pm-icon-btn {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+  }
+
+  .pm-main {
+    margin-left: 0 !important;
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+    width: 100%;
+    padding: 16px 12px 28px;
+    overflow-x: hidden;
+  }
+
+  .pm-page-header {
+    align-items: flex-start;
+  }
+
+  .pm-kpi-grid,
+  .pm-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pm-card,
+  .pm-kpi-card {
+    padding: 16px;
+  }
+
+  .pm-table {
+    min-width: 640px;
+  }
+
+  .pm-card:has(.pm-table) {
+    overflow-x: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .pm-dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
